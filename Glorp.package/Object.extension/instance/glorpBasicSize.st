@@ -1,0 +1,3 @@
+*Glorp
+glorpBasicSize
+	^self basicSize.

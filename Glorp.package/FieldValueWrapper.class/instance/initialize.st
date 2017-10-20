@@ -1,0 +1,4 @@
+public
+initialize
+
+	hasValue := false

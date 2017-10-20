@@ -1,0 +1,3 @@
+tests
+testUpdateWithoutExpiredExistingEntry
+	self helpTestUpdateWithoutExpiredExistingEntry: (TimedExpiryCachePolicy new timeout: 0).

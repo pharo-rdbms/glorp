@@ -1,0 +1,3 @@
+sequences
+databaseSequenceClass
+	self subclassResponsibility.

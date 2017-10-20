@@ -1,0 +1,4 @@
+api
+getValue
+
+	self subclassesMustImplement

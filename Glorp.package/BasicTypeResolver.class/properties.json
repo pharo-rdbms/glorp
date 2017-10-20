@@ -1,0 +1,16 @@
+{
+	"commentStamp" : "guest 10/21/2015 03:17",
+	"super" : "TypeResolver",
+	"category" : "Glorp-Mappings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"concreteMembers",
+		"subclassDescriptorsBuilt",
+		"rootDescriptor",
+		"rootClass"
+	],
+	"name" : "BasicTypeResolver",
+	"type" : "normal"
+}

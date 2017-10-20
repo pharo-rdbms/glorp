@@ -1,0 +1,22 @@
+{
+	"commentStamp" : "guest 10/21/2015 03:17",
+	"super" : "Object",
+	"category" : "Glorp-Platforms",
+	"classinstvars" : [
+		"converterRepository"
+	],
+	"pools" : [ ],
+	"classvars" : [
+		"UseBindingIfSupported"
+	],
+	"instvars" : [
+		"types",
+		"converters",
+		"useBinding",
+		"reservedWords",
+		"functions",
+		"characterEncoding"
+	],
+	"name" : "DatabasePlatform",
+	"type" : "normal"
+}

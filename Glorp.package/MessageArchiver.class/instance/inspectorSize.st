@@ -1,0 +1,3 @@
+debugging
+inspectorSize
+  ^2

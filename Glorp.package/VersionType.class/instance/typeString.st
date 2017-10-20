@@ -1,0 +1,3 @@
+SQL
+typeString
+	^underlyingType typeString.

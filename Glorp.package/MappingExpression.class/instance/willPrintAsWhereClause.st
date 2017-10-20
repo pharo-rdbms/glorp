@@ -1,0 +1,3 @@
+testing
+willPrintAsWhereClause
+	^self hasField.

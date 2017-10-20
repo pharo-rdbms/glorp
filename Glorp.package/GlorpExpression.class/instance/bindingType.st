@@ -1,0 +1,3 @@
+preparing
+bindingType
+	^self type.

@@ -1,0 +1,4 @@
+tests
+testAliasWithEmbeddedMapping
+
+	self unfinished.

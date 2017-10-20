@@ -1,0 +1,4 @@
+initialize-release
+useModificationTracker
+
+	^self

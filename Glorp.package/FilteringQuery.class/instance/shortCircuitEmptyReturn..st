@@ -1,0 +1,3 @@
+testing
+shortCircuitEmptyReturn: parameters
+	^false

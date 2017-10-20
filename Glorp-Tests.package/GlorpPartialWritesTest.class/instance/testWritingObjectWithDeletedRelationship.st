@@ -1,0 +1,3 @@
+tests
+testWritingObjectWithDeletedRelationship
+self todo

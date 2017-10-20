@@ -1,0 +1,3 @@
+accessing
+shortCircuitEmptyReturn: parameters
+	^false

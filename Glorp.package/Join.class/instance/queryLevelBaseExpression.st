@@ -1,0 +1,3 @@
+accessing
+queryLevelBaseExpression
+	^self ultimateBaseExpression.

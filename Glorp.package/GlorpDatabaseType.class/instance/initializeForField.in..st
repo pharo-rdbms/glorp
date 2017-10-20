@@ -1,0 +1,2 @@
+initialize
+initializeForField: aDatabaseField in: aDescriptorSystem

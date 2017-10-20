@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "TorstenBergmann 1/13/2015 20:21",
+	"super" : "MySQLPlatform",
+	"category" : "Glorp-Platforms",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MySQLODBCPlatform",
+	"type" : "normal"
+}

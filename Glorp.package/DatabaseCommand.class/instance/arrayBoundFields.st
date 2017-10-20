@@ -1,0 +1,3 @@
+accessing
+arrayBoundFields
+	self subclassResponsibility

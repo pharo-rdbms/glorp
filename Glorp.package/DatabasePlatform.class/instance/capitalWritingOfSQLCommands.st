@@ -1,0 +1,5 @@
+constants
+capitalWritingOfSQLCommands
+	"^<Boolean>"
+
+	^true

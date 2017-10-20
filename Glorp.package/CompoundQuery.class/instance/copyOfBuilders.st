@@ -1,0 +1,3 @@
+preparing
+copyOfBuilders 
+	^primaryQuery copyOfBuilders

@@ -1,0 +1,3 @@
+accessing
+collectBlock
+	^collectBlock

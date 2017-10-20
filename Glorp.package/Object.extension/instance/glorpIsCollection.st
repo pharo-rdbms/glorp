@@ -1,0 +1,4 @@
+*Glorp
+glorpIsCollection
+
+	^false.

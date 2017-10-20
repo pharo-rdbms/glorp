@@ -1,0 +1,3 @@
+tests
+adjustForMaximumSize: anObject
+	^anObject.

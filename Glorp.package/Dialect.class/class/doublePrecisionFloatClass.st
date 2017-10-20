@@ -1,0 +1,4 @@
+numbers
+doublePrecisionFloatClass
+
+	^ Float

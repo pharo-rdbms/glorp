@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "TorstenBergmann 1/13/2015 20:23",
+	"super" : "GlorpDatabaseType",
+	"category" : "Glorp-Types",
+	"classinstvars" : [
+		"count"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"representationType"
+	],
+	"name" : "GlorpInMemorySequenceDatabaseType",
+	"type" : "normal"
+}

@@ -1,0 +1,4 @@
+SQL
+isOraclePlatform
+
+	^true

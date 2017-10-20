@@ -1,0 +1,18 @@
+{
+	"commentStamp" : "guest 10/21/2015 03:17",
+	"super" : "Object",
+	"category" : "Glorp-Exceptions",
+	"classinstvars" : [
+		"dialectName",
+		"timestampClass",
+		"lookedUpNames",
+		"isNamespaceAware",
+		"lastSystemTime",
+		"lastServerTime"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "Dialect",
+	"type" : "normal"
+}

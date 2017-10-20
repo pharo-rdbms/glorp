@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "guest 10/21/2015 03:17",
+	"super" : "Object",
+	"category" : "Glorp-UnitOfWork",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"contents",
+		"hasValue",
+		"containedBy"
+	],
+	"name" : "FieldValueWrapper",
+	"type" : "normal"
+}

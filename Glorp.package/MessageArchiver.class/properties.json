@@ -1,0 +1,16 @@
+{
+	"commentStamp" : "guest 10/21/2015 03:17",
+	"super" : "ProtoObject",
+	"category" : "Glorp-Queries",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"mySelector",
+		"myArguments",
+		"myReceiver",
+		"query"
+	],
+	"name" : "MessageArchiver",
+	"type" : "normal"
+}

@@ -1,0 +1,1 @@
+Test string extensions in Glorp.

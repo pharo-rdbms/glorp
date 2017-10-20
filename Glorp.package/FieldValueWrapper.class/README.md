@@ -1,0 +1,7 @@
+When we are creating our rowmap, we need to be able to unify values. That is, we express the constraint that field A in table T1 must be equal to field B in table T2. And we have to be able to do this whether or not we have yet assigned a value to either of these fields, and whether or not other equality constraints have already been imposed on one or the other of these fields. We do this by holding the values in a wrapper. When we unify them, we replace one wrapper with the other, so that both rows now refer to the same value. In order to efficiently find where things are contained, we hold a collection of the containing rows.
+
+Instance Variables:
+	containedBy	<(Association key: DatabaseField value: (IdentitySet of: DatabaseRow)) | (IdentityDictionary of: Same)>	The rows that contain this wrapper. Using a trick similar to #dependents, we optimize the containedByCollection to be an association if we are only contained in one row (the most common case). Otherwise we have a dictionary. The containing rows are indexed by field, because when we're updating the row to replace the wrapper, we need to know which field to replace. Also, a single row could conceivably contain the same wrapper in two different fields, and both need to be updated.
+	contents	<Object>	The value we contain
+	hasValue	<Boolean>	Has our value been set or not. We can't just test for nil in contents, because nil is a valid value.
+

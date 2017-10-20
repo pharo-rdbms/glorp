@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "guest 10/21/2015 03:17",
+	"super" : "ToManyMapping",
+	"category" : "Glorp-Mappings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"resultField"
+	],
+	"name" : "DirectToManyMapping",
+	"type" : "normal"
+}

@@ -1,0 +1,3 @@
+testing
+returnTimedProxies
+	^proxyType == TimedProxy

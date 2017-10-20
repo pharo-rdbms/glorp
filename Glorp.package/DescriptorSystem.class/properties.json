@@ -1,0 +1,25 @@
+{
+	"commentStamp" : "guest 10/21/2015 03:17",
+	"super" : "Object",
+	"category" : "Glorp-Mappings",
+	"classinstvars" : [
+		"validateDescriptorSystem"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"session",
+		"platform",
+		"descriptors",
+		"tables",
+		"sequences",
+		"typeResolvers",
+		"cachePolicy",
+		"allClasses",
+		"useDirectAccessForMapping",
+		"classModels",
+		"useJoinsForAnySatisfy"
+	],
+	"name" : "DescriptorSystem",
+	"type" : "normal"
+}

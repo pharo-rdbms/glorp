@@ -1,0 +1,1 @@
+This implements postgresql sequences using nextVal. The mechanism is similar to Oracle sequences, but we don't have to give it a table to select against when all we want is a bunch of numbers, so the implementation is simpler.

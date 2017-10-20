@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "guest 10/21/2015 03:16",
+	"super" : "GlorpSessionBasedTest",
+	"category" : "Glorp-Tests-Database",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GlorpQueryUnionTest",
+	"type" : "normal"
+}

@@ -1,0 +1,3 @@
+constants
+beExample
+	engine := 'EXAMPLE'.

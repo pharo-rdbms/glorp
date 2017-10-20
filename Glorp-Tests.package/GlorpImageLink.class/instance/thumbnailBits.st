@@ -1,0 +1,3 @@
+accessing
+thumbnailBits
+	^thumbnailBits

@@ -1,0 +1,3 @@
+accessing
+classesRequiringIndependentQueriesFor: aClass
+	self subclassResponsibility

@@ -1,0 +1,3 @@
+constants
+supportsMillisecondsInTimes
+	self subclassResponsibility.

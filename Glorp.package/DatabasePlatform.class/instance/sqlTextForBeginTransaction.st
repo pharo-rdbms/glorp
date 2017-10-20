@@ -1,0 +1,5 @@
+constants
+sqlTextForBeginTransaction
+	"comment"
+
+	^'BEGIN'

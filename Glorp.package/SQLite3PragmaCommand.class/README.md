@@ -1,0 +1,1 @@
+Pragma command for SQL3

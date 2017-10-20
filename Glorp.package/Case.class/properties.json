@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "guest 10/21/2015 03:17",
+	"super" : "PrefixFunction",
+	"category" : "Glorp-Expressions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"argumentTypes"
+	],
+	"name" : "Case",
+	"type" : "normal"
+}

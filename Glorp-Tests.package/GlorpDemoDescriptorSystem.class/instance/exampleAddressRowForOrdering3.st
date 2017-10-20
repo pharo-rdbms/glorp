@@ -1,0 +1,9 @@
+examples
+exampleAddressRowForOrdering3
+	| addressTable row |
+	addressTable := self  tableNamed: 'GR_ADDRESS'.
+	row := DatabaseRow newForTable: addressTable.
+	row at: (addressTable fieldNamed: 'ID') put: 3.
+	row at: (addressTable fieldNamed: 'STREET') put: 'Gamma'.
+	row at: (addressTable fieldNamed: 'HOUSE_NUM') put: '100'.
+	^row

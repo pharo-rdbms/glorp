@@ -1,0 +1,3 @@
+testing
+mappedFields
+	self subclassResponsibility

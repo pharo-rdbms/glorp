@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "guest 10/21/2015 03:17",
+	"super" : "Object",
+	"category" : "Glorp-Exceptions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GlorpHelper",
+	"type" : "normal"
+}

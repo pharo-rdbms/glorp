@@ -1,0 +1,3 @@
+accessing
+connection: aPlatformDatabaseConnection
+	connection := aPlatformDatabaseConnection

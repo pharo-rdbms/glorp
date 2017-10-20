@@ -1,0 +1,23 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Glorp-Tests-Models",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"id",
+		"name",
+		"transactions",
+		"accounts",
+		"accountsSortedById",
+		"accountsSortedByIdDescending",
+		"eventsReceived",
+		"seenPostFetch",
+		"seenPreWrite",
+		"seenPostWrite",
+		"seenExpiry"
+	],
+	"name" : "GlorpCustomer",
+	"type" : "normal"
+}

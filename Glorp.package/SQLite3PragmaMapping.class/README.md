@@ -1,0 +1,1 @@
+Pragma mapping for SQLite3

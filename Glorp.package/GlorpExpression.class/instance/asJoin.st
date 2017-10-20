@@ -1,0 +1,3 @@
+converting
+asJoin
+	self subclassResponsibility.

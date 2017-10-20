@@ -1,0 +1,4 @@
+accessing
+requiresDistinct
+
+	^expression requiresDistinct

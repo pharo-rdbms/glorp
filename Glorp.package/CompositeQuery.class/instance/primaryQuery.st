@@ -1,0 +1,3 @@
+accessing
+primaryQuery
+	^queries first

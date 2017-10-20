@@ -1,0 +1,4 @@
+tests
+testReadEmbeddedOneToOne
+
+	self helperForTestReadEmbeddedOneToOne.

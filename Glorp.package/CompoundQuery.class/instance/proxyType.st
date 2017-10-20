@@ -1,0 +1,3 @@
+accessing
+proxyType
+	^primaryQuery proxyType

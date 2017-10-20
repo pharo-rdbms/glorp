@@ -1,0 +1,3 @@
+selecting fields
+fieldsForSelectStatement
+	^#()

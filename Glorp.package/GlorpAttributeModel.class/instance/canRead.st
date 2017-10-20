@@ -1,0 +1,3 @@
+accessing
+canRead
+	^canRead

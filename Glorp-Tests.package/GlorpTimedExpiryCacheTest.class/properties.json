@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "GlorpCacheTest",
+	"category" : "Glorp-Tests-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GlorpTimedExpiryCacheTest",
+	"type" : "normal"
+}

@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "",
+	"super" : "GlorpTestCase",
+	"category" : "Glorp-Tests-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"session",
+		"allEmployees"
+	],
+	"name" : "GlorpFilteredInheritanceTest",
+	"type" : "normal"
+}

@@ -1,0 +1,3 @@
+types
+time
+	^self timestamp.

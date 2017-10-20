@@ -1,0 +1,3 @@
+api
+beOuterJoin
+	outerJoin := true.

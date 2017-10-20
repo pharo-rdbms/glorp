@@ -1,0 +1,1 @@
+The GlorpTravelFolder and GlorpTravelFile test classes are not (at time of creation) connected to GlorpTravelAgent and the other long-established Glorp test classes;  they have a separate descriptor system, etc..  Their names were chosen just to make it obvious that they are also test objects.

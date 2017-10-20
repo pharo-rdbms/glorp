@@ -1,0 +1,3 @@
+transactions
+beginTransaction
+	^self subclassResponsibility.

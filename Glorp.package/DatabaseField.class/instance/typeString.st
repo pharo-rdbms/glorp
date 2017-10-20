@@ -1,0 +1,4 @@
+database
+typeString
+
+	^type typeString

@@ -1,0 +1,3 @@
+accessing
+shouldUseSingleQuery
+	^self descriptor typeResolver shouldUseSingleQuery

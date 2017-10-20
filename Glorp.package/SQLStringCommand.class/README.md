@@ -1,0 +1,1 @@
+This represents a command that executes arbitrary SQL and is not a select. For selects use SQLStringSelectCommand.

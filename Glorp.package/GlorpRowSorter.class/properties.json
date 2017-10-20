@@ -1,0 +1,18 @@
+{
+	"commentStamp" : "guest 10/21/2015 03:17",
+	"super" : "Object",
+	"category" : "Glorp-UnitOfWork",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"childSelector",
+		"queue",
+		"sorted",
+		"current",
+		"items",
+		"childCache"
+	],
+	"name" : "GlorpRowSorter",
+	"type" : "normal"
+}

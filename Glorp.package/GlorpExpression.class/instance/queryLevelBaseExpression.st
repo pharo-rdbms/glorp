@@ -1,0 +1,3 @@
+navigating
+queryLevelBaseExpression
+	^self ultimateBaseExpression

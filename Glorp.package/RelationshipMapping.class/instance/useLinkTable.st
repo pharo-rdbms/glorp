@@ -1,0 +1,3 @@
+accessing
+useLinkTable
+	usesLinkTable := true.

@@ -1,0 +1,3 @@
+accessing
+serialNumber
+	^serialNumber

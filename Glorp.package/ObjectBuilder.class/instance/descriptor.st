@@ -1,0 +1,4 @@
+accessing
+descriptor
+	
+	^expression descriptor

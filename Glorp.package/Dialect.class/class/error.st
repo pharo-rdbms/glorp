@@ -1,0 +1,4 @@
+*Glorp
+error
+
+	^Error

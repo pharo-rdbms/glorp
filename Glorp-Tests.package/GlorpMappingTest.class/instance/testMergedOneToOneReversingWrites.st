@@ -1,0 +1,3 @@
+tests
+testMergedOneToOneReversingWrites
+	self helperForMergedOneToOneReversingWriteOrder: true

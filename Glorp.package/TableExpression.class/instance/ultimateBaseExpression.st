@@ -1,0 +1,3 @@
+accessing
+ultimateBaseExpression
+	^base ultimateBaseExpression.

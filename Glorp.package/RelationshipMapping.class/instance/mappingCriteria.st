@@ -1,0 +1,3 @@
+accessing
+mappingCriteria
+	^self join.

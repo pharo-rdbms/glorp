@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "GlorpTestDescriptorSystem",
+	"category" : "Glorp-Tests-CollectionTypeModels",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GlorpCollectionTypesDescriptorSystem",
+	"type" : "normal"
+}

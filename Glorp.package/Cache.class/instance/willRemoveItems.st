@@ -1,0 +1,3 @@
+accessing
+willRemoveItems
+	^policy willRemoveItems.

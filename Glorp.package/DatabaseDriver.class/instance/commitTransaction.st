@@ -1,0 +1,3 @@
+transactions
+commitTransaction
+	^self subclassResponsibility.

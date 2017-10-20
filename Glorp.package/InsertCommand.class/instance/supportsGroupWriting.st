@@ -1,0 +1,3 @@
+testing
+supportsGroupWriting
+	^true.

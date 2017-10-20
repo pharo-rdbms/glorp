@@ -1,0 +1,3 @@
+selecting fields
+fieldsFromMyPerspective
+	self subclassResponsibility.

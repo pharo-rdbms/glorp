@@ -1,0 +1,3 @@
+printing
+hasOldVersion
+	^oldVersion notNil

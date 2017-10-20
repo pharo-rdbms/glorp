@@ -1,0 +1,3 @@
+tests
+testWritingNewObject
+self todo

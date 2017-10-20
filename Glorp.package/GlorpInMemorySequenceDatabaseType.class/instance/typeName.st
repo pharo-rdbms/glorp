@@ -1,0 +1,4 @@
+SQL
+typeName
+
+	^representationType typeName.

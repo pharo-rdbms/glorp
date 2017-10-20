@@ -1,0 +1,1 @@
+This is a function subclass specifically for substring functions. It needs its own separate subclass because it has to be written out differently for different databases, particularly if applied to LOB types. 

@@ -1,0 +1,3 @@
+accessing
+sqlString
+	^stream contents.

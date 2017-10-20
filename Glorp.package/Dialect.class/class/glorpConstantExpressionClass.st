@@ -1,0 +1,3 @@
+forward references
+glorpConstantExpressionClass
+	^ConstantExpression

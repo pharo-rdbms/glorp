@@ -1,0 +1,5 @@
+constants
+sqlTextForNULLAttributeConstraint
+	"^<String>"
+
+	^'NULL'

@@ -1,0 +1,3 @@
+accessing
+modificationTracker: aGlorpModificationTrackingPolicy
+	modificationTracker := aGlorpModificationTrackingPolicy

@@ -1,0 +1,3 @@
+constants
+initializeTypes
+	types := nil.

@@ -1,0 +1,3 @@
+constants
+supportsAuthentication
+	^true

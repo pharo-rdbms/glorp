@@ -1,0 +1,1 @@
+A command to delete our set of rows.

@@ -1,0 +1,4 @@
+transformations
+hasTransformation
+
+	^false.

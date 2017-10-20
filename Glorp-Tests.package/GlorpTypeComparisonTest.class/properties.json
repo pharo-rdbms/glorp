@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "GlorpTestCase",
+	"category" : "Glorp-Tests-DatabaseTypes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"platform"
+	],
+	"name" : "GlorpTypeComparisonTest",
+	"type" : "normal"
+}

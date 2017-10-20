@@ -1,0 +1,3 @@
+constants
+beArchive
+	engine := 'ARCHIVE'.

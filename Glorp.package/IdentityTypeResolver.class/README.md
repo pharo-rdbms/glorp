@@ -1,0 +1,1 @@
+This is a trivial type resolver (and the default one) that just uses a single class, with no inheritance.

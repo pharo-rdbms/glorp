@@ -1,0 +1,17 @@
+{
+	"commentStamp" : "",
+	"super" : "TestCase",
+	"category" : "Glorp-Tests-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"unsorted",
+		"sorted",
+		"groupA",
+		"groupB",
+		"groupC"
+	],
+	"name" : "GlorpBreadthFirstTopologicalSortTest",
+	"type" : "normal"
+}

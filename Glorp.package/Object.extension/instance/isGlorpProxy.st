@@ -1,0 +1,3 @@
+*Glorp
+isGlorpProxy
+	^false.

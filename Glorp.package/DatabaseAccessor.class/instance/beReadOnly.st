@@ -1,0 +1,3 @@
+permissions
+beReadOnly
+	self denyWrites.

@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "GlorpReadingDifferentCollectionsThroughMappingsTest",
+	"category" : "Glorp-Tests-Database",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GlorpReadingDifferentCollectionsThroughMappingsWithClassModelsTest",
+	"type" : "normal"
+}

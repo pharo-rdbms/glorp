@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "guest 10/21/2015 03:17",
+	"super" : "Object",
+	"category" : "Glorp-Types",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"platform",
+		"selector",
+		"typeString"
+	],
+	"name" : "GlorpDatabaseType",
+	"type" : "normal"
+}

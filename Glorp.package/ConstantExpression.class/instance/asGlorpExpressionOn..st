@@ -1,0 +1,3 @@
+converting
+asGlorpExpressionOn: aBaseExpression
+	^self.

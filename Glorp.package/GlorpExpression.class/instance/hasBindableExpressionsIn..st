@@ -1,0 +1,3 @@
+preparing
+hasBindableExpressionsIn: aCommand
+	^false.

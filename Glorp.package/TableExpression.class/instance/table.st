@@ -1,0 +1,4 @@
+accessing
+table
+
+	^table.

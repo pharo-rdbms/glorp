@@ -1,0 +1,3 @@
+sequencing
+nextReservedNumber
+	^reservedNumbers removeFirst.

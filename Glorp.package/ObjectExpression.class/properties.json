@@ -1,0 +1,16 @@
+{
+	"commentStamp" : "guest 10/21/2015 03:17",
+	"super" : "GlorpExpression",
+	"category" : "Glorp-Expressions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"mappingExpressions",
+		"requiresDistinct",
+		"tableAliases",
+		"fieldAliases"
+	],
+	"name" : "ObjectExpression",
+	"type" : "normal"
+}

@@ -1,0 +1,23 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Glorp-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"encodingStrategy",
+		"database",
+		"username",
+		"password",
+		"connectString",
+		"name",
+		"schema",
+		"databaseName",
+		"host",
+		"port",
+		"secure"
+	],
+	"name" : "Login",
+	"type" : "normal"
+}

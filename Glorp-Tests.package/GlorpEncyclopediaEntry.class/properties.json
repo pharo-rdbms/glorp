@@ -1,0 +1,16 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Glorp-Tests-Models",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"id",
+		"text",
+		"title",
+		"mediaType"
+	],
+	"name" : "GlorpEncyclopediaEntry",
+	"type" : "normal"
+}

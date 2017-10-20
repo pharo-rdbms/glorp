@@ -1,0 +1,3 @@
+constants
+beInnoDB
+	engine := 'InnoDB'.

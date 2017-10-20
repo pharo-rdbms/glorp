@@ -1,0 +1,18 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Glorp-Tests-Models",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"id",
+		"description",
+		"copiesInStock",
+		"version",
+		"title",
+		"author"
+	],
+	"name" : "GlorpBook",
+	"type" : "normal"
+}

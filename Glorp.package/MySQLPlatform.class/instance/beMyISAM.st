@@ -1,0 +1,3 @@
+constants
+beMyISAM
+	engine := 'MyISAM'.

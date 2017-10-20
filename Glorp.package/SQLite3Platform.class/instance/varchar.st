@@ -1,0 +1,3 @@
+types
+varchar
+	^self text.

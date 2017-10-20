@@ -1,0 +1,3 @@
+setUp
+defaultDatabaseType
+	self subclassResponsibility.

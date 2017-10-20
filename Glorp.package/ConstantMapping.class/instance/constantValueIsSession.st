@@ -1,0 +1,4 @@
+accessing
+constantValueIsSession
+
+	valueIsSession := true

@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "guest 10/21/2015 03:16",
+	"super" : "Object",
+	"category" : "Glorp-Tests-Models",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"id",
+		"name"
+	],
+	"name" : "GlorpWorkingStiff",
+	"type" : "normal"
+}

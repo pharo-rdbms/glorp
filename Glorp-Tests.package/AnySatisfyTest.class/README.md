@@ -1,0 +1,1 @@
+This test verifies that nested #anySatisfy: blocks do not throw an exception.

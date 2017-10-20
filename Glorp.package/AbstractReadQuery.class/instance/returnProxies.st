@@ -1,0 +1,3 @@
+accessing
+returnProxies
+	^proxyType notNil

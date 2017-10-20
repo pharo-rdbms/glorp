@@ -1,0 +1,20 @@
+{
+	"commentStamp" : "guest 10/21/2015 03:17",
+	"super" : "Object",
+	"category" : "Glorp-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"system",
+		"currentUnitOfWork",
+		"cache",
+		"accessor",
+		"applicationData",
+		"reaper",
+		"errorAction",
+		"modificationTracker"
+	],
+	"name" : "GlorpSession",
+	"type" : "normal"
+}

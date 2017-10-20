@@ -1,0 +1,3 @@
+testing
+hasUniqueConstraints
+	^uniqueConstraints isEmpty not

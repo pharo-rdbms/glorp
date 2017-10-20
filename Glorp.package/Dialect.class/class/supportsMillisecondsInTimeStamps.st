@@ -1,0 +1,4 @@
+dates
+supportsMillisecondsInTimeStamps
+
+	^true

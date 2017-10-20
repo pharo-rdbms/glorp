@@ -1,0 +1,3 @@
+collections
+needsCollectionMementoFor: aCollection
+	^true

@@ -1,0 +1,3 @@
+api/transactions
+isInTransaction
+	^accessor isInTransaction

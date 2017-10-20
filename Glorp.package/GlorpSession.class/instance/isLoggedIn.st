@@ -1,0 +1,3 @@
+login
+isLoggedIn
+	^accessor isLoggedIn

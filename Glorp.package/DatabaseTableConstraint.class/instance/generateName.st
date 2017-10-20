@@ -1,0 +1,4 @@
+accessing
+generateName
+
+	^self subclassResponsibility

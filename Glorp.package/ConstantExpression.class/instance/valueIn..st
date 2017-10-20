@@ -1,0 +1,3 @@
+accessing
+valueIn: aDictionary
+	^value

@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "DatabasePlatform",
+	"category" : "Glorp-Platforms",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"engine"
+	],
+	"name" : "MySQLPlatform",
+	"type" : "normal"
+}

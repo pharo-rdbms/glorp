@@ -1,0 +1,3 @@
+executing
+basicExecuteSQLString: aString
+	^self subclassResponsibility.

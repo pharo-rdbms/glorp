@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "",
+	"super" : "TestCase",
+	"category" : "Glorp-Tests-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"inner",
+		"outer"
+	],
+	"name" : "GlorpTransformedFieldValueWrapperTest",
+	"type" : "normal"
+}

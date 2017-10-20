@@ -1,0 +1,1 @@
+This represents a function that takes no arguments and is complete in itself. The obvious example is COUNT(*). Making a special '*' pseudo-field seems even more of a hack than just hard-coding it into a function like this. It's possible that things like nextval(sequence) might be able to fall in this category too.

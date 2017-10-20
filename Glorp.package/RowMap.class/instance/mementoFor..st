@@ -1,0 +1,3 @@
+api
+mementoFor: anObject
+	^anObject

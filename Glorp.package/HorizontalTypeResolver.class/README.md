@@ -1,0 +1,1 @@
+This implements inheritance where each concrete class is represented in its own table. Each table will duplicate the fields that are in common between the concrete classes.

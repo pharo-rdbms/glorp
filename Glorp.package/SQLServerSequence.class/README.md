@@ -1,0 +1,1 @@
+This implements SQL Server sequences, which aren't really sequences at all, but identity columns. That means we can't do more than one at a time, and we have to do an extra select to get the value back.

@@ -1,0 +1,3 @@
+testing
+isVariableWidth
+	self subclassResponsibility.

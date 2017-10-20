@@ -1,0 +1,3 @@
+accessing
+copiesInStock
+	^copiesInStock

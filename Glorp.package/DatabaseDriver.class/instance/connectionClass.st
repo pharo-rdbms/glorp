@@ -1,0 +1,3 @@
+accessing
+connectionClass
+	^self subclassResponsibility.

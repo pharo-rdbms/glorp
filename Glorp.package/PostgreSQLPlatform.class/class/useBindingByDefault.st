@@ -1,0 +1,3 @@
+testing
+useBindingByDefault
+	^false

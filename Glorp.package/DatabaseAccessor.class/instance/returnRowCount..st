@@ -1,0 +1,3 @@
+accessing
+returnRowCount: aBoolean
+	^self.

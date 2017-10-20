@@ -1,0 +1,3 @@
+accessing
+isTrue
+	^value

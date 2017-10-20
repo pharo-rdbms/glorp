@@ -1,0 +1,1 @@
+This is a type resolver for inheritance where all of the classes are represented in a single table, with some sort of identifying field for which subclass they are. The table would have the union of all possible fields for all classes. It's called filtering, because for any particular class, we filter out those instances from all those represented in the table.

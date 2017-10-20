@@ -1,0 +1,4 @@
+numbers
+smallDoublePrecisionFloatClass
+
+	^self doublePrecisionFloatClass

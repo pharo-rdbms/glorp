@@ -1,0 +1,3 @@
+accessing
+describedClass
+	^classModel describedClass

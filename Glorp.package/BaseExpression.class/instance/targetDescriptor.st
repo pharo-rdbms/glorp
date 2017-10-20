@@ -1,0 +1,3 @@
+accessing
+targetDescriptor
+	self halt

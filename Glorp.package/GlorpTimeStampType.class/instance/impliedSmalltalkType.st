@@ -1,0 +1,3 @@
+converting
+impliedSmalltalkType
+	^Dialect timestampClass.

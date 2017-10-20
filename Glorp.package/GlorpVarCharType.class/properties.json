@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "TorstenBergmann 1/13/2015 20:22",
+	"super" : "GlorpAbstractStringType",
+	"category" : "Glorp-Types",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GlorpVarCharType",
+	"type" : "normal"
+}

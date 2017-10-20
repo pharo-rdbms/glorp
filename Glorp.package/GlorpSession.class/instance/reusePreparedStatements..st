@@ -1,0 +1,3 @@
+accessing
+reusePreparedStatements: aBoolean
+	accessor reusePreparedStatements: aBoolean

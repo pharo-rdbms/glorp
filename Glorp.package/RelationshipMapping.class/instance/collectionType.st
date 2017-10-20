@@ -1,0 +1,3 @@
+accessing
+collectionType
+	^nil.

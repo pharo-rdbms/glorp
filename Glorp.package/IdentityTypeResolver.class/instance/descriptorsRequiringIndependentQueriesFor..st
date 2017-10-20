@@ -1,0 +1,3 @@
+accessing
+descriptorsRequiringIndependentQueriesFor: aClass
+	^members

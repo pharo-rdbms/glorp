@@ -1,0 +1,1 @@
+This is the default type mapping for classes that aren't using inheritance. It implements all of the protocol as no-ops.

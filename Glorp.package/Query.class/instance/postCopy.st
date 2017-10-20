@@ -1,0 +1,4 @@
+copying
+postCopy
+
+	prepared := false

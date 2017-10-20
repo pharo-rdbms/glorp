@@ -1,0 +1,3 @@
+constants
+beBDB
+	engine := 'BDB'.

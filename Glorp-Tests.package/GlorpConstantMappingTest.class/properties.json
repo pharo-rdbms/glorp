@@ -1,0 +1,16 @@
+{
+	"commentStamp" : "",
+	"super" : "GlorpTestCase",
+	"category" : "Glorp-Tests-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"mappingToClass",
+		"mappingToRow",
+		"mappingToSession",
+		"slot"
+	],
+	"name" : "GlorpConstantMappingTest",
+	"type" : "normal"
+}

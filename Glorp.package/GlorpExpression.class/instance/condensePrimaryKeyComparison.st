@@ -1,0 +1,3 @@
+preparing
+condensePrimaryKeyComparison
+	^self.

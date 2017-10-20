@@ -1,0 +1,3 @@
+accessing
+targetTableJoin
+	^targetTableJoin

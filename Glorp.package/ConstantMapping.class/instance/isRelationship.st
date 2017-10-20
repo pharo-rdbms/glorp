@@ -1,0 +1,3 @@
+testing
+isRelationship
+	^false

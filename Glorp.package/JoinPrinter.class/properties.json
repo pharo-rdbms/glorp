@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "guest 10/21/2015 03:17",
+	"super" : "Object",
+	"category" : "Glorp-Queries",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"joinsToProcess",
+		"availableTables",
+		"query"
+	],
+	"name" : "JoinPrinter",
+	"type" : "normal"
+}

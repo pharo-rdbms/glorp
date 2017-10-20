@@ -1,0 +1,3 @@
+*Glorp
+mayResume
+	^true.

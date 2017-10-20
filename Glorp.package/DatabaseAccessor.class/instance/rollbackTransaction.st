@@ -1,0 +1,3 @@
+transactions
+rollbackTransaction
+	^self subclassResponsibility.

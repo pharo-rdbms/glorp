@@ -1,0 +1,3 @@
+testing
+canBeTypeMappingParent
+	^true

@@ -1,0 +1,1 @@
+A generator that puts Timestamp now into fields when it is invoked.

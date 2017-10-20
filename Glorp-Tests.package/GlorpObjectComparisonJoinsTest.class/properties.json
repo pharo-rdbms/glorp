@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "",
+	"super" : "GlorpSessionBasedTest",
+	"category" : "Glorp-Tests-Database",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"itinerary1",
+		"itinerary2"
+	],
+	"name" : "GlorpObjectComparisonJoinsTest",
+	"type" : "normal"
+}

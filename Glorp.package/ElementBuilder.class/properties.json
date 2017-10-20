@@ -1,0 +1,21 @@
+{
+	"commentStamp" : "guest 10/21/2015 03:17",
+	"super" : "Object",
+	"category" : "Glorp-Queries",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"instance",
+		"requiresPopulating",
+		"key",
+		"expression",
+		"cursor",
+		"fieldTranslations",
+		"isExpired",
+		"row",
+		"query"
+	],
+	"name" : "ElementBuilder",
+	"type" : "normal"
+}

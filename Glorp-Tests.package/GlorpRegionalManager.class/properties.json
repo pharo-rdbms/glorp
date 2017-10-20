@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "GlorpManager",
+	"category" : "Glorp-Tests-Models",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"region"
+	],
+	"name" : "GlorpRegionalManager",
+	"type" : "normal"
+}

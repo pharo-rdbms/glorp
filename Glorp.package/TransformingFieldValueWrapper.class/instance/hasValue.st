@@ -1,0 +1,4 @@
+accessing
+hasValue
+
+	^innerWrapper hasValue

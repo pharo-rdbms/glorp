@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "GlorpInventoryItem",
+	"category" : "Glorp-Tests-Models",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"age"
+	],
+	"name" : "GlorpPerishableItem",
+	"type" : "normal"
+}

@@ -1,0 +1,3 @@
+*Glorp
+glorpConstantExpressionClass
+	^self dialect glorpConstantExpressionClass

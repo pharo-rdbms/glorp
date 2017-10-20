@@ -1,0 +1,3 @@
+preparing
+condenseBooleanEquality
+	^self.

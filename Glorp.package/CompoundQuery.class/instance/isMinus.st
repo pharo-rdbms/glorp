@@ -1,0 +1,3 @@
+testing
+isMinus
+	^operation = 'EXCEPT'

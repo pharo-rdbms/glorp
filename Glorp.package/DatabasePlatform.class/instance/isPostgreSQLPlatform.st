@@ -1,0 +1,4 @@
+testing
+isPostgreSQLPlatform
+
+	^false

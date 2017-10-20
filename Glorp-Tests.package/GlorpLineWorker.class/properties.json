@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "GlorpEmployee",
+	"category" : "Glorp-Tests-Models",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"productionLine"
+	],
+	"name" : "GlorpLineWorker",
+	"type" : "normal"
+}

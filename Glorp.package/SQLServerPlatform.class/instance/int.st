@@ -1,0 +1,3 @@
+types
+int
+	^self integer.

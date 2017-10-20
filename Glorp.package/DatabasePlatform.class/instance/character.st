@@ -1,0 +1,3 @@
+types
+character
+	^self char

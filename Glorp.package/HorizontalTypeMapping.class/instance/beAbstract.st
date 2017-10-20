@@ -1,0 +1,3 @@
+accessing
+beAbstract
+	isAbstract := true

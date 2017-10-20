@@ -1,0 +1,4 @@
+testing
+isSQLServerPlatform
+
+	^true

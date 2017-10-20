@@ -1,0 +1,3 @@
+*Glorp-Core
+glorpIsBlock
+	^false.

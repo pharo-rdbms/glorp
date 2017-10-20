@@ -1,0 +1,3 @@
+constants
+beCSV
+	engine := 'CSV'.

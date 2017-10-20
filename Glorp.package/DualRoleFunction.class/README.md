@@ -1,0 +1,1 @@
+This is a function that prints in different ways in a field list than it does in a where clause, typically because use of the where clause version isn't supported in field lists.

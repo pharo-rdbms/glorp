@@ -1,0 +1,1 @@
+This is a definition for MySQL databases. It's not done yet, just here as a placeholder.

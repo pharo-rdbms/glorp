@@ -1,0 +1,19 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Glorp-Tests-Models",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"id",
+		"name",
+		"titles",
+		"titlesWithNumberInStock",
+		"titlesWithNumberInStockLink",
+		"employees",
+		"differentBunchOfEmployeesById"
+	],
+	"name" : "GlorpPublisher",
+	"type" : "normal"
+}

@@ -1,0 +1,3 @@
+accessing
+defaultMessageText
+	^'Illegal Command'

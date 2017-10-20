@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "Station",
+	"category" : "Glorp-Tests-Models",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FeederStation",
+	"type" : "normal"
+}

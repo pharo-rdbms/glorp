@@ -1,0 +1,4 @@
+accessing
+allControlledTables
+
+	^self allTables.

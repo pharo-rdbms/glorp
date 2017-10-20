@@ -1,0 +1,3 @@
+types
+raw
+	^self blob.

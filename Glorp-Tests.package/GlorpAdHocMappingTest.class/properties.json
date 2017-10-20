@@ -1,0 +1,18 @@
+{
+	"commentStamp" : "",
+	"super" : "GlorpDatabaseBasedTest",
+	"category" : "Glorp-Tests-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"mapping",
+		"person",
+		"descriptor",
+		"table",
+		"money",
+		"rowMap"
+	],
+	"name" : "GlorpAdHocMappingTest",
+	"type" : "normal"
+}

@@ -1,0 +1,4 @@
+accessing
+lockKeyFields
+
+	^table lockKeyFields

@@ -1,0 +1,17 @@
+{
+	"commentStamp" : "",
+	"super" : "GlorpTestCase",
+	"category" : "Glorp-Tests-Models",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"transaction",
+		"rowMap",
+		"collection",
+		"newCollection",
+		"copy"
+	],
+	"name" : "GlorpRowMapForMementosCollectionTest",
+	"type" : "normal"
+}

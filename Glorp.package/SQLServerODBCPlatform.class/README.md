@@ -1,0 +1,1 @@
+Platform for ODBC access on SQLServer

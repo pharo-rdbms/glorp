@@ -1,0 +1,3 @@
+constants
+beBlackHole
+	engine := 'BLACKHOLE'.

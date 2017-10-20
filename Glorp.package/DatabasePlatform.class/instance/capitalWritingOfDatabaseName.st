@@ -1,0 +1,5 @@
+constants
+capitalWritingOfDatabaseName
+	"^<Boolean>"
+
+	^true

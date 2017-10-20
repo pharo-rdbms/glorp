@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "GlorpTestCase",
+	"category" : "Glorp-Tests-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"base"
+	],
+	"name" : "GlorpExpressionBasicPropertiesTest",
+	"type" : "normal"
+}

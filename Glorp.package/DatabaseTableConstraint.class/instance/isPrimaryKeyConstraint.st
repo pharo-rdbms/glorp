@@ -1,0 +1,4 @@
+testing
+isPrimaryKeyConstraint
+
+	^false

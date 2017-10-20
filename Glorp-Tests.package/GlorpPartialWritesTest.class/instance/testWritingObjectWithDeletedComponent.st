@@ -1,0 +1,3 @@
+tests
+testWritingObjectWithDeletedComponent
+self todo

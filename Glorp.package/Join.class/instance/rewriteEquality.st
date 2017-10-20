@@ -1,0 +1,3 @@
+preparing
+rewriteEquality
+	^self.

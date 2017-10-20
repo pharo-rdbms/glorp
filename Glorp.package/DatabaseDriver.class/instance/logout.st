@@ -1,0 +1,3 @@
+login
+logout
+^self subclassResponsibility.

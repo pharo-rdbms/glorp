@@ -1,0 +1,3 @@
+setup
+descriptorClass
+	^GlorpCollectionTypesWithClassModelsDescriptorSystem.

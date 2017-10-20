@@ -1,0 +1,3 @@
+validation
+isCollectionAttribute
+	^collectionType notNil

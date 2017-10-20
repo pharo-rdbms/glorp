@@ -1,0 +1,1 @@
+This is a platform for the Microsoft SQL Server database.

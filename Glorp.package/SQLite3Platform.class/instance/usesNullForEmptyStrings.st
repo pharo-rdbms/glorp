@@ -1,0 +1,3 @@
+constants
+usesNullForEmptyStrings
+	^ true

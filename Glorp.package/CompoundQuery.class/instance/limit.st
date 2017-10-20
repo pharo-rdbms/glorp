@@ -1,0 +1,3 @@
+accessing
+limit
+	^primaryQuery limit

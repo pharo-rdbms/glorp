@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "TorstenBergmann 1/13/2015 20:21",
+	"super" : "SQLServerPlatform",
+	"category" : "Glorp-Platforms",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SQLServerODBCPlatform",
+	"type" : "normal"
+}

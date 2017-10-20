@@ -1,0 +1,19 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Glorp-Tests-CollectionTypeModels",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"id",
+		"array",
+		"orderedCollection",
+		"set",
+		"bag",
+		"sortedCollection",
+		"name"
+	],
+	"name" : "GlorpThingWithLotsOfDifferentCollections",
+	"type" : "normal"
+}

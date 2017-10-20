@@ -1,0 +1,4 @@
+accessing
+defaultTracing
+
+	^Tracing new

@@ -1,0 +1,3 @@
+testing
+isInstantiated
+	^realObjects notNil.

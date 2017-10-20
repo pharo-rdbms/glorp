@@ -1,0 +1,3 @@
+accessing
+allTables
+	^query tablesToPrint

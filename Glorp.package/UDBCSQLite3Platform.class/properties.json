@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "PierceNg 3/31/2015 21:02",
+	"super" : "SQLite3Platform",
+	"category" : "Glorp-Platforms",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "UDBCSQLite3Platform",
+	"type" : "normal"
+}

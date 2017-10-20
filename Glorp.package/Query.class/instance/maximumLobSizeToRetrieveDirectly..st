@@ -1,0 +1,3 @@
+accessing
+maximumLobSizeToRetrieveDirectly: anInteger
+	maximumLobSizeToRetrieveDirectly := anInteger

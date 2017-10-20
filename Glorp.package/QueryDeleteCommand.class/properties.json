@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "guest 10/21/2015 03:17",
+	"super" : "SelectCommand",
+	"category" : "Glorp-Database",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"query",
+		"rowCount"
+	],
+	"name" : "QueryDeleteCommand",
+	"type" : "normal"
+}

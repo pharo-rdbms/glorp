@@ -1,0 +1,4 @@
+mapping
+referencedIndependentObjectsFrom: anObject
+
+	self subclassResponsibility

@@ -1,0 +1,3 @@
+exdi specific
+exdiTypeForDates
+	^#Timestamp.

@@ -1,0 +1,3 @@
+accessing
+accessor
+	^GlorpMockAccessor new.

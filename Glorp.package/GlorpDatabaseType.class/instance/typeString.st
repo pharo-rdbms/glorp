@@ -1,0 +1,4 @@
+SQL
+typeString
+
+	^typeString.

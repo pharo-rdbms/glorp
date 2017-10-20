@@ -1,0 +1,3 @@
+accessing
+inStorePurchases
+	^inStorePurchases

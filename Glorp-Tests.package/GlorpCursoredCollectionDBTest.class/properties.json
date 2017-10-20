@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "GlorpSessionBasedTest",
+	"category" : "Glorp-Tests-Database",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GlorpCursoredCollectionDBTest",
+	"type" : "normal"
+}

@@ -1,0 +1,1 @@
+This represents a one-to-one mapping in which the referenced object is stored as part of the same table as the containing object.

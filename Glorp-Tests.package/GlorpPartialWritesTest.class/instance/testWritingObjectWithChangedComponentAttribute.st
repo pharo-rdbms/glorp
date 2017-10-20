@@ -1,0 +1,3 @@
+tests
+testWritingObjectWithChangedComponentAttribute
+self todo

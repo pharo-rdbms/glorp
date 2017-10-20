@@ -1,0 +1,3 @@
+internal
+twoArgumentSpecialSelectors
+	^#(#aggregate:as:)

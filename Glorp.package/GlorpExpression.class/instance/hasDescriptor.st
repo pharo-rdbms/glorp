@@ -1,0 +1,4 @@
+accessing
+hasDescriptor
+
+	^false.

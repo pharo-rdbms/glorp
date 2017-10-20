@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "guest 10/21/2015 03:17",
+	"super" : "Object",
+	"category" : "Glorp-Expressions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"joins"
+	],
+	"name" : "VariableJoin",
+	"type" : "normal"
+}

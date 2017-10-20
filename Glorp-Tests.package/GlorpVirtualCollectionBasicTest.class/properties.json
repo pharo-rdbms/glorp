@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "GlorpSessionBasedTest",
+	"category" : "Glorp-Tests-Database",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"vc"
+	],
+	"name" : "GlorpVirtualCollectionBasicTest",
+	"type" : "normal"
+}

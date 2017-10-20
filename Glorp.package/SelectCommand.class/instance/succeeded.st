@@ -1,0 +1,4 @@
+testing
+succeeded
+
+	^true.

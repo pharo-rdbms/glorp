@@ -1,0 +1,4 @@
+navigating
+queryLevelBaseExpression
+
+	^base queryLevelBaseExpression.

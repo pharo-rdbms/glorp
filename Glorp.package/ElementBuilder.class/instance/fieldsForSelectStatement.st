@@ -1,0 +1,4 @@
+selecting fields
+fieldsForSelectStatement
+
+	^self subclassResponsibility

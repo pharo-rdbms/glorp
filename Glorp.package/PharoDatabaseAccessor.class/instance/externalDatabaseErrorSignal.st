@@ -1,0 +1,3 @@
+executing
+externalDatabaseErrorSignal
+	^ Dialect error

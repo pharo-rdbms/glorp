@@ -1,0 +1,3 @@
+types
+text
+	^self clob.

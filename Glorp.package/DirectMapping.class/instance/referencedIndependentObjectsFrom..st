@@ -1,0 +1,4 @@
+enumerating
+referencedIndependentObjectsFrom: anObject
+
+	^#()

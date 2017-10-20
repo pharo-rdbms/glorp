@@ -1,0 +1,3 @@
+testing
+usesIdentityColumns
+	^true.

@@ -1,0 +1,20 @@
+{
+	"commentStamp" : "guest 10/21/2015 03:17",
+	"super" : "Query",
+	"category" : "Glorp-Queries",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"resultClass",
+		"whereClause",
+		"base",
+		"limit",
+		"offset",
+		"proxyType",
+		"shouldRefresh",
+		"tracing"
+	],
+	"name" : "AbstractReadQuery",
+	"type" : "normal"
+}

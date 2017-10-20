@@ -1,0 +1,3 @@
+type resolvers
+typeResolverForGlorpInventoryItem
+	^HorizontalTypeResolver forRootClass: GlorpInventoryItem.

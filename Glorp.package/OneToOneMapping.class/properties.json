@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "guest 10/21/2015 03:17",
+	"super" : "RelationshipMapping",
+	"category" : "Glorp-Mappings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OneToOneMapping",
+	"type" : "normal"
+}

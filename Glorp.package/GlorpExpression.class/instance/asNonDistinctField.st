@@ -1,0 +1,3 @@
+converting
+asNonDistinctField
+	^self

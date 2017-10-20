@@ -1,0 +1,3 @@
+type resolution
+typeMappingRootDescriptor
+	^self typeResolver typeMappingRootDescriptor

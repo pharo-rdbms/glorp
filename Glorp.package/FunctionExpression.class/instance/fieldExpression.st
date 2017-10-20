@@ -1,0 +1,4 @@
+accessing
+fieldExpression
+
+	^base fieldExpression.

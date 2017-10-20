@@ -1,0 +1,4 @@
+accessing
+allTables
+
+	self subclassResponsibility.

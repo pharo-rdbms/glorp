@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "",
+	"super" : "GlorpTestCase",
+	"category" : "Glorp-Tests-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"mapping",
+		"person"
+	],
+	"name" : "GlorpBasicMappingTest",
+	"type" : "normal"
+}

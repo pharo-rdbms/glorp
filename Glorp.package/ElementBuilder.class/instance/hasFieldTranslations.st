@@ -1,0 +1,3 @@
+executing
+hasFieldTranslations
+	^self fieldTranslations notNil

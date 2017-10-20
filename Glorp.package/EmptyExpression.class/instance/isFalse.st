@@ -1,0 +1,3 @@
+accessing
+isFalse
+	^value not

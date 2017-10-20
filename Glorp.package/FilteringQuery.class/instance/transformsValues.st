@@ -1,0 +1,3 @@
+executing
+transformsValues
+	^collectBlock notNil

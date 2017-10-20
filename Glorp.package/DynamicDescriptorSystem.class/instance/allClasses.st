@@ -1,0 +1,3 @@
+accessing
+allClasses
+	^descriptors keys

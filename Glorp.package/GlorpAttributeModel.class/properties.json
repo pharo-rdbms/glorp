@@ -1,0 +1,22 @@
+{
+	"commentStamp" : "guest 10/21/2015 03:17",
+	"super" : "Object",
+	"category" : "Glorp-Mappings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"name",
+		"type",
+		"collectionType",
+		"keyType",
+		"classModel",
+		"attributeIndex",
+		"useDirectAccess",
+		"setSelector",
+		"canRead",
+		"canWrite"
+	],
+	"name" : "GlorpAttributeModel",
+	"type" : "normal"
+}

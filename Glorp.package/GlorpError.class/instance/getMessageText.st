@@ -1,0 +1,4 @@
+accessing
+getMessageText
+	
+	^self databaseError

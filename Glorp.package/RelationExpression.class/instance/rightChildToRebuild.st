@@ -1,0 +1,3 @@
+preparing
+rightChildToRebuild
+	^rightChild.

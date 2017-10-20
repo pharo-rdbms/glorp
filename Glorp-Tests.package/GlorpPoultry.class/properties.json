@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "GlorpPerishableItem",
+	"category" : "Glorp-Tests-Models",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"featherColor"
+	],
+	"name" : "GlorpPoultry",
+	"type" : "normal"
+}
