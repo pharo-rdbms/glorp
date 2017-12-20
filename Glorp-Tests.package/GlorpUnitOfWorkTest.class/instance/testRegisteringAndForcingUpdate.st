@@ -6,7 +6,7 @@ testRegisteringAndForcingUpdate
 	session beginTransaction.
 	customer := GlorpCustomer example1 id: 7.
 	otherCustomer := GlorpCustomer example2 id: 8.
-	session modify: (Array with: customer with: otherCustomer) in: [].
+	session modifyAll: (Array with: customer with: otherCustomer) in: [].
 	session accessor denyWrites.
 	session modify: customer in: [].
 	session beginUnitOfWork.

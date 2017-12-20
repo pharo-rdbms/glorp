@@ -2,7 +2,7 @@ tests
 testModifyAgents
 	| agents |
 	agents := session read: GlorpTravelAgent orderBy: #id.
-	session modify: agents in: [
+	session modifyAll: agents in: [
 		agents first name: 'Something Else'.
 		(agents at: 2) name: 'something else again'].
 	session reset.

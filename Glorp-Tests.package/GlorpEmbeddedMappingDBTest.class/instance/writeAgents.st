@@ -7,4 +7,4 @@ writeAgents
 	agent2 agency: agent1 agency.
 	agent3 := GlorpTravelAgent new id: 3; name: 'Agent Three'.
 	agent3 agency: (GlorpTravelAgency new name: 'Agency Two').
-	session modify: (Array with: agent1 with: agent2 with: agent3) in: [].
+	session modifyAll: (Array with: agent1 with: agent2 with: agent3) in: [].
