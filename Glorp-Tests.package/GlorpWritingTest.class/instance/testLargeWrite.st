@@ -2,6 +2,7 @@ tests
 testLargeWrite
 	"This is really just a performance test. No assertions. It should take on the order of 10 seconds. If it starts taking 10 minutes, it indicates a potential problem...."
 	| customer |
+	self timeLimit: 180 seconds.
 	session beginTransaction.
 	[customer := GlorpCustomer new.
 	customer name: 'foo'.
