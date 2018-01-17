@@ -1,14 +1,12 @@
 executing
 executeCommandBound: aCommand
-	| cursor |
+	| answerStream |
 	self logCommand: aCommand bound: true.
-	cursor := (self useBinding)
-				ifFalse: [ self basicExecuteSQLString: aCommand sqlString ]
-				ifTrue: [ self databaseDriver basicExecuteSQLString: aCommand sqlString binding: aCommand bindings ].
-	cursor command: aCommand.
-	aCommand needsRowCount ifTrue: [
-		aCommand rowCount: (self platform supportsRowCount
-									ifTrue: [cursor rowCount]
-									ifFalse: [1])].
-	^cursor.
+	self useBinding ifFalse: [ ^ self executeCommandUnbound: aCommand  ].
+	
+	answerStream := self databaseDriver 
+									basicExecuteSQLString: aCommand sqlString 
+									binding: aCommand bindings.
+									
+	^ self cursorFor: answerStream command: aCommand.
 	
