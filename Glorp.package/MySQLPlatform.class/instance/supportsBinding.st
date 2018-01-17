@@ -1,0 +1,3 @@
+testing
+supportsBinding
+	^ true
