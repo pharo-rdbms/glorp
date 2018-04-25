@@ -1,0 +1,1 @@
+Boolean type for MySQL platform. MySQL stores boolean as tinyint(1)

@@ -1,3 +1,3 @@
 types
 boolean
-	^self typeNamed: #boolean ifAbsentPut: [GlorpBooleanType new typeString: 'boolean'].
+	^self typeNamed: #boolean ifAbsentPut: [GlorpMySQLBooleanType new typeString: 'boolean'].
