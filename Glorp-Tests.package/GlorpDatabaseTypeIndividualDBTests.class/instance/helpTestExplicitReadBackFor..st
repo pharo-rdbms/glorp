@@ -10,7 +10,7 @@ helpTestExplicitReadBackFor: dbOutValue
 			type print: dbOutValue on: queryStream.
 			result := connection executeSQLString: queryStream contents. ]
 		ifTrue: [ 
-			type print: '?' on: queryStream.
+			queryStream nextPutAll: '?'.
 			result := connection executeSQLString: queryStream contents binding: (Array with: dbOutValue) ].
 	result isEmpty ifTrue: [^nil].
 	^(result atIndex: 1) atIndex: 1.
