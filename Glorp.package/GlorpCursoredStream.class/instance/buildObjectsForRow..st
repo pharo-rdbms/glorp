@@ -12,7 +12,7 @@ buildObjectsForRow: aRow
 				sendPostFetchValidateIn: self session 
 				OnFailureDo: [each instance: nil]].
 	builders
-		do: [:each | each instance == nil ifFalse: [each knitResultIn: self]].
+		do: [:each | each knitResultIn: self].
 	builders do: [:each | self session sendPostFetchEventTo: each instance].
 	^self buildersThatReturnResults size = 1
 		ifTrue: [self buildersThatReturnResults first returnValueIn: self]
