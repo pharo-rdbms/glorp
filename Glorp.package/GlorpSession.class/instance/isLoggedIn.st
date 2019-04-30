@@ -1,3 +1,0 @@
-login
-isLoggedIn
-	^accessor isLoggedIn

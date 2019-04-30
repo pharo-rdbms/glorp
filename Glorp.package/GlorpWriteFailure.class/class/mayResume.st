@@ -1,3 +1,0 @@
-*Glorp
-mayResume
-	^true.

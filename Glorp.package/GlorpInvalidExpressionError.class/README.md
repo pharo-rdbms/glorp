@@ -1,1 +1,0 @@
-This represents an invalid expression condition in a query.

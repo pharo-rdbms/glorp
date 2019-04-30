@@ -1,1 +1,0 @@
-Platform for ODBC access on MySQL

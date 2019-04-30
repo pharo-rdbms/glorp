@@ -1,3 +1,0 @@
-constants
-beInnoDB
-	engine := 'InnoDB'.

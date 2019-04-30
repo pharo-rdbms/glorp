@@ -1,3 +1,0 @@
-constants
-beExample
-	engine := 'EXAMPLE'.

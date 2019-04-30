@@ -1,1 +1,0 @@
-This generates version numbers by adding one to the previous value of the designated field.

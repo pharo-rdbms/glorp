@@ -1,3 +1,0 @@
-support
-databaseLoginResource
-	^GlorpDatabaseLoginResource current.

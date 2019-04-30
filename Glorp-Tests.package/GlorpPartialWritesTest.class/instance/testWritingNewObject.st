@@ -1,3 +1,0 @@
-tests
-testWritingNewObject
-self todo

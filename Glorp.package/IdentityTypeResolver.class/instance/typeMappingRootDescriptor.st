@@ -1,3 +1,0 @@
-accessing
-typeMappingRootDescriptor
-	^members first

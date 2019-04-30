@@ -1,4 +1,0 @@
-accessing
-allTableNames
-
-	^#('GR_THINGWITHCOLLECTIONS' 'GR_THINGONE' 'GR_THING_LINK').

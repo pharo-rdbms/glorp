@@ -1,3 +1,0 @@
-accessing
-attributeAccessor
-	^self attribute

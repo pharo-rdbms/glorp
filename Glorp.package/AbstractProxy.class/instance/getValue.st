@@ -1,4 +1,0 @@
-api
-getValue
-
-	self subclassesMustImplement

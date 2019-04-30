@@ -1,4 +1,0 @@
-initializing
-initialize
-
-	shouldCreateInDatabase := true.

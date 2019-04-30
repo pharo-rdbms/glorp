@@ -1,3 +1,0 @@
-accessing
-shortCircuitEmptyReturn: parameters
-	^false

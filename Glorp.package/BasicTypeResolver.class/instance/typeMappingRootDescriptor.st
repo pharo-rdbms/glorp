@@ -1,3 +1,0 @@
-type resolution
-typeMappingRootDescriptor
-	^self rootDescriptor

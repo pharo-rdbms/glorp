@@ -1,4 +1,0 @@
-public
-initialize
-
-	hasValue := false

@@ -1,3 +1,0 @@
-constants
-sqlTextForUNIQUEAttributeConstraint
-	^'UNIQUE'.

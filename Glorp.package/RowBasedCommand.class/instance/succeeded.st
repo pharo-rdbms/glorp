@@ -1,3 +1,0 @@
-testing
-succeeded
-	^failed not.

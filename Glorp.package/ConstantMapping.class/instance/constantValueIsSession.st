@@ -1,4 +1,0 @@
-accessing
-constantValueIsSession
-
-	valueIsSession := true

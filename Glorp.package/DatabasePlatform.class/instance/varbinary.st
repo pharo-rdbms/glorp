@@ -1,3 +1,0 @@
-types
-varbinary
-	^self subclassResponsibility.

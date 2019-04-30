@@ -1,3 +1,0 @@
-selecting fields
-fieldsFromThePerspectiveOfTheMainSelect: aCollection
-	^expression translateFields: aCollection

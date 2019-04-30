@@ -1,3 +1,0 @@
-preparing
-adjustWhereClause
-	^self

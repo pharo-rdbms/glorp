@@ -1,3 +1,0 @@
-testing
-isInstantiated
-	^realObjects notNil.

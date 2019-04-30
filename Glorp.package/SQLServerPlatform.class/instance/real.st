@@ -1,3 +1,0 @@
-types
-real
-	^self float.

@@ -1,3 +1,0 @@
-accessing
-valueIn: aDictionary
-	^value

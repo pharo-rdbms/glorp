@@ -1,3 +1,0 @@
-executing
-transformsValues
-	^collectBlock notNil

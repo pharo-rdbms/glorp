@@ -1,3 +1,0 @@
-api
-useFilteredRead
-	shouldUseFilteredRead := true.

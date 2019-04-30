@@ -1,4 +1,0 @@
-validation
-initializeRuntimeMappings
-	super initializeRuntimeMappings.
-	self initializeValueMapping.

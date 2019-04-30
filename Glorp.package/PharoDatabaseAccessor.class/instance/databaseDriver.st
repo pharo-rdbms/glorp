@@ -1,3 +1,0 @@
-login
-databaseDriver
-	^ databaseDriver

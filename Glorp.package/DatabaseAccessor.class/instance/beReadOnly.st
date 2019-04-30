@@ -1,3 +1,0 @@
-permissions
-beReadOnly
-	self denyWrites.

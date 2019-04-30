@@ -1,3 +1,0 @@
-constants
-beBDB
-	engine := 'BDB'.

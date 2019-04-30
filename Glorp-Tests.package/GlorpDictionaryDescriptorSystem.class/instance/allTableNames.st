@@ -1,3 +1,0 @@
-accessing
-allTableNames
-	^#('GLORP_TASKED_WORKER' 'GLORP_TWO_WAY_LINK' 'GLORP_WORKER_TASK')

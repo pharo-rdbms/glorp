@@ -1,1 +1,0 @@
-This represents a function that prints postfix, meaning its name comes after its argument. For example, DESC for a descending sort. That's maybe stretching the definition of a function, but that's how it's implemented for purposes of Glorp SQL definition.

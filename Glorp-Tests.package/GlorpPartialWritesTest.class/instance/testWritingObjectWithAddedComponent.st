@@ -1,3 +1,0 @@
-tests
-testWritingObjectWithAddedComponent
-self todo

@@ -1,5 +1,0 @@
-constants
-capitalWritingOfDatabaseName
-	"^<Boolean>"
-
-	^true

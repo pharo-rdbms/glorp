@@ -1,3 +1,0 @@
-types
-numeric
-	^self number.

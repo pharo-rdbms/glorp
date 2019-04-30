@@ -1,1 +1,0 @@
-This is a platform for Oracle databases. Currently there's only one, but it might be better for some purposes to separate out by versions, as some older versions don't support all features.

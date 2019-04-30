@@ -1,4 +1,0 @@
-api
-getValueFrom: anObject
-
-	^constantValue

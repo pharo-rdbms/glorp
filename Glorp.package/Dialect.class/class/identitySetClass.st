@@ -1,3 +1,0 @@
-general portability
-identitySetClass
-	^IdentitySet 

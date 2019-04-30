@@ -1,3 +1,0 @@
-mapping
-valueInBuilder: aBuilder
-	^value.

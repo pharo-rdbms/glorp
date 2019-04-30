@@ -1,3 +1,0 @@
-api
-asOuterJoin
-	outerJoin := true.

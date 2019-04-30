@@ -1,3 +1,0 @@
-accessing
-currentItem
-	^currentItem

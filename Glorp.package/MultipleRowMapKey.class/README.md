@@ -1,1 +1,0 @@
-This is a special (and rarely needed) form of row map key that allows an arbitrary number of objects to participate in it.

@@ -1,4 +1,0 @@
-other
-allTableNames
-
-	^#('GLORP_WORKER' 'GLORP_JOB' 'GLORP_WORKER_JOB_LINK').

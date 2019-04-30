@@ -1,3 +1,0 @@
-testing
-supportsOrderingFor: aDescriptor
-	^true

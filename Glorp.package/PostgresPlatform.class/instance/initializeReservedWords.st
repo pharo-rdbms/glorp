@@ -1,3 +1,0 @@
-constants
-initializeReservedWords
-	super initializeReservedWords.

@@ -1,4 +1,0 @@
-class lookup
-unbindableClassNames
-
-	^ #()

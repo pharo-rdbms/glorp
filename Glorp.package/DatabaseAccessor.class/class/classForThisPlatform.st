@@ -1,4 +1,0 @@
-instance creation
-classForThisPlatform
-
-	^PharoDatabaseAccessor

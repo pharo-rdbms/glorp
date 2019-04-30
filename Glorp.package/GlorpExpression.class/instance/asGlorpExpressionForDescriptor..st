@@ -1,4 +1,0 @@
-converting
-asGlorpExpressionForDescriptor: aDescriptor
-
-	self ultimateBaseExpression descriptor: aDescriptor.

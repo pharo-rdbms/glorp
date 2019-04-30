@@ -1,3 +1,0 @@
-transactions
-beginTransaction
-	^self subclassResponsibility.

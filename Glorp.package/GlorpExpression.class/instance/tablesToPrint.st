@@ -1,4 +1,0 @@
-preparing
-tablesToPrint
-
-	^#().

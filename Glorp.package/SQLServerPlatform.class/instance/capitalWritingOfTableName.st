@@ -1,5 +1,0 @@
-constants
-capitalWritingOfTableName
-	"^<Boolean>"
-
-	^false

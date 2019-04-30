@@ -1,3 +1,0 @@
-preparing
-copyOfBuilders 
-	^primaryQuery copyOfBuilders

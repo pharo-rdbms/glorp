@@ -1,3 +1,0 @@
-constants
-initializeTypes
-	types := nil.

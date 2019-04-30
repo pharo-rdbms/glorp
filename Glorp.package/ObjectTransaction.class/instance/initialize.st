@@ -1,3 +1,0 @@
-initializing
-initialize
-	self initializeUndoMap.

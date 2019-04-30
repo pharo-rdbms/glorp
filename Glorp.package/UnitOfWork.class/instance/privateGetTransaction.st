@@ -1,4 +1,0 @@
-private
-privateGetTransaction
-
-	^transaction

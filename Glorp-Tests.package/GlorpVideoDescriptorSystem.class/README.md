@@ -1,1 +1,0 @@
-This descriptor system represents a video rental/sales store which sells both online and in a physical store. The interesting bit is that there is no customer table, but there is a customer object. In the database, orders and credit status are linked directly to the store. We synthesize a customer object out of those relationships.

@@ -1,3 +1,0 @@
-types
-serial
-	self subclassResponsibility.

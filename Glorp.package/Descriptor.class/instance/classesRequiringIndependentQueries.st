@@ -1,4 +1,0 @@
-type resolution
-classesRequiringIndependentQueries
-
-	^ self typeResolver classesRequiringIndependentQueriesFor: self describedClass

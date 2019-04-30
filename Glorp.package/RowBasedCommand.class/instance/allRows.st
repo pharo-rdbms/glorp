@@ -1,3 +1,0 @@
-accessing
-allRows
-	^allRows.

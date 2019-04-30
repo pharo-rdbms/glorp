@@ -1,3 +1,0 @@
-accessing
-isFalse
-	^value not

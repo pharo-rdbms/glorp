@@ -1,3 +1,0 @@
-accessing
-inStoreRentals
-	^inStoreRentals.

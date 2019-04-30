@@ -1,3 +1,0 @@
-support
-setUpForNotifyAndRemove
-	self setUpForExpiryActionOf: #notifyAndRemove.

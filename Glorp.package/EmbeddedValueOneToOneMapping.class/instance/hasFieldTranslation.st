@@ -1,4 +1,0 @@
-accessing
-hasFieldTranslation
-
-	^fieldTranslation notNil.

@@ -1,4 +1,0 @@
-printing
-sqlString
-
-	^name.

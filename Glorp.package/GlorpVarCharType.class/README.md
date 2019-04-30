@@ -1,1 +1,0 @@
-VARCHAR type

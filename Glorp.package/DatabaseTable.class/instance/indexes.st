@@ -1,3 +1,0 @@
-indexes
-indexes
-	^indexes.

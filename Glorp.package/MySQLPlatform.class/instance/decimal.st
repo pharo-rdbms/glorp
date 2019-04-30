@@ -1,3 +1,0 @@
-types
-decimal
-	^self double

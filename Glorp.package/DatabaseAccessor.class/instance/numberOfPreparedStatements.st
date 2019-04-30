@@ -1,3 +1,0 @@
-accessing
-numberOfPreparedStatements
-	^0

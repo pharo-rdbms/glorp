@@ -1,3 +1,0 @@
-preparing
-isPrepared
-	^prepared

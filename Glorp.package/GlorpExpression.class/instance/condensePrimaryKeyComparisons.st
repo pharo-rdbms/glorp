@@ -1,3 +1,0 @@
-preparing
-condensePrimaryKeyComparisons
-	^self.

@@ -1,3 +1,0 @@
-constants
-beMemory
-	engine := 'MEMORY'.

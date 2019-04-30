@@ -1,4 +1,0 @@
-preparing
-tables
-
-	^#().

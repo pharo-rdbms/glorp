@@ -1,3 +1,0 @@
-constants
-beMyISAM
-	engine := 'MyISAM'.

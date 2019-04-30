@@ -1,3 +1,0 @@
-type mapping
-allDescribedConcreteClasses
-	^ self typeMapping allDescribedConcreteClasses

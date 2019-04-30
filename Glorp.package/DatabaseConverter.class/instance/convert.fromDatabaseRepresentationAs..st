@@ -1,3 +1,0 @@
-converting
-convert: anObject fromDatabaseRepresentationAs: aDatabaseType 
-	self subclassResponsibility

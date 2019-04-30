@@ -1,3 +1,0 @@
-types
-sequence
-	^self serial.
