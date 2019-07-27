@@ -1,0 +1,3 @@
+cache
+cacheKeyClassFor: aClass 
+	^aClass
