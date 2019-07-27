@@ -1,4 +1,7 @@
 initialize-release
 cacheForClass: aClass
-	^subCaches at: aClass
-		ifAbsentPut: [self makeCacheFor: aClass]
+
+	| classKey |
+	classKey := (self system cacheKeyClassFor: aClass).
+	^subCaches at:  classKey
+		ifAbsentPut: [self makeCacheFor: classKey]
