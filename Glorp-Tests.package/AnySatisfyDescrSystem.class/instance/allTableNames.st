@@ -1,4 +1,0 @@
-accessing
-allTableNames
-
-	^#('ASCUSTOMER' 'ASORDER' 'ASORDERLINEITEM' 'ASITEM' 'ASITEMBONUS' 'ASBONUS').

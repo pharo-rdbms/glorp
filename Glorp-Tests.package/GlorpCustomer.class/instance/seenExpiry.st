@@ -1,3 +1,0 @@
-glorp/events
-seenExpiry
-	^seenExpiry

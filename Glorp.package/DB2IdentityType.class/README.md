@@ -1,1 +1,0 @@
-DB2IdentityType represents identity column types in DB2. Glorp prefers sequences over identity columns, and uses sequences when generating schemas. But since pre-exisitng DB2 tables may contain identity columns, this class is necessary. See also, DB2Sequence and DB2IdentitySequence.

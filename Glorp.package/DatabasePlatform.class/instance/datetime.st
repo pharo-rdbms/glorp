@@ -1,3 +1,0 @@
-types
-datetime
-	^self timestamp

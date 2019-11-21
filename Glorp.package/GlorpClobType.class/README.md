@@ -1,1 +1,0 @@
-CLOB type

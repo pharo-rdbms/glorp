@@ -1,3 +1,0 @@
-validation
-validate
-	self validateAttribute

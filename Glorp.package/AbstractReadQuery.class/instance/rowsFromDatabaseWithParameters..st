@@ -1,3 +1,0 @@
-executing
-rowsFromDatabaseWithParameters: anArray
-	self subclassResponsibility

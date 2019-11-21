@@ -1,4 +1,0 @@
-navigating
-queryLevelBaseExpression
-
-	^self

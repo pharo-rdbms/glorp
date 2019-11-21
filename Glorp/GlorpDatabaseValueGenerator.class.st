@@ -1,0 +1,8 @@
+"
+This is an abstract superclass for thing that generate values when objects are written to the database. The most common usage is the various types of sequences, identity columns and other primary key generating mechanism. But it can also be used for optimistic locking via version numbers or timestamps. It doesn't actually have any code at the moment, so it might just be deletable, or maybe there's some refactoring to be done.
+"
+Class {
+	#name : #GlorpDatabaseValueGenerator,
+	#superclass : #Object,
+	#category : 'Glorp-Database'
+}

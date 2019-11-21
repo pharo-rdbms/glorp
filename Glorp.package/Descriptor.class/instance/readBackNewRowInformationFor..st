@@ -1,2 +1,0 @@
-internal
-readBackNewRowInformationFor: anObject

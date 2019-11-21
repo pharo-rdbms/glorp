@@ -1,1 +1,0 @@
-This represents a command with no additional syntax, basically just a stream. Useful for testing the generation of chunks of SQL.

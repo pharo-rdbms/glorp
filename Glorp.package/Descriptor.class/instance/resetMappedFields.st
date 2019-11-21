@@ -1,3 +1,0 @@
-accessing
-resetMappedFields
-	mappedFields := nil

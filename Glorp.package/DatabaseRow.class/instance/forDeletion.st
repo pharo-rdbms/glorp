@@ -1,3 +1,0 @@
-accessing
-forDeletion
-	^forDeletion.

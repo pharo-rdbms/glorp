@@ -1,1 +1,0 @@
-Ensure that warning/error messages are raised by invalid acts in dictionary mappings.

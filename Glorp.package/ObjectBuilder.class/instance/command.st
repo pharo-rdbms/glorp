@@ -1,3 +1,0 @@
-accessing
-command
-	^cursor command

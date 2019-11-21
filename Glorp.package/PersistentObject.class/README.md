@@ -1,1 +1,0 @@
-This is an abstract superclass for Glorp persistent objects. Things don't have to subclass from this in order to be persistent, but if they do, they will inherit some methods which may be useful.

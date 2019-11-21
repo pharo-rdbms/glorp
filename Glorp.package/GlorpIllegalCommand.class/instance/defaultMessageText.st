@@ -1,3 +1,0 @@
-accessing
-defaultMessageText
-	^'Illegal Command'

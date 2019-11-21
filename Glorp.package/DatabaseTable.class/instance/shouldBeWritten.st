@@ -1,3 +1,0 @@
-accessing
-shouldBeWritten
-	^isImaginary not.

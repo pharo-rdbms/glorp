@@ -1,3 +1,0 @@
-class lookup
-fixedPointClass
-	^ScaledDecimal 

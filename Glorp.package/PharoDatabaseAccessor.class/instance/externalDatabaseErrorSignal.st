@@ -1,3 +1,0 @@
-executing
-externalDatabaseErrorSignal
-	^ Dialect error

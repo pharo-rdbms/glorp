@@ -1,4 +1,0 @@
-SQL
-isOraclePlatform
-
-	^true

@@ -1,1 +1,0 @@
-This is a class representing non-foreign key database constraints. It's not actually used for very much, but is mostly so we can model the metadata in the database's information_schema to get information we need about primary keys and other information that may be represented as constraints rather than field attributes.

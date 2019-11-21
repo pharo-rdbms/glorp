@@ -1,4 +1,0 @@
-fields
-controlsTables
-
-	self subclassResponsibility.

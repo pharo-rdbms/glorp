@@ -1,3 +1,0 @@
-accessing
-allTables
-	^query tablesToPrint

@@ -1,4 +1,0 @@
-dates
-supportsMillisecondsInTimes
-
-	^true

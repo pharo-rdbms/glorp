@@ -1,3 +1,0 @@
-*Glorp
-collectionTypeFor: aClass
-	^aClass.

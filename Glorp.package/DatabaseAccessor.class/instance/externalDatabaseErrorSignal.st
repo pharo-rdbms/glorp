@@ -1,4 +1,0 @@
-executing
-externalDatabaseErrorSignal
-
-	self subclassResponsibility.

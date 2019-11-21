@@ -1,3 +1,0 @@
-exdi specific
-exdiTypeForDates
-	^#Timestamp.

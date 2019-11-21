@@ -1,5 +1,0 @@
-constants
-sqlTextForNULLAttributeConstraint
-	"^<String>"
-
-	^'NULL'

@@ -1,3 +1,0 @@
-executing
-printSQL
-	self subclassResponsibility.

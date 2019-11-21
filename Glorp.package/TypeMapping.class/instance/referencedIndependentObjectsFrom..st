@@ -1,3 +1,0 @@
-mapping
-referencedIndependentObjectsFrom: anObject
-	^#().

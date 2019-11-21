@@ -1,3 +1,0 @@
-accessing
-base
-	^trueBase base.

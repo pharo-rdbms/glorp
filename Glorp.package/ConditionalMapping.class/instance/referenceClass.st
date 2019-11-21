@@ -1,3 +1,0 @@
-accessing
-referenceClass
-	^self representativeMapping referenceClass

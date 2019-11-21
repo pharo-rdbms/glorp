@@ -1,3 +1,0 @@
-permissions
-resetPermissions
-	self permitEverything.

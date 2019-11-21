@@ -1,4 +1,0 @@
-preparing
-controlsTables
-
-	^true.

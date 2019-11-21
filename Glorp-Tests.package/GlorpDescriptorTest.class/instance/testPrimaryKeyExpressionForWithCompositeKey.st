@@ -1,4 +1,0 @@
-tests
-testPrimaryKeyExpressionForWithCompositeKey
-
-	self unfinished.

@@ -1,3 +1,0 @@
-accessing
-valueField
-	^valueMapping field

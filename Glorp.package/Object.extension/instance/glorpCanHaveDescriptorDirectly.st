@@ -1,3 +1,0 @@
-*Glorp
-glorpCanHaveDescriptorDirectly
-	^self isBehavior.

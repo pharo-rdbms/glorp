@@ -1,3 +1,0 @@
-accessing
-beAbstract
-	isAbstract := true

@@ -1,4 +1,0 @@
-accessing
-databaseTableClass
-
-	^system databaseTableClass

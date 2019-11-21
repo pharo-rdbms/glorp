@@ -1,4 +1,0 @@
-constants
-sqlTextCurrentServerUTCTimestamp
-
-	^'SELECT GETUTCDATE()'

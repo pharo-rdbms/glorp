@@ -1,1 +1,0 @@
-This exercises the EmbeddedValueOneToOneMapping.

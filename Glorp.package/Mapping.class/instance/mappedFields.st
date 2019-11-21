@@ -1,3 +1,0 @@
-testing
-mappedFields
-	self subclassResponsibility

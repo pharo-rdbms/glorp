@@ -1,4 +1,0 @@
-dates
-timeOffsetFromGMT
-
-	^ 0

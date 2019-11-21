@@ -1,3 +1,0 @@
-testing
-supportsArithmeticOperatorsOnDates
-	^ false

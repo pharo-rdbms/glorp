@@ -1,1 +1,0 @@
-This is a special subclass of ElementBuilder used when we execute a query that reads multiple different things, but in any row, we expect only one of them to have a value. This is useful if we're doing inheritance queries where each concrete subclass is in a separate table. We can join the queries together, but we expect each row to contain only one particular subclass instance.

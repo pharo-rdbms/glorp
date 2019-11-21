@@ -1,3 +1,0 @@
-tests
-testWritingObjectWithChangedAttribute
-self todo

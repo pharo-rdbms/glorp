@@ -1,3 +1,0 @@
-tests
-testWritingObjectWithDeletedComponent
-self todo

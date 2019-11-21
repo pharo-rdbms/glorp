@@ -1,1 +1,0 @@
-This builds full-blown persistent objects with descriptors. This is the most common type of builder.

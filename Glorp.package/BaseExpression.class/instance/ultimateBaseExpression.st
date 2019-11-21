@@ -1,4 +1,0 @@
-navigating
-ultimateBaseExpression
-
-	^self

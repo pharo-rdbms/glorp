@@ -1,3 +1,0 @@
-private
-determineDialect
-	^ dialectName := #Pharo

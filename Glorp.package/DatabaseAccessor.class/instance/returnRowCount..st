@@ -1,3 +1,0 @@
-accessing
-returnRowCount: aBoolean
-	^self.

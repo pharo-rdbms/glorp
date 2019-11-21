@@ -1,4 +1,0 @@
-*Glorp
-error
-
-	^Error

@@ -1,4 +1,0 @@
-overrides
-shouldBePrintedAsLiteral
-
-	^false

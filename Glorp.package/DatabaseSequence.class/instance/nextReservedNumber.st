@@ -1,3 +1,0 @@
-sequencing
-nextReservedNumber
-	^reservedNumbers removeFirst.

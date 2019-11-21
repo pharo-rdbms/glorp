@@ -1,3 +1,0 @@
-*Glorp
-isGlorpExpression
-	^false.

@@ -1,1 +1,0 @@
-This is a no-op converter. When converting in either direction, it just returns the value.

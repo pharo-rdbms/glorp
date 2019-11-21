@@ -1,4 +1,0 @@
-setup
-tearDown
-
-	session rollbackTransaction.

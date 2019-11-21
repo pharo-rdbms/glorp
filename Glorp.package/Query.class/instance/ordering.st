@@ -1,3 +1,0 @@
-ordering
-ordering
-	^ordering

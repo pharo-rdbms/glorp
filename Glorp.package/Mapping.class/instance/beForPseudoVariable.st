@@ -1,3 +1,0 @@
-accessing
-beForPseudoVariable
-	self attribute beForPseudoVariable.

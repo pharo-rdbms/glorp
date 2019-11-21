@@ -1,4 +1,0 @@
-preparing
-joinExpressionFor: anExpression
-
-	^nil

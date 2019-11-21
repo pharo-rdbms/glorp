@@ -1,4 +1,0 @@
-database
-typeString
-
-	^type typeString

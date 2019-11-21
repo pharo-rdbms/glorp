@@ -1,3 +1,0 @@
-types
-varchar
-	^self subclassResponsibility.

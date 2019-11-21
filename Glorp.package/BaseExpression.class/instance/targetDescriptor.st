@@ -1,3 +1,0 @@
-accessing
-targetDescriptor
-	self halt

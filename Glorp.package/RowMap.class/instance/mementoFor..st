@@ -1,3 +1,0 @@
-api
-mementoFor: anObject
-	^anObject

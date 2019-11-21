@@ -1,3 +1,0 @@
-accessing
-bindingTypes
-	self subclassResponsibility.

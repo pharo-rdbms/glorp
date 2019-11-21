@@ -1,3 +1,0 @@
-accessing
-isAliased
-	^parent notNil.
