@@ -5,7 +5,12 @@ helpTestExplicitReadBackFor: dbOutValue
 	queryStream := SQLStringSelectCommand sqlString: String new parameters: #() useBinding: false session: session.
 	queryStream nextPutAll: 'SELECT test,id FROM ', self tableName, ' WHERE test '.
 	queryStream nextPutAll: (dbOutValue isNil ifTrue: [' IS '] ifFalse: [' = ']).
-	type print: dbOutValue on: queryStream.
-	result := connection executeSQLString: queryStream contents.
+	connection useBinding
+		ifFalse: [
+			type print: dbOutValue on: queryStream.
+			result := connection executeSQLString: queryStream contents. ]
+		ifTrue: [ 
+			queryStream nextPutAll: '?'.
+			result := connection executeSQLString: queryStream contents binding: (Array with: dbOutValue) ].
 	result isEmpty ifTrue: [^nil].
 	^(result atIndex: 1) atIndex: 1.
