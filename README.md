@@ -1,3 +1,9 @@
+# Nov 2019
+
+This branch is for Pharo 7 and may not work with earlier or later Pharo versions.
+
+----
+
 # glorp
 Generic Lightweight Obect Relational Persistence (for Pharo)
 
