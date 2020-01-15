@@ -32,7 +32,7 @@ My int* and float*/double type methods that define Glorp types for SQLite confor
 Class {
 	#name : #SQLite3Platform,
 	#superclass : #DatabasePlatform,
-	#category : 'Glorp-Platforms'
+	#category : #'Glorp-Platforms'
 }
 
 { #category : #'as yet unclassified' }
@@ -240,6 +240,28 @@ SQLite3Platform >> printPostLimit: anInteger on: aCommand [
 	aCommand
 		nextPutAll: ' LIMIT '.
 	anInteger printOn: aCommand.
+]
+
+{ #category : #'services tables' }
+SQLite3Platform >> printSqlStatementToListColumnsInTable: aDatabaseTable inSchema: schemaString on: aStream [
+
+	" Format:
+	       name           |       type        | length | nullable |     default_value     | pk 
+-------------------------+-------------------+--------+----------+-----------------------+----
+ id                      | character varying |    255 |        0 | ''::character varying |  1 
+	"
+
+	aStream nextPutAll: ('SELECT 
+  p.name as name,
+  rtrim(p.type,''(1234567890)'') AS type,
+nullif(trim(substr(p.type,instr(p.type,''('')),''()''),p.type) as length,
+  p.[notnull] AS nullable,
+  p.dflt_value AS col_default_val,
+  p.pk AS pk
+FROM sqlite_master m
+LEFT OUTER JOIN pragma_table_info((m.name)) p
+  ON m.name <> p.name
+WHERE m.type = ''table'' AND m.name=''{1}''' format:{aDatabaseTable. schemaString})
 ]
 
 { #category : #'services tables' }

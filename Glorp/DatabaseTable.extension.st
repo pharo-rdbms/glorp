@@ -1,13 +1,13 @@
 Extension { #name : #DatabaseTable }
 
 { #category : #'*Glorp' }
-DatabaseTable classSide >> named: aString [
+DatabaseTable class >> named: aString [
 
 	^self new name: aString.
 ]
 
 { #category : #'*Glorp' }
-DatabaseTable classSide >> new [
+DatabaseTable class >> new [
 
 	^super new initialize.
 ]

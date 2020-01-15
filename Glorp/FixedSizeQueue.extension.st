@@ -1,16 +1,16 @@
 Extension { #name : #FixedSizeQueue }
 
 { #category : #'*Glorp' }
-FixedSizeQueue classSide >> maximumSize: anInteger [
+FixedSizeQueue class >> maximumSize: anInteger [
 	^self basicNew maximumSize: anInteger.
 ]
 
 { #category : #'*Glorp' }
-FixedSizeQueue classSide >> new [
+FixedSizeQueue class >> new [
 	self error: 'must supply a size'.
 ]
 
 { #category : #'*Glorp' }
-FixedSizeQueue classSide >> new: anInteger [
+FixedSizeQueue class >> new: anInteger [
 	^self maximumSize: anInteger.
 ]

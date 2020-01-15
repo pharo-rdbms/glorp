@@ -1,7 +1,7 @@
 Extension { #name : #AdHocProxy }
 
 { #category : #'*Glorp' }
-AdHocProxy classSide >> readBlock: aZeroArgumentBlock [
+AdHocProxy class >> readBlock: aZeroArgumentBlock [
 
 	^self new glorpReadBlock: aZeroArgumentBlock
 ]

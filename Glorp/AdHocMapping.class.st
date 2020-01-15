@@ -18,7 +18,7 @@ Class {
 		'mappedFields',
 		'shouldProxy'
 	],
-	#category : 'Glorp-Mappings'
+	#category : #'Glorp-Mappings'
 }
 
 { #category : #'instance creation' }
@@ -142,6 +142,12 @@ AdHocMapping >> mapObject: anObject inElementBuilder: anElementBuilder [
 AdHocMapping >> mappedFields [
 
 	^mappedFields
+]
+
+{ #category : #mapping }
+AdHocMapping >> mappedFieldsCount [
+
+	^mappedFields size
 ]
 
 { #category : #mapping }

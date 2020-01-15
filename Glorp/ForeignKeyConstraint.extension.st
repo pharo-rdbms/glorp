@@ -1,7 +1,7 @@
 Extension { #name : #ForeignKeyConstraint }
 
 { #category : #'*Glorp' }
-ForeignKeyConstraint classSide >> sourceField: aDatabaseField targetField: anotherDatabaseField [
+ForeignKeyConstraint class >> sourceField: aDatabaseField targetField: anotherDatabaseField [
 	^self
 		sourceField: aDatabaseField
 		targetField: anotherDatabaseField
@@ -9,14 +9,14 @@ ForeignKeyConstraint classSide >> sourceField: aDatabaseField targetField: anoth
 ]
 
 { #category : #'*Glorp' }
-ForeignKeyConstraint classSide >> sourceField: aDatabaseField targetField: anotherDatabaseField suffixExpression: suffixExpression [
+ForeignKeyConstraint class >> sourceField: aDatabaseField targetField: anotherDatabaseField suffixExpression: suffixExpression [
 	^(self new)
 		sourceField: aDatabaseField targetField: anotherDatabaseField suffixExpression: suffixExpression;
 		yourself.
 ]
 
 { #category : #'*Glorp' }
-ForeignKeyConstraint classSide >> sourceFields: sourceFields targetFields: targetFields [
+ForeignKeyConstraint class >> sourceFields: sourceFields targetFields: targetFields [
 	^self
 		sourceFields: sourceFields
 		targetFields: targetFields
@@ -24,7 +24,7 @@ ForeignKeyConstraint classSide >> sourceFields: sourceFields targetFields: targe
 ]
 
 { #category : #'*Glorp' }
-ForeignKeyConstraint classSide >> sourceFields: sourceFields targetFields: targetFields suffixExpression: suffixExpression [
+ForeignKeyConstraint class >> sourceFields: sourceFields targetFields: targetFields suffixExpression: suffixExpression [
 	^(self new)
 		sourceFields: sourceFields targetFields: targetFields suffixExpression: suffixExpression;
 		yourself.

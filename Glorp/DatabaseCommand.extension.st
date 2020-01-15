@@ -1,6 +1,6 @@
 Extension { #name : #DatabaseCommand }
 
 { #category : #'*Glorp' }
-DatabaseCommand classSide >> new [
+DatabaseCommand class >> new [
 	^super new initialize.
 ]

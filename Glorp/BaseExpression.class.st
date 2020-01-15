@@ -14,7 +14,7 @@ Class {
 		'descriptor',
 		'availableSubSelectNumber'
 	],
-	#category : 'Glorp-Expressions'
+	#category : #'Glorp-Expressions'
 }
 
 { #category : #accessing }
@@ -108,6 +108,11 @@ BaseExpression >> getParameter: aDatabaseField [
 BaseExpression >> hasDescriptor [
 
 	^self descriptor notNil.
+]
+
+{ #category : #accessing }
+BaseExpression >> mappedFieldCount [
+	^self descriptor mappedFields size
 ]
 
 { #category : #accessing }

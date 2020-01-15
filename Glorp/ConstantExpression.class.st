@@ -14,7 +14,7 @@ Class {
 		'value',
 		'alias'
 	],
-	#category : 'Glorp-Expressions'
+	#category : #'Glorp-Expressions'
 }
 
 { #category : #'instance creation' }
@@ -92,6 +92,11 @@ ConstantExpression >> isConstantExpression [
 { #category : #'As yet unclassified' }
 ConstantExpression >> mappedFields [
 	^Array with: self.
+]
+
+{ #category : #'As yet unclassified' }
+ConstantExpression >> mappedFieldsCount [
+	^1
 ]
 
 { #category : #printing }

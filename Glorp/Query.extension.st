@@ -1,7 +1,7 @@
 Extension { #name : #Query }
 
 { #category : #'*Glorp' }
-Query classSide >> count: aClass where: anExpression [
+Query class >> count: aClass where: anExpression [
 	| query |
 	query := self readOneOf: aClass where: anExpression.
 	query retrieve: #countStar.
@@ -9,19 +9,19 @@ Query classSide >> count: aClass where: anExpression [
 ]
 
 { #category : #'*Glorp' }
-Query classSide >> read: aClass [
+Query class >> read: aClass [
 	^self read: aClass where: nil
 ]
 
 { #category : #'*Glorp' }
-Query classSide >> read: aClass where: anExpression [
+Query class >> read: aClass where: anExpression [
 	"Backward-compatibility, since we changed the class name."
 
 	^SimpleQuery read: aClass where: anExpression
 ]
 
 { #category : #'*Glorp' }
-Query classSide >> readManyOf: aClass [
+Query class >> readManyOf: aClass [
 	"readManyOf: and returningManyOf: are synonyms of read:. This now seems more natural to me, to be consistent with session API."
 
 	self deprecated: 'Use #read: instead'.
@@ -29,7 +29,7 @@ Query classSide >> readManyOf: aClass [
 ]
 
 { #category : #'*Glorp' }
-Query classSide >> readManyOf: aClass where: anExpression [
+Query class >> readManyOf: aClass where: anExpression [
 	"readManyOf: and returningManyOf: are synonyms of read:. This now seems more natural to me, to be consistent with session API."
 
 	self deprecated: 'Use #read:where: instead'. 
@@ -37,17 +37,17 @@ Query classSide >> readManyOf: aClass where: anExpression [
 ]
 
 { #category : #'*Glorp' }
-Query classSide >> readOneOf: aClass [
+Query class >> readOneOf: aClass [
 	^SimpleQuery readOneOf: aClass.
 ]
 
 { #category : #'*Glorp' }
-Query classSide >> readOneOf: aClass where: anExpression [
+Query class >> readOneOf: aClass where: anExpression [
 	^SimpleQuery readOneOf: aClass where: anExpression.
 ]
 
 { #category : #'*Glorp' }
-Query classSide >> returningManyOf: aClass [
+Query class >> returningManyOf: aClass [
 	"readManyOf: and returningManyOf: are synonyms of read:. This now seems more natural to me, to be consistent with session API."
 
 	self deprecated: 'Use #read: instead'.
@@ -55,7 +55,7 @@ Query classSide >> returningManyOf: aClass [
 ]
 
 { #category : #'*Glorp' }
-Query classSide >> returningManyOf: aClass where: anExpression [
+Query class >> returningManyOf: aClass where: anExpression [
 	"readManyOf: and returningManyOf: are synonyms of read:. This now seems more natural to me, to be consistent with session API."
 
 	self deprecated: 'Use #read:where: instead'.
@@ -63,7 +63,7 @@ Query classSide >> returningManyOf: aClass where: anExpression [
 ]
 
 { #category : #'*Glorp' }
-Query classSide >> returningOneOf: aClass [
+Query class >> returningOneOf: aClass [
 	"Backward-compatibility, since we changed the class name."
 	"returningOneOf: is a synonym of readOneOf:. This now seems more natural to me, to be consistent with session API."
 
@@ -72,7 +72,7 @@ Query classSide >> returningOneOf: aClass [
 ]
 
 { #category : #'*Glorp' }
-Query classSide >> returningOneOf: aClass where: anExpression [
+Query class >> returningOneOf: aClass where: anExpression [
 	"Backward-compatibility, since we changed the class name."
 	"returningOneOf: is a synonym of readOneOf:. This now seems more natural to me, to be consistent with session API."
 

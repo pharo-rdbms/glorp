@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'charactersThatNeedEscaping'
 	],
-	#category : 'Glorp-Platforms'
+	#category : #'Glorp-Platforms'
 }
 
 { #category : #'as yet unclassified' }
@@ -29,6 +29,11 @@ PostgresPlatform class >> useBindingByDefault [
 { #category : #constants }
 PostgresPlatform >> areSequencesExplicitlyCreated [
 	^true.
+]
+
+{ #category : #types }
+PostgresPlatform >> array [ 
+	^self typeNamed: #ARRAY ifAbsentPut: [GlorpPGArrayType new typeString: 'ARRAY'].
 ]
 
 { #category : #types }
@@ -68,6 +73,26 @@ PostgresPlatform >> char [
 	^self typeNamed: #char ifAbsentPut: [GlorpCharType new typeName: 'character'].
 ]
 
+{ #category : #types }
+PostgresPlatform >> character [
+	^self char.
+]
+
+{ #category : #types }
+PostgresPlatform >> character: width [
+	^self char: width.
+]
+
+{ #category : #types }
+PostgresPlatform >> characterVarying [
+	^self varchar
+]
+
+{ #category : #types }
+PostgresPlatform >> characterVarying: length [
+	^self varchar: length
+]
+
 { #category : #constants }
 PostgresPlatform >> charactersThatNeedEscaping [
 	^charactersThatNeedEscaping ifNil: [#($')]
@@ -84,6 +109,11 @@ PostgresPlatform >> charactersThatNeedEscaping: aCollectionOfChars [
 PostgresPlatform >> clob [
 
 	^self typeNamed: #clob ifAbsentPut: [GlorpClobType new typeString: 'text'].
+]
+
+{ #category : #'conversion-strings' }
+PostgresPlatform >> convertJSONObjectToSQLString: anObject for: aType [
+	^anObject ifNotNil: [ NeoJSONWriter toString: anObject ]
 ]
 
 { #category : #'conversion-strings' }
@@ -105,6 +135,13 @@ PostgresPlatform >> convertSQLStringToByteArray: aString for: aType [
 	^aStream contents
 ]
 
+{ #category : #'conversion-strings' }
+PostgresPlatform >> convertSQLStringToJSONObject: anObject for: aType [
+	^anObject isString 
+		ifTrue: [ NeoJSONReader fromString: anObject ] 
+		ifFalse: [ anObject ]
+]
+
 { #category : #sequences }
 PostgresPlatform >> databaseSequenceClass [
 	^PGSequence.
@@ -123,6 +160,11 @@ PostgresPlatform >> decimal [
 { #category : #types }
 PostgresPlatform >> double [
 	^self float8
+]
+
+{ #category : #types }
+PostgresPlatform >> doublePrecision [
+	^self double
 ]
 
 { #category : #'conversion-strings' }
@@ -234,6 +276,26 @@ PostgresPlatform >> isPostgreSQLPlatform [
 	^true.
 ]
 
+{ #category : #types }
+PostgresPlatform >> json [
+	^self typeNamed: #json ifAbsentPut: [GlorpJSONType new]
+]
+
+{ #category : #'conversion-strings' }
+PostgresPlatform >> jsonToStringConverter [
+
+	^DelegatingDatabaseConverter
+		named: #jsonToString
+		hostedBy: self
+		fromStToDb: #convertJSONObjectToSQLString:for:
+		fromDbToSt: #convertSQLStringToJSONObject:for:.
+]
+
+{ #category : #types }
+PostgresPlatform >> jsonb [
+	^self typeNamed: #jsonb ifAbsentPut: [GlorpJSONType new]
+]
+
 { #category : #constants }
 PostgresPlatform >> maximumLengthOfColumnName [
 	"^<Integer> I return the maximum length of a column name.  (I am not sent at present;  I am here so that if I and #maximumLengthOfTableName (which is sent) should ever differ on some database platform, I can be used in revised truncation logic.)"
@@ -310,6 +372,17 @@ PostgresPlatform >> printPostLimit: anInteger on: aCommand [
 	aCommand
 		nextPutAll: ' LIMIT '.
 	anInteger printOn: aCommand.
+]
+
+{ #category : #'services tables' }
+PostgresPlatform >> printSqlStatementToListColumnsInTable: aDatabaseTable inSchema: schemaString on: aStream [
+	" Format:
+	       name           |       type        | length | nullable |     default_value     | pk 
+-------------------------+-------------------+--------+----------+-----------------------+----
+ id                      | character varying |    255 |        0 | ''::character varying |  1 
+	"
+	aStream 
+		nextPutAll: ('SELECT column_name as name, data_type as type, character_maximum_length as length, (is_nullable=''YES'')::int as nullable, column_default as default_value, (SELECT count(*) FROM pg_attribute a LEFT OUTER JOIN  pg_index i  ON a.attrelid = i.indrelid AND a.attnum = ANY(i.indkey) WHERE  i.indrelid = ''{1}''::regclass AND i.indisprimary AND a.attname=column_name) as pk  FROM information_schema.columns where table_name=''{1}''' format: {aDatabaseTable. schemaString })
 ]
 
 { #category : #'conversion-times' }
@@ -438,6 +511,11 @@ PostgresPlatform >> timeStampTypeString [
 { #category : #types }
 PostgresPlatform >> timestamp [
 	^self typeNamed: #timestamp ifAbsentPut: [GlorpTimeStampType new typeString: 'timestamp without time zone'].
+]
+
+{ #category : #types }
+PostgresPlatform >> timestampWithTimeZone [
+	^self timestamptz
 ]
 
 { #category : #types }

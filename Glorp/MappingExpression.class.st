@@ -20,7 +20,7 @@ Class {
 		'mapping',
 		'phantom'
 	],
-	#category : 'Glorp-Expressions'
+	#category : #'Glorp-Expressions'
 }
 
 { #category : #'instance creation' }
@@ -291,6 +291,14 @@ MappingExpression >> mappedFields [
 	self mapping isNil ifTrue: [^#()].
 	self mapping isRelationship ifTrue: [self error: '"',name, '" is not an attribute that resolves to a field in the mapped tables for ', base descriptor describedClass name].
 	^self mapping mappedFields collect: [:each | base translateField: each].
+]
+
+{ #category : #accessing }
+MappingExpression >> mappedFieldsCount [
+	
+	self mapping isNil ifTrue: [^#()].
+	self mapping isRelationship ifTrue: [self error: '"',name, '" is not an attribute that resolves to a field in the mapped tables for ', base descriptor describedClass name].
+	^self mapping mappedFields size.
 ]
 
 { #category : #internal }

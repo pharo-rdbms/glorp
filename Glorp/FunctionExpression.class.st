@@ -23,7 +23,7 @@ Class {
 	#classInstVars : [
 		'functions'
 	],
-	#category : 'Glorp-Expressions'
+	#category : #'Glorp-Expressions'
 }
 
 { #category : #accessing }
@@ -317,6 +317,11 @@ FunctionExpression >> isSameAliasedFieldAs: aFieldOrFunction [
 { #category : #accessing }
 FunctionExpression >> mappedFields [
 	^Array with: self.
+]
+
+{ #category : #accessing }
+FunctionExpression >> mappedFieldsCount [
+	^1
 ]
 
 { #category : #accessing }

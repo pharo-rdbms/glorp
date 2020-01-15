@@ -1,6 +1,6 @@
 Extension { #name : #SQLStringCommand }
 
 { #category : #'*Glorp' }
-SQLStringCommand classSide >> for: aString [
+SQLStringCommand class >> for: aString [
 	^self new setSQLString: aString.
 ]

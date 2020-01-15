@@ -1,12 +1,12 @@
 Extension { #name : #DatabaseSequence }
 
 { #category : #'*Glorp' }
-DatabaseSequence classSide >> named: aString [
+DatabaseSequence class >> named: aString [
 	^self new name: aString.
 ]
 
 { #category : #'*Glorp' }
-DatabaseSequence classSide >> new [
+DatabaseSequence class >> new [
 
 	^super new initialize.
 ]

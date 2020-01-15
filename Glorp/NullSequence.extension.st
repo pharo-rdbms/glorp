@@ -1,13 +1,13 @@
 Extension { #name : #NullSequence }
 
 { #category : #'*Glorp' }
-NullSequence classSide >> default [
+NullSequence class >> default [
 
 	^self new.
 ]
 
 { #category : #'*Glorp' }
-NullSequence classSide >> new [
+NullSequence class >> new [
 
 	Singleton isNil ifTrue: [Singleton := self basicNew].
 	^Singleton.

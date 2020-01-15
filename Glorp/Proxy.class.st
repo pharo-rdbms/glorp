@@ -17,7 +17,7 @@ Class {
 		'parameters',
 		'action'
 	],
-	#category : 'Glorp-Queries'
+	#category : #'Glorp-Queries'
 }
 
 { #category : #'*Glorp' }
@@ -107,6 +107,12 @@ Proxy >> getValue [
 ]
 
 { #category : #'proxy actions' }
+Proxy >> glorpArmProxy [
+	value ifNil: [ isInstantiated := false ].
+	^self
+]
+
+{ #category : #'proxy actions' }
 Proxy >> glorpOwner [
 	"Return the object for which this proxy was created. Note that this is not kept track of unless we have a proxy action."
 	action isNil ifTrue: [^nil].
@@ -117,7 +123,8 @@ Proxy >> glorpOwner [
 Proxy >> glorpOwner: anObject [
 	"If we don't have an action, the owner is unnecessary. Ignore it. If we do have one, put it in as the key of an association with the action block following it."
 	action isNil ifTrue: [^self].
-	action key: anObject
+	action key: anObject.
+	isInstantiated := false.
 ]
 
 { #category : #'proxy actions' }
@@ -160,7 +167,8 @@ Proxy >> parameters [
 
 { #category : #accessing }
 Proxy >> parameters: aDictionary [
-	parameters := aDictionary
+	parameters := aDictionary.
+	isInstantiated := false.
 ]
 
 { #category : #printing }

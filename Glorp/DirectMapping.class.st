@@ -16,7 +16,7 @@ Class {
 		'shouldProxy',
 		'query'
 	],
-	#category : 'Glorp-Mappings'
+	#category : #'Glorp-Mappings'
 }
 
 { #category : #'instance creation' }
@@ -218,7 +218,8 @@ DirectMapping >> mapObject: anObject inElementBuilder: anElementBuilder [
 		^self setValueIn: anObject to: ((self newProxyIn: anElementBuilder)
 						session: descriptor session;
 						parameters: (self parametersIn: anElementBuilder);
-						glorpOwner: anObject)].
+						glorpOwner: anObject;
+						glorpArmProxy)].
 	value := self valueInBuilder: anElementBuilder.
 	self setValueIn: anObject to: value
 ]

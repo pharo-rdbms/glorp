@@ -48,7 +48,7 @@ Class {
 	#classInstVars : [
 		'converterRepository'
 	],
-	#category : 'Glorp-Platforms'
+	#category : #'Glorp-Platforms'
 }
 
 { #category : #'as yet unclassified' }
@@ -1461,6 +1461,13 @@ DatabasePlatform >> printSqlStatementToCopyDataFromTable: fromTable to: toTable 
 ]
 
 { #category : #'services tables' }
+DatabasePlatform >> printSqlStatementToListColumnsInTable: aDatabaseTable inSchema: schemaString on: aStream [
+	" The default SQL statement is
+	"
+	self subclassResponsibility 
+]
+
+{ #category : #'services tables' }
 DatabasePlatform >> printSqlStatementToListTablesInSchema: schemaString on: aStream [
 	" Not standardized, although SQL Server, MySQL and PostgreSQL use the INFORMATION_SCHEMA "
 
@@ -1808,6 +1815,15 @@ DatabasePlatform >> sqlStatementToCopyDataFromTable: fromDatabaseTable to: toDat
 		on: stream.
 
 	^ stream contents
+]
+
+{ #category : #'services tables' }
+DatabasePlatform >> sqlStatementToListColumnsForTable: aTableName inSchema: schemaString [
+
+	| stream |
+	stream := WriteStream on: String new.
+	self printSqlStatementToListColumnsInTable: aTableName inSchema: schemaString on: stream.
+	^stream contents
 ]
 
 { #category : #'services tables' }

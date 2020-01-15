@@ -1,7 +1,7 @@
 Extension { #name : #DatabaseConverter }
 
 { #category : #'*Glorp' }
-DatabaseConverter classSide >> new [
+DatabaseConverter class >> new [
 
 	^super new initialize.
 ]

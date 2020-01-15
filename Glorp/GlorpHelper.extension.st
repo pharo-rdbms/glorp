@@ -1,6 +1,6 @@
 Extension { #name : #GlorpHelper }
 
 { #category : #'*Glorp' }
-GlorpHelper classSide >> glorpConstantExpressionClass [
+GlorpHelper class >> glorpConstantExpressionClass [
 	^self dialect glorpConstantExpressionClass
 ]

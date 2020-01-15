@@ -1,6 +1,6 @@
 Extension { #name : #GlorpRowSorter }
 
 { #category : #'*Glorp' }
-GlorpRowSorter classSide >> new [
+GlorpRowSorter class >> new [
 	^super new initialize.
 ]

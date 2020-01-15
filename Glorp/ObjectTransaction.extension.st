@@ -1,6 +1,6 @@
 Extension { #name : #ObjectTransaction }
 
 { #category : #'*Glorp' }
-ObjectTransaction classSide >> new [
+ObjectTransaction class >> new [
 	^super new initialize
 ]

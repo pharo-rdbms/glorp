@@ -1,16 +1,16 @@
 Extension { #name : #TimedProxyReaper }
 
 { #category : #'*Glorp' }
-TimedProxyReaper classSide >> delay: seconds [
+TimedProxyReaper class >> delay: seconds [
 	^self new delay: seconds
 ]
 
 { #category : #'*Glorp' }
-TimedProxyReaper classSide >> delay: seconds maximumWork: milliseconds [
+TimedProxyReaper class >> delay: seconds maximumWork: milliseconds [
 	^self new delay: seconds; maximumWork: milliseconds
 ]
 
 { #category : #'*Glorp' }
-TimedProxyReaper classSide >> new [
+TimedProxyReaper class >> new [
 	^super new initialize
 ]

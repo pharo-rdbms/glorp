@@ -1,31 +1,31 @@
 Extension { #name : #DatabaseRow }
 
 { #category : #'*Glorp' }
-DatabaseRow classSide >> emptySlot [
+DatabaseRow class >> emptySlot [
 	emptySlot == nil ifTrue: [emptySlot := Object new].
 	^emptySlot.
 ]
 
 { #category : #'*Glorp' }
-DatabaseRow classSide >> missingFieldIndicator [
+DatabaseRow class >> missingFieldIndicator [
 	missingFieldIndicator == nil ifTrue: [missingFieldIndicator := Object new].
 	^missingFieldIndicator.
 ]
 
 { #category : #'*Glorp' }
-DatabaseRow classSide >> new [
+DatabaseRow class >> new [
 
 	^super new initialize.
 ]
 
 { #category : #'*Glorp' }
-DatabaseRow classSide >> newForTable: aTable [
+DatabaseRow class >> newForTable: aTable [
 
 	^self new table: aTable.
 ]
 
 { #category : #'*Glorp' }
-DatabaseRow classSide >> newForTable: aTable withOwner: anObject [
+DatabaseRow class >> newForTable: aTable withOwner: anObject [
 
 	^self new table: aTable; owner: anObject.
 ]

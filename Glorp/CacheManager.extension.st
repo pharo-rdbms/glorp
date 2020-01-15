@@ -1,12 +1,12 @@
 Extension { #name : #CacheManager }
 
 { #category : #'*Glorp' }
-CacheManager classSide >> forSession: aSession [ 
+CacheManager class >> forSession: aSession [ 
 	^self new session: aSession.
 ]
 
 { #category : #'*Glorp' }
-CacheManager classSide >> new [
+CacheManager class >> new [
 
 	^super new initialize.
 ]

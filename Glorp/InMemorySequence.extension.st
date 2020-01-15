@@ -1,7 +1,7 @@
 Extension { #name : #InMemorySequence }
 
 { #category : #'*Glorp' }
-InMemorySequence classSide >> default [
+InMemorySequence class >> default [
 
 	^self new.
 ]

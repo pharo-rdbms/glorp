@@ -31,7 +31,7 @@ Class {
 		'shouldRefresh',
 		'tracing'
 	],
-	#category : 'Glorp-Queries'
+	#category : #'Glorp-Queries'
 }
 
 { #category : #'instance creation' }
@@ -255,6 +255,11 @@ AbstractReadQuery >> except: aQuery [
 ]
 
 { #category : #executing }
+AbstractReadQuery >> execute [
+	^self executeIn: self resultClass session
+]
+
+{ #category : #executing }
 AbstractReadQuery >> executeWithParameters: parameterArray in: aSession [ 
 	| |
 	session := aSession.
@@ -266,6 +271,19 @@ AbstractReadQuery >> executeWithParameters: parameterArray in: aSession [
 	self setupTracing.
 	^self 
 		readFromDatabaseWithParameters: parameterArray
+]
+
+{ #category : #executing }
+AbstractReadQuery >> first [ 
+	^self readsOneObject: true; limit: 1; executeIn: self resultClass session
+]
+
+{ #category : #executing }
+AbstractReadQuery >> first: anInteger [
+	anInteger = 1 
+		ifTrue: [ self readsOneObject: true ]
+		ifFalse: [ self limit: anInteger ].
+	^self executeIn: self resultClass session
 ]
 
 { #category : #testing }

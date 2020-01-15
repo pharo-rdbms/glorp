@@ -39,7 +39,7 @@ Class {
 	#classVars : [
 		'LoggingEnabled'
 	],
-	#category : 'Glorp-Core'
+	#category : #'Glorp-Core'
 }
 
 { #category : #'instance creation' }
@@ -785,6 +785,19 @@ DatabaseAccessor >> isExistingTable: tableName inSchema: schemaName [
 { #category : #transactions }
 DatabaseAccessor >> isInTransaction [
 	^self subclassResponsibility.
+]
+
+{ #category : #'queries metadata' }
+DatabaseAccessor >> listColumnsInTableNamed: aTable schemaNamed: schemaString [
+
+	| databasePlatform sqlStatement result |
+	
+	databasePlatform := self platform.
+	sqlStatement := databasePlatform sqlStatementToListColumnsForTable: aTable inSchema: schemaString.
+	result := self executeSQLString: sqlStatement.
+	^result isEmpty
+		ifTrue: [#()]
+		ifFalse: [result]
 ]
 
 { #category : #'queries metadata' }

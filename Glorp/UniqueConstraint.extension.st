@@ -1,7 +1,7 @@
 Extension { #name : #UniqueConstraint }
 
 { #category : #'*Glorp' }
-UniqueConstraint classSide >> forTable: aTable fields: aCollectionOfFields [
+UniqueConstraint class >> forTable: aTable fields: aCollectionOfFields [
 
 	| instance |
 	instance := self new.

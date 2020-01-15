@@ -1,7 +1,7 @@
 Extension { #name : #RowBasedCommand }
 
 { #category : #'*Glorp' }
-RowBasedCommand classSide >> forRow: aDatabaseRow useBinding: aBoolean session: aSession [
+RowBasedCommand class >> forRow: aDatabaseRow useBinding: aBoolean session: aSession [
 	^(self new)
 		row: aDatabaseRow;
 		useBinding: aBoolean;
@@ -10,7 +10,7 @@ RowBasedCommand classSide >> forRow: aDatabaseRow useBinding: aBoolean session: 
 ]
 
 { #category : #'*Glorp' }
-RowBasedCommand classSide >> forRows: aCollectionOfDatabaseRows useBinding: aBoolean session: aSession [
+RowBasedCommand class >> forRows: aCollectionOfDatabaseRows useBinding: aBoolean session: aSession [
 	^(self new)
 		allRows: aCollectionOfDatabaseRows;
 		row: aCollectionOfDatabaseRows first;

@@ -1,13 +1,13 @@
 Extension { #name : #DatabaseTableConstraint }
 
 { #category : #'*Glorp' }
-DatabaseTableConstraint classSide >> forTable: aDatabaseTable [
+DatabaseTableConstraint class >> forTable: aDatabaseTable [
 	^self new
 		forTable: aDatabaseTable;
 		yourself
 ]
 
 { #category : #'*Glorp' }
-DatabaseTableConstraint classSide >> new [
+DatabaseTableConstraint class >> new [
 	^super new initialize.
 ]

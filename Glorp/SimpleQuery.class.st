@@ -21,7 +21,7 @@ Class {
 		'customCommand',
 		'tablesToPrint'
 	],
-	#category : 'Glorp-Queries'
+	#category : #'Glorp-Queries'
 }
 
 { #category : #preparing }
@@ -370,8 +370,8 @@ SimpleQuery >> prepare [
 	prepared ifTrue: [^self].
 	self setupTracing.
 	whereClause prepareIn: self.
-	self assignTableAliases.
 	self fixJoins.
+	self assignTableAliases.
 	self computeFields.
 	prepared := true.
 ]

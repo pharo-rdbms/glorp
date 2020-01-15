@@ -1,7 +1,7 @@
 Extension { #name : #TableBasedSequence }
 
 { #category : #'*Glorp' }
-TableBasedSequence classSide >> default [
+TableBasedSequence class >> default [
 
 	^self new sequenceTableName: 'SEQUENCE'.
 ]

@@ -4,7 +4,7 @@ This represents a function that takes no arguments and is complete in itself. Th
 Class {
 	#name : #StandaloneFunction,
 	#superclass : #FunctionExpression,
-	#category : 'Glorp-Expressions'
+	#category : #'Glorp-Expressions'
 }
 
 { #category : #accessing }
@@ -15,6 +15,11 @@ StandaloneFunction >> field [
 { #category : #mapping }
 StandaloneFunction >> mappedFields [
 	^Array with: self.
+]
+
+{ #category : #mapping }
+StandaloneFunction >> mappedFieldsCount [
+	^1
 ]
 
 { #category : #printing }

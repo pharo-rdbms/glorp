@@ -1,13 +1,13 @@
 Extension { #name : #Cache }
 
 { #category : #'*Glorp' }
-Cache classSide >> new [
+Cache class >> new [
 
 	^super new initialize.
 ]
 
 { #category : #'*Glorp' }
-Cache classSide >> newFor: aClass in: aCacheManager [ 
+Cache class >> newFor: aClass in: aCacheManager [ 
 	| newCache descriptor |
 	descriptor := aCacheManager session isNil ifFalse: [aCacheManager system descriptorFor: aClass].
 	newCache := Cache new.

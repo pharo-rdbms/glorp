@@ -1,7 +1,7 @@
 Extension { #name : #MultipleRowMapKey }
 
 { #category : #'*Glorp' }
-MultipleRowMapKey classSide >> new [
+MultipleRowMapKey class >> new [
 	"Answer a newly created and initialized instance."
 
 	^super new initialize

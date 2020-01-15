@@ -1,7 +1,7 @@
 Extension { #name : #GlorpPreparedStatement }
 
 { #category : #'*Glorp' }
-GlorpPreparedStatement classSide >> new [
+GlorpPreparedStatement class >> new [
 	"Answer a newly created and initialized instance."
 
 	^super new initialize

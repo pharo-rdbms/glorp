@@ -31,7 +31,7 @@ Class {
 		'imaginaryTableReplacements',
 		'mappingsForFields'
 	],
-	#category : 'Glorp-Mappings'
+	#category : #'Glorp-Mappings'
 }
 
 { #category : #'instance creation' }
@@ -370,6 +370,12 @@ Descriptor >> mappedFields [
 		fieldSet do: [:each | 
  			(each isGlorpExpression and: [each isConstantExpression not]) ifTrue: [mappedFields add: each]]].
 	^mappedFields.
+]
+
+{ #category : #accessing }
+Descriptor >> mappedFieldsCount [
+	"Return all the fields that are mapped, in the order that they occur in the table. This specifically omits fields that are not in the selected set of tables (so e.g. even if a mapping uses a link table field, if it's not in the list of tables to select from, we don't want it). We also include mapped, non-constant expressions, which we would normally expect to be functions"
+	^self mappedFields size
 ]
 
 { #category : #accessing }

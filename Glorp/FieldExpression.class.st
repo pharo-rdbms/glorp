@@ -17,7 +17,7 @@ Class {
 		'base',
 		'alias'
 	],
-	#category : 'Glorp-Expressions'
+	#category : #'Glorp-Expressions'
 }
 
 { #category : #'instance creation' }
@@ -136,6 +136,11 @@ FieldExpression >> impliedSmalltalkType [
 { #category : #mapping }
 FieldExpression >> mappedFields [
 	^Array with: self field.
+]
+
+{ #category : #mapping }
+FieldExpression >> mappedFieldsCount [
+	^1.
 ]
 
 { #category : #accessing }

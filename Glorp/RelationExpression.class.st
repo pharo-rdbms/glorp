@@ -18,7 +18,7 @@ Class {
 		'rightChild',
 		'outerJoin'
 	],
-	#category : 'Glorp-Expressions'
+	#category : #'Glorp-Expressions'
 }
 
 { #category : #'instance creation' }
@@ -198,7 +198,7 @@ RelationExpression >> condensePrimaryKeyComparison [
 
 	| fieldBeingCompared baseObjectExpression join sourceField |
 	(relation = #= or: [relation = #<>]) ifFalse: [^self].
-	self leftChild mappedFields size = 1 ifFalse: [^self].
+	self leftChild mappedFieldsCount = 1 ifFalse: [^self].
 	fieldBeingCompared := self leftChild field.
 	fieldBeingCompared class == DatabaseField ifFalse: [^self].
 	fieldBeingCompared isPrimaryKey ifFalse: [^self].
@@ -332,6 +332,11 @@ RelationExpression >> mappableSourceFieldsDo: aBlock [
 { #category : #mapping }
 RelationExpression >> mappedFields [
 	^Array with: self
+]
+
+{ #category : #mapping }
+RelationExpression >> mappedFieldsCount [
+	^1
 ]
 
 { #category : #'private/initializing' }

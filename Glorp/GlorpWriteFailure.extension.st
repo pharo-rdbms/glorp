@@ -1,6 +1,6 @@
 Extension { #name : #GlorpWriteFailure }
 
 { #category : #'*Glorp' }
-GlorpWriteFailure classSide >> mayResume [
+GlorpWriteFailure class >> mayResume [
 	^true.
 ]

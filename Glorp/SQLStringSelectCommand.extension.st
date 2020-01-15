@@ -1,7 +1,7 @@
 Extension { #name : #SQLStringSelectCommand }
 
 { #category : #'*Glorp' }
-SQLStringSelectCommand classSide >> sqlString: aString parameters: aDictionaryOrArray useBinding: aBoolean session: aSession [
+SQLStringSelectCommand class >> sqlString: aString parameters: aDictionaryOrArray useBinding: aBoolean session: aSession [
 	^(self new)
 		setSQLString: aString;
 		parameters: aDictionaryOrArray;
