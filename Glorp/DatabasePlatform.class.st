@@ -216,6 +216,15 @@ DatabasePlatform >> byteArrayToStringConverter [
 		fromDbToSt: #convertByteArrayToString:for:.
 ]
 
+{ #category : #'conversion-times' }
+DatabasePlatform >> byteaConverter [
+	^DelegatingDatabaseConverter
+		named: #bytea
+		hostedBy: self
+		fromStToDb: #toByteaSQLString:for:
+		fromDbToSt: #nullConverter:for: "P3 converts on the way in"
+]
+
 { #category : #testing }
 DatabasePlatform >> canBind: aValue to: aType [
 	(Dialect unbindableClassNames includes: aValue class name) ifTrue: [^false].
@@ -2223,6 +2232,13 @@ DatabasePlatform >> timestampToDateConverter [
 { #category : #'type converters' }
 DatabasePlatform >> tinyint [
 	^self number
+]
+
+{ #category : #'conversion-times' }
+DatabasePlatform >> toByteaSQLString: aByteArray for: aType [
+	^String streamContents: [ :s | 
+		s nextPut: $\. 
+		aByteArray printHexOn: s ]
 ]
 
 { #category : #'conversion-times' }

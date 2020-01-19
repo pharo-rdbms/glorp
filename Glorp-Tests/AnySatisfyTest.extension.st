@@ -1,6 +1,6 @@
 Extension { #name : #AnySatisfyTest }
 
 { #category : #'*Glorp-Tests' }
-AnySatisfyTest classSide >> resources [
+AnySatisfyTest class >> resources [
 	^Array with: GlorpSessionResource
 ]

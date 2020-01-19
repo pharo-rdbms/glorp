@@ -1,7 +1,7 @@
 Extension { #name : #GlorpThingWithLotsOfDifferentCollections }
 
 { #category : #'*Glorp-Tests' }
-GlorpThingWithLotsOfDifferentCollections classSide >> example1 [
+GlorpThingWithLotsOfDifferentCollections class >> example1 [
 	| example array |
 	example := self new.
 	example name: 'fred'.
@@ -21,7 +21,7 @@ GlorpThingWithLotsOfDifferentCollections classSide >> example1 [
 ]
 
 { #category : #'*Glorp-Tests' }
-GlorpThingWithLotsOfDifferentCollections classSide >> exampleForOrdering [
+GlorpThingWithLotsOfDifferentCollections class >> exampleForOrdering [
 	| example |
 	example := self new.
 	example name: 'order'.
@@ -36,7 +36,7 @@ GlorpThingWithLotsOfDifferentCollections classSide >> exampleForOrdering [
 ]
 
 { #category : #'*Glorp-Tests' }
-GlorpThingWithLotsOfDifferentCollections classSide >> new [
+GlorpThingWithLotsOfDifferentCollections class >> new [
 	"Answer a newly created and initialized instance."
 
 	^super new initialize

@@ -1,6 +1,6 @@
 Extension { #name : #GlorpThingOne }
 
 { #category : #'*Glorp-Tests' }
-GlorpThingOne classSide >> named: aString [
+GlorpThingOne class >> named: aString [
 	^self new name: aString.
 ]

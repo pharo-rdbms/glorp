@@ -69,6 +69,11 @@ PostgresPlatform >> byteArrayToSQLStringConverter [
 ]
 
 { #category : #types }
+PostgresPlatform >> bytea [
+	^self typeNamed: #bytea ifAbsentPut: [GlorpBinaryType new typeString: 'bytea'].
+]
+
+{ #category : #types }
 PostgresPlatform >> char [
 	^self typeNamed: #char ifAbsentPut: [GlorpCharType new typeName: 'character'].
 ]
@@ -519,6 +524,11 @@ PostgresPlatform >> timestampWithTimeZone [
 ]
 
 { #category : #types }
+PostgresPlatform >> timestampWithoutTimeZone [
+	^self typeNamed: #timestamp ifAbsentPut: [GlorpTimeStampType new typeString: 'timestamp without time zone'].
+]
+
+{ #category : #types }
 PostgresPlatform >> timestamptz [
 	^self typeNamed: #timestamptz ifAbsentPut: [GlorpPGTimestampWithTimeZoneType new]
 ]
@@ -566,6 +576,11 @@ PostgresPlatform >> usesInformationSchema [
 { #category : #testing }
 PostgresPlatform >> usesLengthNotEndPosInSubstring [
 	^true
+]
+
+{ #category : #types }
+PostgresPlatform >> uuid [
+	^self typeNamed: #uuid ifAbsentPut: [GlorpUUIDType new].
 ]
 
 { #category : #types }

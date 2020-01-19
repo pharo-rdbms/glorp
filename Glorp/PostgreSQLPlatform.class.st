@@ -189,6 +189,11 @@ PostgreSQLPlatform >> hexPrintBlob: aByteArray on: aStream for: aType [
 	aStream nextPutAll: '''::bytea'.
 ]
 
+{ #category : #types }
+PostgreSQLPlatform >> inet [
+	^self text
+]
+
 { #category : #functions }
 PostgreSQLPlatform >> initializeFunctions [
 	super initializeFunctions.

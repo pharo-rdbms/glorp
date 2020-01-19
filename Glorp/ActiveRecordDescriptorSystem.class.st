@@ -2,7 +2,8 @@ Class {
 	#name : #ActiveRecordDescriptorSystem,
 	#superclass : #DynamicDescriptorSystem,
 	#instVars : [
-		'rootClass'
+		'rootClass',
+		'inflector'
 	],
 	#category : #'Glorp-Mappings'
 }
@@ -95,7 +96,7 @@ ActiveRecordDescriptorSystem >> attributeNameForFieldName: fieldname [
 
 { #category : #naming }
 ActiveRecordDescriptorSystem >> classNameForTableName: tableName [
-	^self prefixedClassName: tableName toCamelCase capitalized
+	^self prefixedClassName: (inflector singularize: tableName toCamelCase capitalized)
 ]
 
 { #category : #naming }
@@ -106,7 +107,6 @@ ActiveRecordDescriptorSystem >> classPrefix [
 { #category : #initialization }
 ActiveRecordDescriptorSystem >> constructAllClasses [
 	"Subclasses can override this method to add classes. But by default we also look for all descriptor methods in our system, and add them to the class list, so if the methods are written there, then we don't need to do anything further. If the descriptor methods are defined on the classes themselves, then we'll still have to construct the class list manually."
-
 	self allTables
 		valuesDo: [ :ea | 
 			| cls classname subclasses ivars |
@@ -130,7 +130,7 @@ ActiveRecordDescriptorSystem >> constructAllClasses [
 								subclass: classname
 								instanceVariableNames: (ivars joinUsing: ' ')
 								classVariableNames: ''
-								package: self rootClass package name).
+								package: (((Array with: self rootClass package name), self rootClass tags) joinUsing: '-')).
 								
 					"Construct accessors"
 					ivars
@@ -143,15 +143,15 @@ ActiveRecordDescriptorSystem >> constructAllClasses [
 					(ea fields detect: [ :f | f name = 'type' ] ifNone: [  ])
 						ifNotNil: [ subclasses := self session accessor
 								executeSQLString: 'select distinct type from ' , ea name.
-							subclasses
+							(subclasses reject: [ :s | s isNil or: [s first isNil] ])
 								do: [ :sub | 
 									allClasses
 										add:
 											(cls
-												subclass: sub first asSymbol
+												subclass: sub first toCamelCase capitalized asSymbol
 												instanceVariableNames: ''
 												classVariableNames: ''
-												package: cls package name) ] ] ] ].
+												package: (((Array with: self rootClass package name), self rootClass tags) joinUsing: '-')) ] ] ] ].
 	^ allClasses
 ]
 
@@ -182,6 +182,12 @@ ActiveRecordDescriptorSystem >> constructTableForeignKeys [
 		].
 	^tables
 	
+]
+
+{ #category : #initialization }
+ActiveRecordDescriptorSystem >> initialize [ 
+	super initialize.
+	inflector := GlorpInflector new.
 ]
 
 { #category : #private }
@@ -264,8 +270,15 @@ ActiveRecordDescriptorSystem >> initializeTable: newTable [
 			(name = 'id' and: [isPrimaryKey and: [type isStringType]]) 
 				ifTrue: [ 
 					type := (databasePlatform generatorFor: type 
-						withBlock: [UUIDGenerator next asString copyWithout: $-]) 
+						withBlock: [UUIDGenerator next asString]) 
 					generatesOverExistingValues: false ].
+				
+			(name = 'id' and: [isPrimaryKey and: [type typeString = #uuid]]) 
+				ifTrue: [ 
+					type := (databasePlatform generatorFor: type 
+						withBlock: [UUIDGenerator next]) 
+					generatesOverExistingValues: false ].
+				
 			column := (newTable createFieldNamed: name type: type)
 				beNullable: isNullable;
 				defaultValue: defaultValue.
@@ -306,7 +319,7 @@ ActiveRecordDescriptorSystem >> likelyTableForForeignKeyNamed: aKey [
 	table := nil.
 	[ table isNil and: [key notEmpty]] whileTrue: [ 
 		table := tables 
-			at: key
+			at: (inflector pluralize: key)
 			ifAbsent: [ key := key copyAfter: $_. nil]].
 		
 	^table
@@ -395,7 +408,7 @@ ActiveRecordDescriptorSystem >> sessionForLogin: aGlorpLogin [
 { #category : #naming }
 ActiveRecordDescriptorSystem >> tableClassForClass: aClass [ 
 	| className |
-	className := (self tableForClass: aClass) name toCamelCase capitalized asSymbol.
+	className := (inflector singularize: (self tableForClass: aClass) name toCamelCase capitalized asSymbol).
 	^allClasses detect: [:ea | ea name = className] ifNone: [ self error: 'No table found for class ', aClass name ]
 	
 ]
@@ -415,7 +428,7 @@ ActiveRecordDescriptorSystem >> tableForClass: aClass [
 
 { #category : #naming }
 ActiveRecordDescriptorSystem >> tableNameForClassName: classname [
-	^(self unprefixedClassName: classname) toSnakeCase
+	^(inflector pluralize: (self unprefixedClassName: classname) toSnakeCase)
 ]
 
 { #category : #naming }
