@@ -1,3 +1,18 @@
+"
+I am an inflector that can convert words from singular to plural and back.
+
+I work using regular expressions with a single capture expression.  Typically this means the capture expression should begin with a .* to capture arbitrary substrings.  The captured prefix is kept and the new suffix is added on.
+
+For intance:
+
+self addPluralRule: '(.*x|.*ch|.*ss|.*sh)$'  asRegexIgnoringCase replacement: 'es'.
+
+Will match any phrase ending in x, ch, ss, or sh and append es to it.  
+
+Uncountables are words that are same in plural or singular like 'sheep'.  You can add new uncountables with addUncountable:.
+
+Irregulars are words that completely change form like person to people.  Adding an irregular adds a rule to both the plurals and the singulars rules.  As rules are applied from most recently added to oldest, the most general rules are added first and irregulars are added last.
+"
 Class {
 	#name : #GlorpInflector,
 	#superclass : #Object,
@@ -16,16 +31,6 @@ GlorpInflector >> addIrregularSingular: asSingular plural: asPlural [
 	
 	self addPluralRule: '(.*)',asSingular,'$' replacement: asPlural.
 	self addSingularRule: '(.*)',asPlural,'$' replacement: asSingular.
-"	self addPluralRule: (asSingular,'($)') asRegex replacement: asPlural asLowercase.
-	self addPluralRule: (asSingular asLowercase capitalized,'($)') asRegex replacement: asPlural asLowercase capitalized.
-	self addPluralRule: (asPlural asLowercase,'($)') asRegex replacement: asPlural asLowercase.
-	self addPluralRule: (asPlural asLowercase capitalized,'($)') asRegex replacement: asPlural asLowercase capitalized.
-	
-	self addSingularRule: (asPlural asLowercase,'($)') asRegex replacement: asSingular asLowercase.
-	self addSingularRule: (asPlural asLowercase capitalized,'($)') asRegex replacement: asSingular asLowercase capitalized.
-	self addSingularRule: asSingular asLowercase,'($)' replacement: asSingular asLowercase.
-	self addSingularRule: asSingular asLowercase capitalized,'($)' replacement: asSingular asLowercase capitalized.
-	"
 ]
 
 { #category : #adding }
@@ -165,7 +170,7 @@ GlorpInflector >> initializeUncountable [
 	#('bison' 'bream' 'breeches' 'britches' 'carp' 'chassis' 'clippers' 'cod' 'contretemps' 'corps' 'debris' 'deer' 'diabetes' 'djinn' 'eland' 'elk' 'equipment' 'fish' 'flounder' 'gallows' 'graffiti' 'headquarters' 'herpes' 'high-jinks' 'homework' 'information' 'innings' 'itis' 'jackanapes' 'jeans' 'mackerel' 'measles' 'metadata' 'mews' 'money' 'mumps' 'news' 'ois' 'pincers' 'pliers' 'police' 'pox' 'proceedings' 'rabies' 'rice' 'salmon' 'scissors' 'sea-bass' 'series' 'shears' 'sheep' 'species' 'swine' 'trout' 'tuna' 'whiting' 'wildebeest') do: [ :ea | self addUncountable: ea ].
 ]
 
-{ #category : #accessing }
+{ #category : #debugging }
 GlorpInflector >> pluralMatch: aString [ 
 	^plural detect: [ :ea | ea key matches: aString ]
 
@@ -182,7 +187,7 @@ GlorpInflector >> removeUncountable: aString [
 		uncountable remove: (self uncountableRegexFrom: aString) ifAbsent: [  ]
 ]
 
-{ #category : #accessing }
+{ #category : #debugging }
 GlorpInflector >> singularMatch: aString [ 
 	^singular detect: [ :ea | ea key matches: aString ]
 
