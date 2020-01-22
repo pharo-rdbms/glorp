@@ -91,22 +91,6 @@ ActiveRecordDescriptorSystem >> allDescriptors [
 	^super allDescriptors.
 ]
 
-{ #category : #naming }
-ActiveRecordDescriptorSystem >> attributeNameForFieldName: fieldname [
-	^fieldname toCamelCase uncapitalized
-	
-]
-
-{ #category : #naming }
-ActiveRecordDescriptorSystem >> classNameForTableName: tableName [
-	^self prefixedClassName: (inflector singularize: tableName toCamelCase capitalized)
-]
-
-{ #category : #naming }
-ActiveRecordDescriptorSystem >> classPrefix [
-	^''
-]
-
 { #category : #initialization }
 ActiveRecordDescriptorSystem >> constructAllClasses [
 	"Subclasses can override this method to add classes. But by default we also look for all descriptor methods in our system, and add them to the class list, so if the methods are written there, then we don't need to do anything further. If the descriptor methods are defined on the classes themselves, then we'll still have to construct the class list manually."
@@ -299,11 +283,6 @@ ActiveRecordDescriptorSystem >> initializeTable: newTable [
 	self deferentialSetSchema: newTable
 ]
 
-{ #category : #'as yet unclassified' }
-ActiveRecordDescriptorSystem >> isTableClass: aClass [ 
-	^(self tableForClass: aClass) name toCamelCase capitalized asSymbol = aClass name
-]
-
 { #category : #naming }
 ActiveRecordDescriptorSystem >> likelyClassForForeignKeyNamed: aKey [
 	| parts key cls |
@@ -390,15 +369,6 @@ ActiveRecordDescriptorSystem >> prefix: aString [
 	inflector prefix: aString
 ]
 
-{ #category : #naming }
-ActiveRecordDescriptorSystem >> prefixedClassName: classname [
-	^self classPrefix ifNotEmpty: [
-		(classname beginsWith: self classPrefix) 
-			ifTrue: [ classname ]
-			ifFalse: [ self classPrefix , classname ]]
-		ifEmpty: [ classname ]
-]
-
 { #category : #accessing }
 ActiveRecordDescriptorSystem >> rootClass [
 	^rootClass ifNil: [ ActiveRecordModel ]
@@ -444,20 +414,4 @@ ActiveRecordDescriptorSystem >> tableForClass: aClass [
 				ifAbsent: [ tableClass := tableClass superclass. nil ] ].
 	^table
 	
-]
-
-{ #category : #naming }
-ActiveRecordDescriptorSystem >> tableNameForClassName: classname [
-	^(inflector pluralize: (self unprefixedClassName: classname) toSnakeCase)
-]
-
-{ #category : #naming }
-ActiveRecordDescriptorSystem >> unprefixedClassName: baseClassname [
-	^ self classPrefix
-		ifNotEmpty: [ (baseClassname beginsWith: self classPrefix)
-				ifTrue: [ baseClassname
-						copyFrom: self classPrefix size + 1
-						to: baseClassname size ]
-				ifFalse: [ baseClassname ] ]
-		ifEmpty: [ baseClassname ]
 ]
