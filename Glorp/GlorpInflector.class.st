@@ -19,10 +19,20 @@ Class {
 	#instVars : [
 		'uncountable',
 		'singular',
-		'plural'
+		'plural',
+		'prefix',
+		'pluralizeTableNames',
+		'prefixTableNames',
+		'prefixClassKeys'
 	],
 	#category : #'Glorp-Core'
 }
+
+{ #category : #accessing }
+GlorpInflector >> accessor: aString [
+	^(self camelize: aString capitalized: false) asSymbol
+	
+]
 
 { #category : #adding }
 GlorpInflector >> addIrregularSingular: asSingular plural: asPlural [
@@ -63,9 +73,70 @@ GlorpInflector >> applyRules: rules to: aString [
 				ifNone: [ aString ] ]
 ]
 
+{ #category : #accessing }
+GlorpInflector >> camelize: aString [
+	| subs |
+	subs := aString substrings: ':_- ,.'.
+	^subs size = 1 
+		ifTrue: [ aString capitalized ] 
+		ifFalse: [ ( subs collect: [ :ea | ea asLowercase capitalized ]) joinUsing: '']
+	
+]
+
+{ #category : #accessing }
+GlorpInflector >> camelize: aString capitalized: shouldCapitalize [
+	^shouldCapitalize 
+		ifTrue: [ self camelize: aString ]
+		ifFalse: [ (self camelize: aString) uncapitalized ]
+	
+]
+
+{ #category : #accessing }
+GlorpInflector >> classKey: aClass [
+	^self prefixClassKeys 
+		ifTrue: [ aClass asString ] 
+		ifFalse: [ self demodulize: aClass asString ]
+	
+]
+
+{ #category : #accessing }
+GlorpInflector >> classify: aTableName [
+	| name |
+	name := aTableName asLowercase.
+	(self prefixTableNames and: [ name beginsWith: (prefix asLowercase, '_') ]) 
+		ifTrue: [ name := name copyAfter: $_ ].
+	self pluralizeTableNames 
+		ifTrue: [ name := self singularize: name ].
+	^self modulize: (self camelize: name)
+]
+
+{ #category : #accessing }
+GlorpInflector >> constantize: aString [
+	^self class environment at: aString asSymbol ifAbsent: [  ]
+	
+]
+
+{ #category : #accessing }
+GlorpInflector >> demodulize: aString [
+	^(prefix notEmpty and: [ aString beginsWith: prefix ]) 
+		ifTrue: [ aString last: ((aString size) - (prefix size)) ] 
+		ifFalse: [ aString ]
+]
+
+{ #category : #accessing }
+GlorpInflector >> foreignKey: aClassName [
+	^self prefixTableNames 
+		ifTrue: [ ((self tableize: aClassName), '_id') copyAfter: $_]
+		ifFalse: [ ((self tableize: aClassName), '_id') ]
+]
+
 { #category : #initialization }
 GlorpInflector >> initialize [ 
 	super initialize.
+	prefix := ''.
+	prefixClassKeys := true.
+	prefixTableNames := true.
+	pluralizeTableNames := true.
 	singular := OrderedCollection new.
 	plural := OrderedCollection new.
 	uncountable := OrderedCollection new.
@@ -170,6 +241,32 @@ GlorpInflector >> initializeUncountable [
 	#('bison' 'bream' 'breeches' 'britches' 'carp' 'chassis' 'clippers' 'cod' 'contretemps' 'corps' 'debris' 'deer' 'diabetes' 'djinn' 'eland' 'elk' 'equipment' 'fish' 'flounder' 'gallows' 'graffiti' 'headquarters' 'herpes' 'high-jinks' 'homework' 'information' 'innings' 'itis' 'jackanapes' 'jeans' 'mackerel' 'measles' 'metadata' 'mews' 'money' 'mumps' 'news' 'ois' 'pincers' 'pliers' 'police' 'pox' 'proceedings' 'rabies' 'rice' 'salmon' 'scissors' 'sea-bass' 'series' 'shears' 'sheep' 'species' 'swine' 'trout' 'tuna' 'whiting' 'wildebeest') do: [ :ea | self addUncountable: ea ].
 ]
 
+{ #category : #accessing }
+GlorpInflector >> modulize: aString [
+	^(prefix notEmpty and: [aString beginsWith: prefix]) ifTrue: [ aString ] ifFalse: [ prefix, aString ]
+]
+
+{ #category : #accessing }
+GlorpInflector >> mutator: aString [
+	^((self camelize: aString capitalized: false), ':') asSymbol
+	
+]
+
+{ #category : #accessing }
+GlorpInflector >> ordinal: anInteger [
+	^ (anInteger \\ 100 between: 11 and: 13)
+		ifTrue: [ 'th' ]
+		ifFalse: [ 
+			#('st' 'nd' 'rd')
+				at: anInteger \\ 10 
+				ifAbsent: [ 'th' ] ]
+]
+
+{ #category : #accessing }
+GlorpInflector >> ordinalize: anInteger [
+	^ anInteger asString, (self ordinal: anInteger)
+]
+
 { #category : #debugging }
 GlorpInflector >> pluralMatch: aString [ 
 	^plural detect: [ :ea | ea key matches: aString ]
@@ -180,6 +277,51 @@ GlorpInflector >> pluralMatch: aString [
 GlorpInflector >> pluralize: aString [ 
 	^self applyRules: plural to: aString
 
+]
+
+{ #category : #configuration }
+GlorpInflector >> pluralizeTableNames [
+	^pluralizeTableNames
+]
+
+{ #category : #configuration }
+GlorpInflector >> pluralizeTableNames: aBoolean [
+	pluralizeTableNames := aBoolean
+]
+
+{ #category : #configuration }
+GlorpInflector >> prefix [ 
+	^prefix
+]
+
+{ #category : #configuration }
+GlorpInflector >> prefix: aString [ 
+	prefix := aString ifNil: [ '' ] ifNotNil: [ aString asUppercase ]
+]
+
+{ #category : #configuration }
+GlorpInflector >> prefixClassKeys [
+	^prefix notEmpty and: [ prefixClassKeys ]
+]
+
+{ #category : #configuration }
+GlorpInflector >> prefixClassKeys: aBoolean [
+	prefixClassKeys := aBoolean
+]
+
+{ #category : #configuration }
+GlorpInflector >> prefixTableNames [
+	^prefix notEmpty and: [ prefixTableNames ]
+]
+
+{ #category : #configuration }
+GlorpInflector >> prefixTableNames: aBoolean [
+	prefixTableNames := aBoolean
+]
+
+{ #category : #accessing }
+GlorpInflector >> primaryKey: aClassName [
+	^'id'
 ]
 
 { #category : #adding }
@@ -199,6 +341,17 @@ GlorpInflector >> singularize: aString [
 
 ]
 
+{ #category : #accessing }
+GlorpInflector >> tableize: aClassName [
+	| name |
+	name := self demodulize: aClassName.
+	^(self prefixTableNames 
+		ifTrue:[ prefix asLowercase, '_' ] 
+		ifFalse: ['']), (pluralizeTableNames 
+			ifTrue: [ self pluralize: (self underscore: name) ]
+			ifFalse: [ self underscore: name ])
+]
+
 { #category : #adding }
 GlorpInflector >> uncountableRegexFrom: aString [ 
 	^(String streamContents: [ :s | 
@@ -206,4 +359,21 @@ GlorpInflector >> uncountableRegexFrom: aString [
 			nextPutAll: '(.*'; 
 			nextPutAll: aString asLowercase;
 			nextPutAll: ')' ]) asRegexIgnoringCase
+]
+
+{ #category : #accessing }
+GlorpInflector >> underscore: aString [
+	^String streamContents: [:s || in c first |
+		in := ReadStream on: aString.
+		c := in next.
+		first := true.
+		[c notNil and: [c isUppercase]] whileTrue: [ 
+			(in peek isLowercase and: [ first not ]) ifTrue: [s nextPut: $_]. 
+			s nextPut: c asLowercase. c := in next. first := false].
+		[ c notNil ] whileTrue: [ 
+			c isUppercase ifTrue: [ s nextPut: $_ ]. 
+			s nextPut: c asLowercase.
+			c := in next]
+		]
+	
 ]

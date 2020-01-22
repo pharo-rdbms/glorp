@@ -10,7 +10,8 @@ Class {
 
 { #category : #adding }
 ActiveRecordDescriptorSystem >> addToManyRelationshipNamed: aName inDescriptor: aDescriptor toClass: aClass join: aJoin [
-	| ivars table realFromClass |
+	| ivars table realFromClass package |
+	package := ((Array with: self rootClass package name), self rootClass tags) joinUsing: '-'.
 	realFromClass := self tableClassForClass: aDescriptor describedClass.
 	realFromClass methodDictionary at: aName asSymbol ifAbsent: [ 
 		"We need to stick in an ivar and accessor for the relationship proxy"
@@ -21,7 +22,7 @@ ActiveRecordDescriptorSystem >> addToManyRelationshipNamed: aName inDescriptor: 
 				subclass: realFromClass name
 				instanceVariableNames: (ivars joinUsing: ' ')
 				classVariableNames: realFromClass classVariablesString
-				package: realFromClass package name.
+				package: package.
 				
 				(RBCreateAccessorsForVariableRefactoring
 					variable: aName asSymbol
@@ -32,7 +33,8 @@ ActiveRecordDescriptorSystem >> addToManyRelationshipNamed: aName inDescriptor: 
 	table := self tableForClass: aClass.
 	aDescriptor mappings
 		detect: [ :m | m attribute name = aName ]
-		ifNone: [ (aDescriptor newMapping: ToManyMapping)
+		ifNone: [ 
+			(aDescriptor newMapping: ToManyMapping)
 				attributeName: aName;
 				referenceClass: (self tableClassForClass: aClass)";
 				mappingCriteria: aJoin;
@@ -41,7 +43,8 @@ ActiveRecordDescriptorSystem >> addToManyRelationshipNamed: aName inDescriptor: 
 
 { #category : #adding }
 ActiveRecordDescriptorSystem >> addToOneRelationshipNamed: aName inDescriptor: aDescriptor toClass: aClass join: aJoin [
-	| ivars realFromClass |
+	| ivars realFromClass package |
+	package := ((Array with: self rootClass package name), self rootClass tags) joinUsing: '-'.
 	realFromClass := self tableClassForClass: aDescriptor describedClass.
 	realFromClass methodDictionary at: aName asSymbol ifAbsent: [  
 		"We need to stick in an ivar and accessor for the relationship proxy"
@@ -52,7 +55,7 @@ ActiveRecordDescriptorSystem >> addToOneRelationshipNamed: aName inDescriptor: a
 				subclass: realFromClass name
 				instanceVariableNames: (ivars joinUsing: ' ')
 				classVariableNames: realFromClass classVariablesString
-				package: realFromClass package name 
+				package: package 
 		].
 					
 			(RBCreateAccessorsForVariableRefactoring
@@ -69,8 +72,8 @@ ActiveRecordDescriptorSystem >> addToOneRelationshipNamed: aName inDescriptor: a
 				referenceClass: (self tableClassForClass: aClass);
 				"mappingCriteria: aJoin;"
 				"proxyAction: [ :owner :target | target ifNotNil: [owner perform: (aName,':')asSymbol with: target] ];"
-				debugRead: (aClass = HowYouHeard and: [ aName asSymbol = #channels]);
-				debugWrite: (aClass = HowYouHeard and: [ aName asSymbol = #channels])].
+				debugRead: (aClass = TXHowYouHeard and: [ aName asSymbol = #channels]);
+				debugWrite: (aClass = TXHowYouHeard and: [ aName asSymbol = #channels])].
 	
 		
 ]
@@ -107,12 +110,14 @@ ActiveRecordDescriptorSystem >> classPrefix [
 { #category : #initialization }
 ActiveRecordDescriptorSystem >> constructAllClasses [
 	"Subclasses can override this method to add classes. But by default we also look for all descriptor methods in our system, and add them to the class list, so if the methods are written there, then we don't need to do anything further. If the descriptor methods are defined on the classes themselves, then we'll still have to construct the class list manually."
+	| package |
+	package := ((Array with: self rootClass package name), self rootClass tags) joinUsing: '-'.
 	self allTables
 		valuesDo: [ :ea | 
 			| cls classname subclasses ivars |
 			ea primaryKeyFields size = 1
-				ifTrue: [ classname := self classNameForTableName: ea name.
-					cls := Smalltalk at: classname asSymbol ifAbsent: [ nil ].
+				ifTrue: [ classname := inflector modulize: (inflector classify: ea name).
+					cls := inflector constantize: classname.
 					ivars := (cls
 						ifNil: [ #() ]
 						ifNotNil: [ cls instVarNames collect: [ :v | v asString ] ])
@@ -120,17 +125,18 @@ ActiveRecordDescriptorSystem >> constructAllClasses [
 					"Add missing fields"
 					ea fields
 						do: [ :f | 
-							(ivars includes: f name toCamelCase)
-								ifFalse: [ ivars add: f name toCamelCase ] ].
+							| var |
+							var := inflector camelize: f name capitalized: false.
+							(ivars includes: var)
+								ifFalse: [ ivars add: var ] ].
 					ivars remove: 'type' ifAbsent: [  ].
-					
 					allClasses
 						add:
 							(cls := self rootClass
 								subclass: classname
 								instanceVariableNames: (ivars joinUsing: ' ')
 								classVariableNames: ''
-								package: (((Array with: self rootClass package name), self rootClass tags) joinUsing: '-')).
+								package: package).
 								
 					"Construct accessors"
 					ivars
@@ -148,10 +154,10 @@ ActiveRecordDescriptorSystem >> constructAllClasses [
 									allClasses
 										add:
 											(cls
-												subclass: sub first toCamelCase capitalized asSymbol
+												subclass: (inflector modulize: sub first) asSymbol
 												instanceVariableNames: ''
 												classVariableNames: ''
-												package: (((Array with: self rootClass package name), self rootClass tags) joinUsing: '-')) ] ] ] ].
+												package: package) ] ] ] ].
 	^ allClasses
 ]
 
@@ -162,7 +168,9 @@ ActiveRecordDescriptorSystem >> constructAllDescriptors [
 
 { #category : #initialization }
 ActiveRecordDescriptorSystem >> constructAllTables [
-	| tableNames |
+	| tableNames accessor |
+	accessor := self session accessor.
+	accessor isLoggedIn ifFalse: [ accessor login ].
 	tables := Dictionary new.
 	tableNames := self session accessor listTableNamesInSchemaNamed: self session accessor schema.
 	tableNames do: [:aTableName | self tableNamed: aTableName ].
@@ -208,7 +216,7 @@ ActiveRecordDescriptorSystem >> initializeDescriptor: aDescriptor [
 	(directFields, foreignKeys) 
 		do: [ :field | 
 			(aDescriptor newMapping: DirectMapping)
-				from: field name toCamelCase asSymbol
+				from: (inflector accessor: field name)
 				to: field ].
 			
 	typeField
@@ -216,7 +224,7 @@ ActiveRecordDescriptorSystem >> initializeDescriptor: aDescriptor [
 			resolver := FilteredTypeResolver forRootClass: (self tableClassForClass: aDescriptor describedClass).
 			resolver
 				register: aDescriptor
-				keyedBy: aDescriptor describedClass name asString
+				keyedBy: (inflector classKey: aDescriptor describedClass)
 				field: typeField ].
 			
 	^ aDescriptor
@@ -247,12 +255,12 @@ ActiveRecordDescriptorSystem >> initializeTable: newTable [
 			isPrimaryKey := row sixth = 1.
 			type := (length
 				ifNil: [ | sel |
-					sel := dbType toCamelCase.
-					(databasePlatform respondsTo: sel asSymbol) 
+					sel := inflector accessor: dbType.
+					(databasePlatform respondsTo: sel) 
 						ifTrue: [ databasePlatform perform: sel asSymbol ]
 						ifFalse: [ databasePlatform perform: sel asLowercase asSymbol ]]
 				ifNotNil: [ databasePlatform
-						perform: (dbType toCamelCase , ':') asSymbol
+						perform: (inflector mutator: dbType)
 						with: length ]).
 			
 			(name = 'created_at' and: [ dbType asLowercase beginsWith: 'timestamp' ]) 
@@ -303,7 +311,7 @@ ActiveRecordDescriptorSystem >> likelyClassForForeignKeyNamed: aKey [
 	parts := parts copyUpToLast: parts last.
 	cls := nil.
 	[ cls isNil and: [parts notEmpty]] whileTrue: [ 
-		key := (parts joinUsing: '_') toCamelCase capitalized.
+		key := inflector classify: (parts joinUsing: '_').
 		cls := allClasses 
 			detect: [ :ea | ea name = key ] 
 			ifNone: [ parts := parts copyWithoutFirst. nil]].
@@ -316,10 +324,11 @@ ActiveRecordDescriptorSystem >> likelyClassForForeignKeyNamed: aKey [
 ActiveRecordDescriptorSystem >> likelyTableForForeignKeyNamed: aKey [
 	| key table |
 	key := aKey asUppercase copyUpToLast: $_.
+	inflector pluralizeTableNames ifTrue: [ key := inflector pluralize: key ].
 	table := nil.
 	[ table isNil and: [key notEmpty]] whileTrue: [ 
 		table := tables 
-			at: (inflector pluralize: key)
+			at: key
 			ifAbsent: [ key := key copyAfter: $_. nil]].
 		
 	^table
@@ -343,7 +352,7 @@ ActiveRecordDescriptorSystem >> postInitializeDescriptor: aDescriptor [
 	foreignKeys
 		do: [ :field | 
 			| otherClass attrName |
-			attrName := (field name copyUpToLast: $_) toCamelCase.
+			attrName := inflector camelize: (field name copyUpToLast: $_) capitalized: false.
 			otherClass := self likelyClassForForeignKeyNamed: field name.
 			
 			otherClass
@@ -354,7 +363,7 @@ ActiveRecordDescriptorSystem >> postInitializeDescriptor: aDescriptor [
 						inDescriptor: aDescriptor 
 						toClass: otherClass 
 						join: join. 
-					reverseRelationshipName := table name toCamelCase pluralize uncapitalized.
+					reverseRelationshipName := inflector pluralize: (inflector camelize: table name capitalized: false).
 					(otherClass = (self tableClassForClass: aDescriptor describedClass)) ifFalse: [  
 						otherClass withAllSubclassesDo:[:other | 
 							| otherDescriptor |
@@ -369,6 +378,16 @@ ActiveRecordDescriptorSystem >> postInitializeDescriptor: aDescriptor [
 					]
 				].
 	^ aDescriptor
+]
+
+{ #category : #accessing }
+ActiveRecordDescriptorSystem >> prefix [
+	^inflector prefix
+]
+
+{ #category : #accessing }
+ActiveRecordDescriptorSystem >> prefix: aString [
+	inflector prefix: aString
 ]
 
 { #category : #naming }
@@ -408,8 +427,9 @@ ActiveRecordDescriptorSystem >> sessionForLogin: aGlorpLogin [
 { #category : #naming }
 ActiveRecordDescriptorSystem >> tableClassForClass: aClass [ 
 	| className |
-	className := (inflector singularize: (self tableForClass: aClass) name toCamelCase capitalized asSymbol).
-	^allClasses detect: [:ea | ea name = className] ifNone: [ self error: 'No table found for class ', aClass name ]
+	className := (inflector classify: (self tableForClass: aClass) name) asSymbol.
+"	className := (inflector singularize: (self tableForClass: aClass) name toCamelCase capitalized asSymbol).
+"	^allClasses detect: [:ea | ea name = className] ifNone: [ self error: 'No table found for class ', aClass name ]
 	
 ]
 
@@ -420,7 +440,7 @@ ActiveRecordDescriptorSystem >> tableForClass: aClass [
 	tableClass := aClass.
 	[ table ]
 		whileNil: [ table := tables
-				at: (self tableNameForClassName: tableClass name) asUppercase
+				at: (inflector tableize: tableClass name) asUppercase
 				ifAbsent: [ tableClass := tableClass superclass. nil ] ].
 	^table
 	
