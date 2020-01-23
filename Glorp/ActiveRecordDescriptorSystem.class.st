@@ -3,7 +3,8 @@ Class {
 	#superclass : #DynamicDescriptorSystem,
 	#instVars : [
 		'rootClass',
-		'inflector'
+		'inflector',
+		'classesWereModified'
 	],
 	#category : #'Glorp-Mappings'
 }
@@ -17,6 +18,7 @@ ActiveRecordDescriptorSystem >> addToManyRelationshipNamed: aName inDescriptor: 
 		"We need to stick in an ivar and accessor for the relationship proxy"
 		ivars := realFromClass instVarNames.
 		(ivars includes: aName asSymbol) ifFalse: [
+			classesWereModified := true.
 			ivars := ivars copyWith: aName.
 			realFromClass superclass
 				subclass: realFromClass name
@@ -36,9 +38,7 @@ ActiveRecordDescriptorSystem >> addToManyRelationshipNamed: aName inDescriptor: 
 		ifNone: [ 
 			(aDescriptor newMapping: ToManyMapping)
 				attributeName: aName;
-				referenceClass: (self tableClassForClass: aClass)";
-				mappingCriteria: aJoin;
-				orderBy: [ :each | (each getTable: table name asUppercase) getField: (aName toCamelCase, '_id') ]" ]
+				referenceClass: (self tableClassForClass: aClass) ]
 ]
 
 { #category : #adding }
@@ -50,6 +50,7 @@ ActiveRecordDescriptorSystem >> addToOneRelationshipNamed: aName inDescriptor: a
 		"We need to stick in an ivar and accessor for the relationship proxy"
 		ivars := realFromClass instVarNames.
 		(ivars includes: aName asSymbol) ifFalse: [ 
+			classesWereModified := true.
 			ivars := ivars copyWith: aName.
 			realFromClass superclass
 				subclass: realFromClass name
@@ -69,11 +70,7 @@ ActiveRecordDescriptorSystem >> addToOneRelationshipNamed: aName inDescriptor: a
 		ifNone: [ 
 			(aDescriptor newMapping: OneToOneMapping)
 				attributeName: aName asSymbol;
-				referenceClass: (self tableClassForClass: aClass);
-				"mappingCriteria: aJoin;"
-				"proxyAction: [ :owner :target | target ifNotNil: [owner perform: (aName,':')asSymbol with: target] ];"
-				debugRead: (aClass = TXHowYouHeard and: [ aName asSymbol = #channels]);
-				debugWrite: (aClass = TXHowYouHeard and: [ aName asSymbol = #channels])].
+				referenceClass: (self tableClassForClass: aClass)].
 	
 		
 ]
@@ -87,7 +84,16 @@ ActiveRecordDescriptorSystem >> allClasses [
 
 { #category : #accessing }
 ActiveRecordDescriptorSystem >> allDescriptors [
-	descriptors ifEmpty: [ self constructAllDescriptors ].
+	descriptors ifEmpty: [ 
+		classesWereModified := false.
+		self constructAllDescriptors.
+		"Check if we had to reshape any classes - if we did then our descriptor inst var offsets are wrong.  
+		Build them again. This should only happen during development when making changes."
+		classesWereModified ifTrue: [ 
+			descriptors := Dictionary new.
+			classesWereModified := false. 
+			self constructAllDescriptors.
+			classesWereModified ifTrue: [self error: 'There is a bug here!'] ] ].
 	^super allDescriptors.
 ]
 
@@ -98,29 +104,36 @@ ActiveRecordDescriptorSystem >> constructAllClasses [
 	package := ((Array with: self rootClass package name), self rootClass tags) joinUsing: '-'.
 	self allTables
 		valuesDo: [ :ea | 
-			| cls classname subclasses ivars |
+			| cls classname subclasses ivars cvars needsUpdate |
+			needsUpdate := false.
 			ea primaryKeyFields size = 1
 				ifTrue: [ classname := inflector modulize: (inflector classify: ea name).
 					cls := inflector constantize: classname.
-					ivars := (cls
-						ifNil: [ #() ]
-						ifNotNil: [ cls instVarNames collect: [ :v | v asString ] ])
-						asOrderedCollection.
+					cls
+						ifNil: [ 
+							needsUpdate := true. 
+							ivars := OrderedCollection new.
+							cvars := OrderedCollection new ]
+						ifNotNil: [ 
+							ivars := (cls instVarNames collect: [ :v | v asString ]) asOrderedCollection.
+							cvars := (cls classVarNames collect: [:v | v asString ]) asOrderedCollection ].
 					"Add missing fields"
 					ea fields
 						do: [ :f | 
 							| var |
 							var := inflector camelize: f name capitalized: false.
 							(ivars includes: var)
-								ifFalse: [ ivars add: var ] ].
+								ifFalse: [ needsUpdate := true. ivars add: var ] ].
 					ivars remove: 'type' ifAbsent: [  ].
 					allClasses
 						add:
-							(cls := self rootClass
-								subclass: classname
-								instanceVariableNames: (ivars joinUsing: ' ')
-								classVariableNames: ''
-								package: package).
+							(needsUpdate ifTrue: [ 
+								classesWereModified := true. 
+								cls := self rootClass
+									subclass: classname
+									instanceVariableNames: (ivars joinUsing: ' ')
+									classVariableNames: (cvars joinUsing: ' ')
+									package: package] ifFalse: [ cls ]).
 								
 					"Construct accessors"
 					ivars
@@ -134,14 +147,16 @@ ActiveRecordDescriptorSystem >> constructAllClasses [
 						ifNotNil: [ subclasses := self session accessor
 								executeSQLString: 'select distinct type from ' , ea name.
 							(subclasses reject: [ :s | s isNil or: [s first isNil] ])
-								do: [ :sub | 
+								do: [ :sub || subName |
+									subName := (inflector classify: (inflector modulize: sub first)) asSymbol.
 									allClasses
 										add:
-											(cls
-												subclass: (inflector modulize: sub first) asSymbol
-												instanceVariableNames: ''
-												classVariableNames: ''
-												package: package) ] ] ] ].
+											((inflector constantize: subName) ifNil: [  
+												cls
+													subclass: subName 
+													instanceVariableNames: ''
+													classVariableNames: ''
+													package: package ]) ] ] ] ].
 	^ allClasses
 ]
 
@@ -180,6 +195,7 @@ ActiveRecordDescriptorSystem >> constructTableForeignKeys [
 ActiveRecordDescriptorSystem >> initialize [ 
 	super initialize.
 	inflector := GlorpInflector new.
+	classesWereModified := false.
 ]
 
 { #category : #private }
@@ -312,6 +328,28 @@ ActiveRecordDescriptorSystem >> likelyTableForForeignKeyNamed: aKey [
 		
 	^table
 	
+]
+
+{ #category : #accessing }
+ActiveRecordDescriptorSystem >> linkTables [
+	"Assumption is link tables have compound primary keys of foreign keys or is composed of only foreign keys, timestamps, 
+	and maybe a primary key, and maybe a single integer field used for ordering."
+	^self allTables values select: [ :table || remaining |
+			remaining := (table fields reject: [:field | 
+				((field name endsWith: '_id') or:[ field name = 'id' ]) 
+					or: [ #(created_at updated_at deleted_at) includes: field name asSymbol ] ]).
+				"(remaining size = 1 and: [remaining last type isIntegerType]) or: [ "remaining isEmpty "]" ]
+]
+
+{ #category : #accessing }
+ActiveRecordDescriptorSystem >> mappedTables [
+	"Assumption is link tables have compound primary keys of foreign keys or is composed of only foreign keys, timestamps, 
+	and maybe a primary key, and maybe a single integer field used for ordering."
+	^self allTables values reject: [ :table || remaining |
+			remaining := (table fields reject: [:field | 
+				((field name endsWith: '_id') or:[ field name = 'id' ]) 
+					or: [ #(created_at updated_at deleted_at) includes: field name asSymbol ] ]).
+				"(remaining size = 1 and: [remaining last type isIntegerType]) or: [ "remaining isEmpty "]" ]
 ]
 
 { #category : #private }

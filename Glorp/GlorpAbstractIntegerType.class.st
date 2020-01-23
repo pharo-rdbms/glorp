@@ -4,7 +4,7 @@ Abstract integer type
 Class {
 	#name : #GlorpAbstractIntegerType,
 	#superclass : #GlorpAbstractNumericType,
-	#category : 'Glorp-Types'
+	#category : #'Glorp-Types'
 }
 
 { #category : #converting }
@@ -22,4 +22,9 @@ GlorpAbstractIntegerType >> impliedSmalltalkType [
 GlorpAbstractIntegerType >> initialize [
 	super initialize.
 	typeString := 'integer'.
+]
+
+{ #category : #testing }
+GlorpAbstractIntegerType >> isIntegerType [
+	^true
 ]

@@ -20,7 +20,7 @@ Class {
 		'selector',
 		'typeString'
 	],
-	#category : 'Glorp-Types'
+	#category : #'Glorp-Types'
 }
 
 { #category : #'as yet unclassified' }
@@ -133,6 +133,12 @@ GlorpDatabaseType >> isGenerated [
 
 { #category : #testing }
 GlorpDatabaseType >> isIdentityColumn [
+	^false.
+]
+
+{ #category : #testing }
+GlorpDatabaseType >> isIntegerType [
+	"Return true if the type of values this stores are strings"
 	^false.
 ]
 

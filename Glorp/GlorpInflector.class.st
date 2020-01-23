@@ -64,8 +64,10 @@ GlorpInflector >> addUncountable: aString [
 
 { #category : #private }
 GlorpInflector >> applyRules: rules to: aString [
+	| final |
+	final := (aString substrings: ' -_:.,?!;+=') last.
 	^uncountable
-		detect: [ :ea | ea matches: aString ]
+		detect: [ :ea | ea matches: final ]
 		ifFound: [:ea | aString ]
 		ifNone: [ rules
 				detect: [ :ea | ea key matches: aString ]
@@ -102,8 +104,8 @@ GlorpInflector >> classKey: aClass [
 { #category : #accessing }
 GlorpInflector >> classify: aTableName [
 	| name |
-	name := aTableName asLowercase.
-	(self prefixTableNames and: [ name beginsWith: (prefix asLowercase, '_') ]) 
+	name := aTableName.
+	(self prefixTableNames and: [ name asLowercase beginsWith: (prefix asLowercase, '_') ]) 
 		ifTrue: [ name := name copyAfter: $_ ].
 	self pluralizeTableNames 
 		ifTrue: [ name := self singularize: name ].
@@ -356,7 +358,7 @@ GlorpInflector >> tableize: aClassName [
 GlorpInflector >> uncountableRegexFrom: aString [ 
 	^(String streamContents: [ :s | 
 		s 
-			nextPutAll: '(.*'; 
+			nextPutAll: '(^'; 
 			nextPutAll: aString asLowercase;
 			nextPutAll: ')' ]) asRegexIgnoringCase
 ]
