@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'engine'
 	],
-	#category : 'Glorp-Platforms'
+	#category : #'Glorp-Platforms'
 }
 
 { #category : #'as yet unclassified' }
@@ -281,6 +281,29 @@ MySQLPlatform >> printPostLimit: anInteger on: aCommand [
     aCommand
         nextPutAll: ' LIMIT '.
     anInteger printOn: aCommand.
+]
+
+{ #category : #'services tables' }
+MySQLPlatform >> printSqlStatementToListColumnsInTable: aDatabaseTable inSchema: schemaString on: aStream [
+	" Query to fetch column definitions in mysql in the format ActiveRecordDescriptorSystem wants"
+	^(String streamContents: [ :s | s
+		nextPutAll: 'select col.column_name as name, '; 
+		nextPutAll: 'col.data_type as type, '; 
+		nextPutAll: 'case when col.numeric_precision is not null ';
+      nextPutAll:     'then col.numeric_precision ';
+      nextPutAll:     'else col.character_maximum_length end as length, ';
+		nextPutAll: 'if(col.is_nullable = ''YES'',1,0) as nullable, ';
+		nextPutAll: 'col.column_default as default_value, ';
+		nextPutAll: 'if(col.column_key = ''PRI'' or col.column_key = ''MUL'',1,0) as pk ';
+		nextPutAll: 'from information_schema.tables as tab ';
+		nextPutAll: 'inner join information_schema.columns as col ';
+		nextPutAll:     'on col.table_schema = tab.table_schema ';
+		nextPutAll:     'and col.table_name = tab.table_name ';
+		nextPutAll: 'where tab.table_type = ''BASE TABLE'' ';
+		nextPutAll:     'and tab.table_schema not in (''information_schema'',''mysql'',''performance_schema'',''sys'') ';
+		nextPutAll:     'and tab.table_schema = ''{2}'' and col.table_name = ''{1}'' ';
+		nextPutAll: 'order by tab.table_name, col.ordinal_position ']) format: { aDatabaseTable . schemaString }
+		
 ]
 
 { #category : #'conversion-times' }
