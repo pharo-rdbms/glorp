@@ -64,10 +64,8 @@ GlorpInflector >> addUncountable: aString [
 
 { #category : #private }
 GlorpInflector >> applyRules: rules to: aString [
-	| final |
-	final := (aString substrings: ' -_:.,?!;+=') last.
 	^uncountable
-		detect: [ :ea | ea matches: final ]
+		detect: [ :ea | ea matches: aString ]
 		ifFound: [:ea | aString ]
 		ifNone: [ rules
 				detect: [ :ea | ea key matches: aString ]
@@ -167,6 +165,7 @@ GlorpInflector >> initializePlural [
 	self addPluralRule: '.*$' asRegexIgnoringCase replacement: 's'.
 	self addPluralRule: '(.*x|.*ch|.*ss|.*sh)$'  asRegexIgnoringCase replacement: 'es'.
 	self addPluralRule: '(^.*[^aeiou])y$'  asRegexIgnoringCase replacement: 'ies'.
+	self addPluralRule: '(.*s)eries$' asRegexIgnoringCase replacement:  'eries'.
 	self addPluralRule: '(.*matr|.*vert|.*ind)[ie]x$'  asRegexIgnoringCase replacement: 'ices'.
 	self addPluralRule: '(.*)fe?$'  asRegexIgnoringCase replacement: 'ves'.
 	self addPluralRule: '(.*ba|.*diagno|.*analy)sis$'  asRegexIgnoringCase replacement: 'ses'.
@@ -189,6 +188,7 @@ GlorpInflector >> initializeSingular [
 	self addSingularRule: '(.*)s$' asRegexIgnoringCase replacement:  ''.
 	self addSingularRule: '(.*x|.*ch|.*ss|.*sh)es$' asRegexIgnoringCase replacement:  ''.
 	self addSingularRule: '(.*[^aeiou])ies$'  asRegexIgnoringCase replacement: 'y'.
+	self addSingularRule: '(.*s)eries$' asRegexIgnoringCase replacement:  'eries'.
 	self addSingularRule: '(.*m)ovies$' asRegexIgnoringCase replacement:  'ovie'.
 	self addSingularRule: '(.*vert|.*ind)ices$' asRegexIgnoringCase replacement:  'ex'.
 	self addSingularRule: '(.*[^f])ves$' asRegexIgnoringCase replacement:  'fe'.
@@ -240,7 +240,7 @@ GlorpInflector >> initializeSingular [
 
 { #category : #initialization }
 GlorpInflector >> initializeUncountable [
-	#('bison' 'bream' 'breeches' 'britches' 'carp' 'chassis' 'clippers' 'cod' 'contretemps' 'corps' 'debris' 'deer' 'diabetes' 'djinn' 'eland' 'elk' 'equipment' 'fish' 'flounder' 'gallows' 'graffiti' 'headquarters' 'herpes' 'high-jinks' 'homework' 'information' 'innings' 'itis' 'jackanapes' 'jeans' 'mackerel' 'measles' 'metadata' 'mews' 'money' 'mumps' 'news' 'ois' 'pincers' 'pliers' 'police' 'pox' 'proceedings' 'rabies' 'rice' 'salmon' 'scissors' 'sea-bass' 'series' 'shears' 'sheep' 'species' 'swine' 'trout' 'tuna' 'whiting' 'wildebeest') do: [ :ea | self addUncountable: ea ].
+	#('bison' 'bream' 'breeches' 'britches' 'carp' 'chassis' 'clippers' 'cod' 'contretemps' 'corps' 'debris' 'deer' 'diabetes' 'djinn' 'eland' 'elk' 'equipment' 'fish' 'flounder' 'gallows' 'graffiti' 'headquarters' 'herpes' 'high-jinks' 'homework' 'information' 'innings' 'itis' 'jackanapes' 'jeans' 'mackerel' 'measles' 'metadata' 'mews' 'money' 'mumps' 'news' 'ois' 'pincers' 'pliers' 'police' 'pox' 'proceedings' 'rabies' 'rice' 'salmon' 'scissors' 'sea-bass' 'shears' 'sheep' 'species' 'swine' 'trout' 'tuna' 'whiting' 'wildebeest') do: [ :ea | self addUncountable: ea ].
 ]
 
 { #category : #accessing }
@@ -256,11 +256,13 @@ GlorpInflector >> mutator: aString [
 
 { #category : #accessing }
 GlorpInflector >> ordinal: anInteger [
-	^ (anInteger \\ 100 between: 11 and: 13)
+	| integer |
+	integer := anInteger asInteger abs.
+	^ (integer \\ 100 between: 11 and: 13)
 		ifTrue: [ 'th' ]
 		ifFalse: [ 
 			#('st' 'nd' 'rd')
-				at: anInteger \\ 10 
+				at: integer \\ 10 
 				ifAbsent: [ 'th' ] ]
 ]
 
@@ -358,9 +360,9 @@ GlorpInflector >> tableize: aClassName [
 GlorpInflector >> uncountableRegexFrom: aString [ 
 	^(String streamContents: [ :s | 
 		s 
-			nextPutAll: '(^'; 
+			nextPutAll: '.*\b'; 
 			nextPutAll: aString asLowercase;
-			nextPutAll: ')' ]) asRegexIgnoringCase
+			nextPutAll: '$' ]) asRegexIgnoringCase
 ]
 
 { #category : #accessing }

@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'rootClass',
 		'inflector',
-		'classesWereModified'
+		'classesWereModified',
+		'sortingFieldNames'
 	],
 	#category : #'Glorp-Mappings'
 }
@@ -191,11 +192,22 @@ ActiveRecordDescriptorSystem >> constructTableForeignKeys [
 	
 ]
 
+{ #category : #accessing }
+ActiveRecordDescriptorSystem >> inflector [
+	^ inflector
+]
+
+{ #category : #accessing }
+ActiveRecordDescriptorSystem >> inflector: anObject [
+	inflector := anObject
+]
+
 { #category : #initialization }
 ActiveRecordDescriptorSystem >> initialize [ 
 	super initialize.
 	inflector := GlorpInflector new.
 	classesWereModified := false.
+	sortingFieldNames := #(position sequence_no seq_no sequence_num seq_num sort_no display_position display_order )
 ]
 
 { #category : #private }
@@ -299,6 +311,53 @@ ActiveRecordDescriptorSystem >> initializeTable: newTable [
 	self deferentialSetSchema: newTable
 ]
 
+{ #category : #accessing }
+ActiveRecordDescriptorSystem >> isLinkTable: aTable [
+	"Assumption is link tables have compound primary keys of foreign keys or is composed of only foreign keys, timestamps, 
+	and maybe a primary key, and maybe a single integer field used for ordering."
+
+	| primaryKeys foreignKeys timestamps other |
+	primaryKeys := aTable primaryKeyFields.
+	foreignKeys := aTable fields
+		select: [ :field | 
+			| table |
+			table := self likelyTableForForeignKeyNamed: field name.
+			"Ignore recursive links"
+			table notNil and: [ table ~= aTable ] ].
+	timestamps := aTable fields
+		select:
+			[ :field | self isTimestampField: field name asSymbol ].
+	other := aTable fields
+		reject: [ :ea | 
+			(primaryKeys includes: ea)
+				or: [ (foreignKeys includes: ea) or: [ timestamps includes: ea ] ] ].
+	^ foreignKeys size = 2
+		and: [ other size < 2
+				and: [ other isEmpty
+						or: [ other first type isIntegerType
+								and: [ self isSortingField: other first ] ] ] ]
+]
+
+{ #category : #naming }
+ActiveRecordDescriptorSystem >> isSortingField: aFieldOrName [
+	| realName |
+	realName := aFieldOrName isString 
+		ifTrue: [ aFieldOrName asSymbol ] 
+		ifFalse: [ aFieldOrName name asSymbol ].
+		
+	^sortingFieldNames includes: realName
+]
+
+{ #category : #naming }
+ActiveRecordDescriptorSystem >> isTimestampField: aFieldOrName [
+	| realName |
+	realName := aFieldOrName isString 
+		ifTrue: [ aFieldOrName asSymbol ] 
+		ifFalse: [ aFieldOrName name asSymbol ].
+		
+	^#(created_at updated_at deleted_at) includes: realName
+]
+
 { #category : #naming }
 ActiveRecordDescriptorSystem >> likelyClassForForeignKeyNamed: aKey [
 	| parts key cls |
@@ -319,13 +378,20 @@ ActiveRecordDescriptorSystem >> likelyClassForForeignKeyNamed: aKey [
 ActiveRecordDescriptorSystem >> likelyTableForForeignKeyNamed: aKey [
 	| key table |
 	key := aKey asUppercase copyUpToLast: $_.
-	inflector pluralizeTableNames ifTrue: [ key := inflector pluralize: key ].
+	inflector pluralizeTableNames ifTrue: [ key := (inflector pluralize: key) asUppercase ].
 	table := nil.
 	[ table isNil and: [key notEmpty]] whileTrue: [ 
 		table := tables 
 			at: key
 			ifAbsent: [ key := key copyAfter: $_. nil]].
-		
+	table ifNil: [ | candidates |
+		key := aKey asUppercase copyUpToLast: $_.
+		inflector pluralizeTableNames ifTrue: [ key := (inflector pluralize: key) asUppercase ].
+		candidates := tables keys select: [ :ea | ea endsWith: key ].
+		candidates ifNotEmpty: [ 
+			candidates sort: [ :a :b | (a size) < (b size) ].
+			table := tables at: candidates first.
+			] ].
 	^table
 	
 ]
@@ -334,22 +400,14 @@ ActiveRecordDescriptorSystem >> likelyTableForForeignKeyNamed: aKey [
 ActiveRecordDescriptorSystem >> linkTables [
 	"Assumption is link tables have compound primary keys of foreign keys or is composed of only foreign keys, timestamps, 
 	and maybe a primary key, and maybe a single integer field used for ordering."
-	^self allTables values select: [ :table || remaining |
-			remaining := (table fields reject: [:field | 
-				((field name endsWith: '_id') or:[ field name = 'id' ]) 
-					or: [ #(created_at updated_at deleted_at) includes: field name asSymbol ] ]).
-				"(remaining size = 1 and: [remaining last type isIntegerType]) or: [ "remaining isEmpty "]" ]
+	^self allTables values select: [ :table | self isLinkTable: table ]
 ]
 
 { #category : #accessing }
 ActiveRecordDescriptorSystem >> mappedTables [
 	"Assumption is link tables have compound primary keys of foreign keys or is composed of only foreign keys, timestamps, 
 	and maybe a primary key, and maybe a single integer field used for ordering."
-	^self allTables values reject: [ :table || remaining |
-			remaining := (table fields reject: [:field | 
-				((field name endsWith: '_id') or:[ field name = 'id' ]) 
-					or: [ #(created_at updated_at deleted_at) includes: field name asSymbol ] ]).
-				"(remaining size = 1 and: [remaining last type isIntegerType]) or: [ "remaining isEmpty "]" ]
+	^self allTables values reject: [ :table | self isLinkTable: table ]
 ]
 
 { #category : #private }
@@ -430,6 +488,16 @@ ActiveRecordDescriptorSystem >> sessionForLogin: aGlorpLogin [
 	newSession accessor login.
 	newSession system: self.
 	^newSession
+]
+
+{ #category : #accessing }
+ActiveRecordDescriptorSystem >> sortingFieldNames [
+	^ sortingFieldNames
+]
+
+{ #category : #accessing }
+ActiveRecordDescriptorSystem >> sortingFieldNames: anObject [
+	sortingFieldNames := anObject
 ]
 
 { #category : #naming }
