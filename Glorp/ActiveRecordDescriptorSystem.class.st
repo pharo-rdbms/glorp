@@ -11,8 +11,8 @@ Class {
 }
 
 { #category : #adding }
-ActiveRecordDescriptorSystem >> addToManyRelationshipNamed: aName inDescriptor: aDescriptor toClass: aClass join: aJoin [
-	| ivars table realFromClass package |
+ActiveRecordDescriptorSystem >> addToManyRelationshipNamed: aName inDescriptor: aDescriptor toClass: aClass [
+	| ivars realFromClass package |
 	package := ((Array with: self rootClass package name), self rootClass tags) joinUsing: '-'.
 	realFromClass := self tableClassForClass: aDescriptor describedClass.
 	realFromClass methodDictionary at: aName asSymbol ifAbsent: [ 
@@ -33,7 +33,6 @@ ActiveRecordDescriptorSystem >> addToManyRelationshipNamed: aName inDescriptor: 
 					classVariable: false) execute ]
 		].
 	"Set up the descriptor"
-	table := self tableForClass: aClass.
 	aDescriptor mappings
 		detect: [ :m | m attribute name = aName ]
 		ifNone: [ 
@@ -43,7 +42,38 @@ ActiveRecordDescriptorSystem >> addToManyRelationshipNamed: aName inDescriptor: 
 ]
 
 { #category : #adding }
-ActiveRecordDescriptorSystem >> addToOneRelationshipNamed: aName inDescriptor: aDescriptor toClass: aClass join: aJoin [
+ActiveRecordDescriptorSystem >> addToManyRelationshipNamed: aName inDescriptor: aDescriptor toClass: aClass join: aJoin [
+	| ivars realFromClass package |
+	package := ((Array with: self rootClass package name), self rootClass tags) joinUsing: '-'.
+	realFromClass := self tableClassForClass: aDescriptor describedClass.
+	realFromClass methodDictionary at: aName asSymbol ifAbsent: [ 
+		"We need to stick in an ivar and accessor for the relationship proxy"
+		ivars := realFromClass instVarNames.
+		(ivars includes: aName asSymbol) ifFalse: [
+			classesWereModified := true.
+			ivars := ivars copyWith: aName.
+			realFromClass superclass
+				subclass: realFromClass name
+				instanceVariableNames: (ivars joinUsing: ' ')
+				classVariableNames: realFromClass classVariablesString
+				package: package.
+				
+				(RBCreateAccessorsForVariableRefactoring
+					variable: aName asSymbol
+					class: realFromClass
+					classVariable: false) execute ]
+		].
+	"Set up the descriptor"
+	aDescriptor mappings
+		detect: [ :m | m attribute name = aName ]
+		ifNone: [ 
+			(aDescriptor newMapping: ManyToManyMapping)
+				attributeName: aName;
+				referenceClass: (self tableClassForClass: aClass) ]
+]
+
+{ #category : #adding }
+ActiveRecordDescriptorSystem >> addToOneRelationshipNamed: aName inDescriptor: aDescriptor toClass: aClass [
 	| ivars realFromClass package |
 	package := ((Array with: self rootClass package name), self rootClass tags) joinUsing: '-'.
 	realFromClass := self tableClassForClass: aDescriptor describedClass.
@@ -103,8 +133,8 @@ ActiveRecordDescriptorSystem >> constructAllClasses [
 	"Subclasses can override this method to add classes. But by default we also look for all descriptor methods in our system, and add them to the class list, so if the methods are written there, then we don't need to do anything further. If the descriptor methods are defined on the classes themselves, then we'll still have to construct the class list manually."
 	| package |
 	package := ((Array with: self rootClass package name), self rootClass tags) joinUsing: '-'.
-	self allTables
-		valuesDo: [ :ea | 
+	self mappedTables 
+		do: [ :ea | 
 			| cls classname subclasses ivars cvars needsUpdate |
 			needsUpdate := false.
 			ea primaryKeyFields size = 1
@@ -412,7 +442,25 @@ ActiveRecordDescriptorSystem >> mappedTables [
 
 { #category : #private }
 ActiveRecordDescriptorSystem >> postInitializeAllDescriptors [
-	super allDescriptors do: [ :ea | self postInitializeDescriptor: ea ]
+	super allDescriptors do: [ :ea | self postInitializeDescriptor: ea ].
+	self linkTables do: [ :linkTable |
+		linkTable foreignKeyConstraints do: [ :fromConstraint || descriptor fromClass join |
+			fromClass := inflector constantize: (inflector classify: fromConstraint targetFields first table name).
+			descriptor := self descriptorFor: fromClass.
+			join := fromConstraint asReverseJoin.
+			(linkTable foreignKeyConstraints reject: [ :ea | ea = fromConstraint ]) 
+				do: [ :toConstraint || toClass attributeName | 
+					toClass := inflector constantize: (inflector classify: toConstraint targetFields first table name).
+					attributeName := (inflector pluralize: (inflector demodulize: toClass name)) uncapitalized asSymbol.
+					fromClass withAllSubclassesDo: [ :cls | 
+						self addToManyRelationshipNamed: attributeName 
+							inDescriptor: descriptor 
+							toClass: toClass 
+							join: join. 
+						]
+					]
+			 ]
+		 ]
 ]
 
 { #category : #private }
@@ -431,13 +479,10 @@ ActiveRecordDescriptorSystem >> postInitializeDescriptor: aDescriptor [
 			otherClass := self likelyClassForForeignKeyNamed: field name.
 			
 			otherClass
-				ifNotNil: [ | join inverseJoin |
-					join := Join from: field to: ((self tableForClass: otherClass) primaryKeyFields first).
-					inverseJoin := join inverseJoin.
+				ifNotNil: [ 
 					self addToOneRelationshipNamed: attrName 
 						inDescriptor: aDescriptor 
-						toClass: otherClass 
-						join: join. 
+						toClass: otherClass. 
 					reverseRelationshipName := inflector pluralize: (inflector camelize: table name capitalized: false).
 					(otherClass = (self tableClassForClass: aDescriptor describedClass)) ifFalse: [  
 						otherClass withAllSubclassesDo:[:other | 
@@ -446,8 +491,7 @@ ActiveRecordDescriptorSystem >> postInitializeDescriptor: aDescriptor [
 							self
 								addToManyRelationshipNamed: reverseRelationshipName 
 								inDescriptor: otherDescriptor 
-								toClass: (self tableClassForClass: aDescriptor describedClass)
-								join: inverseJoin. 
+								toClass: (self tableClassForClass: aDescriptor describedClass).
 							] 
 						]
 					]
