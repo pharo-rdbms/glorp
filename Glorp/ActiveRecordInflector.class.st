@@ -14,7 +14,7 @@ Uncountables are words that are same in plural or singular like 'sheep'.  You ca
 Irregulars are words that completely change form like person to people.  Adding an irregular adds a rule to both the plurals and the singulars rules.  As rules are applied from most recently added to oldest, the most general rules are added first and irregulars are added last.
 "
 Class {
-	#name : #GlorpInflector,
+	#name : #ActiveRecordInflector,
 	#superclass : #Object,
 	#instVars : [
 		'uncountable',
@@ -25,17 +25,17 @@ Class {
 		'prefixTableNames',
 		'prefixClassKeys'
 	],
-	#category : #'Glorp-Core'
+	#category : #'Glorp-ActiveRecord'
 }
 
 { #category : #accessing }
-GlorpInflector >> accessor: aString [
+ActiveRecordInflector >> accessor: aString [
 	^(self camelize: aString capitalized: false) asSymbol
 	
 ]
 
 { #category : #adding }
-GlorpInflector >> addIrregularSingular: asSingular plural: asPlural [
+ActiveRecordInflector >> addIrregularSingular: asSingular plural: asPlural [
 	self removeUncountable: asSingular.
 	self removeUncountable: asPlural.
 	
@@ -44,26 +44,26 @@ GlorpInflector >> addIrregularSingular: asSingular plural: asPlural [
 ]
 
 { #category : #adding }
-GlorpInflector >> addPluralRule: rule replacement: replacement [
+ActiveRecordInflector >> addPluralRule: rule replacement: replacement [
 	rule isString ifTrue: [self removeUncountable: rule].
 	self removeUncountable: replacement.
 	plural addFirst: (rule isString ifTrue: [ rule asRegexIgnoringCase ] ifFalse: [rule]) -> replacement.
 ]
 
 { #category : #adding }
-GlorpInflector >> addSingularRule: rule replacement: replacement [
+ActiveRecordInflector >> addSingularRule: rule replacement: replacement [
 	rule isString ifTrue: [self removeUncountable: rule].
 	self removeUncountable: replacement.
 	singular addFirst: (rule isString ifTrue: [rule asRegexIgnoringCase] ifFalse: [rule]) -> replacement.
 ]
 
 { #category : #adding }
-GlorpInflector >> addUncountable: aString [
+ActiveRecordInflector >> addUncountable: aString [
 	uncountable add: (self uncountableRegexFrom: aString)
 ]
 
 { #category : #private }
-GlorpInflector >> applyRules: rules to: aString [
+ActiveRecordInflector >> applyRules: rules to: aString [
 	^uncountable
 		detect: [ :ea | ea matches: aString ]
 		ifFound: [:ea | aString ]
@@ -74,7 +74,7 @@ GlorpInflector >> applyRules: rules to: aString [
 ]
 
 { #category : #accessing }
-GlorpInflector >> camelize: aString [
+ActiveRecordInflector >> camelize: aString [
 	| subs |
 	subs := aString substrings: ':_- ,.'.
 	^subs size = 1 
@@ -84,7 +84,7 @@ GlorpInflector >> camelize: aString [
 ]
 
 { #category : #accessing }
-GlorpInflector >> camelize: aString capitalized: shouldCapitalize [
+ActiveRecordInflector >> camelize: aString capitalized: shouldCapitalize [
 	^shouldCapitalize 
 		ifTrue: [ self camelize: aString ]
 		ifFalse: [ (self camelize: aString) uncapitalized ]
@@ -92,7 +92,7 @@ GlorpInflector >> camelize: aString capitalized: shouldCapitalize [
 ]
 
 { #category : #accessing }
-GlorpInflector >> classKey: aClass [
+ActiveRecordInflector >> classKey: aClass [
 	^self prefixClassKeys 
 		ifTrue: [ aClass asString ] 
 		ifFalse: [ self demodulize: aClass asString ]
@@ -100,7 +100,7 @@ GlorpInflector >> classKey: aClass [
 ]
 
 { #category : #accessing }
-GlorpInflector >> classify: aTableName [
+ActiveRecordInflector >> classify: aTableName [
 	| name |
 	name := aTableName.
 	(self prefixTableNames and: [ name asLowercase beginsWith: (prefix asLowercase, '_') ]) 
@@ -111,27 +111,27 @@ GlorpInflector >> classify: aTableName [
 ]
 
 { #category : #accessing }
-GlorpInflector >> constantize: aString [
+ActiveRecordInflector >> constantize: aString [
 	^self class environment at: aString asSymbol ifAbsent: [  ]
 	
 ]
 
 { #category : #accessing }
-GlorpInflector >> demodulize: aString [
+ActiveRecordInflector >> demodulize: aString [
 	^(prefix notEmpty and: [ aString beginsWith: prefix ]) 
 		ifTrue: [ aString last: ((aString size) - (prefix size)) ] 
 		ifFalse: [ aString ]
 ]
 
 { #category : #accessing }
-GlorpInflector >> foreignKey: aClassName [
+ActiveRecordInflector >> foreignKey: aClassName [
 	^self prefixTableNames 
 		ifTrue: [ ((self tableize: aClassName), '_id') copyAfter: $_]
 		ifFalse: [ ((self tableize: aClassName), '_id') ]
 ]
 
 { #category : #initialization }
-GlorpInflector >> initialize [ 
+ActiveRecordInflector >> initialize [ 
 	super initialize.
 	prefix := ''.
 	prefixClassKeys := true.
@@ -148,7 +148,7 @@ GlorpInflector >> initialize [
 ]
 
 { #category : #initialization }
-GlorpInflector >> initializeIrregular [
+ActiveRecordInflector >> initializeIrregular [
 	{ 
 		'person'-> 'people'.
     	'man'-> 'men'.
@@ -160,7 +160,7 @@ GlorpInflector >> initializeIrregular [
 ]
 
 { #category : #initialization }
-GlorpInflector >> initializePlural [
+ActiveRecordInflector >> initializePlural [
 	"Rules based on Rails Inflector at https://github.com/rails/rails/blob/f33d52c95217212cbacc8d5e44b5a8e3cdc6f5b3/activesupport/lib/active_support/inflections.rb"
 	self addPluralRule: '.*$' asRegexIgnoringCase replacement: 's'.
 	self addPluralRule: '(.*x|.*ch|.*ss|.*sh)$'  asRegexIgnoringCase replacement: 'es'.
@@ -183,7 +183,7 @@ GlorpInflector >> initializePlural [
 ]
 
 { #category : #initialization }
-GlorpInflector >> initializeSingular [
+ActiveRecordInflector >> initializeSingular [
 
 	self addSingularRule: '(.*)s$' asRegexIgnoringCase replacement:  ''.
 	self addSingularRule: '(.*x|.*ch|.*ss|.*sh)es$' asRegexIgnoringCase replacement:  ''.
@@ -239,23 +239,23 @@ GlorpInflector >> initializeSingular [
 ]
 
 { #category : #initialization }
-GlorpInflector >> initializeUncountable [
+ActiveRecordInflector >> initializeUncountable [
 	#('bison' 'bream' 'breeches' 'britches' 'carp' 'chassis' 'clippers' 'cod' 'contretemps' 'corps' 'debris' 'deer' 'diabetes' 'djinn' 'eland' 'elk' 'equipment' 'fish' 'flounder' 'gallows' 'graffiti' 'headquarters' 'herpes' 'high-jinks' 'homework' 'information' 'innings' 'itis' 'jackanapes' 'jeans' 'mackerel' 'measles' 'metadata' 'mews' 'money' 'mumps' 'news' 'ois' 'pincers' 'pliers' 'police' 'pox' 'proceedings' 'rabies' 'rice' 'salmon' 'scissors' 'sea-bass' 'shears' 'sheep' 'species' 'swine' 'trout' 'tuna' 'whiting' 'wildebeest') do: [ :ea | self addUncountable: ea ].
 ]
 
 { #category : #accessing }
-GlorpInflector >> modulize: aString [
+ActiveRecordInflector >> modulize: aString [
 	^(prefix notEmpty and: [aString beginsWith: prefix]) ifTrue: [ aString ] ifFalse: [ prefix, aString ]
 ]
 
 { #category : #accessing }
-GlorpInflector >> mutator: aString [
+ActiveRecordInflector >> mutator: aString [
 	^((self camelize: aString capitalized: false), ':') asSymbol
 	
 ]
 
 { #category : #accessing }
-GlorpInflector >> ordinal: anInteger [
+ActiveRecordInflector >> ordinal: anInteger [
 	| integer |
 	integer := anInteger asInteger abs.
 	^ (integer \\ 100 between: 11 and: 13)
@@ -267,86 +267,86 @@ GlorpInflector >> ordinal: anInteger [
 ]
 
 { #category : #accessing }
-GlorpInflector >> ordinalize: anInteger [
+ActiveRecordInflector >> ordinalize: anInteger [
 	^ anInteger asString, (self ordinal: anInteger)
 ]
 
 { #category : #debugging }
-GlorpInflector >> pluralMatch: aString [ 
+ActiveRecordInflector >> pluralMatch: aString [ 
 	^plural detect: [ :ea | ea key matches: aString ]
 
 ]
 
 { #category : #accessing }
-GlorpInflector >> pluralize: aString [ 
+ActiveRecordInflector >> pluralize: aString [ 
 	^self applyRules: plural to: aString
 
 ]
 
 { #category : #configuration }
-GlorpInflector >> pluralizeTableNames [
+ActiveRecordInflector >> pluralizeTableNames [
 	^pluralizeTableNames
 ]
 
 { #category : #configuration }
-GlorpInflector >> pluralizeTableNames: aBoolean [
+ActiveRecordInflector >> pluralizeTableNames: aBoolean [
 	pluralizeTableNames := aBoolean
 ]
 
 { #category : #configuration }
-GlorpInflector >> prefix [ 
+ActiveRecordInflector >> prefix [ 
 	^prefix
 ]
 
 { #category : #configuration }
-GlorpInflector >> prefix: aString [ 
+ActiveRecordInflector >> prefix: aString [ 
 	prefix := aString ifNil: [ '' ] ifNotNil: [ aString asUppercase ]
 ]
 
 { #category : #configuration }
-GlorpInflector >> prefixClassKeys [
+ActiveRecordInflector >> prefixClassKeys [
 	^prefix notEmpty and: [ prefixClassKeys ]
 ]
 
 { #category : #configuration }
-GlorpInflector >> prefixClassKeys: aBoolean [
+ActiveRecordInflector >> prefixClassKeys: aBoolean [
 	prefixClassKeys := aBoolean
 ]
 
 { #category : #configuration }
-GlorpInflector >> prefixTableNames [
+ActiveRecordInflector >> prefixTableNames [
 	^prefix notEmpty and: [ prefixTableNames ]
 ]
 
 { #category : #configuration }
-GlorpInflector >> prefixTableNames: aBoolean [
+ActiveRecordInflector >> prefixTableNames: aBoolean [
 	prefixTableNames := aBoolean
 ]
 
 { #category : #accessing }
-GlorpInflector >> primaryKey: aClassName [
+ActiveRecordInflector >> primaryKey: aClassName [
 	^'id'
 ]
 
 { #category : #adding }
-GlorpInflector >> removeUncountable: aString [
+ActiveRecordInflector >> removeUncountable: aString [
 		uncountable remove: (self uncountableRegexFrom: aString) ifAbsent: [  ]
 ]
 
 { #category : #debugging }
-GlorpInflector >> singularMatch: aString [ 
+ActiveRecordInflector >> singularMatch: aString [ 
 	^singular detect: [ :ea | ea key matches: aString ]
 
 ]
 
 { #category : #accessing }
-GlorpInflector >> singularize: aString [ 
+ActiveRecordInflector >> singularize: aString [ 
 	^self applyRules: singular to: aString
 
 ]
 
 { #category : #accessing }
-GlorpInflector >> tableize: aClassName [
+ActiveRecordInflector >> tableize: aClassName [
 	| name |
 	name := self demodulize: aClassName.
 	^(self prefixTableNames 
@@ -357,7 +357,7 @@ GlorpInflector >> tableize: aClassName [
 ]
 
 { #category : #adding }
-GlorpInflector >> uncountableRegexFrom: aString [ 
+ActiveRecordInflector >> uncountableRegexFrom: aString [ 
 	^(String streamContents: [ :s | 
 		s 
 			nextPutAll: '.*\b'; 
@@ -366,7 +366,7 @@ GlorpInflector >> uncountableRegexFrom: aString [
 ]
 
 { #category : #accessing }
-GlorpInflector >> underscore: aString [
+ActiveRecordInflector >> underscore: aString [
 	^String streamContents: [:s || in c first |
 		in := ReadStream on: aString.
 		c := in next.

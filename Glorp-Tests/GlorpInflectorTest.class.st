@@ -200,7 +200,7 @@ GlorpInflectorTest >> ordinalNumbers [
 { #category : #running }
 GlorpInflectorTest >> setUp [ 
 	super setUp.
-	inflector := GlorpInflector new.
+	inflector := ActiveRecordInflector new.
 	
 ]
 

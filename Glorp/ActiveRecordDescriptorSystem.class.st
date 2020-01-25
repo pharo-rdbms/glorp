@@ -7,7 +7,7 @@ Class {
 		'classesWereModified',
 		'sortingFieldNames'
 	],
-	#category : #'Glorp-Mappings'
+	#category : #'Glorp-ActiveRecord'
 }
 
 { #category : #adding }
@@ -262,7 +262,7 @@ ActiveRecordDescriptorSystem >> inflector: anObject [
 { #category : #initialization }
 ActiveRecordDescriptorSystem >> initialize [ 
 	super initialize.
-	inflector := GlorpInflector new.
+	inflector := ActiveRecordInflector new.
 	classesWereModified := false.
 	sortingFieldNames := #(position sequence_no seq_no sequence_num seq_num sort_no display_position display_order )
 ]

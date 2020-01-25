@@ -1,7 +1,7 @@
 Class {
 	#name : #ActiveRecordModel,
 	#superclass : #Object,
-	#category : #'Glorp-Core'
+	#category : #'Glorp-ActiveRecord'
 }
 
 { #category : #'typing/selecting keys' }
