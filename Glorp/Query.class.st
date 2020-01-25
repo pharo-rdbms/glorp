@@ -28,6 +28,9 @@ Class {
 		'readsOneObject',
 		'grouping'
 	],
+	#classVars : [
+		'delegate'
+	],
 	#category : #'Glorp-Queries'
 }
 
@@ -42,6 +45,17 @@ Query class >> count: aClass where: anExpression [
 	query := self readOneOf: aClass where: anExpression.
 	query retrieve: #countStar.
 	^query.
+]
+
+{ #category : #'*Glorp' }
+Query class >> delegateClass [
+	^delegate ifNil: [ delegate := SimpleQuery ]
+]
+
+{ #category : #'*Glorp' }
+Query class >> delegateTo: aClass [ 
+	"Making Query pluggable.  I think we could replace the default query class with ActiveRecordQuery with no ill effects even without using AR but am not sure so this formalizes the current practice of using Query for factory for SimpleQuery objects.  The inintialize methods in DescriptorSystem and ActiveRecordDescriptorSystem call this and set up their preferred query class.  The assmumption is that you are not mixing AR with non AR in the same image.  I would have preferred delegating query creation to the descriptor system but there are class size instantitations that don't have any context floating around"
+	delegate := aClass
 ]
 
 { #category : #'instance creation' }
@@ -59,7 +73,7 @@ Query class >> read: aClass [
 Query class >> read: aClass where: anExpression [
 	"Backward-compatibility, since we changed the class name."
 
-	^ActiveRecordQuery read: aClass where: anExpression
+	^self delegateClass read: aClass where: anExpression
 ]
 
 { #category : #'*Glorp' }
@@ -80,12 +94,12 @@ Query class >> readManyOf: aClass where: anExpression [
 
 { #category : #'*Glorp' }
 Query class >> readOneOf: aClass [
-	^ActiveRecordQuery readOneOf: aClass.
+	^self delegateClass readOneOf: aClass.
 ]
 
 { #category : #'*Glorp' }
 Query class >> readOneOf: aClass where: anExpression [
-	^ActiveRecordQuery readOneOf: aClass where: anExpression.
+	^self delegateClass readOneOf: aClass where: anExpression.
 ]
 
 { #category : #'*Glorp' }

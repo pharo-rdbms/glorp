@@ -14,7 +14,7 @@ Class {
 		'orderBy',
 		'shouldWriteTheOrderField'
 	],
-	#category : 'Glorp-Mappings'
+	#category : #'Glorp-Mappings'
 }
 
 { #category : #mapping }
@@ -98,7 +98,7 @@ ToManyMapping >> orderBy: aBlockOrSelector [
 { #category : #'private/expressions' }
 ToManyMapping >> orderField [
 	| exp |
-	exp := Query new expressionBlockFor: orderBy first.
+	exp := self session queryClass new expressionBlockFor: orderBy first.
 	^(exp asGlorpExpressionOn: (BaseExpression new descriptor: self referenceDescriptor)) field
 ]
 

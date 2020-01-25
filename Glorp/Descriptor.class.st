@@ -110,7 +110,7 @@ Descriptor >> buildReplacementTableSelectFrom: sourceMapping to: targetMapping [
 	"Build a select statement that combines the two mappings. We expect that both are relationships from a single object whose table is imaginary, so we need to knit together the information from the mappings to join the real tables directly together."
 
 	| fullJoin targetJoin sourceJoin subQuery join |
-	subQuery := Query read: sourceMapping referenceClass.
+	subQuery := self session queryClass read: sourceMapping referenceClass.
 	subQuery session: self session.	
 	subQuery setUpExpressions.
 	"Invert because these will both start with the imaginary one on the left and we want to merge them together"

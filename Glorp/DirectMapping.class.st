@@ -60,7 +60,7 @@ DirectMapping >> buildQuery [
 	whereClause := Join new.
 	descriptor primaryTable primaryKeyFields do: [:each |
 		whereClause addSource: each target: each].
-	query := Query readOneOf: descriptor describedClass where: whereClause.
+	query := self session queryClass readOneOf: descriptor describedClass where: whereClause.
 	query retrieve: self attribute name.
 	query session: self session.
 	^query.

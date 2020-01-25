@@ -83,7 +83,7 @@ RelationshipMapping >> buildGeneralQueryIn: anObjectBuilder [
 	parentCriteria := anObjectBuilder query whereClause.
 	fullCriteria := parentCriteria
 		rebuildOn: phantomExpression.
-	newQuery := Query read: self referenceClass.
+	newQuery := descriptor system queryClass read: self referenceClass.
 	"newQuery collectionType: self collectionType."
 	fullCriteria isEmptyExpression ifFalse: [newQuery where: fullCriteria].
 	self
@@ -98,8 +98,8 @@ RelationshipMapping >> buildQuery [
 	| toMany |
 	toMany := self attribute isCollectionAttribute.
 	query := toMany
-		ifTrue: [Query read: self referenceClass where: self join]
-		ifFalse: [Query readOneOf: self referenceClass where: self join].
+		ifTrue: [self session queryClass read: self referenceClass where: self join]
+		ifFalse: [self session queryClass readOneOf: self referenceClass where: self join].
 	query session: self session.
 	query baseExpression descriptor: (self session descriptorFor: self referenceClass).
 	query collectionType: self collectionType.

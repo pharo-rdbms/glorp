@@ -66,7 +66,7 @@ ReadQuery >> asSimpleQueryFor: aClass [
 	newBase := BaseExpression new.
 	newBase descriptor: (session system descriptorFor: aClass).
 	newCriteria := whereClause rebuildOn: newBase startingFrom: newBase withOuterScopeBase: newBase.
-	newQuery := ActiveRecordQuery new
+	newQuery := session queryClass new
 		initResultClass: aClass
 		whereClause: newCriteria
 		singleObject: readsOneObject.

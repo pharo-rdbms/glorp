@@ -35,12 +35,13 @@ Class {
 		'allClasses',
 		'useDirectAccessForMapping',
 		'classModels',
-		'useJoinsForAnySatisfy'
+		'useJoinsForAnySatisfy',
+		'queryClass'
 	],
 	#classInstVars : [
 		'validateDescriptorSystem'
 	],
-	#category : 'Glorp-Mappings'
+	#category : #'Glorp-Mappings'
 }
 
 { #category : #utility }
@@ -468,7 +469,8 @@ DescriptorSystem >> initialize [
 	typeResolvers := Dictionary new.
 	sequences := Dictionary new.
 	useDirectAccessForMapping := true.
-	allClasses := OrderedCollection new
+	allClasses := OrderedCollection new.
+	queryClass := SimpleQuery
 ]
 
 { #category : #private }
@@ -603,6 +605,16 @@ DescriptorSystem >> privateAndBasicAddDescriptorFor: anObject as: aDescriptor [
 	"Just add the descriptor and don't try to validate. anObject may not actually even be a class. Assume the descriptor is already properly initialized"
 	descriptors at: anObject put: aDescriptor.
 	aDescriptor system: self
+]
+
+{ #category : #accessing }
+DescriptorSystem >> queryClass [
+	^queryClass
+]
+
+{ #category : #accessing }
+DescriptorSystem >> queryClass: aClass [
+	queryClass := aClass
 ]
 
 { #category : #sequences }

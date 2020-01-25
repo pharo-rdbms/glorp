@@ -22,7 +22,7 @@ Class {
 		'realObjects',
 		'parameters'
 	],
-	#category : 'Glorp-Queries'
+	#category : #'Glorp-Queries'
 }
 
 { #category : #'instance creation' }
@@ -93,7 +93,7 @@ GlorpVirtualCollection >> last [
 
 { #category : #'initialize-release' }
 GlorpVirtualCollection >> on: aClass in: aSession [
-	query := Query read: aClass.
+	query := aSession queryClass read: aClass.
 	session := aSession.
 ]
 

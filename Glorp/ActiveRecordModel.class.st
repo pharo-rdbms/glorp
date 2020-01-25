@@ -26,7 +26,7 @@ ActiveRecordModel class >> find: aPrimaryKey [
 	| pkAttribute cachedSession |
 	cachedSession := self session.
 	pkAttribute := (cachedSession system descriptorFor: self) primaryKeyMappings first attribute name.
-	^(Query readOneOf: self where: [:each | (each perform: pkAttribute) = aPrimaryKey]) execute.
+	^(cachedSession queryClass readOneOf: self where: [:each | (each perform: pkAttribute) = aPrimaryKey]) execute.
 ]
 
 { #category : #'typing/selecting keys' }
@@ -83,8 +83,8 @@ ActiveRecordModel class >> orderBy: aBlock [
 ActiveRecordModel class >> query [
 	"Handle soft deletes"
 	^(self instVarNames includes: #deletedAt  ) 
-		ifTrue: [ Query read: self where: [:ea | ea deletedAt isNil ] ]
-		ifFalse: [ Query read: self ]
+		ifTrue: [ self session queryClass read: self where: [:ea | ea deletedAt isNil ] ]
+		ifFalse: [ self session queryClass read: self ]
 ]
 
 { #category : #accessing }

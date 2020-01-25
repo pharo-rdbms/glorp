@@ -32,7 +32,7 @@ Class {
 		'errorAction',
 		'modificationTracker'
 	],
-	#category : 'Glorp-Core'
+	#category : #'Glorp-Core'
 }
 
 { #category : #'instance creation' }
@@ -224,12 +224,12 @@ GlorpSession >> copy [
 
 { #category : #'api/queries' }
 GlorpSession >> count: aClass [
-	^self execute: (SimpleQuery count: aClass)
+	^self execute: (self queryClass count: aClass)
 ]
 
 { #category : #'api/queries' }
 GlorpSession >> count: aClass where: anExpression [
-	^self execute: (SimpleQuery count: aClass where: anExpression)
+	^self execute: (self queryClass count: aClass where: anExpression)
 ]
 
 { #category : #'internal/writing' }
@@ -316,7 +316,7 @@ GlorpSession >> delete: aClass where: aBlock [
 	
 	"DELETE THEM FROM THE CACHE AS WELL, OR ELSE HAVE VERY LARGE WARNING THAT YOU'RE NOT GOING TO"
 	| q |
-	q := Query readOneOf: aClass where: aBlock.
+	q := self queryClass readOneOf: aClass where: aBlock.
 	^self deleteAllSatisfying: q.
 ]
 
@@ -680,17 +680,22 @@ GlorpSession >> privateRegisterAsOld: anObject [
 ]
 
 { #category : #'api/queries' }
+GlorpSession >> queryClass [ 
+	^system queryClass
+]
+
+{ #category : #'api/queries' }
 GlorpSession >> read: aClass [
 	"Return an array of instances of aClass, each one from a row of its corresponding database table."
 
-	^self execute: (SimpleQuery read: aClass)
+	^self execute: (self queryClass read: aClass)
 ]
 
 { #category : #'api/queries' }
 GlorpSession >> read: aClass limit: anInteger [
 	"Return an array of not more than anInteger of instances of aClass, each one from a row of its corresponding database table."
 
-	^self execute: (SimpleQuery read: aClass limit: anInteger)
+	^self execute: (self queryClass read: aClass limit: anInteger)
 ]
 
 { #category : #'api/queries' }
@@ -698,7 +703,7 @@ GlorpSession >> read: aClass orderBy: aCriteria [
 	"aCriteria can be a block, such as [:each | each id], or a symbol (that Glorp can translate into such a block), such as #id."
 
 	| query |
-	query := SimpleQuery read: aClass.
+	query := self queryClass read: aClass.
 	query orderBy: aCriteria.
 	^self execute: query
 ]
@@ -707,7 +712,7 @@ GlorpSession >> read: aClass orderBy: aCriteria [
 GlorpSession >> read: aClass where: aBlock [
 	"aBlock should return a boolean, for example, [:each | each lastname = 'Doe']."
 
-	^self execute: (SimpleQuery read: aClass where: aBlock)
+	^self execute: (self queryClass read: aClass where: aBlock)
 ]
 
 { #category : #'api/queries' }
@@ -715,7 +720,7 @@ GlorpSession >> read: aClass where: aBlock limit: anInteger [
 	"Return an array of up to anInteger instances of aClass for which aBlock returns true, each from a row from its table."
 
 	^self execute:
-		(SimpleQuery
+		(self queryClass
 			read: aClass
 			where: aBlock
 			limit: anInteger)
@@ -765,14 +770,14 @@ GlorpSession >> readManyOf: aClass where: aBlock limit: anInteger [
 GlorpSession >> readOneOf: aClass [
 	"Return a single instance of aClass from a row of its table."
 
-	^self execute: (SimpleQuery readOneOf: aClass)
+	^self execute: (self queryClass readOneOf: aClass)
 ]
 
 { #category : #'api/queries' }
 GlorpSession >> readOneOf: aClass where: aBlock [
 	"aBlock should return a boolean, for example, [:each | each title='Report']."
 
-	^self execute: (SimpleQuery readOneOf: aClass where: aBlock)
+	^self execute: (self queryClass readOneOf: aClass where: aBlock)
 ]
 
 { #category : #private }
@@ -860,7 +865,7 @@ GlorpSession >> refresh: anObject [
 				primaryKeyExpressionFor: realObject
 				basedOn: (BaseExpression new  descriptor: (self descriptorFor: realObject class))
 				relation: #=.
-	query := Query readOneOf: realObject class where: exp.
+	query := self queryClass readOneOf: realObject class where: exp.
 	query shouldRefresh: true.
 	^self execute: query
 ]
