@@ -246,7 +246,7 @@ AbstractReadQuery >> deleteWithParameters: parameterArray in: aSession [
 
 { #category : #accessing }
 AbstractReadQuery >> descriptor [
-	^session descriptorFor: resultClass
+	^session ifNotNil: [session descriptorFor: resultClass]
 ]
 
 { #category : #'boolean operations' }

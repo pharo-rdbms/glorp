@@ -8,7 +8,7 @@ Class {
 	#classVars : [
 		'DefaultLogin'
 	],
-	#category : 'Glorp-Tests-Database'
+	#category : #'Glorp-Tests-Database'
 }
 
 { #category : #defaults }
@@ -92,7 +92,7 @@ GlorpDatabaseLoginResource class >> defaultPostgreSQLLogin [
 		database: PostgreSQLPlatform new;
 		username: 'postgres';
 		password: 'secret';
-		connectString: '192.168.4.102_test'.
+		connectString: 'localhost_test'.
 ]
 
 { #category : #defaults }

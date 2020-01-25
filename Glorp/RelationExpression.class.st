@@ -198,7 +198,7 @@ RelationExpression >> condensePrimaryKeyComparison [
 
 	| fieldBeingCompared baseObjectExpression join sourceField |
 	(relation = #= or: [relation = #<>]) ifFalse: [^self].
-	self leftChild mappedFieldsCount = 1 ifFalse: [^self].
+	self leftChild mappedFields size = 1 ifFalse: [^self].
 	fieldBeingCompared := self leftChild field.
 	fieldBeingCompared class == DatabaseField ifFalse: [^self].
 	fieldBeingCompared isPrimaryKey ifFalse: [^self].

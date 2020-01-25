@@ -1051,6 +1051,11 @@ DatabasePlatform >> isSQLite3Platform [
 	^false
 ]
 
+{ #category : #testing }
+DatabasePlatform >> isUDBCSQLite3Platform [
+	^false
+]
+
 { #category : #constants }
 DatabasePlatform >> maxSQLBufferLength [
 	"^<Integer> I return the maximum length of a sql command stream"
