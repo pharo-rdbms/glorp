@@ -14,3 +14,17 @@ ActiveRecordQuery >> deleteFromDatabaseWithParameters: anArray [
 	session accessor executeCommand: command returnCursor: false.
 	^command rowCount.
 ]
+
+{ #category : #'initialize-release' }
+ActiveRecordQuery >> initResultClass: aClass whereClause: theCriteria singleObject: aBoolean [ 
+	| originalExpression amendedExpression |
+	resultClass := aClass.
+	originalExpression := ((theCriteria isNil or: [theCriteria = true or: [theCriteria = false]]) 
+		ifTrue: [EmptyExpression on: theCriteria] ifFalse: [theCriteria]).
+	amendedExpression := (aClass instVarIndexFor: #deletedAt ifAbsent: [  ])
+		ifNil: [ originalExpression ] 
+		ifNotNil: [ [:ea | ea deletedAt isNIL AND: [ originalExpression value: ea ] ] ].
+	self whereClause: amendedExpression.
+	readsOneObject := aBoolean.
+	aBoolean ifTrue: [self limit: 1]
+]
