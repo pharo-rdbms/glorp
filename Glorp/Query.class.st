@@ -28,7 +28,7 @@ Class {
 		'readsOneObject',
 		'grouping'
 	],
-	#category : 'Glorp-Queries'
+	#category : #'Glorp-Queries'
 }
 
 { #category : #'instance creation' }
@@ -59,7 +59,7 @@ Query class >> read: aClass [
 Query class >> read: aClass where: anExpression [
 	"Backward-compatibility, since we changed the class name."
 
-	^SimpleQuery read: aClass where: anExpression
+	^ActiveRecordQuery read: aClass where: anExpression
 ]
 
 { #category : #'*Glorp' }
@@ -80,12 +80,12 @@ Query class >> readManyOf: aClass where: anExpression [
 
 { #category : #'*Glorp' }
 Query class >> readOneOf: aClass [
-	^SimpleQuery readOneOf: aClass.
+	^ActiveRecordQuery readOneOf: aClass.
 ]
 
 { #category : #'*Glorp' }
 Query class >> readOneOf: aClass where: anExpression [
-	^SimpleQuery readOneOf: aClass where: anExpression.
+	^ActiveRecordQuery readOneOf: aClass where: anExpression.
 ]
 
 { #category : #'*Glorp' }

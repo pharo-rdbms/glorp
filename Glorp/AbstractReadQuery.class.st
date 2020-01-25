@@ -36,7 +36,7 @@ Class {
 
 { #category : #'instance creation' }
 AbstractReadQuery class >> newQuery [
-	^SimpleQuery new
+	^ActiveRecordQuery new
 ]
 
 { #category : #'*Glorp' }

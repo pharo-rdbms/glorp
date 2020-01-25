@@ -10,6 +10,28 @@ Class {
 	#category : #'Glorp-ActiveRecord'
 }
 
+{ #category : #'instance creation' }
+ActiveRecordDescriptorSystem class >> sessionForAccessor: aDatabaseAccesor [.
+	"Create a session associated with the given accesseor, and using us as a descriptor system. 
+	This is the easiest way to get a full blown session going."
+	
+	^(ActiveRecordSession forSystem: (self forPlatform: aDatabaseAccesor platform))
+		accessor: aDatabaseAccesor;
+		yourself
+
+]
+
+{ #category : #'instance creation' }
+ActiveRecordDescriptorSystem class >> sessionForLogin: aGlorpLogin [
+	"Create a session associated with the given login, and using us as a descriptor system. This is the easiest way to get a full blown session going."
+	| system session |
+	system := self forPlatform: aGlorpLogin database.
+	session := ActiveRecordSession new.
+	session accessor: (DatabaseAccessor forLogin: aGlorpLogin).
+	session system: system.
+	^session
+]
+
 { #category : #adding }
 ActiveRecordDescriptorSystem >> addToManyRelationshipNamed: aName inDescriptor: aDescriptor toClass: aClass [
 	| ivars realFromClass package |
@@ -547,6 +569,17 @@ ActiveRecordDescriptorSystem >> rootClass: anObject [
 ]
 
 { #category : #'session creation' }
+ActiveRecordDescriptorSystem >> sessionForAccessor: aDatabaseAccesor [
+	"Create a session associated with the given accesseor, and using us as a descriptor system. 
+	This is the easiest way to get a full blown session going."
+	
+	^(ActiveRecordSession forSystem: (self forPlatform: aDatabaseAccesor platform))
+		accessor: aDatabaseAccesor;
+		yourself
+
+]
+
+{ #category : #'session creation' }
 ActiveRecordDescriptorSystem >> sessionForLogin: aGlorpLogin [
 	"Create a session associated with the given login, and using us as a descriptor system. This is the easiest way to get a full blown session going."
 
@@ -554,9 +587,8 @@ ActiveRecordDescriptorSystem >> sessionForLogin: aGlorpLogin [
 	platform isNil ifTrue: [self platform: aGlorpLogin database].
 	aGlorpLogin database class = self platform class ifFalse: [self error: 'Login is incompatible with the database specified in the descriptor system'].
 	session isNil ifFalse: [InvalidSessionSetup signal: 'DescriptorSystem already has a session; resume this error if this was intended.'].
-	newSession := GlorpSession new.
+	newSession := ActiveRecordSession new.
 	newSession accessor: (DatabaseAccessor forLogin: aGlorpLogin).
-	newSession accessor login.
 	newSession system: self.
 	^newSession
 ]

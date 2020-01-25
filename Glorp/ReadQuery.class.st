@@ -4,7 +4,7 @@ This represents a general read query. By general we mean that it might require m
 Class {
 	#name : #ReadQuery,
 	#superclass : #AbstractReadQuery,
-	#category : 'Glorp-Queries'
+	#category : #'Glorp-Queries'
 }
 
 { #category : #converting }
@@ -66,7 +66,7 @@ ReadQuery >> asSimpleQueryFor: aClass [
 	newBase := BaseExpression new.
 	newBase descriptor: (session system descriptorFor: aClass).
 	newCriteria := whereClause rebuildOn: newBase startingFrom: newBase withOuterScopeBase: newBase.
-	newQuery := SimpleQuery new
+	newQuery := ActiveRecordQuery new
 		initResultClass: aClass
 		whereClause: newCriteria
 		singleObject: readsOneObject.

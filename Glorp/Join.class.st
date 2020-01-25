@@ -24,7 +24,7 @@ Class {
 		'outerJoin',
 		'owningMapping'
 	],
-	#category : 'Glorp-Expressions'
+	#category : #'Glorp-Expressions'
 }
 
 { #category : #'instance creation' }
@@ -121,7 +121,7 @@ Join >> addSource: aField target: anotherField [
 				ifTrue: [ConstantExpression for: aField]
 				ifFalse: [aField].
 	sources add: value.
-	targetValue := anotherField class == SimpleQuery
+	targetValue := (anotherField class includesBehavior: SimpleQuery)
 		ifTrue: [anotherField asGlorpExpressionOn: base] 
 		ifFalse: [anotherField].
 	(self isConstant: targetValue) ifTrue: [
