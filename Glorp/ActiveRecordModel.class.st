@@ -80,7 +80,7 @@ ActiveRecordModel class >> newSession [
 
 { #category : #'typing/selecting keys' }
 ActiveRecordModel class >> oneWhere: aBlock [ 
-	^ActiveRecordQuery readOneOf: self where: aBlock 
+	^self session queryClass readOneOf: self where: aBlock 
 ]
 
 { #category : #'typing/selecting keys' }
