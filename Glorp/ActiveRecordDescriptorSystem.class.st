@@ -1,3 +1,6 @@
+"
+I am a Glorp DescriptorSystem that infers and builds the class hierarchy and descriptor mappings from the database schema.  I expect the database schema to conform to Rails ActiveRecord naming conventions.
+"
 Class {
 	#name : #ActiveRecordDescriptorSystem,
 	#superclass : #DynamicDescriptorSystem,

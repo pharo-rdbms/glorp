@@ -1,3 +1,8 @@
+"
+I am a subclass of SimpleQuery and act the same except that I prepend the condition deleted_at is null to all my queries if the table being referenced has a field deleted_at.
+
+
+"
 Class {
 	#name : #ActiveRecordQuery,
 	#superclass : #SimpleQuery,

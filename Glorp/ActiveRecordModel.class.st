@@ -1,3 +1,12 @@
+"
+I am a base class for ActiveRecord objects.
+
+It is not essential to use me but I provide a number of convenient class side query helpers.
+
+New projects should subclass me and use that subclass as the base class for the project.
+
+The project base class should have a class method 'session' to share a session among instances in the current context.  In seaside this might be tied to the current web session.
+"
 Class {
 	#name : #ActiveRecordModel,
 	#superclass : #Object,
@@ -117,4 +126,9 @@ ActiveRecordModel >> save [
 	self session commitUnitOfWorkAndContinue.
 	
 	^self
+]
+
+{ #category : #actions }
+ActiveRecordModel >> session [ 
+	^self class session
 ]
