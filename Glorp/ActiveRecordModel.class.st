@@ -36,7 +36,9 @@ ActiveRecordModel class >> findAll [
 
 { #category : #'typing/selecting keys' }
 ActiveRecordModel class >> first [ 
-	^(self query orderBy: [:ea | ea id ]) first 
+	^((self instVarIndexFor: #createdAt ifAbsent: [  ] ) 
+		ifNil: [ (self oneWhere: nil) orderBy: [:ea | ea id  ] ]
+		ifNotNil: [ (self oneWhere: nil) orderBy: [:ea | ea createdAt ] ]) execute
 ]
 
 { #category : #'typing/selecting keys' }
@@ -46,7 +48,10 @@ ActiveRecordModel class >> first: aNumber [
 
 { #category : #'typing/selecting keys' }
 ActiveRecordModel class >> last [ 
-	^(self query orderBy: [ :ea | ea id descending ]) first 
+	^((self instVarIndexFor: #createdAt ifAbsent: [  ] ) 
+		ifNil: [ (self oneWhere: nil) orderBy: [:ea | ea id descending] ]
+		ifNotNil: [ (self oneWhere: nil) orderBy: [:ea | ea createdAt descending] ]) execute
+
 ]
 
 { #category : #'typing/selecting keys' }
@@ -62,6 +67,11 @@ ActiveRecordModel class >> limit: aNumber [
 { #category : #accessing }
 ActiveRecordModel class >> newSession [
 	^self descriptorClass newSession
+]
+
+{ #category : #'typing/selecting keys' }
+ActiveRecordModel class >> oneWhere: aBlock [ 
+	^ActiveRecordQuery readOneOf: self where: aBlock 
 ]
 
 { #category : #'typing/selecting keys' }
@@ -90,7 +100,12 @@ ActiveRecordModel class >> table [
 
 { #category : #'typing/selecting keys' }
 ActiveRecordModel class >> where: aBlock [
-	^self query where: aBlock
+	^ActiveRecordQuery read: self where: aBlock
+]
+
+{ #category : #'typing/selecting keys' }
+ActiveRecordModel class >> where: aBlock limit: aLimit [
+	^ActiveRecordQuery read: self where: aBlock limit: aLimit
 ]
 
 { #category : #actions }
