@@ -23,14 +23,17 @@ ActiveRecordQuery >> deleteFromDatabaseWithParameters: anArray [
 { #category : #'initialize-release' }
 ActiveRecordQuery >> initResultClass: aClass whereClause: theCriteria singleObject: aBoolean [ 
 	| amendedExpression |
-	amendedExpression := (aClass canUnderstand: #deletedAt)
-		ifFalse: [ (theCriteria isNil or: [theCriteria = true or: [theCriteria = false]]) 
-			ifTrue: [EmptyExpression on: theCriteria] 
-			ifFalse: [theCriteria] ] 
-		ifTrue: [ 
-			(theCriteria isNil or: [theCriteria = true or: [theCriteria = false]])
-				ifTrue:[ [:ea | ea deletedAt isNIL ] ]
-				ifFalse: [ [:ea | ea deletedAt isNIL AND: [ theCriteria value: ea ] ] ] ].
+	amendedExpression := theCriteria isBlock 
+	ifTrue: [  
+	 	(aClass canUnderstand: #deletedAt)
+			ifFalse: [ (theCriteria isNil or: [theCriteria = true or: [theCriteria = false]]) 
+				ifTrue: [EmptyExpression on: theCriteria] 
+				ifFalse: [theCriteria] ] 
+			ifTrue: [ 
+				(theCriteria isNil or: [theCriteria = true or: [theCriteria = false]])
+					ifTrue:[ [:ea | ea deletedAt isNIL ] ]
+					ifFalse: [ [:ea | ea deletedAt isNIL AND: [ theCriteria value: ea ] ] ] ] ]
+		ifFalse: [ theCriteria ].
 	super initResultClass: aClass whereClause: amendedExpression singleObject: aBoolean. 
 	
 ]
