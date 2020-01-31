@@ -23,11 +23,10 @@ ActiveRecordQuery >> deleteFromDatabaseWithParameters: anArray [
 
 { #category : #accessing }
 ActiveRecordQuery >> session: aSession [
-	| table |
 	super session: aSession.
-	aSession ifNotNil: [  
-	table := aSession system tableForClass: self resultClass.
-	((table fieldNamed: #deleted_at ifAbsent: [ ] caseSensitive: false) notNil
-		and: [ resultClass canUnderstand: #deletedAt ]) 
-			ifTrue: [ self AND: [ :ea | ea deletedAt isNIL] ] ]
+	aSession ifNotNil: [ 
+		 ((resultClass isBehavior and: [resultClass canUnderstand: #deletedAt]) and: [ | table |
+			table := aSession system tableForClass: self resultClass.
+			(table fieldNamed: #deleted_at ifAbsent: [ ] caseSensitive: false) notNil
+			 ]) ifTrue: [ self AND: [ :ea | ea deletedAt isNIL] ] ]
 ]
