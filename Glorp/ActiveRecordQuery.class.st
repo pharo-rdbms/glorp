@@ -21,10 +21,13 @@ ActiveRecordQuery >> deleteFromDatabaseWithParameters: anArray [
 	^command rowCount.
 ]
 
-{ #category : #'initialize-release' }
-ActiveRecordQuery >> initResultClass: aClass whereClause: theCriteria singleObject: aBoolean [ 
-	super initResultClass: aClass whereClause: theCriteria singleObject: aBoolean.
-	(aClass canUnderstand: #deletedAt) 
-		ifTrue: [ self AND: [ :ea | ea deletedAt isNIL ] ]
-	
+{ #category : #accessing }
+ActiveRecordQuery >> session: aSession [
+	| table |
+	super session: aSession.
+	aSession ifNotNil: [  
+	table := aSession system tableForClass: self resultClass.
+	((table fieldNamed: #deleted_at ifAbsent: [ ] caseSensitive: false) notNil
+		and: [ resultClass canUnderstand: #deletedAt ]) 
+			ifTrue: [ self AND: [ :ea | ea deletedAt isNIL] ] ]
 ]

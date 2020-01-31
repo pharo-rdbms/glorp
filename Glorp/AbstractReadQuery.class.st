@@ -262,7 +262,7 @@ AbstractReadQuery >> execute [
 { #category : #executing }
 AbstractReadQuery >> executeWithParameters: parameterArray in: aSession [ 
 	| |
-	session := aSession.
+	self session: aSession.
 	self requiresFullQuery 
 		ifTrue: [^self asFullQuery executeWithParameters: parameterArray in: aSession].
 	self checkValidity.
