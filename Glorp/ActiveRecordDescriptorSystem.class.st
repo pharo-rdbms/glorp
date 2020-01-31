@@ -60,10 +60,14 @@ ActiveRecordDescriptorSystem >> addToManyRelationshipNamed: aName inDescriptor: 
 	"Set up the descriptor"
 	aDescriptor mappings
 		detect: [ :m | m attribute name = aName ]
-		ifNone: [ 
-			(aDescriptor newMapping: ToManyMapping)
+		ifNone: [ | mapping table |
+			table := self tableForClass: aClass.
+			mapping := (aDescriptor newMapping: ToManyMapping)
 				attributeName: aName;
-				referenceClass: (self tableClassForClass: aClass) ]
+				referenceClass: (self tableClassForClass: aClass).
+				table fields detect: [ :ea | self isSortingField: ea ] 
+					ifFound: [:f |
+						mapping orderBy: f; writeTheOrderField ] ]
 ]
 
 { #category : #adding }
@@ -91,10 +95,12 @@ ActiveRecordDescriptorSystem >> addToManyRelationshipNamed: aName inDescriptor: 
 	"Set up the descriptor"
 	aDescriptor mappings
 		detect: [ :m | m attribute name = aName ]
-		ifNone: [ 
-			(aDescriptor newMapping: ManyToManyMapping)
+		ifNone: [ | mapping |
+			mapping := (aDescriptor newMapping: ManyToManyMapping)
 				attributeName: aName;
-				referenceClass: (self tableClassForClass: aClass) ]
+				referenceClass: (self tableClassForClass: aClass).
+				aJoin allTables anyOne fields detect: [ :ea | self isSortingField: ea ] 
+					ifFound: [ :f | mapping orderBy: f; writeTheOrderField ] ]
 ]
 
 { #category : #adding }
