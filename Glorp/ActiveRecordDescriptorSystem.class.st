@@ -289,7 +289,7 @@ ActiveRecordDescriptorSystem >> initialize [
 	super initialize.
 	inflector := ActiveRecordInflector new.
 	classesWereModified := false.
-	sortingFieldNames := #(position sequence_no seq_no sequence_num seq_num sort_no display_position display_order order ).
+	sortingFieldNames := #(position sequence_no seq_no sequence_num seq_num sort_no display_position display_order order sort_value sort_key sort).
 	queryClass := ActiveRecordQuery.
 	Query delegateTo: ActiveRecordQuery
 ]
