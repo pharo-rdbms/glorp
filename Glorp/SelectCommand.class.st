@@ -16,9 +16,10 @@ Class {
 	#superclass : #DatabaseCommand,
 	#instVars : [
 		'parameters',
-		'blockFactor'
+		'blockFactor',
+		'query'
 	],
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #'*Glorp' }

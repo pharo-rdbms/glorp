@@ -10,10 +10,9 @@ Class {
 	#name : #QueryDeleteCommand,
 	#superclass : #SelectCommand,
 	#instVars : [
-		'query',
 		'rowCount'
 	],
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #accessing }

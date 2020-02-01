@@ -13,7 +13,7 @@ Class {
 ActiveRecordQuery >> deleteFromDatabaseWithParameters: anArray [
 	| command |
 	self descriptor classesRequiringIndependentQueries size >1 ifTrue: [self error: 'Delete with where clause not yet supported for classes that cross tables.'].
-	(self class includesBehavior: ActiveRecordQuery) ifTrue: [self error: 'Non-simple queries not yet supported for deletes with where clauses'].
+	(self class includesBehavior: SimpleQuery) ifFalse: [self error: 'Non-simple queries not yet supported for deletes with where clauses'].
 	self halt.
 	command := self deleteSqlWith: anArray.
 	"Should this duplicate the error handling in rowsFromDatabasewithParameters:?"

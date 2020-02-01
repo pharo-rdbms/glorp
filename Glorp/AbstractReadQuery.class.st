@@ -237,7 +237,7 @@ AbstractReadQuery >> deleteFromDatabaseWithParameters: anArray [
 { #category : #executing }
 AbstractReadQuery >> deleteWithParameters: parameterArray in: aSession [ 
 	| |
-	session := aSession.
+	self session: aSession.
 	self checkValidity.
 	self setUpExpressions.
 	self setupTracing.

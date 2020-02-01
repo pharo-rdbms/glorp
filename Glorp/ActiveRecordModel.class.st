@@ -18,6 +18,11 @@ ActiveRecordModel class >> all [
 	^self query execute
 ]
 
+{ #category : #'typing/selecting keys' }
+ActiveRecordModel class >> delete: aBlock [
+	^self session ifNotNil: [ self session delete: self where: aBlock ]
+]
+
 { #category : #setup }
 ActiveRecordModel class >> descriptorClass [
 	"You should return a subclass of ActiveRecordDescriptorSystem here "
@@ -115,6 +120,11 @@ ActiveRecordModel class >> where: aBlock [
 { #category : #'typing/selecting keys' }
 ActiveRecordModel class >> where: aBlock limit: aLimit [
 	^ActiveRecordQuery read: self where: aBlock limit: aLimit
+]
+
+{ #category : #'submorphs-add/remove' }
+ActiveRecordModel >> delete [ 
+	self session delete: self.
 ]
 
 { #category : #actions }

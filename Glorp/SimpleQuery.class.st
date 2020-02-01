@@ -274,11 +274,20 @@ SimpleQuery >> deleteSqlWith: aDictionary [
 		result := customCommand copy.
 		result query: self; parameters: aDictionary; useBinding: session useBinding; session: session.
 		^result].
-	^QueryDeleteCommand
-		forQuery: self
-		parameters: aDictionary
-		useBinding: session useBinding
-		session: session.
+
+	^self tablesToPrint anyOne fields detect: [ :ea | ea name = #deleted_at ] 
+		ifFound: [ :ea |  
+			QuerySoftDeleteCommand
+				forQuery: self
+				parameters: aDictionary
+				useBinding: session useBinding
+				session: session] 
+		ifNone: [  
+			QueryDeleteCommand
+				forQuery: self
+				parameters: aDictionary
+				useBinding: session useBinding
+				session: session]
 ]
 
 { #category : #accessing }

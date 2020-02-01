@@ -11,10 +11,9 @@ Class {
 	#name : #QuerySelectCommand,
 	#superclass : #SelectCommand,
 	#instVars : [
-		'query',
 		'boundExpressions'
 	],
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #accessing }
