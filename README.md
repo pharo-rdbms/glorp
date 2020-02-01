@@ -57,9 +57,13 @@ Active Record uses naming conventions for the columns in database tables, depend
 There are also some optional column names that will add additional features to Active Record instances:
 
 **created_at** - Automatically gets set to the current date and time when the record is first created.
+
 **updated_at** - Automatically gets set to the current date and time whenever the record is created or updated.
+
 **deleted_at** - When present, delete methods will just update this field to the current timestamp and **ActiveRecordQuery** will ignore records where deleted_at is not null.
+
 **type** - Specifies that the model uses Single Table Inheritance.
+
 **order** - Specifies the order of records when in a to-many relationship.  In the event of a link table, the order field is on the link table.  A number of synonyms are used to infer ordering fields.  By default fields named position sequence_no seq_no sequence_num seq_num sort_no display_position display_order order sort_value sort_key sort are inferred to be sort keys.  This can be changed in the **ActiveRecordDescriptorSystem**.
 
 The ActiveRecord mappings are new and may contain bugs.  There are some tests but more are needed. Submission of tests, bug reports, or fixes are welcome.  
