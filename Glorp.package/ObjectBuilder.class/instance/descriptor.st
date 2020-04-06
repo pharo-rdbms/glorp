@@ -1,4 +1,0 @@
-accessing
-descriptor
-	
-	^expression descriptor

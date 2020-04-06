@@ -1,4 +1,0 @@
-debugging
-basicPrintString
-
-	^self printString

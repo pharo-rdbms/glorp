@@ -1,1 +1,0 @@
-An abstract superclass providing convenience methods for domain objects to facilitate testing.

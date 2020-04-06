@@ -1,3 +1,0 @@
-accessing
-session
-	^command session.

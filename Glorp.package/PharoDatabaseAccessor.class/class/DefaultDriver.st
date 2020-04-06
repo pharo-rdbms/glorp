@@ -1,3 +1,0 @@
-configuration
-DefaultDriver
-	^DefaultDriver

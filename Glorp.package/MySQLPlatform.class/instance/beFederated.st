@@ -1,3 +1,0 @@
-constants
-beFederated
-	engine := 'FEDERATED'.

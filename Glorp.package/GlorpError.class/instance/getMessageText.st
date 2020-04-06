@@ -1,4 +1,0 @@
-accessing
-getMessageText
-	
-	^self databaseError

@@ -1,3 +1,0 @@
-accessing
-numberOfElements
-	^items size.

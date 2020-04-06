@@ -1,3 +1,0 @@
-preparing
-rewriteEqualityExpressions
-	^self.

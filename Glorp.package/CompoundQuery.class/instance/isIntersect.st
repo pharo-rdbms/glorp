@@ -1,3 +1,0 @@
-testing
-isIntersect
-	^operation = #INTERSECT.

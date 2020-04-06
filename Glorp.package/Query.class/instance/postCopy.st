@@ -1,4 +1,0 @@
-copying
-postCopy
-
-	prepared := false

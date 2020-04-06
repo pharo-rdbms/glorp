@@ -1,3 +1,0 @@
-accessing
-titlesWithNumberInStock
-	^titlesWithNumberInStock

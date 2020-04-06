@@ -1,3 +1,0 @@
-debugging
-class
-	^MessageArchiver

@@ -1,3 +1,0 @@
-accessing
-collectionType
-	^self primaryQuery collectionType

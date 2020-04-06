@@ -1,3 +1,0 @@
-testing
-isMinus
-	^operation = 'EXCEPT'

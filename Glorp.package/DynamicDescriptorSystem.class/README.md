@@ -1,1 +1,0 @@
-This is a descriptor system whose descriptors and tables are created dynamically rather than out of generated code. Note that identity is extremely important, so care is required to set these up properly.

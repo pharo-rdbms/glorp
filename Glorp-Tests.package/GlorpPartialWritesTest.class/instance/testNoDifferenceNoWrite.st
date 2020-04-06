@@ -1,3 +1,0 @@
-tests
-testNoDifferenceNoWrite
-self todo

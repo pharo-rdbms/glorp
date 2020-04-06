@@ -1,2 +1,0 @@
-*Glorp
-glorpPostWrite: aSession

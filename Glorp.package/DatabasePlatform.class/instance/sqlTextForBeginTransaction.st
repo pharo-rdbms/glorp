@@ -1,5 +1,0 @@
-constants
-sqlTextForBeginTransaction
-	"comment"
-
-	^'BEGIN'

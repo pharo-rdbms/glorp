@@ -1,1 +1,0 @@
-MSSQL  Sysname type 

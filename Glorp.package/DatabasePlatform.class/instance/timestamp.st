@@ -1,3 +1,0 @@
-types
-timestamp
-	self subclassResponsibility.

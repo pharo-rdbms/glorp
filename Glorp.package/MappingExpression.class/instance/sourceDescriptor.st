@@ -1,3 +1,0 @@
-accessing
-sourceDescriptor
-	^base descriptor.

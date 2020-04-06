@@ -1,3 +1,0 @@
-converting
-asNonDistinctField
-	^self

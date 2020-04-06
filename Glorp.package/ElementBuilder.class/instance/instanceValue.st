@@ -1,3 +1,0 @@
-accessing
-instanceValue
-	^instance

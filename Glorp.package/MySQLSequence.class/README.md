@@ -1,1 +1,0 @@
-This is a sequence type for MySQL AutoIncrement fields.

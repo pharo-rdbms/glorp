@@ -1,3 +1,0 @@
-navigating
-ultimateBaseExpression
-	self subclassResponsibility.

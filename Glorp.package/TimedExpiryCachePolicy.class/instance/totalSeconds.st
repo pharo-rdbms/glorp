@@ -1,4 +1,0 @@
-utility
-totalSeconds
-
-	^Dialect totalSeconds.

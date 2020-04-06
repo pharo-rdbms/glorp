@@ -1,4 +1,0 @@
-accessing
-requiresDistinct
-
-	^expression requiresDistinct

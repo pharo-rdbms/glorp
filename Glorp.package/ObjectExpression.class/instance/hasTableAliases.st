@@ -1,3 +1,0 @@
-testing
-hasTableAliases
-	^tableAliases notNil

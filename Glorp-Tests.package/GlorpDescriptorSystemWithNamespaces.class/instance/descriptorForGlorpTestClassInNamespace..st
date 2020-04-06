@@ -1,3 +1,0 @@
-accessing
-descriptorForGlorpTestClassInNamespace: aDescriptor 
-	^aDescriptor

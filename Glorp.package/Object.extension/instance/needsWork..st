@@ -1,4 +1,0 @@
-*Glorp
-needsWork: aString
-
-	^self.

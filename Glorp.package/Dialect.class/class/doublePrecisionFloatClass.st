@@ -1,4 +1,0 @@
-numbers
-doublePrecisionFloatClass
-
-	^ Float

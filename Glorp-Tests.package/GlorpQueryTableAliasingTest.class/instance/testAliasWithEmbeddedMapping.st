@@ -1,4 +1,0 @@
-tests
-testAliasWithEmbeddedMapping
-
-	self unfinished.

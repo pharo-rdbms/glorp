@@ -1,3 +1,0 @@
-printing
-hasOldVersion
-	^oldVersion notNil

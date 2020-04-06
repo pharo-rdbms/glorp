@@ -1,3 +1,0 @@
-accessing
-sqlString
-	^stream contents.

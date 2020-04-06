@@ -1,1 +1,0 @@
-This represents a general read query. By general we mean that it might require more than one trip to the database. It computes a "tracing" indicating which groups of objects can be read simultaneously, then constructs a group of corresponding SimpleQuery instances and executes them.

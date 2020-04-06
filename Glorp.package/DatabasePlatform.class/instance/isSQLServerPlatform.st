@@ -1,4 +1,0 @@
-testing
-isSQLServerPlatform
-
-	^false

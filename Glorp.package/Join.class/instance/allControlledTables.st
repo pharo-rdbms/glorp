@@ -1,4 +1,0 @@
-accessing
-allControlledTables
-
-	^self allTables.

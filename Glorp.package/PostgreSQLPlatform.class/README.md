@@ -1,1 +1,0 @@
-This is a platform for the socket protocol 2 API of the PostgreSQL database.

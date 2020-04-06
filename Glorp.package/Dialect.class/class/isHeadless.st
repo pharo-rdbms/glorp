@@ -1,4 +1,0 @@
-identifying
-isHeadless
-
-	^ Smalltalk isHeadless

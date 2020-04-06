@@ -1,3 +1,0 @@
-testing
-shortCircuitEmptyReturn: parameters
-	^false

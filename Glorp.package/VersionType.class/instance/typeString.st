@@ -1,3 +1,0 @@
-SQL
-typeString
-	^underlyingType typeString.

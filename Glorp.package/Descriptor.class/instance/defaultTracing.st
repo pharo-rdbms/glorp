@@ -1,3 +1,0 @@
-tracing
-defaultTracing
-	^Tracing new

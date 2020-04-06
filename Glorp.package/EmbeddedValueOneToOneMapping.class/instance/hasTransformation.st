@@ -1,4 +1,0 @@
-transformations
-hasTransformation
-
-	^false.

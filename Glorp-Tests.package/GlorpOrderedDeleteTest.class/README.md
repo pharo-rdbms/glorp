@@ -1,1 +1,0 @@
-Test deleting objects with ordered links to others.  If the link table were to have an order field and no primary key, Glorp would compute the primary key to include the order field, but deletion from within the ordered collection would then automatically recompute the order field numbers of all later items.  We verify

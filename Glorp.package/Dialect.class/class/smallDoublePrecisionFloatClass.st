@@ -1,4 +1,0 @@
-numbers
-smallDoublePrecisionFloatClass
-
-	^self doublePrecisionFloatClass

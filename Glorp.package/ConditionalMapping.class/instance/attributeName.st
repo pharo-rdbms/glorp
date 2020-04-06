@@ -1,3 +1,0 @@
-accessing
-attributeName
-	^self representativeMapping attributeName

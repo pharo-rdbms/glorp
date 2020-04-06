@@ -1,3 +1,0 @@
-tests
-testUpdateWithoutExpiredExistingEntry2
-	self helpTestUpdateWithoutExpiredExistingEntry: (TimedStrongCachePolicy new timeout: 0).

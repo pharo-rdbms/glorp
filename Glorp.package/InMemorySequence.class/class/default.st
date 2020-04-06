@@ -1,4 +1,0 @@
-*Glorp
-default
-
-	^self new.

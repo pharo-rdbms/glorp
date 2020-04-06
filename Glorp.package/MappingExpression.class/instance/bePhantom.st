@@ -1,3 +1,0 @@
-accessing
-bePhantom
-	phantom := true.

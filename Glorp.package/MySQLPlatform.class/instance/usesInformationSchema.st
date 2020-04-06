@@ -1,4 +1,0 @@
-testing
-usesInformationSchema
-
-	^true

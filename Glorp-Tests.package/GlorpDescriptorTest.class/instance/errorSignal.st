@@ -1,4 +1,0 @@
-support
-errorSignal
-
-	^Dialect error.

@@ -1,4 +1,0 @@
-testing
-isPrimaryKeyConstraint
-
-	^false

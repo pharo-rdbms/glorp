@@ -1,4 +1,0 @@
-accessing
-discardPassword
-
-	password := nil

@@ -1,3 +1,0 @@
-validation
-validateRows: aUnitOfWork
-	"This is a hook to allow the system to do application-specific validation of the rows to be written. I suppose it's also possible to modify the rows here. Subclasses can override if they have useful work to do here. This will be called after the rows are generated, pre-write notification has been sent, rows have been sorted for writing, and and just before sequence numbers (if pre-write) are assigned, and writing starts"

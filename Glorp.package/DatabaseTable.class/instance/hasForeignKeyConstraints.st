@@ -1,3 +1,0 @@
-testing
-hasForeignKeyConstraints
-	^foreignKeyConstraints isEmpty not

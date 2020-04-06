@@ -1,4 +1,0 @@
-types
-sequence
-
-	^self subclassResponsibility

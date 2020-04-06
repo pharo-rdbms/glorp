@@ -1,1 +1,0 @@
-I support Glorp's use of the SQLite database through NBSQLite3, the NativeBoost interface to SQLite for Pharo Smalltalk.

@@ -1,1 +1,0 @@
-This tests the ability to do a union operation on queries, returning results corresponding to multiple different queries.

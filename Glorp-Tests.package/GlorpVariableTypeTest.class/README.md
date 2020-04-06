@@ -1,1 +1,0 @@
-This exercises trying to map to objects that might be of multiple types, not related by inheritance. 

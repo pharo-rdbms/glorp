@@ -1,4 +1,0 @@
-api
-getField: aField
-	"This is rather a hack on the use of get:, but I think it should be all right because we should never run into one of these in normal expression generation. The issue is that if we do an expression of the form (x = aQuery) where the query returns an object of the same class as X. We want to rewrite that into a primary key comparison for the database, so we want to do a get: against aQuery. But the only thing that seems to sensibly translate into is a retrieve: clause and return the query. That will only work for a single level get:, but I think that a multi-level one, from converting a block, shouldn't ever get to a general sub-select."
-	query retrieve: [:each | each getField: aField].

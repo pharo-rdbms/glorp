@@ -1,3 +1,0 @@
-ordering
-grouping
-	^grouping

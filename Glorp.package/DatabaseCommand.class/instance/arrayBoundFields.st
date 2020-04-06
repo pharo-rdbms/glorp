@@ -1,3 +1,0 @@
-accessing
-arrayBoundFields
-	self subclassResponsibility

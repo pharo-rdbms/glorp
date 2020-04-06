@@ -1,3 +1,0 @@
-testing
-isIdentityColumn
-	^true.
