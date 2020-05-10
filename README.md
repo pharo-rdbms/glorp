@@ -7,7 +7,7 @@ This port of Glorp is based on VisualWorks Glorp version 8.0.1.
 
 Further information on loading and using Glorp is available in "Object-Relational Persistance with Glorp", available from http://books.pharo.org/
 
-To load Glorp:
+To load Glorp itself:
 
 ```smalltalk
 Metacello new 
@@ -16,16 +16,9 @@ Metacello new
 	load.
 ```
 
-Note that the required database drivers must be loaded separately.
-
-To load Glorp with the SQLite drivers:
-
-```smalltalk
-Metacello new 
-	repository: 'github://pharo-rdbms/glorp-sqlite3';
-	baseline: 'GlorpSQLite';
-	load.
-```
+Note that Glorp requires database drivers for the actual database connectivity:
+- For SQLite, see [glorp-sqlite3](https://github.com/pharo-rdbms/glorp-sqlite3). Use its Metacello snippet to load both Glorp and the driver in one go.
+- For PostgreSQL, see [P3](https://github.com/svenvc/P3). As per its README, load the driver after loading Glorp itself.
 
 # ActiveRecord extensions
 
