@@ -1,3 +1,6 @@
+# May 2020
+WIP - This branch is to merge ```master``` (Tonel format, ActiveRecord enhancements) with PierceNg's changes on ```pharo7```.
+
 # Glorp
 Generic Lightweight Obect Relational Persistence (for Pharo)
 
