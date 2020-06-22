@@ -88,8 +88,7 @@ MySQLPlatform >> bigint [
 
 { #category : #types }
 MySQLPlatform >> bigint: length [
-	^(self typeNamed: #bigint ifAbsentPut: [GlorpMySQLIntegerType new typeString: 'bigint'])
-		length: length asInteger; yourself
+	^(self typeNamed: #bigint ifAbsentPut: [GlorpIntegerType new typeString: 'bigint'])
 ]
 
 { #category : #binding }
@@ -257,7 +256,7 @@ MySQLPlatform >> int: length [
 { #category : #types }
 MySQLPlatform >> integer [
 
-	^self typeNamed: #integer ifAbsentPut: [GlorpMySQLIntegerType new typeString: 'int'].
+	^self typeNamed: #integer ifAbsentPut: [GlorpIntegerType new typeString: 'int'].
 ]
 
 { #category : #testing }
@@ -439,8 +438,7 @@ MySQLPlatform >> smallint [
 { #category : #types }
 MySQLPlatform >> smallint: length [
 
-	^(self typeNamed: #smallint ifAbsentPut: [GlorpMySQLIntegerType new typeString: 'smallint'])
-		length: length asInteger; yourself.
+	^(self typeNamed: #smallint ifAbsentPut: [GlorpIntegerType new typeString: 'smallint'])
 ]
 
 { #category : #'services tables' }
@@ -521,9 +519,15 @@ MySQLPlatform >> timestamp [
 ]
 
 { #category : #types }
+MySQLPlatform >> tinyint [
+	^(self typeNamed: #tinyint ifAbsentPut: [GlorpIntegerType new typeString: 'tinyint'])
+		
+]
+
+{ #category : #types }
 MySQLPlatform >> tinyint: length [
-	^(self typeNamed: #tinyint ifAbsentPut: [GlorpMySQLIntegerType new typeString: 'tinyint'])
-		length: length asInteger; yourself
+	^(self typeNamed: #tinyint ifAbsentPut: [GlorpIntegerType new typeString: 'tinyint'])
+		
 ]
 
 { #category : #types }
