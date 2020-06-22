@@ -230,9 +230,9 @@ ActiveRecordDescriptorSystem >> constructAllClasses [
 					subclasses := self session accessor 
 						executeSQLString: (String streamContents: 
 							[:s | s nextPutAll: 'select distinct type from '; nextPutAll: table name]).
-					(subclasses reject: [ :s | s isNil or: [(s at: 1) isNil] ])
+					(subclasses reject: [ :s | s isNil or: [s first isNil] ])
 						do: [ :sub || subName subclass |
-							subName := (inflector classify: (inflector modulize: (sub at: 1))) asSymbol.
+							subName := (inflector classify: (inflector modulize: sub first)) asSymbol.
 							allClasses
 								add:
 									(subclass := (inflector constantize: subName) ifNil: [
@@ -276,8 +276,9 @@ ActiveRecordDescriptorSystem >> constructTableForeignKeys [
 			ownerTable ifNotNil: [ | pks |
 				pks := ownerTable primaryKeyFields.
 				pks size = 1 
-					ifTrue: [ table addForeignKeyFrom: fk to: pks first ] 
-					ifFalse: [ self halt ]
+					ifTrue: [ table addForeignKeyFrom: fk to: pks first ]
+					"This is useful for debugging model creation -tb" 
+					"ifFalse: [ self error: 'Cannot add foreign key constraints for compound primary keys' ]"
 				]
 			]
 		].
