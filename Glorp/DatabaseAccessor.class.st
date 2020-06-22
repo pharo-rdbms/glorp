@@ -809,7 +809,7 @@ DatabaseAccessor >> listTableNamesInSchemaNamed: schemaString [
 	result := self executeSQLString: sqlStatement.
 	^result isEmpty
 		ifTrue: [#()]
-		ifFalse: [result collect: [:ea| ea first]]
+		ifFalse: [result collect: [:ea| ea at: 1 ]]
 ]
 
 { #category : #logging }

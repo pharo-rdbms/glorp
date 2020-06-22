@@ -81,6 +81,17 @@ MySQLPlatform >> beMyISAM [
 	engine := 'MyISAM'.
 ]
 
+{ #category : #types }
+MySQLPlatform >> bigint [
+	^self typeNamed: #bigint ifAbsentPut: [GlorpIntegerType new typeString: 'bigint'].
+]
+
+{ #category : #types }
+MySQLPlatform >> bigint: length [
+	^(self typeNamed: #bigint ifAbsentPut: [GlorpMySQLIntegerType new typeString: 'bigint'])
+		length: length asInteger; yourself
+]
+
 { #category : #binding }
 MySQLPlatform >> bindingsForGroupWritingFor: aCommand [
 	"Return the bindings array for a group write. This can be in different formats, depending on the database and perhaps the mechanism in place."
@@ -126,6 +137,18 @@ MySQLPlatform >> clob [
 	^self typeNamed: #clob ifAbsentPut: [GlorpMySQLClobType new typeString: 'LONGTEXT'].
 ]
 
+{ #category : #'conversion-strings' }
+MySQLPlatform >> convertJSONObjectToSQLString: anObject for: aType [
+	^anObject ifNotNil: [ NeoJSONWriter toString: anObject ]
+]
+
+{ #category : #'conversion-strings' }
+MySQLPlatform >> convertSQLStringToJSONObject: anObject for: aType [
+	^anObject isString 
+		ifTrue: [ NeoJSONReader fromString: anObject ] 
+		ifFalse: [ anObject ]
+]
+
 { #category : #constants }
 MySQLPlatform >> createTableStatementStringFor: aGLORPDatabaseTable [
 	^(super createTableStatementStringFor: aGLORPDatabaseTable), ' ENGINE=', self engine.
@@ -144,7 +167,12 @@ MySQLPlatform >> date [
 
 { #category : #types }
 MySQLPlatform >> decimal [
-	^self double
+	^self numeric
+]
+
+{ #category : #types }
+MySQLPlatform >> decimal: precision [
+	^self numeric precision: precision asInteger; yourself
 ]
 
 { #category : #constants }
@@ -186,6 +214,12 @@ MySQLPlatform >> float8 [
 	^self double.
 ]
 
+{ #category : #types }
+MySQLPlatform >> float: precision [
+	(precision asInteger between: 0 and: 23) ifTrue: [ ^self float ].
+	(precision asInteger between: 24 and: 53) ifTrue: [ ^self double ]
+]
+
 { #category : #functions }
 MySQLPlatform >> initializeFunctions [
 	super initializeFunctions.
@@ -216,14 +250,34 @@ MySQLPlatform >> int8 [
 ]
 
 { #category : #types }
+MySQLPlatform >> int: length [
+	^self integer length: length asInteger; yourself
+]
+
+{ #category : #types }
 MySQLPlatform >> integer [
 
-	^self typeNamed: #integer ifAbsentPut: [GlorpIntegerType new typeString: 'int'].
+	^self typeNamed: #integer ifAbsentPut: [GlorpMySQLIntegerType new typeString: 'int'].
 ]
 
 { #category : #testing }
 MySQLPlatform >> isMySQLPlatform [
 	^true.
+]
+
+{ #category : #types }
+MySQLPlatform >> json [
+	^self typeNamed: #json ifAbsentPut: [GlorpJSONType new]
+]
+
+{ #category : #'conversion-strings' }
+MySQLPlatform >> jsonToStringConverter [
+
+	^DelegatingDatabaseConverter
+		named: #jsonToString
+		hostedBy: self
+		fromStToDb: #convertJSONObjectToSQLString:for:
+		fromDbToSt: #convertSQLStringToJSONObject:for:.
 ]
 
 { #category : #constants }
@@ -241,6 +295,11 @@ MySQLPlatform >> maximumLengthOfTableName [
 	^64
 ]
 
+{ #category : #types }
+MySQLPlatform >> mediumint [
+	^self bigint.
+]
+
 { #category : #constants }
 MySQLPlatform >> nameForPrimaryKeyConstraintsWhenDropping [
 	"Return the name we use to describe a constraint when dropping them. This is required because MySQL wants you to use 'DROP PRIMARY KEY' rather than the ANSI 'DROP CONSTRAINT'."
@@ -251,6 +310,20 @@ MySQLPlatform >> nameForPrimaryKeyConstraintsWhenDropping [
 MySQLPlatform >> number [
 
 	^self typeNamed: #number ifAbsentPut: [GlorpNumericType new typeString: 'decimal'].
+]
+
+{ #category : #types }
+MySQLPlatform >> numeric [
+	^self typeNamed: #numeric ifAbsentPut: [GlorpNumericType new typeString: 'numeric' ]
+]
+
+{ #category : #types }
+MySQLPlatform >> numeric: precisionCommaScale [
+	| md precision scale |
+	md := precisionCommaScale splitOn: ','.
+	precision := md first ifEmpty: [ nil ] ifNotEmpty: [md first asInteger].
+	scale := md size = 2 ifTrue: [md last asInteger] ifFalse: [ nil ].
+	^self numeric precision: precision; scale: scale; yourself
 ]
 
 { #category : #'conversion-times' }
@@ -286,15 +359,17 @@ MySQLPlatform >> printPostLimit: anInteger on: aCommand [
 { #category : #'services tables' }
 MySQLPlatform >> printSqlStatementToListColumnsInTable: aDatabaseTable inSchema: schemaString on: aStream [
 	" Query to fetch column definitions in mysql in the format ActiveRecordDescriptorSystem wants"
-	^(String streamContents: [ :s | s
+	aStream nextPutAll: ((String streamContents: [ :s | s
 		nextPutAll: 'select col.column_name as name, '; 
 		nextPutAll: 'col.data_type as type, '; 
-		nextPutAll: 'case when col.numeric_precision is not null ';
-      nextPutAll:     'then col.numeric_precision ';
-      nextPutAll:     'else col.character_maximum_length end as length, ';
+		nextPutAll:'if(substring_index(substring_index(col.column_type,''('',-1),'')'',1)=col.column_type';
+		nextPutAll: ',null,substring_index(substring_index(col.column_type,''('',-1),'')'',1)) as parameters, ';
 		nextPutAll: 'if(col.is_nullable = ''YES'',1,0) as nullable, ';
 		nextPutAll: 'col.column_default as default_value, ';
-		nextPutAll: 'if(col.column_key = ''PRI'' or col.column_key = ''MUL'',1,0) as pk ';
+		nextPutAll: 'if(col.column_key = ''PRI'',1,0) as pk, ';
+		nextPutAll: 'if(instr(col.column_type,''zerofill'')=0,0,1) as "zerofill", ';
+		nextPutAll: 'if(instr(col.column_type,''unsigned'')=0,0,1) as "unsigned", ';
+		nextPutAll: 'col.numeric_scale as "scale" ';
 		nextPutAll: 'from information_schema.tables as tab ';
 		nextPutAll: 'inner join information_schema.columns as col ';
 		nextPutAll:     'on col.table_schema = tab.table_schema ';
@@ -302,7 +377,7 @@ MySQLPlatform >> printSqlStatementToListColumnsInTable: aDatabaseTable inSchema:
 		nextPutAll: 'where tab.table_type = ''BASE TABLE'' ';
 		nextPutAll:     'and tab.table_schema not in (''information_schema'',''mysql'',''performance_schema'',''sys'') ';
 		nextPutAll:     'and tab.table_schema = ''{2}'' and col.table_name = ''{1}'' ';
-		nextPutAll: 'order by tab.table_name, col.ordinal_position ']) format: { aDatabaseTable . schemaString }
+		nextPutAll: 'order by tab.table_name, col.ordinal_position ']) format: { aDatabaseTable . schemaString })
 		
 ]
 
@@ -361,6 +436,13 @@ MySQLPlatform >> smallint [
 	^self typeNamed: #smallint ifAbsentPut: [GlorpSmallIntType new typeString: 'SMALLINT'].
 ]
 
+{ #category : #types }
+MySQLPlatform >> smallint: length [
+
+	^(self typeNamed: #smallint ifAbsentPut: [GlorpMySQLIntegerType new typeString: 'smallint'])
+		length: length asInteger; yourself.
+]
+
 { #category : #'services tables' }
 MySQLPlatform >> startColumnQuote [
 	"Return the character used to start quoting the name of a column so that we can avoid conflicts with reserved names. The default MySQL quoting is to use backquotes rather than the ANSI style."
@@ -393,7 +475,7 @@ MySQLPlatform >> supportsArithmeticOperatorsOnDates [
 
 { #category : #testing }
 MySQLPlatform >> supportsBinding [
-	^ true
+	^ false
 ]
 
 { #category : #testing }
@@ -439,10 +521,27 @@ MySQLPlatform >> timestamp [
 ]
 
 { #category : #types }
+MySQLPlatform >> tinyint: length [
+	^(self typeNamed: #tinyint ifAbsentPut: [GlorpMySQLIntegerType new typeString: 'tinyint'])
+		length: length asInteger; yourself
+]
+
+{ #category : #types }
 MySQLPlatform >> typeWithDatabaseName: aString characterWidth: aNumber extraInformation: extraValue [
 	"Return our type which matches the database name for the type. Assumes all variable width fields are strings right now."
 	extraValue = 'auto_increment' ifTrue: [^self serial].
 	^super typeWithDatabaseName: aString characterWidth: aNumber.
+]
+
+{ #category : #types }
+MySQLPlatform >> typeWithQueriedDatabaseDescription: row inflector: inflector [
+	| type zerofill unsigned |
+	zerofill := (row at: 7) = 1.
+	unsigned := (row at: 8) = 1.
+	type := super typeWithQueriedDatabaseDescription: row inflector: inflector.
+	"zerofill ifTrue: [ type zerofill: true ].
+	unsigned ifTrue: [ type unsigned: true ]."
+	^type
 ]
 
 { #category : #testing }
