@@ -159,7 +159,7 @@ PostgresPlatform >> date [
 
 { #category : #types }
 PostgresPlatform >> decimal [
-	^self numeric.
+	^self typeNamed: #decimal ifAbsentPut: [GlorpDecimalType new].
 ]
 
 { #category : #types }

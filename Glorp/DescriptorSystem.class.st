@@ -533,6 +533,17 @@ DescriptorSystem >> joinFor: aMapping toTables: toTables fromConstraints: fromCo
 			constraints: (toConstraints, fromConstraints);
 			signal: 'Cannot automatically determine join, no constraints found.'].
 	numberOfConstraints > 1 ifTrue: [
+		| prefix toC frC |
+		prefix := (self inflector underscore: aMapping attributeName) copyUpTo: $_.
+		frC := fromConstraints select: [ :ea | 
+			(ea sourceFields anySatisfy: [ :field | field name beginsWith: prefix ]) or:
+			[ ea targetFields anySatisfy: [ :field | field name beginsWith: prefix ] ] ].
+		toC := toConstraints select: [ :ea | 
+			(ea sourceFields anySatisfy: [ :field | field name beginsWith: prefix ]) or:
+			[ ea targetFields anySatisfy: [ :field | field name beginsWith: prefix ] ] ].
+		numberOfConstraints := (Set new addAll: toC; addAll: frC; yourself) size.
+		numberOfConstraints = 1 
+			ifTrue: [ ^toC isEmpty ifTrue: [ frC first asReverseJoin ] ifFalse: [ toC first asJoin ] ].
 		CannotAutomaticallyDetermineJoin new
 			tables: toTables;
 			constraints: (toConstraints, fromConstraints);

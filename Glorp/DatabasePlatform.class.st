@@ -281,7 +281,7 @@ DatabasePlatform >> char [
 
 { #category : #types }
 DatabasePlatform >> char: anInteger [
-	^self char width: anInteger.
+	^self char width: anInteger asInteger.
 ]
 
 { #category : #types }
@@ -1792,7 +1792,7 @@ DatabasePlatform >> serial [
 
 { #category : #types }
 DatabasePlatform >> serial: aNumber [
-	^self serial increment: aNumber
+	^self serial increment: aNumber asNumber
 ]
 
 { #category : #types }
@@ -2338,6 +2338,53 @@ DatabasePlatform >> typeWithDatabaseName: aString characterWidth: aNumber extraI
 ]
 
 { #category : #types }
+DatabasePlatform >> typeWithQueriedDatabaseDescription: row inflector: inflector [
+	| type name dbType parameters isNullable defaultValue isPrimaryKey scale |
+	name := row at: 1.
+	dbType := row at: 2.
+	parameters := row at: 3.
+	isNullable := (row at: 4) = 1.
+	defaultValue := row at: 5.
+	isPrimaryKey := (row at: 6) = 1.
+	scale := (row at: 9) ifNotNil: [(row at: 9) asInteger].
+	type := (parameters 
+				ifNil: [ | sel |
+					sel := inflector accessor: dbType.
+					(self respondsTo: sel) 
+						ifTrue: [ self perform: sel asSymbol ]
+						ifFalse: [ self perform: sel asLowercase asSymbol ]]
+				ifNotNil: [ self
+						perform: (inflector mutator: dbType)
+						with: parameters ]).
+			
+			(name = 'created_at' and: [ dbType asLowercase beginsWith: 'timestamp' ]) 
+				ifTrue: [ 
+						type := 
+							(self versionFieldFor: type) generatesOverExistingValues: false.
+					].
+				
+			(name = 'updated_at' and: [ dbType asLowercase beginsWith: 'timestamp' ]) 
+				ifTrue: [ 
+						type := (self versionFieldFor: type) 
+							generatesOverExistingValues: true.
+					].
+			
+			(name = 'id' and: [isPrimaryKey and: [type isStringType]]) 
+				ifTrue: [ 
+					type := (self generatorFor: type 
+						withBlock: [UUIDGenerator next asString]) 
+					generatesOverExistingValues: false ].
+				
+			(name = 'id' and: [isPrimaryKey and: [type typeString = #uuid]]) 
+				ifTrue: [ 
+					type := (self generatorFor: type 
+						withBlock: [UUIDGenerator next]) 
+					generatesOverExistingValues: false ].
+		(scale notNil and: [ scale asInteger notNil and: [scale asInteger > 0]]) ifTrue: [ type scale: scale  ].
+	^type
+]
+
+{ #category : #types }
 DatabasePlatform >> types [
 	types == nil ifTrue: [types := IdentityDictionary new].
 	^types.
@@ -2459,7 +2506,7 @@ DatabasePlatform >> varChar [
 { #category : #types }
 DatabasePlatform >> varChar: anInt [
 
-	^self varchar width: anInt.
+	^self varchar width: anInt asInteger.
 ]
 
 { #category : #types }

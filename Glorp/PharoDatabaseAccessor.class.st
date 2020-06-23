@@ -22,7 +22,7 @@ Class {
 	#classVars : [
 		'DefaultDriver'
 	],
-	#category : 'Glorp-Core'
+	#category : #'Glorp-Core'
 }
 
 { #category : #configuration }
@@ -95,6 +95,8 @@ PharoDatabaseAccessor >> connectionArgsFromCurrentLogin [
 PharoDatabaseAccessor >> connectionClassForLogin: aLogin [ 
 
 	self class DefaultDriver ifNotNil: [ ^ self class DefaultDriver ].
+	aLogin database class == MySQLPlatform 
+		ifTrue: [ ^ Smalltalk at: #MySQLDatabaseDriver ].
 	aLogin database class == PostgreSQLPlatform
 		ifTrue: [ ^ Smalltalk at: #NativePostgresDriver ].
 	aLogin database class == UDBCSQLite3Platform 
