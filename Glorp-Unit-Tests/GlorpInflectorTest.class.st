@@ -457,6 +457,7 @@ GlorpInflectorTest >> testCamelToUnderscore [
 
 { #category : #'tests-data' }
 GlorpInflectorTest >> testCamelToUnderscoreWithoutReverse [ 
+	<expectedFailure>
 	self camelToUnderscoreWithoutReverse do: [ :ea |
 		self 
 			assert: (inflector underscore: ea key) 
