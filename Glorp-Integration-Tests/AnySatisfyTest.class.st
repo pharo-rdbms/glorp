@@ -10,6 +10,12 @@ Class {
 	#category : #'Glorp-Integration-Tests-Database'
 }
 
+{ #category : #accessing }
+AnySatisfyTest class >> resources [
+
+	^ Array with: GlorpSessionResource
+]
+
 { #category : #'example data' }
 AnySatisfyTest >> createTestData: aSession [
 	| bonus itemBonus |

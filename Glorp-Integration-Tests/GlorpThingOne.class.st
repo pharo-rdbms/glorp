@@ -17,6 +17,12 @@ Class {
 	#category : #'Glorp-Integration-Tests-Models'
 }
 
+{ #category : #'instance creation' }
+GlorpThingOne class >> named: aString [
+
+	^ self new name: aString
+]
+
 { #category : #comparing }
 GlorpThingOne >> <= aThingOne [
 	^self name <= aThingOne name.
