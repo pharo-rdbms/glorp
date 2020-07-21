@@ -1,0 +1,18 @@
+SmalltalkCISpec {
+  #loading : [
+    SCIMetacelloLoadSpec {
+      #baseline : 'Glorp',
+      #directory : '',
+      #load : [ 'CI' ],
+      #platforms : [  #pharo ]
+    }
+  ],
+  #testing : {
+     #coverage : {
+      #packages : [ 'Glorp' , 'Glorp-Unit-Tests' ],
+      #service: #codecov,
+      #auto_upload: false
+      }
+    }
+  }
+}

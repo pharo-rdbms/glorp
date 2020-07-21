@@ -1,4 +1,9 @@
-# Glorp
+# GLORP
+
+[![Unit Tests](https://github.com/pharo-rdbms/glorp/workflows/Unit%20Tests/badge.svg?branch=master)](https://github.com/pharo-rdbms/glorp/actions?query=workflow%3AUnit%20Tests)
+[![Coverage Status](https://codecov.io/github/pharo-rdbms/glorp/coverage.svg?branch=master)](https://codecov.io/gh/pharo-rdbms/glorp/branch/master)
+[![Pharo 8.0](https://img.shields.io/badge/Pharo-8.0-informational)](https://pharo.org)
+
 Generic Lightweight Obect Relational Persistence (for Pharo)
 
 Glorp is a full-featured Object-Relational Mapper which offers a number of features to reduce the 'impedance' between working with objects and storing them in flat tables. Amongst those features, you'll find some features saving you from writing SQL queries by hand, managing transactions that rollback the changes to the objects in your image or commit them to the database, writing simple and complex queries using plain Pharo syntax, and other features that we will cover in this introduction chapter and in the advanced topics chapter.
@@ -10,7 +15,7 @@ Further information on loading and using Glorp is available in "Object-Relationa
 To load Glorp itself:
 
 ```smalltalk
-Metacello new 
+Metacello new
 	repository: 'github://pharo-rdbms/glorp';
 	baseline: 'Glorp';
 	load.
@@ -40,7 +45,7 @@ ActiveRecord will pluralize your class names to find the respective database tab
 | Mouse  |  mice |
 | Person |   people |
 
-Table pluralization can be disabled by setting pluralizeTables on the descriptor system. 
+Table pluralization can be disabled by setting pluralizeTables on the descriptor system.
 
 ## Schema Conventions
 Active Record uses naming conventions for the columns in database tables, depending on the purpose of these columns.
@@ -63,5 +68,3 @@ There are also some optional column names that will add additional features to A
 The ActiveRecord mappings are new and may contain bugs.  There are some tests but more are needed. Submission of tests, bug reports, or fixes are welcome.  
 
 ActiveRecord support was added by Todd Blanchard
-
-
