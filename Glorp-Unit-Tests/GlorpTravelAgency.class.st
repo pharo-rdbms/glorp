@@ -19,7 +19,8 @@ Class {
 
 { #category : #comparing }
 GlorpTravelAgency >> = aGlorpTravelAgency [
-	^self name = aGlorpTravelAgency name.
+
+	^ ( aGlorpTravelAgency isKindOf: self class ) and: [ self name = aGlorpTravelAgency name ]
 ]
 
 { #category : #accessing }
@@ -30,6 +31,12 @@ GlorpTravelAgency >> agents [
 { #category : #accessing }
 GlorpTravelAgency >> agents: anObject [
 	agents := anObject
+]
+
+{ #category : #comparing }
+GlorpTravelAgency >> hash [
+
+	^ self name hash
 ]
 
 { #category : #accessing }

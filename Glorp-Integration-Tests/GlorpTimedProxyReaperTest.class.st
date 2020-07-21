@@ -30,6 +30,7 @@ GlorpTimedProxyReaperTest >> tearDown [
 { #category : #tests }
 GlorpTimedProxyReaperTest >> testAddObjects [
 
+	<expectedFailure>
 	| proxies |
 	proxies := OrderedCollection new.
 	1 to: 10 do: [:index | 
@@ -44,20 +45,24 @@ GlorpTimedProxyReaperTest >> testAddObjects [
 { #category : #tests }
 GlorpTimedProxyReaperTest >> testExpireObjects [
 
+	<expectedFailure>
 	| proxies |
-	proxies := OrderedCollection new.
-	1 to: 10 do: [:index | 
-		proxies add: (TimedProxy readOneOf: Object where: nil in: nil).
-		proxies last glorpSecondsToLive: 1.
-		reaper add: proxies last].
 
-	(Delay forSeconds: 5) wait.
-	proxies do: [:proxy | self shouldnt: [reaper includes: proxy]].
+	proxies := OrderedCollection new.
+	1 to: 10 do: [ :index | 
+		proxies add: ( TimedProxy readOneOf: Object where: nil in: nil ).
+		proxies last glorpSecondsToLive: 1.
+		reaper add: proxies last
+		].
+
+	( Delay forSeconds: 5 ) wait.
+	proxies do: [ :proxy | self shouldnt: [ reaper includes: proxy ] ]
 ]
 
 { #category : #tests }
 GlorpTimedProxyReaperTest >> testTouchAndExpireObjectsWhileOtherObjectsAreBeingReaped [
 
+	<expectedFailure>
 	| expiringProxy proxy |
 	reaper delay: 0.25.
 	expiringProxy := TimedProxy readOneOf: Object where: nil in: nil.
@@ -80,6 +85,7 @@ GlorpTimedProxyReaperTest >> testTouchAndExpireObjectsWhileOtherObjectsAreBeingR
 { #category : #tests }
 GlorpTimedProxyReaperTest >> testTouchObjects [
 
+	<expectedFailure>
 	| proxy |
 	reaper delay: 0.25.
 	proxy := TimedProxy readOneOf: Object where: nil in: nil.

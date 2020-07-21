@@ -1,0 +1,28 @@
+SmalltalkCISpec {
+  #loading : [
+    SCIMetacelloLoadSpec {
+      #baseline : 'Glorp',
+      #directory : '',
+      #load : [ 'Tests' ],
+      #platforms : [  #pharo ]
+    },
+    SCIMetacelloLoadSpec {
+      #baseline : 'P3',
+      #load : [ 'glorp' ],
+      #repository: 'github://svenvc/P3:master/',
+      #platforms : [  #pharo ],
+      #onConflict : #useLoaded
+    }
+  ],
+  #postLoading : [
+    'scripts/setupP3AsDatabaseDriver.st'
+  ],
+  #testing : {
+     #coverage : {
+      #packages : [ 'Glorp*' ],
+      #service: #codecov,
+      #auto_upload: false
+      }
+    }
+  }
+}
