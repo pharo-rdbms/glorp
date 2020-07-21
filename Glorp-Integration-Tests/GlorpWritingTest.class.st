@@ -7,6 +7,12 @@ Class {
 	#category : #'Glorp-Integration-Tests-Database'
 }
 
+{ #category : #accessing }
+GlorpWritingTest class >> defaultTimeLimit [
+
+	^ 1 minute
+]
+
 { #category : #support }
 GlorpWritingTest >> setUp [
 	super setUp.
