@@ -115,21 +115,38 @@ GlorpQueryUnionTest >> testCompoundCommandCreate [
 ]
 
 { #category : #'tests-unit' }
-GlorpQueryUnionTest >> testCreateCompoundExpression [
-	| platform compoundString expectedString |
-	expectedString := 'SELECT DISTINCT * FROM ((SELECT t1.ID, t1.STREET, t1.HOUSE_NUM
- FROM GR_ADDRESS t1) UNION ALL (SELECT t1.ID, t1.STREET, t1.HOUSE_NUM
- FROM GR_ADDRESS t1)) t1'.
+GlorpQueryUnionTest >> testCreateCompoundExpressionOnPostgreSQL [
+
+	| platform compoundString |
+
+	GlorpDatabaseLoginResource current platform isPostgreSQLPlatform
+		ifFalse: [ ^ self skip ].
 	platform := PostgreSQLPlatform new.
 	compoundString := self helpTestCompoundExpressionOnPlatform: platform.
-	self assert: compoundString equals: expectedString.
-	platform := SQLServerPlatform new.
-	compoundString := self helpTestCompoundExpressionOnPlatform: platform.
-	self assert: compoundString equals: expectedString.
+	self
+		assert: compoundString
+		equals:
+			'SELECT DISTINCT * FROM ((SELECT t1.ID, t1.STREET, t1.HOUSE_NUM
+ FROM GR_ADDRESS t1) UNION ALL (SELECT t1.ID, t1.STREET, t1.HOUSE_NUM
+ FROM GR_ADDRESS t1)) t1'
+]
+
+{ #category : #'tests-unit' }
+GlorpQueryUnionTest >> testCreateCompoundExpressionOnSQLite3 [
+
+	| platform compoundString |
+
+	GlorpDatabaseLoginResource current platform isSQLite3Platform
+		ifFalse: [ self skip ].
+
 	platform := SQLite3Platform new.
 	compoundString := self helpTestCompoundExpressionOnPlatform: platform.
-	self assert: compoundString equals: expectedString.
-
+	self
+		assert: compoundString
+		equals:
+			'SELECT DISTINCT * FROM (SELECT t1.ID, t1.STREET, t1.HOUSE_NUM
+ FROM GR_ADDRESS t1 UNION ALL SELECT t1.ID, t1.STREET, t1.HOUSE_NUM
+ FROM GR_ADDRESS t1) t1'
 ]
 
 { #category : #'tests-unit' }
