@@ -23,6 +23,7 @@ GlorpDirectMappingDBTest >> readPerson [
 GlorpDirectMappingDBTest >> testMappingToSubselect [
 
 	| personDescriptor people |
+	session platform isSQLite3Platform ifTrue: [ ^self skip ].
 	[session beginTransaction.
 	self writeAddress.
 	self writeHomelessPerson.
