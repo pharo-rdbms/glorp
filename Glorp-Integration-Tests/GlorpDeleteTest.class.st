@@ -413,6 +413,16 @@ GlorpDeleteTest >> testDeleteWhenRemovingFromAnExclusiveCollection [
 ]
 
 { #category : #tests }
+GlorpDeleteTest >> testDeleteWhere [
+
+	[ self setUpCustomer.
+	session inUnitOfWorkDo: [ session delete: GlorpCustomer where: [ :each | each id = 1 ] ].
+	self checkCustomerDeletedInDatabase
+	]
+		ensure: [ session rollbackTransaction ]
+]
+
+{ #category : #tests }
 GlorpDeleteTest >> testNormalDeleteOnFolders [
 	| user |
 	
