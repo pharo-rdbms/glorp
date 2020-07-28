@@ -28,6 +28,15 @@ GlorpDatabaseSessionTest >> tearDown [
 ]
 
 { #category : #tests }
+GlorpDatabaseSessionTest >> testLoginIfError [
+
+	[ 
+	session loginIfError: [ :error | self fail ].
+	self assert: session isLoggedIn ]
+		ensure: [ session logout ]
+]
+
+{ #category : #tests }
 GlorpDatabaseSessionTest >> testWriteRow [
 	| rowToWrite fields rowReadFromDatabase |
 	rowToWrite := session system examplePersonRow2.
