@@ -33,7 +33,7 @@ GlorpDatabaseSessionTest >> testLoginIfError [
 	[ 
 	session loginIfError: [ :error | self fail ].
 	self assert: session isLoggedIn ]
-		ensure: [ session logout ]
+		ensure: [ session rollbackTransaction ]
 ]
 
 { #category : #tests }
