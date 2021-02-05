@@ -368,7 +368,7 @@ SQLite3Platform >> serial [
 { #category : #constants }
 SQLite3Platform >> sqlTextCurrentServerUTCTimestamp [
 	"Not sure if we should stick a Z at the end for Zulu time"
-	^'SELECT strftime(''%Y-%m-%d %H:%M:%S'', datetime(''now'',''utc''))'
+	^'SELECT strftime(''%Y-%m-%d %H:%M:%f'', datetime(''now'',''utc''))'
 ]
 
 { #category : #testing }
