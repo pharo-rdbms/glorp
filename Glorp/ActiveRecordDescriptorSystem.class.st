@@ -273,11 +273,17 @@ ActiveRecordDescriptorSystem >> constructTableForeignKeys [
 		foreignKeys do: [ :fk |
 			| ownerTable | 
 			ownerTable := self likelyTableForForeignKeyNamed: fk name.
-			ownerTable ifNotNil: [ table addForeignKeyFrom: fk to: (ownerTable fieldNamed: 'id') ] 
+			ownerTable ifNotNil: [ | pks |
+				pks := ownerTable primaryKeyFields.
+				pks size = 1 
+					ifTrue: [ table addForeignKeyFrom: fk to: pks first ]
+					"This is useful for debugging model creation -tb" 
+					"ifFalse: [ self error: 'Cannot add foreign key constraints for compound primary keys' ]"
+				]
 			]
 		].
 	^tables
-	
+	 
 ]
 
 { #category : #accessing }
@@ -335,7 +341,7 @@ ActiveRecordDescriptorSystem >> initializeDescriptor: aDescriptor [
 { #category : #private }
 ActiveRecordDescriptorSystem >> initializeTable: newTable [
 	"fill in the definition from the database
-	          name           |       type        | length | nullable |     default_value     | pk 
+	          name           |       type        | length | nullable |     default_value     | pk | optional
 -------------------------+-------------------+--------+----------+-----------------------+----
  id                      | character varying |    255 |        0 | ''::character varying |  1 
  effective_date          | date              |        |        1 |                       |  0 
@@ -348,46 +354,12 @@ ActiveRecordDescriptorSystem >> initializeTable: newTable [
 		schemaNamed: self session accessor schema.
 	columns
 		do: [ :row | 
-			| column type name dbType length isNullable defaultValue isPrimaryKey |
-			name := row first.
-			dbType := row second.
-			length := row third.
-			isNullable := row fourth = 1.
-			defaultValue := row fifth.
-			isPrimaryKey := row sixth = 1.
-			type := (length
-				ifNil: [ | sel |
-					sel := inflector accessor: dbType.
-					(databasePlatform respondsTo: sel) 
-						ifTrue: [ databasePlatform perform: sel asSymbol ]
-						ifFalse: [ databasePlatform perform: sel asLowercase asSymbol ]]
-				ifNotNil: [ databasePlatform
-						perform: (inflector mutator: dbType)
-						with: length ]).
-			
-			(name = 'created_at' and: [ dbType asLowercase beginsWith: 'timestamp' ]) 
-				ifTrue: [ 
-						type := 
-							(databasePlatform versionFieldFor: type) generatesOverExistingValues: false.
-					].
-				
-			(name = 'updated_at' and: [ dbType asLowercase beginsWith: 'timestamp' ]) 
-				ifTrue: [ 
-						type := (databasePlatform versionFieldFor: type) 
-							generatesOverExistingValues: true.
-					].
-			
-			(name = 'id' and: [isPrimaryKey and: [type isStringType]]) 
-				ifTrue: [ 
-					type := (databasePlatform generatorFor: type 
-						withBlock: [UUIDGenerator next asString]) 
-					generatesOverExistingValues: false ].
-				
-			(name = 'id' and: [isPrimaryKey and: [type typeString = #uuid]]) 
-				ifTrue: [ 
-					type := (databasePlatform generatorFor: type 
-						withBlock: [UUIDGenerator next]) 
-					generatesOverExistingValues: false ].
+			| column type name isNullable defaultValue isPrimaryKey |
+			name := row at: 1.
+			isNullable := (row at: 4) = 1.
+			defaultValue := row at: 5.
+			isPrimaryKey := (row at: 6) = 1.
+			type := databasePlatform typeWithQueriedDatabaseDescription: row inflector: inflector.
 				
 			column := (newTable createFieldNamed: name type: type)
 				beNullable: isNullable;
@@ -534,18 +506,38 @@ ActiveRecordDescriptorSystem >> postInitializeDescriptor: aDescriptor [
 					
 	foreignKeys
 		do: [ :field | 
-			| otherClass attrName |
+			| otherClass attrName prefix otherTable |
 			attrName := inflector camelize: (field name copyUpToLast: $_) capitalized: false.
 			otherClass := self likelyClassForForeignKeyNamed: field name.
-			
 			otherClass
 				ifNotNil: [ 
+					otherTable := self tableForClass: otherClass.
+					prefix := field name copyUpToLast: $_.
+					reverseRelationshipName := inflector pluralize: (inflector camelize: (table name) capitalized: false).
+					(prefix size > table name size and: [ prefix endsWith: table name ]) 
+						ifTrue: [ 
+							prefix := prefix first: (prefix size - table name size). 
+							reverseRelationshipName := inflector 
+								pluralize: (inflector camelize: (prefix, table name) 
+								capitalized: false).
+						]
+						ifFalse: [ 
+							(prefix size > otherTable name size and: [ prefix endsWith: otherTable name ]) 
+								ifTrue: [
+									prefix := prefix first: (prefix size - otherTable name size).
+									reverseRelationshipName := inflector 
+										pluralize: (inflector camelize: (prefix, table name) 
+										capitalized: false).
+								]
+								ifFalse: [prefix := ''] 
+						].
+			
 					self addToOneRelationshipNamed: attrName 
 						inDescriptor: aDescriptor 
 						toClass: otherClass. 
-					reverseRelationshipName := inflector pluralize: (inflector camelize: table name capitalized: false).
+						
 					(otherClass = (self tableClassForClass: aDescriptor describedClass)) ifFalse: [  
-						otherClass withAllSubclassesDo:[:other | 
+						otherClass withAllSubclassesDo: [:other | 
 							| otherDescriptor |
 							otherDescriptor := self descriptorFor: other.
 							self

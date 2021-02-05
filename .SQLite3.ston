@@ -1,0 +1,28 @@
+SmalltalkCISpec {
+  #loading : [
+    SCIMetacelloLoadSpec {
+      #baseline : 'Glorp',
+      #directory : '',
+      #load : [ 'Tests' ],
+      #platforms : [  #pharo ]
+    },
+    SCIMetacelloLoadSpec {
+      #baseline : 'SQLite3',
+      #load : [ 'glorp' , 'SQLite3-Glorp-Tests' ],
+      #repository: 'github://pharo-rdbms/Pharo-SQLite3:master/',
+      #platforms : [  #pharo ],
+      #onConflict : #useLoaded
+    }
+  ],
+  #postLoading : [
+    'scripts/setupSQLite3AsDatabaseDriver.st'
+  ],
+  #testing : {
+     #coverage : {
+      #packages : [ 'Glorp*' ],
+      #service: #codecov,
+      #auto_upload: false
+      }
+    }
+  }
+}

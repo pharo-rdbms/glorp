@@ -4,7 +4,7 @@ I support Glorp's use of the SQLite database through NBSQLite3, the NativeBoost 
 Class {
 	#name : #UDBCSQLite3Platform,
 	#superclass : #SQLite3Platform,
-	#category : 'Glorp-Platforms'
+	#category : #'Glorp-Platforms'
 }
 
 { #category : #types }
@@ -22,11 +22,6 @@ UDBCSQLite3Platform >> convertIntegerToBoolean: anInteger for: aType [
 		ifTrue: [ anInteger ]
 		ifFalse: [ super convertIntegerToBoolean: anInteger for: aType ]
 
-]
-
-{ #category : #testing }
-UDBCSQLite3Platform >> isSQLite3Platform [
-	^ false
 ]
 
 { #category : #testing }

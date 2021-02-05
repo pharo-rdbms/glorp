@@ -8,7 +8,7 @@ Class {
 		'parameters',
 		'maximumBlobSizeToRetrieveDirectly'
 	],
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #'*Glorp' }
@@ -34,8 +34,10 @@ SQLStringCommand >> bindings [
 
 { #category : #'initialize-release' }
 SQLStringCommand >> initialize [
+
 	super initialize.
 	maximumBlobSizeToRetrieveDirectly := super maximumLobSizeToRetrieveDirectly.
+	parameters := #()
 ]
 
 { #category : #accessing }
