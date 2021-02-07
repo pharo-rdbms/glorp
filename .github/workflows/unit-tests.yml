@@ -19,9 +19,10 @@ jobs:
       - name: Load Image and Run Unit Tests
         run: smalltalkci -s ${{ matrix.smalltalk }} $GITHUB_WORKSPACE/.unit.ston
         timeout-minutes: 10
-      - run: echo "::set-env name=SCI_COVERAGE_FILE_LOCATION::${HOME}/.smalltalkCI/_builds/coveralls_results.json"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1.0.6
+        uses: codecov/codecov-action@v1
         with:
+          name: ${{matrix.os}}-${{matrix.smalltalk}}
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: ${{ env.SCI_COVERAGE_FILE_LOCATION }}
