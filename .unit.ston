@@ -10,8 +10,7 @@ SmalltalkCISpec {
   #testing : {
      #coverage : {
       #packages : [ 'Glorp' , 'Glorp-Unit-Tests' ],
-      #service: #codecov,
-      #auto_upload: false
+      #format: #lcov
       }
     }
   }
