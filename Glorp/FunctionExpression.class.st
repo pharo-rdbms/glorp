@@ -195,7 +195,6 @@ FunctionExpression >> canHaveBase [
 { #category : #iterating }
 FunctionExpression >> convertValueOf: anObject in: aDictionary [
 	| translated |
-
 	translated := anObject isGlorpExpression 
 		ifTrue: [anObject valueIn: aDictionary]
 		ifFalse: [anObject].

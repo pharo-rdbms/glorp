@@ -47,6 +47,12 @@ SQLite3Platform >> areSequencesExplicitlyCreated [
 	^false
 ]
 
+{ #category : #constants }
+SQLite3Platform >> autoTrimsStringsLongerThanColumnSize [
+	"It doesn't actually trim them - but it will not complain about them either.  It just takes them."
+	^true
+]
+
 { #category : #binding }
 SQLite3Platform >> bindingsForGroupWritingFor: aCommand [
 	"Return the bindings array for a group write. This can be in different formats, depending on the database and perhaps the mechanism in place."
@@ -199,6 +205,13 @@ SQLite3Platform >> maximumLengthOfTableName [
 	^128
 ]
 
+{ #category : #testing }
+SQLite3Platform >> maximumQueryValueSize [
+	"If there's a limit on how big a bound input parameter can be for a query, return it here. By default, no maximum. "
+	"https://sqlite.org/limits.html : The pattern matching algorithm used in the default LIKE and GLOB implementation of SQLite can exhibit O(N²) performance (where N is the number of characters in the pattern) for certain pathological cases. To avoid denial-of-service attacks from miscreants who are able to specify their own LIKE or GLOB patterns, the length of the LIKE or GLOB pattern is limited to SQLITE_MAX_LIKE_PATTERN_LENGTH bytes. The default value of this limit is 50000. A modern workstation can evaluate even a pathological LIKE or GLOB pattern of 50000 bytes relatively quickly. The denial of service problem only comes into play when the pattern length gets into millions of bytes. Nevertheless, since most useful LIKE or GLOB patterns are at most a few dozen bytes in length, paranoid application developers may want to reduce this parameter to something in the range of a few hundred if they know that external users are able to generate arbitrary patterns."
+	^50000 
+]
+
 { #category : #types }
 SQLite3Platform >> numeric [
 
@@ -221,7 +234,7 @@ SQLite3Platform >> printDate: aDateString for: aType [
 
 	aDateString isNil ifTrue: [^'NULL'].
 	"The next line is checking code and can be dropped when SQLite is sufficiently tested."
-	aDateString class = Date ifTrue: [self error: 'SQLite does not support date types;  this should have been a String'].
+	aDateString class = Date ifTrue: [^aDateString yyyymmdd printString].
 	^aDateString printString
 ]
 
@@ -352,6 +365,12 @@ SQLite3Platform >> serial [
 	^self typeNamed: #serial ifAbsentPut: [GlorpSerialType new typeString: 'INTEGER PRIMARY KEY AUTOINCREMENT'].
 ]
 
+{ #category : #constants }
+SQLite3Platform >> sqlTextCurrentServerUTCTimestamp [
+	"Not sure if we should stick a Z at the end for Zulu time"
+	^'SELECT strftime(''%Y-%m-%d %H:%M:%f'', datetime(''now'',''utc''))'
+]
+
 { #category : #testing }
 SQLite3Platform >> supportsANSIJoins [
 	"Do we support the JOIN <tableName> USING <criteria> syntax."
@@ -361,6 +380,11 @@ SQLite3Platform >> supportsANSIJoins [
 { #category : #testing }
 SQLite3Platform >> supportsAlterTableForConstraints [
 
+	^false
+]
+
+{ #category : #testing }
+SQLite3Platform >> supportsArithmeticOperatorsOnDates [
 	^false
 ]
 
