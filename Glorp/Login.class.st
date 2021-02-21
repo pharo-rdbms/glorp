@@ -25,9 +25,10 @@ Class {
 		'databaseName',
 		'host',
 		'port',
-		'secure'
+		'secure',
+		'settings'
 	],
-	#category : 'Glorp-Core'
+	#category : #'Glorp-Core'
 }
 
 { #category : #'as yet unclassified' }
@@ -138,12 +139,16 @@ Login >> host: aHost [
 	host := aHost.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Login >> initialize [
-	"My schema supplies the schema to my accessor, to its session and to that session's descriptor system.  Since a DatabaseTable's schema is initialized to the empty string, not nil (and that of a StoreLogin must never be nil), initialize to the empty string here, so that calling code need not check for nil."
+	settings := IdentityDictionary new
+]
 
-	schema := ''.
-	secure := false
+{ #category : #testing }
+Login >> isSSL [
+	"Return true if my current connection is SSL encrypted"
+
+	^ settings at: #ssl ifAbsent: [ false ]
 ]
 
 { #category : #accessing }
@@ -237,6 +242,11 @@ Login >> secure: aBoolean [
 Login >> sessionForDescriptorSystem: aDescriptorSystemClass [
 	"Create a session for this login, using aDescriptorSystemClass for its metadata"
 	^aDescriptorSystemClass sessionForLogin: self.
+]
+
+{ #category : #initialization }
+Login >> setSSL [
+	settings at: #ssl put: true
 ]
 
 { #category : #accessing }
