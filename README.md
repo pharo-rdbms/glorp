@@ -5,6 +5,7 @@
 [![SQLite3 Tests](https://github.com/pharo-rdbms/glorp/workflows/SQLite3%20Integration%20Tests/badge.svg?branch=master)](https://github.com/pharo-rdbms/glorp/actions?query=workflow%3ASQLite3%20Integration%20Tests)
 [![Coverage Status](https://codecov.io/github/pharo-rdbms/glorp/coverage.svg?branch=master)](https://codecov.io/gh/pharo-rdbms/glorp/branch/master)
 [![Pharo 8.0](https://img.shields.io/badge/Pharo-8.0-informational)](https://pharo.org)
+[![Pharo 9.0](https://img.shields.io/badge/Pharo-9.0-informational)](https://pharo.org)
 
 ## Generic Lightweight Object Relational Persistence (for Pharo)
 
