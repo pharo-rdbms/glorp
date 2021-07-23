@@ -27,9 +27,13 @@ ToManyMapping >> buildGeneralQueryIn: anObjectBuilder [
 
 { #category : #mapping }
 ToManyMapping >> buildQuery [
+	| targetDescriptor |
+	targetDescriptor := self referenceDescriptor.
 	query := super buildQuery.
-	orderBy isNil ifFalse: [orderBy do: [:each | query orderBy: each]].
-	^query
+	orderBy ifNotNil: [ orderBy do: [ :each || attr |
+			attr := targetDescriptor directMappingForField: each.
+			query orderBy: attr attributeName ] ].
+	^ query
 ]
 
 { #category : #api }
