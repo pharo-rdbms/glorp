@@ -1,6 +1,6 @@
 name: PostgreSQL Integration Tests
 
-on: [push,pull_request]
+on: [push,pull_request,workflow_dispatch]
 
 jobs:
    build:
@@ -8,8 +8,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        smalltalk: [ Pharo64-8.0 ]
-        rdbms: [ PostgreSQLv10, PostgreSQLv11, PostgreSQLv12 ]
+        smalltalk: [ Pharo64-8.0, Pharo64-9.0 ]
+        rdbms: [ PostgreSQLv10, PostgreSQLv11, PostgreSQLv12, PostgreSQLv13 ]
     name: ${{ matrix.smalltalk }} + ${{ matrix.rdbms }}
     steps:
       - uses: actions/checkout@v2
@@ -20,15 +20,15 @@ jobs:
       - name: Set up Smalltalk CI
         uses: hpi-swa/setup-smalltalkCI@v1
         with:
-          smalltalk-version: ${{ matrix.smalltalk }}
+          smalltalk-image: ${{ matrix.smalltalk }}
       - name: Load Image and Run Integration Tests
         run: smalltalkci -s ${{ matrix.smalltalk }} .PostgreSQL.ston
         timeout-minutes: 15
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RDBMS: ${{ matrix.rdbms }}
-      - run: echo "::set-env name=SCI_COVERAGE_FILE_LOCATION::${HOME}/.smalltalkCI/_builds/coveralls_results.json"
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1.0.6
+        uses: codecov/codecov-action@v1
         with:
+          name: ${{matrix.os}}-${{matrix.smalltalk}}
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: ${{ env.SCI_COVERAGE_FILE_LOCATION }}

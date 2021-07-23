@@ -226,7 +226,6 @@ RelationExpression >> condensePrimaryKeyComparisons [
 { #category : #iterating }
 RelationExpression >> convertValueOf: anObject in: aDictionary [
 	| translated convertedValue |
-
 	translated := anObject isGlorpExpression 
 		ifTrue: [anObject valueIn: aDictionary]
 		ifFalse: [anObject].
