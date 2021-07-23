@@ -177,15 +177,15 @@ PharoDatabaseAccessor >> isLoggedIn [
 ]
 
 { #category : #login }
-PharoDatabaseAccessor >> loginIfError: aBlock [ 
+PharoDatabaseAccessor >> loginIfError: aBlock [
 	self log: 'Login'.
 	self databaseDriver: self connectionClass new.
 	self
-		execute: [
-			self databaseDriver connect: currentLogin.
-			currentLogin secure 
-				ifTrue: [ currentLogin discardPassword ]
-			]
+		execute: [ currentLogin isSSL
+				ifTrue: [ self databaseDriver connectSSL: currentLogin ]
+				ifFalse: [ self databaseDriver connect: currentLogin ].
+			currentLogin secure
+				ifTrue: [ currentLogin discardPassword ] ]
 		ifError: aBlock.
 	self log: 'Login finished'
 ]
