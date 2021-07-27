@@ -98,7 +98,7 @@ PharoDatabaseAccessor >> connectionClassForLogin: aLogin [
 	aLogin database class == MySQLPlatform 
 		ifTrue: [ ^ Smalltalk at: #MySQLDatabaseDriver ].
 	aLogin database class == PostgreSQLPlatform
-		ifTrue: [ ^ Smalltalk at: #NativePostgresDriver ].
+		ifTrue: [ ^ Smalltalk at: #P3DatabaseDriver ].
 	aLogin database class == UDBCSQLite3Platform 
 		ifTrue: [ ^ Smalltalk at: #NBSQLite3GlorpAccessor ].
 	self error: 'A driver is not installed for platform: ' , aLogin database class name
