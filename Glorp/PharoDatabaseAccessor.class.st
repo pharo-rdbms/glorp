@@ -100,7 +100,7 @@ PharoDatabaseAccessor >> connectionClassForLogin: aLogin [
 	aLogin database class == PostgreSQLPlatform
 		ifTrue: [ ^ Smalltalk at: #P3DatabaseDriver ].
 	aLogin database class == UDBCSQLite3Platform 
-		ifTrue: [ ^ Smalltalk at: #NBSQLite3GlorpAccessor ].
+		ifTrue: [ ^ Smalltalk at: #SQLite3Driver ].
 	self error: 'A driver is not installed for platform: ' , aLogin database class name
 ]
 
