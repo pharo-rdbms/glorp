@@ -141,7 +141,10 @@ Login >> host: aHost [
 
 { #category : #initialization }
 Login >> initialize [
-	settings := IdentityDictionary new
+	super initialize.
+	settings := IdentityDictionary new.
+	secure := false.
+	schema := ''
 ]
 
 { #category : #testing }
