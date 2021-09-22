@@ -34,7 +34,7 @@ ToManyMapping >> buildQuery [
 			each isString 
 				ifTrue: [ query orderBy: each asSymbol ].
 			each isBlock 
-				ifTrue: [ query orderBy: each  ]
+				ifTrue: [ query orderBy: each ]
 				ifFalse: [  
 					attr := targetDescriptor directMappingForField: each.
 					attr notNil ifTrue: [ query orderBy: attr attributeName ] ] ] ].
