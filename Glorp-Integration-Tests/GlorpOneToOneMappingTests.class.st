@@ -5,7 +5,7 @@ Class {
 		'sessionsPool',
 		'lastPoolSessionIndex'
 	],
-	#category : #'Glorp-Unit-Tests-Tests'
+	#category : #'Glorp-Integration-Tests-Database'
 }
 
 { #category : #accessing }
