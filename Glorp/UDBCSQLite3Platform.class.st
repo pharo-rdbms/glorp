@@ -30,17 +30,6 @@ UDBCSQLite3Platform >> isUDBCSQLite3Platform [
 ]
 
 { #category : #'conversion-times' }
-UDBCSQLite3Platform >> printDate: aDateString for: aType [
-
-	aDateString isNil ifTrue: [^'NULL'].
-	^ String streamContents: [ :str |
-		str nextPut: $".
-		aDateString printOn: str.
-		str nextPut: $" ]
-
-]
-
-{ #category : #'conversion-times' }
 UDBCSQLite3Platform >> printDate: aTimestamp isoFormatOn: stream [
 	"Print the date as yyyy-mm-dd"
 	| monthNumber dayOfMonth |
