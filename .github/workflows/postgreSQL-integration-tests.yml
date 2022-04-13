@@ -8,8 +8,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        smalltalk: [ Pharo64-8.0, Pharo64-9.0 ]
-        rdbms: [ PostgreSQLv10, PostgreSQLv11, PostgreSQLv12, PostgreSQLv13 ]
+        smalltalk: [ Pharo64-8.0, Pharo64-9.0, Pharo64-10 ]
+        rdbms: [ PostgreSQLv10, PostgreSQLv11, PostgreSQLv12, PostgreSQLv13, PostgreSQLv14 ]
     name: ${{ matrix.smalltalk }} + ${{ matrix.rdbms }}
     steps:
       - uses: actions/checkout@v2
@@ -22,7 +22,7 @@ jobs:
         with:
           smalltalk-image: ${{ matrix.smalltalk }}
       - name: Load Image and Run Integration Tests
-        run: smalltalkci -s ${{ matrix.smalltalk }} .PostgreSQL.ston
+        run: smalltalkci -s ${{ matrix.smalltalk }} .smalltalkci/.PostgreSQL.ston
         timeout-minutes: 15
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

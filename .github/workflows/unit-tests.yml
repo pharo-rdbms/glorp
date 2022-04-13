@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        smalltalk: [ Pharo64-8.0, Pharo64-9.0 ]
+        smalltalk: [ Pharo64-8.0, Pharo64-9.0, Pharo64-10 ]
     name: ${{ matrix.smalltalk }}
     steps:
       - uses: actions/checkout@v2
@@ -17,7 +17,7 @@ jobs:
         with:
           smalltalk-image: ${{ matrix.smalltalk }}
       - name: Load Image and Run Unit Tests
-        run: smalltalkci -s ${{ matrix.smalltalk }} $GITHUB_WORKSPACE/.unit.ston
+        run: smalltalkci -s ${{ matrix.smalltalk }} .smalltalkci/.unit.ston
         timeout-minutes: 10
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
