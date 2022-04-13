@@ -14,7 +14,7 @@ BaselineOfGlorp >> baseline: spec [
 				package: 'Glorp';
 				group: 'Core' with: 'Glorp';
 			
-				package: 'Glorp-Unit-Tests' with: [ spec requires: 'Glorp' ];
+				package: 'Glorp-Unit-Tests' with: [ spec requires: 'Core' ];
 				group: 'Tests' with: 'Glorp-Unit-Tests';
 				group: 'CI' with: 'Glorp-Unit-Tests';
 			
