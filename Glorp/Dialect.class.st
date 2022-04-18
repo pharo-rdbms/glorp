@@ -12,7 +12,7 @@ Class {
 		'lastSystemTime',
 		'lastServerTime'
 	],
-	#category : 'Glorp-Exceptions'
+	#category : #'Glorp-Exceptions'
 }
 
 { #category : #dates }
@@ -249,7 +249,6 @@ Dialect class >> readFixedPointFrom: aString [
 Dialect class >> reset [
 	"self reset"
 	lookedUpNames := nil.
-	identitySetClass := nil.
 	timestampClass := nil.
 	dialectName := nil
 ]
