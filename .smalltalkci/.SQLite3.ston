@@ -2,7 +2,7 @@ SmalltalkCISpec {
   #loading : [
     SCIMetacelloLoadSpec {
       #baseline : 'Glorp',
-      #directory : '',
+      #directory : '..',
       #load : [ 'Tests' ],
       #platforms : [  #pharo ]
     },
@@ -15,7 +15,7 @@ SmalltalkCISpec {
     }
   ],
   #postLoading : [
-    'scripts/setupSQLite3AsDatabaseDriver.st'
+    '../scripts/setupSQLite3AsDatabaseDriver.st'
   ],
   #testing : {
      #coverage : {

@@ -14,7 +14,7 @@ BaselineOfGlorp >> baseline: spec [
 				package: 'Glorp';
 				group: 'Core' with: 'Glorp';
 			
-				package: 'Glorp-Unit-Tests' with: [ spec requires: 'Glorp' ];
+				package: 'Glorp-Unit-Tests' with: [ spec requires: 'Core' ];
 				group: 'Tests' with: 'Glorp-Unit-Tests';
 				group: 'CI' with: 'Glorp-Unit-Tests';
 			
@@ -23,6 +23,12 @@ BaselineOfGlorp >> baseline: spec [
 			
 			"This keeps backwards compatibility for people loading Glorp-Tests"
 			spec group: 'Glorp-Tests' with: 'Tests'
+			].
+	spec
+		for: #'pharo10.x'
+		do: [ spec
+				package: 'Glorp-Pharo10';
+				group: 'Core' with: 'Glorp-Pharo10'
 			]
 ]
 
