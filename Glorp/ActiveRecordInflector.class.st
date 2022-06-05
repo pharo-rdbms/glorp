@@ -372,7 +372,7 @@ ActiveRecordInflector >> underscore: aString [
 		c := in next.
 		first := true.
 		[c notNil and: [c isUppercase]] whileTrue: [ 
-			(in peek isLowercase and: [ first not ]) ifTrue: [s nextPut: $_]. 
+			(in atEnd not and: [in peek isLowercase and: [ first not ]]) ifTrue: [s nextPut: $_]. 
 			s nextPut: c asLowercase. c := in next. first := false].
 		[ c notNil ] whileTrue: [ 
 			c isUppercase ifTrue: [ s nextPut: $_ ]. 

@@ -67,7 +67,7 @@ ActiveRecordDescriptorSystem >> addToManyRelationshipNamed: aName inDescriptor: 
 				referenceClass: (self tableClassForClass: aClass).
 				table fields detect: [ :ea | self isSortingField: ea ] 
 					ifFound: [:f |
-						mapping orderBy: f; writeTheOrderField ] ]
+						mapping orderBy: (inflector accessor: f name asSymbol); writeTheOrderField ] ]
 ]
 
 { #category : #adding }
@@ -100,7 +100,7 @@ ActiveRecordDescriptorSystem >> addToManyRelationshipNamed: aName inDescriptor: 
 				attributeName: aName;
 				referenceClass: (self tableClassForClass: aClass).
 				aJoin allTables anyOne fields detect: [ :ea | self isSortingField: ea ] 
-					ifFound: [ :f | mapping orderBy: f; writeTheOrderField ] ]
+					ifFound: [ :f | mapping orderBy: (inflector accessor: f name asSymbol); writeTheOrderField ] ]
 ]
 
 { #category : #adding }
