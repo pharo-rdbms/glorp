@@ -17,9 +17,11 @@ Class {
 		'operation',
 		'primaryQuery',
 		'specialBuilders',
-		'requiresDistinct'
+		'requiresDistinct',
+		'limit',
+		'offset'
 	],
-	#category : 'Glorp-Queries'
+	#category : #'Glorp-Queries'
 }
 
 { #category : #'instance creation' }
@@ -65,6 +67,18 @@ CompoundQuery >> executeWithParameters: parameterArray in: aSession [
 		readFromDatabaseWithParameters: parameterArray
 ]
 
+{ #category : #testing }
+CompoundQuery >> hasLimit [
+
+	^ self limit isNotNil
+]
+
+{ #category : #testing }
+CompoundQuery >> hasOffset [
+
+	^ self offset isNotNil
+]
+
 { #category : #initializing }
 CompoundQuery >> initialize [
 	super initialize.
@@ -94,13 +108,13 @@ CompoundQuery >> joins [
 
 { #category : #accessing }
 CompoundQuery >> limit [
-	^primaryQuery limit
+	^limit
 ]
 
 { #category : #accessing }
 CompoundQuery >> limit: anInteger [
 	"We currently ignore limit sets and use the one from our contained queries."
-	^self
+	limit := anInteger
 ]
 
 { #category : #accessing }
@@ -116,13 +130,13 @@ CompoundQuery >> minus: aQuery [
 
 { #category : #accessing }
 CompoundQuery >> offset [
-	^primaryQuery offset
+	^ offset
 ]
 
 { #category : #accessing }
 CompoundQuery >> offset: anInteger [
 	"We currently ignore offset sets and use the one from our contained queries."
-	^self
+	offset := anInteger
 ]
 
 { #category : #accessing }
@@ -163,10 +177,22 @@ CompoundQuery >> printCompoundSelectAliasesOn: aStream [
 ]
 
 { #category : #printing }
+CompoundQuery >> printOffsetOn: aCommand [
+	self hasOffset ifFalse: [^self].
+	self platform printOffset: self offset on: aCommand
+]
+
+{ #category : #printing }
 CompoundQuery >> printOperationOn: aCommand [
 	aCommand space.
 	aCommand nextPutAll: (self platform compoundOperationFor: operation).
 	aCommand space
+]
+
+{ #category : #printing }
+CompoundQuery >> printPostLimitOn: aCommand [
+	self hasLimit ifFalse: [^self].
+	self platform printPostLimit: self limit on: aCommand
 ]
 
 { #category : #accessing }

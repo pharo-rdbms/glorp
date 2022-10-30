@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'commands'
 	],
-	#category : 'Glorp-Core'
+	#category : #'Glorp-Core'
 }
 
 { #category : #accessing }
@@ -40,6 +40,18 @@ CompoundSelectCommand >> commands [
 { #category : #testing }
 CompoundSelectCommand >> hasGrouping [
 	^self query hasGrouping
+]
+
+{ #category : #testing }
+CompoundSelectCommand >> hasLimit [
+
+	^self query hasLimit
+]
+
+{ #category : #testing }
+CompoundSelectCommand >> hasOffset [
+
+	^self query hasOffset
 ]
 
 { #category : #testing }
@@ -82,8 +94,11 @@ CompoundSelectCommand >> printSQL [
 		ifTrue: 
 			[self nextPut: $).
 			query printCompoundSelectAliasesOn: self].
+		
 	query printOrderingOn: self.
-	query printGroupingOn: self
+	query printGroupingOn: self.
+	query printPostLimitOn: self.
+	query printOffsetOn: self.
 ]
 
 { #category : #testing }
@@ -93,7 +108,9 @@ CompoundSelectCommand >> requiresDistinct [
 
 { #category : #testing }
 CompoundSelectCommand >> requiresWrapperQuery [
-	^self requiresDistinct
-		or: [self hasOrdering
-			or: [self hasGrouping]]
+    ^ self requiresDistinct
+		or: [ self hasOrdering
+			or: [ self hasGrouping
+				or: [ self hasLimit
+					or: [ self hasOffset ] ] ] ] 
 ]
