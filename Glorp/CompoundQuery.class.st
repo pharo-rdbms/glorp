@@ -113,7 +113,7 @@ CompoundQuery >> limit [
 
 { #category : #accessing }
 CompoundQuery >> limit: anInteger [
-	"We currently ignore limit sets and use the one from our contained queries."
+	"Adding a limit value will wrap the union queries in a SELECT statement"
 	limit := anInteger
 ]
 
@@ -135,7 +135,7 @@ CompoundQuery >> offset [
 
 { #category : #accessing }
 CompoundQuery >> offset: anInteger [
-	"We currently ignore offset sets and use the one from our contained queries."
+	"Adding an offset value will wrap the union queries in a SELECT statement"
 	offset := anInteger
 ]
 
