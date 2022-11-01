@@ -132,6 +132,178 @@ GlorpQueryUnionTest >> testCreateCompoundExpressionOnPostgreSQL [
 ]
 
 { #category : #'tests-unit' }
+GlorpQueryUnionTest >> testCreateCompoundExpressionOnPostgreSQLNonDistict [
+"sends requiresDistinct: false to union query, no limit, offset, orderBy or groupBy. Shoud only produce (query1) UNION ALL (query2)"
+
+	| platform compoundString query union |
+
+	GlorpDatabaseLoginResource current platform isPostgreSQLPlatform
+		ifFalse: [ ^ self skip ].
+
+	platform := PostgreSQLPlatform new.
+	platform useBinding: false.
+	
+	query := Query read: GlorpAddress.
+	union := query unionAll: query.
+
+	union requiresDistinct: false.
+	
+	union session: session.
+	compoundString :=(union sqlWith: Dictionary new) sqlString.
+	
+	self
+		assert: compoundString
+		equals:
+			'(SELECT t1.ID, t1.STREET, t1.HOUSE_NUM
+ FROM GR_ADDRESS t1) UNION ALL (SELECT t1.ID, t1.STREET, t1.HOUSE_NUM
+ FROM GR_ADDRESS t1)'
+]
+
+{ #category : #'tests-unit' }
+GlorpQueryUnionTest >> testCreateCompoundExpressionOnPostgreSQLWithLimit [
+"sends limit: message to union query, shoud appear at the end"
+
+	| platform compoundString query union |
+
+	GlorpDatabaseLoginResource current platform isPostgreSQLPlatform
+		ifFalse: [ ^ self skip ].
+
+	platform := PostgreSQLPlatform new.
+	platform useBinding: false.
+	
+	query := Query read: GlorpAddress.
+	union := query unionAll: query.
+	
+	union limit: 35.
+	
+	union session: session.
+	compoundString :=(union sqlWith: Dictionary new) sqlString.
+	
+	self
+		assert: compoundString
+		equals:
+			'SELECT DISTINCT * FROM ((SELECT t1.ID, t1.STREET, t1.HOUSE_NUM
+ FROM GR_ADDRESS t1) UNION ALL (SELECT t1.ID, t1.STREET, t1.HOUSE_NUM
+ FROM GR_ADDRESS t1)) t1 LIMIT 35'
+]
+
+{ #category : #'tests-unit' }
+GlorpQueryUnionTest >> testCreateCompoundExpressionOnPostgreSQLWithLimitAndOffset [
+"sends limit: and offset: messages to union query, shoud appear at the end"
+
+	| platform compoundString query union |
+
+	GlorpDatabaseLoginResource current platform isPostgreSQLPlatform
+		ifFalse: [ ^ self skip ].
+
+	platform := PostgreSQLPlatform new.
+	platform useBinding: false.
+	
+	query := Query read: GlorpAddress.
+	union := query unionAll: query.
+	
+	union offset: 17.
+	union limit: 22.
+	
+	union session: session.
+	compoundString :=(union sqlWith: Dictionary new) sqlString.
+	
+	self
+		assert: compoundString
+		equals:
+			'SELECT DISTINCT * FROM ((SELECT t1.ID, t1.STREET, t1.HOUSE_NUM
+ FROM GR_ADDRESS t1) UNION ALL (SELECT t1.ID, t1.STREET, t1.HOUSE_NUM
+ FROM GR_ADDRESS t1)) t1 LIMIT 22 OFFSET 17'
+]
+
+{ #category : #'tests-unit' }
+GlorpQueryUnionTest >> testCreateCompoundExpressionOnPostgreSQLWithLimitNonDistict [
+"sends requiresDistinct: false to union query, shoud only produce SELECT * FROM ..."
+
+	| platform compoundString query union |
+
+	GlorpDatabaseLoginResource current platform isPostgreSQLPlatform
+		ifFalse: [ ^ self skip ].
+
+	platform := PostgreSQLPlatform new.
+	platform useBinding: false.
+	
+	query := Query read: GlorpAddress.
+	union := query unionAll: query.
+
+	union requiresDistinct: false.
+	
+	union offset: 17.
+	union limit: 22.
+	
+	union session: session.
+	compoundString :=(union sqlWith: Dictionary new) sqlString.
+	
+	self
+		assert: compoundString
+		equals:
+			'SELECT * FROM ((SELECT t1.ID, t1.STREET, t1.HOUSE_NUM
+ FROM GR_ADDRESS t1) UNION ALL (SELECT t1.ID, t1.STREET, t1.HOUSE_NUM
+ FROM GR_ADDRESS t1)) t1 LIMIT 22 OFFSET 17'
+]
+
+{ #category : #'tests-unit' }
+GlorpQueryUnionTest >> testCreateCompoundExpressionOnPostgreSQLWithOffset [
+"sends offset: message to union query, shoud appear at the end"
+
+	| platform compoundString query union |
+
+	GlorpDatabaseLoginResource current platform isPostgreSQLPlatform
+		ifFalse: [ ^ self skip ].
+
+	platform := PostgreSQLPlatform new.
+	platform useBinding: false.
+	
+	query := Query read: GlorpAddress.
+	union := query unionAll: query.
+	
+	union offset: 17.
+	
+	union session: session.
+	compoundString :=(union sqlWith: Dictionary new) sqlString.
+	
+	self
+		assert: compoundString
+		equals:
+			'SELECT DISTINCT * FROM ((SELECT t1.ID, t1.STREET, t1.HOUSE_NUM
+ FROM GR_ADDRESS t1) UNION ALL (SELECT t1.ID, t1.STREET, t1.HOUSE_NUM
+ FROM GR_ADDRESS t1)) t1 OFFSET 17'
+]
+
+{ #category : #'tests-unit' }
+GlorpQueryUnionTest >> testCreateCompoundExpressionOnPostgreSQLWithOrderBy [
+"sends orderBy: block to union query, adds ORDER BY statement at the end."
+
+	| platform compoundString query union |
+
+	GlorpDatabaseLoginResource current platform isPostgreSQLPlatform
+		ifFalse: [ ^ self skip ].
+
+	platform := PostgreSQLPlatform new.
+	platform useBinding: false.
+	
+	query := Query read: GlorpAddress.
+	union := query unionAll: query.
+
+	union orderBy: [ :each | each street ].
+	
+	union session: session.
+	compoundString :=(union sqlWith: Dictionary new) sqlString.
+	
+	self
+		assert: compoundString
+		equals:
+			'SELECT DISTINCT * FROM ((SELECT t1.ID, t1.STREET, t1.HOUSE_NUM
+ FROM GR_ADDRESS t1) UNION ALL (SELECT t1.ID, t1.STREET, t1.HOUSE_NUM
+ FROM GR_ADDRESS t1)) t1 ORDER BY t1.STREET'
+]
+
+{ #category : #'tests-unit' }
 GlorpQueryUnionTest >> testCreateCompoundExpressionOnSQLite3 [
 
 	| platform compoundString |
