@@ -2,7 +2,7 @@ SmalltalkCISpec {
   #loading : [
     SCIMetacelloLoadSpec {
       #baseline : 'Glorp',
-      #directory : '..',
+      #directory : '../src',
       #load : [ 'CI' ],
       #platforms : [  #pharo ]
     }
