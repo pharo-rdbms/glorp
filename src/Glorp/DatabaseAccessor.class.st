@@ -821,8 +821,8 @@ DatabaseAccessor >> log: aStringOrBlock [
 		ifTrue: [aStringOrBlock]
 		ifFalse: [aStringOrBlock value].
 	string size > 4000 ifTrue: [string := string copyFrom: 1 to: 4000].
-	Transcript
-		cr;
+	self logger 
+		cr; 
 		show: string.
 ]
 
@@ -836,7 +836,7 @@ DatabaseAccessor >> logCommand: aDatabaseCommand bound: aBoolean [
 	string := aDatabaseCommand sqlString.
  	aBoolean ifTrue: [string := string , '  ' , aDatabaseCommand bindings printString].
 	string size > 4000 ifTrue: [string := string copyFrom: 1 to: 4000].
-	Transcript
+	self logger 
 		cr;
 		show: string.
 ]
@@ -890,8 +890,8 @@ DatabaseAccessor >> logTime: aTimeOrBlock [
 	time := (Dialect isBlock: aTimeOrBlock)
 		ifTrue: [aTimeOrBlock value]
 		ifFalse: [aTimeOrBlock].
-	Transcript
-		cr;
+	self logger 
+		cr; 
 		show: '(' , (time / 1000.0) printString , ' s)'.
 ]
 
