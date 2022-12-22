@@ -43,6 +43,7 @@ GlorpLoggingTest >> setUp [
 GlorpLoggingTest >> tearDown [
 
 	super tearDown.
+	session logging: false. 
 	session rollbackTransaction.
 	session reset.
 	session := nil.
