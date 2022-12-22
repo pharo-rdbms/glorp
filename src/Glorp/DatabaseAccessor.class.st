@@ -814,16 +814,19 @@ DatabaseAccessor >> listTableNamesInSchemaNamed: schemaString [
 
 { #category : #logging }
 DatabaseAccessor >> log: aStringOrBlock [
-	"Log an arbitrary string"
+
 	| string |
-	self logging ifFalse: [^self].
+	self logging ifFalse: [ ^ self ].
 	string := aStringOrBlock isString
-		ifTrue: [aStringOrBlock]
-		ifFalse: [aStringOrBlock value].
-	string size > 4000 ifTrue: [string := string copyFrom: 1 to: 4000].
-	self logger 
-		cr; 
-		show: string.
+		ifTrue: [ aStringOrBlock ]
+		ifFalse: [ aStringOrBlock value ].
+	string size > 4000 ifTrue: [ string := string copyFrom: 1 to: 4000 ].
+	self logger
+		cr;
+		nextPutAll: string;
+		flush.
+	(self logOnly and: [ string notEmpty and: [ string last ~= $; ] ]) 
+		ifTrue: [ self logger nextPutAll: ';' ]
 ]
 
 { #category : #logging }
@@ -835,10 +838,7 @@ DatabaseAccessor >> logCommand: aDatabaseCommand bound: aBoolean [
 	self logging ifFalse: [^self].
 	string := aDatabaseCommand sqlString.
  	aBoolean ifTrue: [string := string , '  ' , aDatabaseCommand bindings printString].
-	string size > 4000 ifTrue: [string := string copyFrom: 1 to: 4000].
-	self logger 
-		cr;
-		show: string.
+	self log: string
 ]
 
 { #category : #logging }
@@ -868,31 +868,16 @@ DatabaseAccessor >> logOnlyOn: aTextCollector [
 	self logOnly: true.
 ]
 
-{ #category : #private }
-DatabaseAccessor >> logString: aString [
-
-	| stringToLog |
-	stringToLog := aString size > 4000 
-		ifTrue: [aString copyFrom: 1 to: 4000]
-		ifFalse: [aString].
-	self logger
-		cr;
-		show: stringToLog.
-	(self logOnly and: [stringToLog notEmpty and: [stringToLog last ~= $;]])
-		ifTrue: [self logger show: ';'].
-]
-
 { #category : #logging }
 DatabaseAccessor >> logTime: aTimeOrBlock [
+
 	| time |
 	self changed: #time: with: aTimeOrBlock.
-	self logging ifFalse: [^self].
+	self logging ifFalse: [ ^ self ].
 	time := (Dialect isBlock: aTimeOrBlock)
-		ifTrue: [aTimeOrBlock value]
-		ifFalse: [aTimeOrBlock].
-	self logger 
-		cr; 
-		show: '(' , (time / 1000.0) printString , ' s)'.
+		ifTrue: [ aTimeOrBlock value ]
+		ifFalse: [ aTimeOrBlock ].
+	self log: '(' , (time / 1000.0) printString , ' s)'
 ]
 
 { #category : #logging }
