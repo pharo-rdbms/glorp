@@ -65,7 +65,7 @@ GlorpLoggingTest >> nextPutAll: aString [
 { #category : #running }
 GlorpLoggingTest >> runCase [
 
-	(GlorpDatabaseLoginResource defaultLogin database isA:
+	(GlorpDatabaseLoginResource defaultLogin database isKindOf:
 		 self coveredPlatformType)
 		ifTrue: [ super runCase ]
 		ifFalse: [ self skip ]
