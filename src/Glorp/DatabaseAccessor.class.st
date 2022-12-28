@@ -819,14 +819,14 @@ DatabaseAccessor >> log: aStringOrBlock [
 	self logging ifFalse: [ ^ self ].
 	string := aStringOrBlock isString
 		ifTrue: [ aStringOrBlock ]
-		ifFalse: [ aStringOrBlock value ].
+		ifFalse: [ aStringOrBlock value ]. 
 	string size > 4000 ifTrue: [ string := string copyFrom: 1 to: 4000 ].
+	(self logOnly and: [ string notEmpty and: [ string last ~= $; ] ]) 
+		ifTrue: [ string := string , ';' ].
 	self logger
 		cr;
 		nextPutAll: string;
 		flush.
-	(self logOnly and: [ string notEmpty and: [ string last ~= $; ] ]) 
-		ifTrue: [ self logger nextPutAll: ';' ]
 ]
 
 { #category : #logging }
