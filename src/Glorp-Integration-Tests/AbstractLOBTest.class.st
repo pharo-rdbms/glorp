@@ -81,6 +81,8 @@ AbstractLOBTest >> readBackModelWithValue: anObject [
 
 { #category : #private }
 AbstractLOBTest >> useEqualityToCompare [
-	^ self platform isSQLServerPlatform
-		or: [ self platform isPostgreSQLPlatform ]
+
+	^ self platform isSQLServerPlatform or: [ 
+		  self platform isPostgreSQLPlatform or: [ 
+			  self platform isSQLite3Platform ] ]
 ]
