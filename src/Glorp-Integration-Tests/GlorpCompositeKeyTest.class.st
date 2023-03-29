@@ -88,7 +88,7 @@ GlorpCompositeKeyTest >> testMessageCacheHit [
 	messages do: [ :each |
 		| individualMessages individualMessage otherIndividualMessage |
 		individualMessages := session
-			                      readManyOf: GlorpMessage
+			                      read: GlorpMessage
 			                      where: [ :eachMessage | eachMessage = each ].
 		self assert: individualMessages size equals: 1.
 		individualMessage := individualMessages first.
