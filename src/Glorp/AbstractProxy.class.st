@@ -14,8 +14,14 @@ Class {
 		'value',
 		'isInstantiated'
 	],
-	#category : 'Glorp-Queries'
+	#category : #'Glorp-Queries'
 }
+
+{ #category : #testing }
+AbstractProxy class >> isAbstract [
+
+	^ self == AbstractProxy
+]
 
 { #category : #'instance creation' }
 AbstractProxy class >> new [
@@ -87,7 +93,7 @@ AbstractProxy >> inspect [
 	^self getValue inspect
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AbstractProxy >> instVarAt: index [ 
 	"Primitive. Answer a fixed variable in an object. The numbering of the 
 	variables corresponds to the named instance variables. Fail if the index 
@@ -192,7 +198,7 @@ AbstractProxy >> printStringLimitedTo: limit [
 	^ limitedString , '...etc...'
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AbstractProxy >> proxyInitialize [
 
 	isInstantiated := false
