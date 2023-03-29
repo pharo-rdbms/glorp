@@ -29,6 +29,12 @@ GlorpDatabaseType class >> instance [
 	^super new
 ]
 
+{ #category : #testing }
+GlorpDatabaseType class >> isAbstract [
+
+	^ self == GlorpDatabaseType
+]
+
 { #category : #'as yet unclassified' }
 GlorpDatabaseType class >> new [
 	^super new initialize.

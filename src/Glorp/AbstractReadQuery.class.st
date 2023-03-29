@@ -34,6 +34,12 @@ Class {
 	#category : #'Glorp-Queries'
 }
 
+{ #category : #testing }
+AbstractReadQuery class >> isAbstract [
+
+	^ self == AbstractReadQuery
+]
+
 { #category : #'instance creation' }
 AbstractReadQuery class >> newQuery [
 	^self delegateClass new

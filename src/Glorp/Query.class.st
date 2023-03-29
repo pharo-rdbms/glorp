@@ -58,6 +58,12 @@ Query class >> delegateTo: aClass [
 	delegate := aClass
 ]
 
+{ #category : #testing }
+Query class >> isAbstract [
+
+	^ self == Query
+]
+
 { #category : #'instance creation' }
 Query class >> new [
 

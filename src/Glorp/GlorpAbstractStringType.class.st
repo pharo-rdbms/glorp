@@ -19,8 +19,14 @@ Class {
 		'width',
 		'queryType'
 	],
-	#category : 'Glorp-Types'
+	#category : #'Glorp-Types'
 }
+
+{ #category : #testing }
+GlorpAbstractStringType class >> isAbstract [
+
+	^ self == GlorpAbstractStringType
+]
 
 { #category : #comparing }
 GlorpAbstractStringType >> = aType [

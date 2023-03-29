@@ -34,7 +34,7 @@ Class {
 		'row',
 		'query'
 	],
-	#category : 'Glorp-Queries'
+	#category : #'Glorp-Queries'
 }
 
 { #category : #'*Glorp' }
@@ -70,6 +70,12 @@ ElementBuilder class >> for: anExpression in: aQuery [
 		expression: anExpression;
 		query: aQuery;
 		setup
+]
+
+{ #category : #testing }
+ElementBuilder class >> isAbstract [
+
+	^ self == ElementBuilder
 ]
 
 { #category : #'instance creation' }
