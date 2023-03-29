@@ -12,10 +12,10 @@ Class {
 	#instVars : [
 		'target'
 	],
-	#category : 'Glorp-Core'
+	#category : #'Glorp-Core'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 AddingWriteStream class >> on: aCollection [
 	^self new target: aCollection.
 ]

@@ -147,7 +147,7 @@ ActiveRecordInflector >> initialize [
 	^self
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 ActiveRecordInflector >> initializeIrregular [
 	{ 
 		'person'-> 'people'.
@@ -159,7 +159,7 @@ ActiveRecordInflector >> initializeIrregular [
 	^self
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 ActiveRecordInflector >> initializePlural [
 	"Rules based on Rails Inflector at https://github.com/rails/rails/blob/f33d52c95217212cbacc8d5e44b5a8e3cdc6f5b3/activesupport/lib/active_support/inflections.rb"
 	self addPluralRule: '.*$' asRegexIgnoringCase replacement: 's'.
@@ -182,7 +182,7 @@ ActiveRecordInflector >> initializePlural [
 	^self
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 ActiveRecordInflector >> initializeSingular [
 
 	self addSingularRule: '(.*)s$' asRegexIgnoringCase replacement:  ''.
@@ -238,7 +238,7 @@ ActiveRecordInflector >> initializeSingular [
 	^self
 ]
 
-{ #category : #initialization }
+{ #category : #'private - initialization' }
 ActiveRecordInflector >> initializeUncountable [
 	#('bison' 'bream' 'breeches' 'britches' 'carp' 'chassis' 'clippers' 'cod' 'contretemps' 'corps' 'debris' 'deer' 'diabetes' 'djinn' 'eland' 'elk' 'equipment' 'fish' 'flounder' 'gallows' 'graffiti' 'headquarters' 'herpes' 'high-jinks' 'homework' 'information' 'innings' 'itis' 'jackanapes' 'jeans' 'mackerel' 'measles' 'metadata' 'mews' 'money' 'mumps' 'news' 'ois' 'pincers' 'pliers' 'police' 'pox' 'proceedings' 'rabies' 'rice' 'salmon' 'scissors' 'sea-bass' 'shears' 'sheep' 'species' 'swine' 'trout' 'tuna' 'whiting' 'wildebeest') do: [ :ea | self addUncountable: ea ].
 ]

@@ -461,7 +461,7 @@ DescriptorSystem >> hasDescriptorFor: aClassOrObject [
 	^(self descriptorFor: aClassOrObject) notNil
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 DescriptorSystem >> initialize [
 	descriptors := Dictionary new.
 	tables := Dictionary new.

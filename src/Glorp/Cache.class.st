@@ -17,7 +17,7 @@ Class {
 		'mainCache',
 		'extraReferences'
 	],
-	#category : 'Glorp-Core'
+	#category : #'Glorp-Core'
 }
 
 { #category : #'*Glorp' }
@@ -145,11 +145,11 @@ Cache >> includesKey: key withClass: aClass [
 	^value isKindOf: aClass.
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 Cache >> initialize [
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 Cache >> initializeCache [
 
 	items := policy newItemsIn: self.
@@ -189,7 +189,7 @@ Cache >> numberOfElements [
 	^items size.
 ]
 
-{ #category : #initialize }
+{ #category : #dependencies }
 Cache >> release [
 	policy release: self.
 	extraReferences := nil.

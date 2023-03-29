@@ -151,7 +151,7 @@ PharoDatabaseAccessor >> externalDatabaseErrorSignal [
 	^ Dialect error
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 PharoDatabaseAccessor >> initialize [
 	super initialize.
 	reusePreparedStatements := false.

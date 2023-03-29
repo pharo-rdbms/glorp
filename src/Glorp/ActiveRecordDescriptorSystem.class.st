@@ -611,7 +611,7 @@ ActiveRecordDescriptorSystem >> tableClassForClass: aClass [
 	| className |
 	className := (inflector classify: (self tableForClass: aClass) name) asSymbol.
 "	className := (inflector singularize: (self tableForClass: aClass) name toCamelCase capitalized asSymbol).
-"	^allClasses detect: [:ea | ea name = className] ifNone: [ self error: 'No table found for class ', aClass name ]
+"	^ allClasses detect: [:ea | ea name = className] ifNone: [ self error: 'No table found for class ', aClass name ]
 	
 ]
 

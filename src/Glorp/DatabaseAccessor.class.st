@@ -745,7 +745,7 @@ DatabaseAccessor >> inTransactionDo: aBlock [
 	^result.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 DatabaseAccessor >> initialize [
 	deniedCommands := nil.
 	mutex := Semaphore forMutualExclusion.
@@ -1006,7 +1006,7 @@ DatabaseAccessor >> renameTable: aDatabaseTable to: newTableName inPlatform: aDa
 		ifError: errorBlock
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 DatabaseAccessor >> reset [
 	"Don't reset the permissions, because the replicator wants to reset sessions without changing their characteristics"
 "	self permitEverything."

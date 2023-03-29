@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'readBlock'
 	],
-	#category : 'Glorp-Queries'
+	#category : #'Glorp-Queries'
 }
 
 { #category : #'*Glorp' }
@@ -49,7 +49,7 @@ AdHocProxy >> printOn: aStream [
 	aStream nextPut: $}
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 AdHocProxy >> proxyInitialize [
 
 	super proxyInitialize.
