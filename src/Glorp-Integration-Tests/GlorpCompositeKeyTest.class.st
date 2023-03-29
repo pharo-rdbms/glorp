@@ -82,17 +82,24 @@ GlorpCompositeKeyTest >> testFolderIdentity [
 
 { #category : #'tests- basic reading' }
 GlorpCompositeKeyTest >> testMessageCacheHit [
+
 	| messages |
-	messages := session readManyOf: GlorpMessage.
-	messages do: [:each | | individualMessages individualMessage otherIndividualMessage|
-		individualMessages := session readManyOf: GlorpMessage where: [:eachMessage | eachMessage = each].
-		self assert: individualMessages size = 1.
+	messages := session read: GlorpMessage.
+	messages do: [ :each |
+		| individualMessages individualMessage otherIndividualMessage |
+		individualMessages := session
+			                      readManyOf: GlorpMessage
+			                      where: [ :eachMessage | eachMessage = each ].
+		self assert: individualMessages size equals: 1.
 		individualMessage := individualMessages first.
 		session accessor denyReads.
-		otherIndividualMessage := session readOneOf: GlorpMessage where: [:eachMessage | eachMessage = each].
+		otherIndividualMessage := session
+			                          readOneOf: GlorpMessage
+			                          where: [ :eachMessage |
+			                          eachMessage = each ].
 		session accessor resetPermissions.
-		self assert: individualMessage == each.
-		self assert: otherIndividualMessage == individualMessage].
+		self assert: individualMessage identicalTo: each.
+		self assert: otherIndividualMessage identicalTo: individualMessage ]
 ]
 
 { #category : #'tests- basic reading' }
