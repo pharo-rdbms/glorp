@@ -27,22 +27,16 @@ FilteredTypeMapping class >> to: field keyedBy: key [
 
 { #category : #mapping }
 FilteredTypeMapping >> addTypeMappingCriteriaTo: collection in: base [
+
 	| singleRightValue r l |
-	key isNil
-		ifTrue: [ singleRightValue := self keys size = 1.
-			r := ConstantExpression
-				for:
-					(singleRightValue
-						ifTrue: [ self keys asArray first ]
-						ifFalse: [ self keys ]) ]
-		ifFalse: [ singleRightValue := true.
-			r := ConstantExpression for: key ].
+	singleRightValue := self keys size = 1.
+	r := ConstantExpression for: (singleRightValue
+			      ifTrue: [ self keys asArray first ]
+			      ifFalse: [ self keys ]).
 	l := FieldExpression forField: self field basedOn: base.
-	collection
-		add:
-			(singleRightValue
-				ifTrue: [ l equals: r ]
-				ifFalse: [ l in: r ])
+	collection add: (singleRightValue
+			 ifTrue: [ l equals: r ]
+			 ifFalse: [ l in: r ])
 ]
 
 { #category : #'initialize-release' }

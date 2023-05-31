@@ -52,8 +52,8 @@ CacheManager >> cacheFor: anObject [
 CacheManager >> cacheForClass: aClass [
 	| resolver cacheClass |
 
-	resolver := (self session descriptorFor: aClass) typeResolver.
-	cacheClass := resolver usesInheritance
+	resolver := (self session descriptorFor: aClass) ifNotNil: [ :descriptor | descriptor typeResolver ].
+	cacheClass := (resolver notNil and: [resolver usesInheritance])
 		ifTrue: [ resolver rootClass ]
 		ifFalse: [ aClass ].
 	^ subCaches
