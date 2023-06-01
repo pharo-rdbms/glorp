@@ -1,3 +1,6 @@
+"
+Data type used to store precise decimal numbers
+"
 Class {
 	#name : #GlorpDecimalType,
 	#superclass : #GlorpNumericType,

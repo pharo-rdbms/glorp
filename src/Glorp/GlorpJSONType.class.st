@@ -1,3 +1,6 @@
+"
+Data type that is used to store JSON (JavaScript Object Notation) data 
+"
 Class {
 	#name : #GlorpJSONType,
 	#superclass : #GlorpAbstractStringType,
