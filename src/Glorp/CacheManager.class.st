@@ -15,7 +15,7 @@ Class {
 		'subCaches',
 		'session'
 	],
-	#category : 'Glorp-Core'
+	#category : #'Glorp-Core'
 }
 
 { #category : #'*Glorp' }
@@ -48,10 +48,17 @@ CacheManager >> cacheFor: anObject [
 		ifFalse: [self cacheForClass: nonMetaClass].
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'private/caching' }
 CacheManager >> cacheForClass: aClass [
-	^subCaches at: aClass
-		ifAbsentPut: [self makeCacheFor: aClass]
+	| resolver cacheClass |
+
+	resolver := (self session descriptorFor: aClass) ifNotNil: [ :descriptor | descriptor typeResolver ].
+	cacheClass := (resolver notNil and: [resolver usesInheritance])
+		ifTrue: [ resolver rootClass ]
+		ifFalse: [ aClass ].
+	^ subCaches
+		at: cacheClass
+		ifAbsentPut: [ self makeCacheFor: cacheClass ]
 ]
 
 { #category : #querying }
