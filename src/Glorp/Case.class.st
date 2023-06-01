@@ -20,20 +20,22 @@ Class {
 	#instVars : [
 		'argumentTypes'
 	],
-	#category : 'Glorp-Expressions'
+	#category : #'Glorp-Expressions'
 }
 
-{ #category : #'As yet unclassified' }
-Case >> argumentTypes: anArray [ 
-	argumentTypes := anArray.
+{ #category : #accessing }
+Case >> argumentTypes: anArray [
+
+	argumentTypes := anArray
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 Case >> initialize [
+
 	super initialize.
 	function := 'CASE'.
 	separator := ' '.
-	argumentTypes := OrderedCollection new: 3.
+	argumentTypes := OrderedCollection new: 3
 ]
 
 { #category : #printing }

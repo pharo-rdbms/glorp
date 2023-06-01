@@ -9,36 +9,45 @@ Class {
 
 { #category : #accessing }
 StandaloneFunction >> field [
-	^nil.
+
+	^ nil
 ]
 
 { #category : #mapping }
 StandaloneFunction >> mappedFields [
-	^Array with: self.
+
+	^ Array with: self
 ]
 
 { #category : #mapping }
 StandaloneFunction >> mappedFieldsCount [
-	^1
+
+	^ 1
 ]
 
 { #category : #printing }
 StandaloneFunction >> printSQLOn: aStream withParameters: aDictionary [
-	aStream nextPutAll: ' '; nextPutAll: function.
+
+	aStream
+		nextPutAll: ' ';
+		nextPutAll: function
 ]
 
 { #category : #accessing }
 StandaloneFunction >> type [
-	type isNil ifFalse: [^type].
-	^self defaultType.
+
+	type isNil ifFalse: [ ^ type ].
+	^ self defaultType
 ]
 
 { #category : #mapping }
 StandaloneFunction >> valueInBuilder: anElementBuilder [
-	^anElementBuilder valueOfField: self
+
+	^ anElementBuilder valueOfField: self
 ]
 
 { #category : #mapping }
 StandaloneFunction >> valueInBuilder: anElementBuilder as: anExpression [
-	^anElementBuilder valueOfField: anExpression.
+
+	^ anElementBuilder valueOfField: anExpression
 ]

@@ -25,13 +25,15 @@ Class {
 	#category : #'Glorp-Core'
 }
 
-{ #category : #configuration }
+{ #category : #'settings - configuration' }
 PharoDatabaseAccessor class >> DefaultDriver [
-	^DefaultDriver
+
+	^ DefaultDriver
 ]
 
-{ #category : #configuration }
+{ #category : #'settings - configuration' }
 PharoDatabaseAccessor class >> DefaultDriver: aDriver [
+
 	DefaultDriver := aDriver
 ]
 
@@ -56,6 +58,7 @@ PharoDatabaseAccessor >> basicExecuteSQLStringNoResult: aString doing: aBlock [
 
 { #category : #transactions }
 PharoDatabaseAccessor >> beginTransaction [
+
 	self log: 'Begin Transaction'.
 	isInTransaction := true.
 	self databaseDriver beginTransaction
@@ -63,15 +66,17 @@ PharoDatabaseAccessor >> beginTransaction [
 
 { #category : #transactions }
 PharoDatabaseAccessor >> commitTransaction [
+
 	self log: 'Commit Transaction'.
 	isInTransaction := false.
 	self databaseDriver commitTransaction
 ]
 
-{ #category : #executing }
+{ #category : #accessing }
 PharoDatabaseAccessor >> connection [
-	self databaseDriver ifNil: [ ^nil ].
-	^self databaseDriver connection
+
+	self databaseDriver ifNil: [ ^ nil ].
+	^ self databaseDriver connection
 ]
 
 { #category : #login }
@@ -106,53 +111,60 @@ PharoDatabaseAccessor >> connectionClassForLogin: aLogin [
 
 { #category : #login }
 PharoDatabaseAccessor >> databaseDriver [
+
 	^ databaseDriver
 ]
 
 { #category : #login }
 PharoDatabaseAccessor >> databaseDriver: aDriver [
+
 	databaseDriver := aDriver
 ]
 
 { #category : #executing }
 PharoDatabaseAccessor >> disconnect [
+
 	^ self connection disconnect
 ]
 
 { #category : #accessing }
 PharoDatabaseAccessor >> encoding [
-	 ^self connection queryEncoding
+
+	^ self connection queryEncoding
 ]
 
 { #category : #executing }
 PharoDatabaseAccessor >> executeCommandBound: aCommand [
+
 	| answerStream |
 	self logCommand: aCommand bound: true.
-	self useBinding ifFalse: [ ^ self executeCommandUnbound: aCommand  ].
-	
-	answerStream := self databaseDriver 
-									basicExecuteSQLString: aCommand sqlString 
-									binding: aCommand bindings.
-									
-	^ self cursorFor: answerStream command: aCommand.
-	
+	self useBinding ifFalse: [ ^ self executeCommandUnbound: aCommand ].
+
+	answerStream := self databaseDriver
+		                basicExecuteSQLString: aCommand sqlString
+		                binding: aCommand bindings.
+
+	^ self cursorFor: answerStream command: aCommand
 ]
 
 { #category : #executing }
 PharoDatabaseAccessor >> executeCommandUnbound: aCommand [
+
 	| answerStream |
 	self log: aCommand sqlString.
 	answerStream := self basicExecuteSQLString: aCommand sqlString.
-	^self cursorFor: answerStream command: aCommand.
+	^ self cursorFor: answerStream command: aCommand
 ]
 
 { #category : #executing }
 PharoDatabaseAccessor >> externalDatabaseErrorSignal [
+
 	^ Dialect error
 ]
 
 { #category : #initialization }
 PharoDatabaseAccessor >> initialize [
+
 	super initialize.
 	reusePreparedStatements := false.
 	isInTransaction := false.
@@ -162,17 +174,20 @@ PharoDatabaseAccessor >> initialize [
 { #category : #executing }
 PharoDatabaseAccessor >> innerExceptionFor: exception [
 	"I don't know how to get the inner error in Squeak"
-	^exception messageText.
+
+	^ exception messageText
 ]
 
 { #category : #transactions }
 PharoDatabaseAccessor >> isInTransaction [
+
 	^ isInTransaction
 ]
 
 { #category : #login }
 PharoDatabaseAccessor >> isLoggedIn [
-	self databaseDriver ifNil: [^ false].
+
+	self databaseDriver ifNil: [ ^ false ].
 	^ self databaseDriver isConnected
 ]
 
@@ -192,7 +207,8 @@ PharoDatabaseAccessor >> loginIfError: aBlock [
 
 { #category : #login }
 PharoDatabaseAccessor >> logout [
-	self isLoggedIn ifFalse: [^self].
+
+	self isLoggedIn ifFalse: [ ^ self ].
 	self log: 'Logout'.
 	self databaseDriver logout.
 	self log: 'Logout finished'
@@ -201,12 +217,18 @@ PharoDatabaseAccessor >> logout [
 { #category : #executing }
 PharoDatabaseAccessor >> releaseCursor: aCursor in: aPreparedStatement [
 	"Release the cursor. We're trapping exceptions, so return true or false to indicate success/failure"
-	aCursor isNil ifTrue: [^self].
-	^[aCursor close. true] on: Dialect error do: [:ex | ex return: false].
+
+	aCursor isNil ifTrue: [ ^ self ].
+	^ [
+	  aCursor close.
+	  true ]
+		  on: Dialect error
+		  do: [ :ex | ex return: false ]
 ]
 
 { #category : #transactions }
 PharoDatabaseAccessor >> rollbackTransaction [
+
 	self log: 'Rollback Transaction'.
 	isInTransaction := false.
 	self databaseDriver rollbackTransaction
@@ -214,10 +236,12 @@ PharoDatabaseAccessor >> rollbackTransaction [
 
 { #category : #executing }
 PharoDatabaseAccessor >> rowCount [
-	^ self databaseDriver rowCount.
+
+	^ self databaseDriver rowCount
 ]
 
 { #category : #login }
-PharoDatabaseAccessor >> showDialog: aString [ 
+PharoDatabaseAccessor >> showDialog: aString [
+
 	UIManager default inform: aString
 ]

@@ -14,7 +14,7 @@ Class {
 		'command',
 		'object'
 	],
-	#category : 'Glorp-Exceptions'
+	#category : #'Glorp-Exceptions'
 }
 
 { #category : #'*Glorp' }
@@ -24,11 +24,13 @@ GlorpWriteFailure class >> mayResume [
 
 { #category : #accessing }
 GlorpWriteFailure >> command [
-	^command
+
+	^ command
 ]
 
 { #category : #accessing }
 GlorpWriteFailure >> command: anObject [
+
 	command := anObject
 ]
 
@@ -39,15 +41,18 @@ GlorpWriteFailure >> defaultMessageText [
 
 { #category : #accessing }
 GlorpWriteFailure >> object [
-	^object
+
+	^ object
 ]
 
 { #category : #accessing }
 GlorpWriteFailure >> object: anObject [
+
 	object := anObject
 ]
 
 { #category : #accessing }
 GlorpWriteFailure >> session [
-	^self command session.
+
+	^ self command session
 ]

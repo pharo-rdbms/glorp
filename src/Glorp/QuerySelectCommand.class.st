@@ -18,58 +18,67 @@ Class {
 
 { #category : #accessing }
 QuerySelectCommand >> bindingTypes [
-	self useBinding ifFalse: [^#()].
-	boundExpressions isNil ifTrue: [self findBoundExpressions].
-	^boundExpressions collect: [:each | each bindingType].
+
+	self useBinding ifFalse: [ ^ #(  ) ].
+	boundExpressions isNil ifTrue: [ self findBoundExpressions ].
+	^ boundExpressions collect: [ :each | each bindingType ]
 ]
 
 { #category : #accessing }
 QuerySelectCommand >> bindings [
-	self useBinding ifFalse: [^#()].
-	boundExpressions isNil ifTrue: [self findBoundExpressions].
-	^boundExpressions collect: [:each | each bindingIn: self].
+
+	self useBinding ifFalse: [ ^ #(  ) ].
+	boundExpressions isNil ifTrue: [ self findBoundExpressions ].
+	^ boundExpressions collect: [ :each | each bindingIn: self ]
 ]
 
 { #category : #accessing }
 QuerySelectCommand >> blockFactor [
-	blockFactor isNil ifTrue: [blockFactor := query expectedRows].
-	^blockFactor.
+
+	blockFactor isNil ifTrue: [ blockFactor := query expectedRows ].
+	^ blockFactor
 ]
 
 { #category : #accessing }
 QuerySelectCommand >> boundExpressions [
-	^boundExpressions
+
+	^ boundExpressions
 ]
 
 { #category : #accessing }
 QuerySelectCommand >> boundExpressions: anObject [
+
 	boundExpressions := anObject
 ]
 
 { #category : #accessing }
 QuerySelectCommand >> findBoundExpressions [
-	self useBinding ifFalse: [^nil].
+
+	self useBinding ifFalse: [ ^ nil ].
 	boundExpressions := OrderedCollection new.
-	query addBoundExpressionsIn: self to: boundExpressions.
+	query addBoundExpressionsIn: self to: boundExpressions
 ]
 
 { #category : #accessing }
 QuerySelectCommand >> maximumLobSizeToRetrieveDirectly [
-	^query isNil
-		ifTrue: [super maximumLobSizeToRetrieveDirectly]
-		ifFalse: [query maximumLobSizeToRetrieveDirectly].
+
+	^ query isNil
+		  ifTrue: [ super maximumLobSizeToRetrieveDirectly ]
+		  ifFalse: [ query maximumLobSizeToRetrieveDirectly ]
 ]
 
 { #category : #printing }
 QuerySelectCommand >> printOn: aStream [
+
 	super printOn: aStream.
 	aStream nextPut: $(.
 	query printOn: aStream.
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : #printing }
 QuerySelectCommand >> printSQL [
+
 	stream nextPutAll: 'SELECT '.
 	query printSelectFieldsOn: self.
 	self findBoundExpressions.
@@ -79,20 +88,23 @@ QuerySelectCommand >> printSQL [
 	query printGroupingOn: self.
 	query printOrderingOn: self.
 	query printPostLimitOn: self.
-	query printOffsetOn: self.
+	query printOffsetOn: self
 ]
 
 { #category : #accessing }
 QuerySelectCommand >> query [
-	^query.
+
+	^ query
 ]
 
 { #category : #accessing }
 QuerySelectCommand >> query: aQuery [
-	query := aQuery.
+
+	query := aQuery
 ]
 
 { #category : #reporting }
 QuerySelectCommand >> tables [
-	^(self query tablesToPrint collect: [:each | each parent]) asSet.
+
+	^ (self query tablesToPrint collect: [ :each | each parent ]) asSet
 ]

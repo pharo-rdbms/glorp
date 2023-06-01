@@ -7,7 +7,7 @@ Class {
 	#classVars : [
 		'Singleton'
 	],
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #'*Glorp' }
@@ -23,7 +23,7 @@ NullSequence class >> new [
 	^Singleton.
 ]
 
-{ #category : #public }
+{ #category : #sequencing }
 NullSequence >> getSequenceValueFromDatabaseFor: aField in: aRow using: aSession [
 ]
 

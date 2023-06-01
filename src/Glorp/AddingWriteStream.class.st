@@ -17,35 +17,42 @@ Class {
 
 { #category : #'instance creation' }
 AddingWriteStream class >> on: aCollection [
-	^self new target: aCollection.
+
+	^ self new target: aCollection
 ]
 
 { #category : #accessing }
 AddingWriteStream >> contents [
-	^target
+
+	^ target
 ]
 
 { #category : #accessing }
 AddingWriteStream >> nextPut: anObject [
+
 	target add: anObject
 ]
 
 { #category : #accessing }
 AddingWriteStream >> nextPutAll: aCollection [
+
 	target glorpAddAll: aCollection
 ]
 
 { #category : #accessing }
 AddingWriteStream >> on: aSet [
+
 	target := aSet
 ]
 
 { #category : #accessing }
 AddingWriteStream >> target [
-	^target
+
+	^ target
 ]
 
 { #category : #accessing }
 AddingWriteStream >> target: aCollection [
+
 	target := aCollection
 ]

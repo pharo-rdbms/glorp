@@ -4,5 +4,5 @@ Extension { #name : #GlorpPreparedStatement }
 GlorpPreparedStatement class >> new [
 	"Answer a newly created and initialized instance."
 
-	^super new initialize
+	^ super new initialize
 ]

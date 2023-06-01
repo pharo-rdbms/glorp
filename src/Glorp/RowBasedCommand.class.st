@@ -28,31 +28,35 @@ Class {
 
 { #category : #'*Glorp' }
 RowBasedCommand class >> forRow: aDatabaseRow useBinding: aBoolean session: aSession [
-	^(self new)
-		row: aDatabaseRow;
-		useBinding: aBoolean;
-		session: aSession;
-		yourself.
+
+	^ self new
+		  row: aDatabaseRow;
+		  useBinding: aBoolean;
+		  session: aSession;
+		  yourself
 ]
 
 { #category : #'*Glorp' }
 RowBasedCommand class >> forRows: aCollectionOfDatabaseRows useBinding: aBoolean session: aSession [
-	^(self new)
-		allRows: aCollectionOfDatabaseRows;
-		row: aCollectionOfDatabaseRows first;
-		useBinding: aBoolean;
-		session: aSession;
-		yourself.
+
+	^ self new
+		  allRows: aCollectionOfDatabaseRows;
+		  row: aCollectionOfDatabaseRows first;
+		  useBinding: aBoolean;
+		  session: aSession;
+		  yourself
 ]
 
 { #category : #accessing }
 RowBasedCommand >> allRows [
-	^allRows.
+
+	^ allRows
 ]
 
 { #category : #accessing }
 RowBasedCommand >> allRows: aCollectionOfDatabaseRows [
-	allRows := aCollectionOfDatabaseRows.
+
+	allRows := aCollectionOfDatabaseRows
 ]
 
 { #category : #'bound values' }
@@ -65,23 +69,24 @@ RowBasedCommand >> arrayBindings [
 	1
 		to: allRows size
 		do:
-			[:rowNumber | 
+			[:rowNumber |
 			| inputRow |
 			inputRow := allRows at: rowNumber.
 			1
 				to: fields size
 				do:
-					[:columnNumber | 
+					[:columnNumber |
 					(allBindings at: columnNumber)
 						at: rowNumber
 						put: (inputRow at: (fields at: columnNumber) ifAbsent: [nil])]].
-	^allBindings asArray.
+	^allBindings asArray
 ]
 
-{ #category : #'bound values' }
+{ #category : #accessing }
 RowBasedCommand >> arrayBoundFields [
 	"Return the list of fields to be bound in the SQL string we will use for array binding. For array binding, we need to include all possible fields, rather than those that just have values in a particular row"
-	self subclassResponsibility.
+
+	self subclassResponsibility
 ]
 
 { #category : #'bound values' }
@@ -91,15 +96,15 @@ RowBasedCommand >> batchStatementBindings [
 	| bound fields |
 	fields := self arrayBoundFields.
 	bound := OrderedCollection new: allRows size * fields size.
-	allRows do: [:eachRow | 
-		fields do: [:each | 
+	allRows do: [:eachRow |
+		fields do: [:each |
 			| fieldValue |
 			fieldValue := eachRow at: each ifAbsent: [nil].
 			(self canBind: fieldValue to: each type) ifTrue: [bound add: fieldValue]]].
-	^bound asArray.
+	^bound asArray
 ]
 
-{ #category : #'bound values' }
+{ #category : #accessing }
 RowBasedCommand >> bindingTypes [
 	| all basic size |
 	^(self shouldUseGroupWriting)
@@ -112,24 +117,26 @@ RowBasedCommand >> bindingTypes [
 				index := i * size.
 				all replaceElementsFrom: index + 1 to: index + size withArray: basic startingAt: 1].
 			all]
-		ifFalse: [self singleRowBoundFields collect: [:each | each type]].
+		ifFalse: [self singleRowBoundFields collect: [:each | each type]]
 ]
 
-{ #category : #'bound values' }
+{ #category : #accessing }
 RowBasedCommand >> bindings [
-	^(self shouldUseGroupWriting)
-		ifTrue: [self platform bindingsForGroupWritingFor: self]
-		ifFalse: [self singleRowBindings].
+
+	^ self shouldUseGroupWriting
+		  ifTrue: [ self platform bindingsForGroupWritingFor: self ]
+		  ifFalse: [ self singleRowBindings ]
 ]
 
 { #category : #executing }
 RowBasedCommand >> executeBoundIn: anAccessor [
+
 	| result |
 	(self hasMultipleRows and: [self shouldUseGroupWriting not])
 		ifTrue:
 			[self allRows
 				do:
-					[:each | 
+					[:each |
 					self row: each.
 					result := anAccessor executeCommandBound: self.
 					result release.
@@ -144,14 +151,14 @@ RowBasedCommand >> executeBoundIn: anAccessor [
 	^ anAccessor cursorFor: #() readStream
 ]
 
-{ #category : #'bound values' }
+{ #category : #executing }
 RowBasedCommand >> executeUnboundIn: anAccessor [
 	anAccessor returnRowCount: self needsRowCount.
 	(self hasMultipleRows and: [self shouldUseGroupWriting not])
 		ifTrue:
 			[self allRows
 				do:
-					[:each | 
+					[:each |
 					self row: each.
 					anAccessor
 						executeSQLStringNoResult: self sqlString
@@ -171,71 +178,76 @@ RowBasedCommand >> executeUnboundIn: anAccessor [
 								and: [anAccessor rowCount ~= self expectedNumberOfModifiedRows]]
 						forCommand: self].
 			row postWriteAssignSequencesUsing: anAccessor].
-	^#() readStream.
+	^#() readStream
 ]
 
 { #category : #executing }
 RowBasedCommand >> expectedNumberOfModifiedRows [
-	^self hasMultipleRows ifTrue: [allRows size] ifFalse: [1].
+
+	^ self hasMultipleRows
+		  ifTrue: [ allRows size ]
+		  ifFalse: [ 1 ]
 ]
 
 { #category : #testing }
 RowBasedCommand >> hasMultipleRows [
-	^allRows notNil and: [allRows size > 1].
+
+	^ allRows notNil and: [ allRows size > 1 ]
 ]
 
 { #category : #initialization }
 RowBasedCommand >> initialize [
+
 	super initialize.
-	failed := false.
+	failed := false
 ]
 
 { #category : #testing }
 RowBasedCommand >> maximumSingleWriteSize [
 	"How many values will write at once. This is only really applicable when not doing binding and concatenating many statements together for one trip to the DB"
-	^1000.
+
+	^ 1000
 ]
 
 { #category : #accessing }
 RowBasedCommand >> parameterTypeSignature [
 	"Return a string indicating the parameter types. Complicated by the possibility of multiple rows, and of null values"
+
 	| result |
 	result := WriteStream on: String new.
 	self hasMultipleRows
-		ifTrue:
-			[row
-				keysAndValuesDo:
-					[:eachKey :eachValInFirstRow| 
-					| nextValue |
-					eachValInFirstRow notNil
-						ifTrue: [result nextPutAll: eachValInFirstRow class name]
-						ifFalse:
-							[allRows
-								do:
-									[:eachRow | 
-									(nextValue := eachRow at: eachKey ifAbsent: [nil]) notNil
-										ifTrue: [result nextPutAll: nextValue class name]]]]]
-		ifFalse:
-			[row
-				keysAndValuesDo:
-					[:eachKey :eachValue | result nextPutAll: eachValue class name]].
-	^result contents.
+		ifTrue: [
+			row keysAndValuesDo: [ :eachKey :eachValInFirstRow |
+				| nextValue |
+				eachValInFirstRow notNil
+					ifTrue: [ result nextPutAll: eachValInFirstRow class name ]
+					ifFalse: [
+						allRows do: [ :eachRow |
+							(nextValue := eachRow at: eachKey ifAbsent: [ nil ]) notNil
+								ifTrue: [ result nextPutAll: nextValue class name ] ] ] ] ]
+		ifFalse: [
+			row keysAndValuesDo: [ :eachKey :eachValue |
+				result nextPutAll: eachValue class name ] ].
+	^ result contents
 ]
 
 { #category : #accessing }
 RowBasedCommand >> row [
-	^row.
+
+	^ row
 ]
 
 { #category : #accessing }
 RowBasedCommand >> row: anObject [
+
 	row := anObject.
-	sqlString := nil.
+	sqlString := nil
 ]
 
 { #category : #'bound values' }
 RowBasedCommand >> rowAtATimeBindings [
 	"Return multiple sets of bindings in a form suitable for iterating over"
+
 	| allBindings fields rowTemplate |
 	fields := self arrayBoundFields.
 	rowTemplate := Array new: fields size.
@@ -246,69 +258,82 @@ RowBasedCommand >> rowAtATimeBindings [
 		allBindings at: i put: currentRow.
 		1 to: fields size do: [:j |
 			currentRow at: j put: (input at: (fields at: j) ifAbsent: [nil])]].
-	^allBindings asArray.
+	^allBindings asArray
 ]
 
 { #category : #accessing }
 RowBasedCommand >> rowCount [
-	^rowCount.
+
+	^ rowCount
 ]
 
 { #category : #accessing }
 RowBasedCommand >> rowCount: anInteger [
-	rowCount := anInteger.
+
+	rowCount := anInteger
 ]
 
 { #category : #'bound values' }
 RowBasedCommand >> singleRowBindings [
+
 	| bound |
 	bound := OrderedCollection new.
-	self singleRowBoundFields
-		do:
-			[:each | 
-			| fieldValue |
-			fieldValue := row at: each ifAbsent: [nil].
-			(self canBind: fieldValue to: each type) ifTrue: [bound add: fieldValue]].
-	^bound asArray.
+	self singleRowBoundFields do: [ :each |
+		| fieldValue |
+		fieldValue := row at: each ifAbsent: [ nil ].
+		(self canBind: fieldValue to: each type) ifTrue: [
+			bound add: fieldValue ] ].
+	^ bound asArray
 ]
 
 { #category : #'bound values' }
 RowBasedCommand >> singleRowBoundFields [
 	"Return the list of fields to be bound in the SQL string we will use for a single operation. We only need to include those fields that actually have values in the particular row we're operating on"
-	self subclassResponsibility.
+
+	self subclassResponsibility
 ]
 
 { #category : #executing }
 RowBasedCommand >> subCommands [
+
 	| startPosition commands endPosition subRows newCommand |
 	startPosition := 1.
 	commands := OrderedCollection new.
-	[startPosition > allRows size] whileFalse: [
-		endPosition := (startPosition + self maximumSingleWriteSize - 1) min: allRows size.
+	[ startPosition > allRows size ] whileFalse: [
+		endPosition := startPosition + self maximumSingleWriteSize - 1 min:
+			               allRows size.
 		subRows := allRows copyFrom: startPosition to: endPosition.
-		newCommand := self class forRows: subRows useBinding: self useBinding session: self session.
+		newCommand := self class
+			              forRows: subRows
+			              useBinding: self useBinding
+			              session: self session.
 		commands add: newCommand.
-		startPosition := endPosition + 1].
-	^commands.
+		startPosition := endPosition + 1 ].
+	^ commands
 ]
 
 { #category : #testing }
 RowBasedCommand >> succeeded [
-	^failed not.
+
+	^ failed not
 ]
 
 { #category : #testing }
 RowBasedCommand >> supportsGroupWriting [
 	"Return true if array binding or a similar mechanism can be used to execute us with multiple commands at once. I think in general this can only ever make sense for inserts (and possibly selects under some circumstances). Updates may want to update only part of the fields."
-	^false.
+
+	^ false
 ]
 
 { #category : #reporting }
 RowBasedCommand >> tables [
-	^Array with: self row table.
+
+	^ Array with: self row table
 ]
 
 { #category : #testing }
 RowBasedCommand >> tooBigForSingleWrite [
-	^self hasMultipleRows and: [allRows size > self maximumSingleWriteSize].
+
+	^ self hasMultipleRows and: [
+		  allRows size > self maximumSingleWriteSize ]
 ]

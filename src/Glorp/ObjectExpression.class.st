@@ -25,13 +25,13 @@ Class {
 		'tableAliases',
 		'fieldAliases'
 	],
-	#category : 'Glorp-Expressions'
+	#category : #'Glorp-Expressions'
 }
 
 { #category : #'api-aggregates' }
 ObjectExpression >> aggregate: anExpression as: aggregateFunctionName [
 
-	^self aggregate: anExpression as: aggregateFunctionName where: nil.
+	^ self aggregate: anExpression as: aggregateFunctionName where: nil
 ]
 
 { #category : #'api-aggregates' }
@@ -64,7 +64,8 @@ session read: GlorpCustomer where: 	[:each |
 ]
 
 { #category : #fields }
-ObjectExpression >> aliasTable: aDatabaseTable to: aString [ 
+ObjectExpression >> aliasTable: aDatabaseTable to: aString [
+
 	| newTable |
 	newTable := aDatabaseTable copy.
 	newTable name: aString.
@@ -74,34 +75,38 @@ ObjectExpression >> aliasTable: aDatabaseTable to: aString [
 ]
 
 { #category : #fields }
-ObjectExpression >> aliasedTableFor: aDatabaseTable [ 
-	tableAliases isNil ifTrue: [^aDatabaseTable].
-	aDatabaseTable isAliased ifTrue: [^aDatabaseTable].
-	^tableAliases 
-		at: aDatabaseTable 
-		ifAbsent: [
-			(self tables includes: aDatabaseTable) 	
-				ifTrue: [self error: 'Bug. Expression has only partially aliased tables']
-				ifFalse: [
-					| tableExpression |
-					tableExpression := self mappingExpressions at: aDatabaseTable ifAbsent: [nil].
-					tableExpression isNil 
-						ifTrue: [aDatabaseTable]
-						ifFalse: [tableExpression aliasedTableFor: aDatabaseTable]]].
+ObjectExpression >> aliasedTableFor: aDatabaseTable [
+
+	tableAliases isNil ifTrue: [ ^ aDatabaseTable ].
+	aDatabaseTable isAliased ifTrue: [ ^ aDatabaseTable ].
+	^ tableAliases at: aDatabaseTable ifAbsent: [
+		  (self tables includes: aDatabaseTable)
+			  ifTrue: [
+			  self error: 'Bug. Expression has only partially aliased tables' ]
+			  ifFalse: [
+				  | tableExpression |
+				  tableExpression := self mappingExpressions
+					                     at: aDatabaseTable
+					                     ifAbsent: [ nil ].
+				  tableExpression isNil
+					  ifTrue: [ aDatabaseTable ]
+					  ifFalse: [ tableExpression aliasedTableFor: aDatabaseTable ] ] ]
 ]
 
 { #category : #fields }
-ObjectExpression >> aliasedTableFor: aDatabaseTable  ifAbsent: aBlock [
-	tableAliases isNil ifTrue: [^aBlock value].
-	aDatabaseTable isAliased ifTrue: [^aDatabaseTable].
-	^tableAliases at: aDatabaseTable ifAbsent: [aBlock value].
+ObjectExpression >> aliasedTableFor: aDatabaseTable ifAbsent: aBlock [
+
+	tableAliases isNil ifTrue: [ ^ aBlock value ].
+	aDatabaseTable isAliased ifTrue: [ ^ aDatabaseTable ].
+	^ tableAliases at: aDatabaseTable ifAbsent: [ aBlock value ]
 ]
 
 { #category : #internal }
-ObjectExpression >> anySatisfyDefault: anExpression [ 
-	^(self system isNil or: [self system useJoinsForAnySatisfy])
-		ifTrue: [self anySatisfyJoin: anExpression]
-		ifFalse: [self anySatisfyExists: anExpression].
+ObjectExpression >> anySatisfyDefault: anExpression [
+
+	^ (self system isNil or: [ self system useJoinsForAnySatisfy ])
+		  ifTrue: [ self anySatisfyJoin: anExpression ]
+		  ifFalse: [ self anySatisfyExists: anExpression ]
 ]
 
 { #category : #internal }
@@ -131,52 +136,64 @@ ObjectExpression >> anySatisfyJoin: anExpression [
 { #category : #'api-aggregates' }
 ObjectExpression >> asDate [
 	"Cast the receiver to be a date"
-	^self getFunction: #cast: withArguments: (Array with: self system platform date asGlorpExpression).
+
+	^ self
+		  getFunction: #cast:
+		  withArguments:
+		  (Array with: self system platform date asGlorpExpression)
 ]
 
 { #category : #'api-aggregates' }
 ObjectExpression >> asTimestamp [
 	"Cast the receiver to be a timestamp"
-	^self getFunction: #cast: withArguments: (Array with: self system platform timestamp asGlorpExpression).
+
+	^ self
+		  getFunction: #cast:
+		  withArguments:
+		  (Array with: self system platform timestamp asGlorpExpression)
 ]
 
 { #category : #preparing }
 ObjectExpression >> assignTableAliasesStartingAt: anInteger prefix: aString [
+
 	| tableNumber prefix |
-	self controlsTables ifFalse: [^anInteger].
-	self hasTableAliases ifTrue: [^anInteger].
+	self controlsTables ifFalse: [ ^ anInteger ].
+	self hasTableAliases ifTrue: [ ^ anInteger ].
 	tableNumber := anInteger.
-	prefix := aString isNil ifTrue: ['t'] ifFalse: [aString].
-	self tables
-		do:
-			[:each | 
-			self aliasTable: each to: prefix , tableNumber printString.
-			tableNumber := tableNumber + 1].
-	^tableNumber.
+	prefix := aString isNil
+		          ifTrue: [ 't' ]
+		          ifFalse: [ aString ].
+	self tables do: [ :each |
+		self aliasTable: each to: prefix , tableNumber printString.
+		tableNumber := tableNumber + 1 ].
+	^ tableNumber
 ]
 
 { #category : #'api-aggregates' }
 ObjectExpression >> average: anExpression [
-	^self aggregate: anExpression as: #average.
+
+	^ self aggregate: anExpression as: #average
 ]
 
 { #category : #testing }
 ObjectExpression >> canTranslateFields [
 	"Return true if we are a mapping expression and can thus translate from fields into their aliased version for a particular query. More generally, do we respond to translateField:"
-	^true.
+
+	^ true
 ]
 
 { #category : #fields }
 ObjectExpression >> controlsTables [
 
-	self subclassResponsibility.
+	self subclassResponsibility
 ]
 
 { #category : #'api-aggregates' }
 ObjectExpression >> count: anExpression [
 	"Make a subselect of the expression that is our argument, returning a count(*). e.g.
 session read: GlorpCustomer where: 	[:each |  (each count: [:eachCust | eachCust accounts]) = 1]."
-	^self aggregate: anExpression as: #countStar.
+
+	^ self aggregate: anExpression as: #countStar
 ]
 
 { #category : #'api-aggregates' }
@@ -228,7 +245,7 @@ ObjectExpression >> findFieldNamed: aString [
 		field isNil ifFalse: [fields add: field]].
 	fields isEmpty ifTrue: [self error: 'No field named ', aString, ' in ', self printString].
 	fields size > 1 ifTrue: [self error: 'Ambiguous field ', aString, ' in ', self printString].
-	^fields at: 1.
+	^ fields at: 1
 ]
 
 { #category : #api }
@@ -240,7 +257,7 @@ ObjectExpression >> get: aSymbol [
 	functionExpression := self getFunction: aSymbol withArguments: #().
 	functionExpression isNil ifFalse: [^functionExpression].
 	^self mappingExpressions at: reallyASymbol
-		ifAbsentPut: [MappingExpression named: reallyASymbol basedOn: self]
+		ifAbsentPut: [MappingExpression named: reallyASymbol basedOn: self ]
 ]
 
 { #category : #api }
@@ -266,11 +283,13 @@ but since the subselect part might be very verbose, I might prefer to put the co
    [:each | 5 = (each count: subQuery)]
 because then the left-hand side expression doesn't refer back to the block argument, and we can't build the expression correctly. So I can write
    [:each | (each getConstant: 5) = (each count: subQuery)]"
-	^anObject asGlorpExpressionOn: self.
+
+	^ anObject asGlorpExpressionOn: self
 ]
 
 { #category : #api }
 ObjectExpression >> getField: aField [
+
 	| realField |
 	realField := aField isString
 		ifTrue: [self findFieldNamed: aField]
@@ -283,7 +302,7 @@ ObjectExpression >> getField: aField [
 					[realField := realField value isString
 						ifTrue: [realField := self findFieldNamed: realField value]
 						ifFalse: [realField]]].
-	^self getFieldKnownNotToBeAName: realField.
+	^self getFieldKnownNotToBeAName: realField
 ]
 
 { #category : #api }
@@ -297,7 +316,7 @@ ObjectExpression >> getFieldKnownNotToBeAName: aField [
 			[realField class == ConstantExpression ifTrue: [^realField].
 			realField class == ParameterExpression
 				ifTrue: [realField := realField field]].
-	^self getFieldThatsAnActualFieldObject: realField.
+	^self getFieldThatsAnActualFieldObject: realField
 ]
 
 { #category : #api }
@@ -310,23 +329,24 @@ ObjectExpression >> getFieldThatsAnActualFieldObject: aField [
 			[self mappingExpressions
 				at: aField
 				ifAbsentPut: [self newFieldExpressionFor: aField]]
-		ifFalse: [(self getTable: aField table) getField: aField].
+		ifFalse: [(self getTable: aField table) getField: aField]
 ]
 
 { #category : #api }
 ObjectExpression >> getMapping: aMapping named: aString [
 	"Get a mapping expression given the actual mapping (this is most useful for an anonymous mapping that isn't named or in our descriptor). Only if you really know what you're doing!. Short circuit looking up the mapping, checking for functions, and so on."
 
-	^self mappingExpressions at: aString
+	^ self mappingExpressions at: aString
 		ifAbsentPut: [ | expression |
 			expression := MappingExpression named: aString basedOn: self.
 			expression mapping: aMapping.
-			expression].
+			expression]
 ]
 
 { #category : #api }
-ObjectExpression >> getParameter: aDatabaseField [ 
-	^ParameterExpression forField: aDatabaseField basedOn: self.
+ObjectExpression >> getParameter: aDatabaseField [
+
+	^ ParameterExpression forField: aDatabaseField basedOn: self
 ]
 
 { #category : #api }
@@ -344,42 +364,52 @@ ObjectExpression >> getTable: aTable [
 				ifFalse: [realTable := realTable value]].
 	^self mappingExpressions
 		at: realTable
-		ifAbsentPut: [TableExpression forTable: realTable basedOn: self].
+		ifAbsentPut: [TableExpression forTable: realTable basedOn: self]
 ]
 
 { #category : #testing }
 ObjectExpression >> hasField [
-	^false.
+
+	^ false
 ]
 
 { #category : #testing }
 ObjectExpression >> hasProvidedAdditionalExpressions [
 	"Return true if we have already provided additional expressions to some query. Only important when we're preparing a subselect and don't want to bring in joins that are part of the main query"
-	^self hasTableAliases.
+
+	^ self hasTableAliases
 ]
 
 { #category : #testing }
 ObjectExpression >> hasTableAliases [
-	^tableAliases notNil
+
+	^ tableAliases notNil
 ]
 
 { #category : #internal }
 ObjectExpression >> includes: anObject [
 	"Allow us to specify includes: as a shortcut for (anySatisfy: [:each | each = anObject]). Rather than just call anySatisfy:, we need to go through the get: mechanism, both to avoid the anySatisfy: method on expressions that treats them like a collection, and to make sure we get the default mechanism for anySatisfy: (either joins or exists)"
-	^self get: #anySatisfy: withArguments: (Array with: ([:each | each = anObject] asGlorpExpressionOn: self)).
+
+	^ self
+		  get: #anySatisfy:
+		  withArguments:
+		  (Array with:
+			   ([ :each | each = anObject ] asGlorpExpressionOn: self))
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 ObjectExpression >> initialize [
 
 	super initialize.
-	requiresDistinct := false.
+	requiresDistinct := false
 ]
 
 { #category : #accessing }
 ObjectExpression >> mappingExpressions [
-	mappingExpressions isNil ifTrue: [mappingExpressions := IdentityDictionary new].
-	^mappingExpressions.
+
+	mappingExpressions isNil ifTrue: [
+		mappingExpressions := IdentityDictionary new ].
+	^ mappingExpressions
 ]
 
 { #category : #accessing }
@@ -389,149 +419,170 @@ ObjectExpression >> mappingExpressions: anObject [
 
 { #category : #'api-aggregates' }
 ObjectExpression >> max: anExpression [
-	^self aggregate: anExpression as: #max.
+
+	^ self aggregate: anExpression as: #max
 ]
 
 { #category : #'api-aggregates' }
 ObjectExpression >> min: anExpression [
-	^self aggregate: anExpression as: #min.
+
+	^ self aggregate: anExpression as: #min
 ]
 
 { #category : #fields }
 ObjectExpression >> newFieldExpressionFor: aField [
 
-	^FieldExpression forField: aField basedOn: self
+	^ FieldExpression forField: aField basedOn: self
 ]
 
 { #category : #internal }
-ObjectExpression >> noneSatisfy: anExpression [ 
+ObjectExpression >> noneSatisfy: anExpression [
+
 	| newExpression |
-	newExpression := SubSelectExpression 
-		named: #noneSatisfy:
-		basedOn: self
-		withArguments: (Array with: anExpression).
-	^newExpression.
+	newExpression := SubSelectExpression
+		                 named: #noneSatisfy:
+		                 basedOn: self
+		                 withArguments: (Array with: anExpression).
+	^ newExpression
 ]
 
 { #category : #internal }
-ObjectExpression >> noneSatisfyExists: anExpression [ 
+ObjectExpression >> noneSatisfyExists: anExpression [
+
 	| newExpression |
-	newExpression := SubSelectExpression 
-		named: #noneSatisfy:
-		basedOn: self
-		withArguments: (Array with: anExpression).
-	^newExpression.
+	newExpression := SubSelectExpression
+		                 named: #noneSatisfy:
+		                 basedOn: self
+		                 withArguments: (Array with: anExpression).
+	^ newExpression
 ]
 
 { #category : #internal }
 ObjectExpression >> oneArgumentSpecialSelectors [
-	^#(#anySatisfyDefault: #anySatisfyJoin: #anySatisfyExists: #getTable: #getField: #fieldNamed: #parameter: #noneSatisfy: #noneSatisfyExists: #getConstant: #count: #sum: #min: #max: #average: #sqlSelect: #includes:)
+
+	^ #( #anySatisfyDefault: #anySatisfyJoin: #anySatisfyExists:
+	     #getTable: #getField: #fieldNamed: #parameter: #noneSatisfy:
+	     #noneSatisfyExists: #getConstant: #count: #sum: #min: #max:
+	     #average: #sqlSelect: #includes: )
 ]
 
 { #category : #internal }
 ObjectExpression >> performSpecialExpression: aSymbol withArguments: anArray [
+
 	| symbolToPerform |
 	symbolToPerform := self specialSymbolToPerformFor: aSymbol.
 	(self zeroArgumentSpecialSelectors includes: symbolToPerform) ifTrue: [^self perform: symbolToPerform].
 	(self oneArgumentSpecialSelectors includes: symbolToPerform) ifTrue: [^self perform: symbolToPerform with: anArray first ].
 	(self twoArgumentSpecialSelectors includes: symbolToPerform) ifTrue: [^self perform: symbolToPerform with: (anArray at: 1) with: (anArray at: 2)].
-	^nil.
+	^ nil
 ]
 
 { #category : #printing }
-ObjectExpression >> printTableAliasesOn: aStream [ 
-	self hasTableAliases 
-		ifTrue: 
-			[aStream nextPutAll: ' '.
-			tableAliases keysAndValuesDo: [:eachKey :eachValue | 
-				aStream nextPutAll: eachKey name, '->', eachValue name , ' ']]
+ObjectExpression >> printTableAliasesOn: aStream [
+
+	self hasTableAliases ifTrue: [
+		aStream nextPutAll: ' '.
+		tableAliases keysAndValuesDo: [ :eachKey :eachValue |
+			aStream nextPutAll: eachKey name , '->' , eachValue name , ' ' ] ]
 ]
 
 { #category : #api }
 ObjectExpression >> referenceClass [
 	"Return the class that our mapping refers to, if we have a mapping. If we're a base expression, just return our class, and if we're a table expression, just return nil."
-	^self subclassResponsibility.
+
+	^ self subclassResponsibility
 ]
 
 { #category : #'private/accessing' }
 ObjectExpression >> removeMappingExpression: anExpression [
 	"Private. Normally you would never do this, but in the case of an anySatisfy: or allSatisfy: we want to have each of them as distinct joins, so we will remove the entry from the mappingExpression of the base, making sure that relationship will not be used for anything else. Since any/allSatisfy: is the only valid use of a collection relationship, we don't have to worry about whether it was used for something else earlier."
 
-	self mappingExpressions removeKey: anExpression name.
+	self mappingExpressions removeKey: anExpression name
 ]
 
 { #category : #'private/accessing' }
 ObjectExpression >> requiresDistinct [
-	^requiresDistinct
+
+	^ requiresDistinct
 ]
 
 { #category : #'private/accessing' }
-ObjectExpression >> requiresDistinct: aBoolean [ 
+ObjectExpression >> requiresDistinct: aBoolean [
+
 	requiresDistinct := aBoolean
 ]
 
 { #category : #internal }
 ObjectExpression >> specialSymbolToPerformFor: aSymbol [
 	"Avoid polymorphism between things you can send to an expression inside a query block and things you can do to an expression to iterate over an expression true"
-	aSymbol == #anySatisfy: ifTrue: [^#anySatisfyDefault:].
-	aSymbol == #select: ifTrue: [^#sqlSelect:].
-	^aSymbol.
+
+	aSymbol == #anySatisfy: ifTrue: [ ^ #anySatisfyDefault: ].
+	aSymbol == #select: ifTrue: [ ^ #sqlSelect: ].
+	^ aSymbol
 ]
 
 { #category : #'api-aggregates' }
 ObjectExpression >> sqlAverage [
 	"Make a subselect of the expression that is our argument, returning an avg(). e.g.
 session read: GlorpCustomer where: 	[:each |  each accounts balance sqlAverage > 100]."
-	^self queryLevelBaseExpression average: self.
+
+	^ self queryLevelBaseExpression average: self
 ]
 
 { #category : #'api-aggregates' }
 ObjectExpression >> sqlAvg [
 	"Make a subselect of the expression that is our argument, returning an avg(). e.g.
 session read: GlorpCustomer where: 	[:each |  each accounts balance sqlAvg > 100]."
-	^self queryLevelBaseExpression average: self.
+
+	^ self queryLevelBaseExpression average: self
 ]
 
 { #category : #'api-aggregates' }
 ObjectExpression >> sqlCount [
 	"Make a subselect of the expression that is our argument, returning a count(). e.g.
 session read: GlorpCustomer where: 	[:each |  each accounts sqlCount = 1]."
-	^self queryLevelBaseExpression count: self.
+
+	^ self queryLevelBaseExpression count: self
 ]
 
 { #category : #'api-aggregates' }
 ObjectExpression >> sqlCountWhere: filterExpression [
 	"Make a subselect of the expression that is our argument, returning a count(). e.g.
 session read: GlorpCustomer where: 	[:each |  each accounts sqlCount = 1]."
-	^self queryLevelBaseExpression count: self where: filterExpression.
+
+	^ self queryLevelBaseExpression count: self where: filterExpression
 ]
 
 { #category : #'api-aggregates' }
 ObjectExpression >> sqlMax [
 	"Make a subselect of the expression that is our argument, returning a max(). e.g.
 session read: GlorpCustomer where: 	[:each |  each accounts balance sqlMax = 1]."
-	^self queryLevelBaseExpression max: self.
+
+	^ self queryLevelBaseExpression max: self
 ]
 
 { #category : #'api-aggregates' }
 ObjectExpression >> sqlMin [
 	"Make a subselect of the expression that is our argument, returning a minimum. e.g.
 session read: GlorpCustomer where: 	[:each |  each accounts balance sqlMin = 1]."
-	^self queryLevelBaseExpression min: self.
+
+	^ self queryLevelBaseExpression min: self
 ]
 
 { #category : #'api-aggregates' }
 ObjectExpression >> sqlSum [
 	"Make a subselect of the expression that is our argument, returning a count(*). e.g.
 session read: GlorpCustomer where: 	[:each |  each accounts balance sqlSum = 1]."
-	^self queryLevelBaseExpression sum: self.
+
+	^ self queryLevelBaseExpression sum: self
 ]
 
 { #category : #'api-aggregates' }
 ObjectExpression >> sum: anExpression [
 	"Make a subselect of the expression that is our argument, returning a sum. e.g.
 session read: GlorpCustomer where: 	[:each |  (each sum: [:eachCust | eachCust accounts id]) > 5]."
-	^self aggregate: anExpression as: #sum.
+
+	^ self aggregate: anExpression as: #sum
 ]
 
 { #category : #accessing }
@@ -541,38 +592,50 @@ ObjectExpression >> system [
 
 { #category : #accessing }
 ObjectExpression >> table [
-	self subclassResponsibility.
+
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 ObjectExpression >> tableAliases [
+
 	tableAliases isNil ifTrue: [
-		tableAliases := IdentityDictionary new: 3].
-	^tableAliases
+		tableAliases := IdentityDictionary new: 3 ].
+	^ tableAliases
 ]
 
 { #category : #fields }
 ObjectExpression >> translateField: aDatabaseField [
+
 	| newTable rebuilt |
 	rebuilt := aDatabaseField isGlorpExpression
-		ifTrue: [aDatabaseField asGlorpExpressionOn: self withUltimateBase: self ultimateBaseExpression]
-		ifFalse: [aDatabaseField].
+		           ifTrue: [
+			           aDatabaseField
+				           asGlorpExpressionOn: self
+				           withUltimateBase: self ultimateBaseExpression ]
+		           ifFalse: [ aDatabaseField ].
 	newTable := self aliasedTableFor: rebuilt table.
-	newTable == rebuilt table ifTrue: [^rebuilt].
-	^self fieldAliases at: aDatabaseField ifAbsentPut: [rebuilt withTable: newTable].
+	newTable == rebuilt table ifTrue: [ ^ rebuilt ].
+	^ self fieldAliases
+		  at: aDatabaseField
+		  ifAbsentPut: [ rebuilt withTable: newTable ]
 ]
 
 { #category : #fields }
-ObjectExpression >> translateFields: anOrderedCollection [ 
-	^anOrderedCollection collect: [:each | self translateField: each]
+ObjectExpression >> translateFields: anOrderedCollection [
+
+	^ anOrderedCollection collect: [ :each | self translateField: each ]
 ]
 
 { #category : #internal }
 ObjectExpression >> twoArgumentSpecialSelectors [
-	^#(#aggregate:as:)
+
+	^ #( #aggregate:as: )
 ]
 
 { #category : #internal }
 ObjectExpression >> zeroArgumentSpecialSelectors [
-	^#(#asOuterJoin #sqlCount #sqlSum #sqlMin #sqlMax #sqlAverage #sqlAvg #isEmpty #notEmpty #asDate #asTimestamp #bePhantom).
+
+	^ #( #asOuterJoin #sqlCount #sqlSum #sqlMin #sqlMax #sqlAverage
+	     #sqlAvg #isEmpty #notEmpty #asDate #asTimestamp #bePhantom )
 ]

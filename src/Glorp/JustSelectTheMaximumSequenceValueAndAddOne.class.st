@@ -12,21 +12,23 @@ Class {
 		'field',
 		'table'
 	],
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #accessing }
 JustSelectTheMaximumSequenceValueAndAddOne >> field [
-	field isNil ifTrue: [field := table primaryKeyFields first].
-	^field.
+
+	field isNil ifTrue: [ field := table primaryKeyFields first ].
+	^ field
 ]
 
 { #category : #accessing }
 JustSelectTheMaximumSequenceValueAndAddOne >> field: aDatabaseField [
-	field := aDatabaseField.
+
+	field := aDatabaseField
 ]
 
-{ #category : #other }
+{ #category : #sequencing }
 JustSelectTheMaximumSequenceValueAndAddOne >> getSequenceValueFromDatabaseFor: aField in: aRow using: aSession [
 
 	| stream rows value |
@@ -39,10 +41,10 @@ JustSelectTheMaximumSequenceValueAndAddOne >> getSequenceValueFromDatabaseFor: a
 	rows := aSession accessor executeSQLString: stream contents.
 	value := rows first first isNil ifTrue: [1] ifFalse: [rows first first + 1].
 	aRow at: aField put: value.
-	^value.
+	^ value
 ]
 
-{ #category : #other }
+{ #category : #sequencing }
 JustSelectTheMaximumSequenceValueAndAddOne >> reserveSequenceNumbers: anInteger in: anAccessor for: aTable [
 	| numberNeeded firstNumber fakeRow |
 	numberNeeded := anInteger - self availableReservedNumbers.
@@ -57,5 +59,6 @@ JustSelectTheMaximumSequenceValueAndAddOne >> reserveSequenceNumbers: anInteger 
 
 { #category : #accessing }
 JustSelectTheMaximumSequenceValueAndAddOne >> table: aTable [
-	table := aTable.
+
+	table := aTable
 ]

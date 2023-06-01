@@ -15,57 +15,64 @@ Class {
 		'separator',
 		'argumentModifierBlock'
 	],
-	#category : 'Glorp-Expressions'
+	#category : #'Glorp-Expressions'
 }
 
 { #category : #accessing }
 PrefixFunction >> argumentModifierBlock [
-	^argumentModifierBlock
+
+	^ argumentModifierBlock
 ]
 
 { #category : #accessing }
 PrefixFunction >> argumentModifierBlock: aBlock [
+
 	argumentModifierBlock := aBlock
 ]
 
 { #category : #accessing }
 PrefixFunction >> arguments [
-	^arguments.
+
+	^ arguments
 ]
 
 { #category : #accessing }
 PrefixFunction >> arguments: aCollection [
 	"Our arguments may have already been set to a block, in which case we evaluate it with the incoming collection."
-	argumentModifierBlock notNil ifTrue: [^arguments := argumentModifierBlock value: self value: aCollection].
-	arguments := aCollection.
+
+	argumentModifierBlock notNil ifTrue: [
+		^ arguments := argumentModifierBlock value: self value: aCollection ].
+	arguments := aCollection
 ]
 
 { #category : #converting }
 PrefixFunction >> convertedStValueOf: anObject [
 	"This assumes that functions that do conversions have already had their effect in the database, and all we're concerned with is the fundamental data type conversion"
-	^base convertedStValueOf: anObject.
+
+	^ base convertedStValueOf: anObject
 ]
 
 { #category : #iterating }
 PrefixFunction >> do: aBlock skipping: aSet [
 	"Iterate over the expression tree. Keep track of who has already been visited, so we don't get trapped in cycles or visit nodes twice."
 
-	(aSet includes: self) ifTrue: [^self].
+	(aSet includes: self) ifTrue: [ ^ self ].
 	aSet add: self.
 	base do: aBlock skipping: aSet.
-	arguments do: [:each | each do: aBlock skipping: aSet].
-	aBlock value: self.
+	arguments do: [ :each | each do: aBlock skipping: aSet ].
+	aBlock value: self
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 PrefixFunction >> initialize [
 	super initialize.
 	arguments := #().
-	separator := ','.
+	separator := ','
 ]
 
 { #category : #printing }
 PrefixFunction >> printBasicSQLOn: aStream withParameters: aDictionary forSelect: aBoolean [
+
 	aStream
 		nextPutAll: function;
 		nextPut: $(.
@@ -74,10 +81,10 @@ PrefixFunction >> printBasicSQLOn: aStream withParameters: aDictionary forSelect
 		ifFalse: [base printSQLOn: aStream withParameters: aDictionary].
 	arguments
 		do:
-			[:each | 
+			[:each |
 			"It's possible there needs to be type conversion here similar to InfixFunction>>printSQLOn:withParameters:, but it's not clear how common that case is, or how best to do it, so leaving it until it becomes a problem."
 			aStream nextPutAll: separator.
-			aBoolean 
+			aBoolean
 				ifTrue: [each printSelectSQLOn: aStream withParameters: aDictionary]
 				ifFalse: [each printSQLOn: aStream withParameters: aDictionary]].
 	aStream nextPut: $).
@@ -85,35 +92,41 @@ PrefixFunction >> printBasicSQLOn: aStream withParameters: aDictionary forSelect
 		ifTrue:
 			[aStream
 				nextPutAll: ' AS ';
-				nextPutAll: alias].
+				nextPutAll: alias]
 ]
 
 { #category : #printing }
 PrefixFunction >> printSQLOn: aStream withParameters: aDictionary [
+
 	self printsIntoJoins
 		ifTrue: [self printBasicSQLOn: aStream withParameters: aDictionary forSelect: false]
-		ifFalse: [base printSQLOn: aStream withParameters: aDictionary].
+		ifFalse: [base printSQLOn: aStream withParameters: aDictionary]
 ]
 
 { #category : #printing }
 PrefixFunction >> printSelectSQLOn: aStream withParameters: aDictionary [
-	self printBasicSQLOn: aStream withParameters: aDictionary forSelect: true.
+
+	self printBasicSQLOn: aStream withParameters: aDictionary forSelect: true
 ]
 
 { #category : #printing }
-PrefixFunction >> printTreeOn: aStream [ 
+PrefixFunction >> printTreeOn: aStream [
+
 	aStream
-		nextPutAll: function, '('.
+		nextPutAll: function;
+		nextPutAll: '('.
 	base printOn: aStream.
-	aStream nextPutAll: ')'.
+	aStream nextPutAll: ')'
 ]
 
 { #category : #accessing }
 PrefixFunction >> separator [
-	^separator
+
+	^ separator
 ]
 
 { #category : #accessing }
 PrefixFunction >> separator: aString [
+
 	separator := aString
 ]

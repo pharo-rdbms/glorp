@@ -15,31 +15,36 @@ Class {
 		'constraints',
 		'tables'
 	],
-	#category : 'Glorp-Exceptions'
+	#category : #'Glorp-Exceptions'
 }
 
 { #category : #accessing }
 CannotAutomaticallyDetermineJoin >> constraints [
-	constraints isNil ifTrue: [constraints := #()].
-	^constraints
+
+	constraints isNil ifTrue: [ constraints := #(  ) ].
+	^ constraints
 ]
 
 { #category : #accessing }
 CannotAutomaticallyDetermineJoin >> constraints: aCollection [
+
 	constraints := aCollection
 ]
 
 { #category : #accessing }
 CannotAutomaticallyDetermineJoin >> defaultMessageText [
-	^'Cannot calculate the join automatically, not enough information.'.
+
+	^ 'Cannot calculate the join automatically, not enough information.'
 ]
 
 { #category : #accessing }
 CannotAutomaticallyDetermineJoin >> tables [
-	^tables
+
+	^ tables
 ]
 
 { #category : #accessing }
 CannotAutomaticallyDetermineJoin >> tables: databaseTables [
+
 	tables := databaseTables
 ]

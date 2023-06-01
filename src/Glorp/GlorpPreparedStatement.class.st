@@ -16,62 +16,71 @@ Class {
 		'statement',
 		'busy'
 	],
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #'*Glorp' }
 GlorpPreparedStatement class >> new [
 	"Answer a newly created and initialized instance."
 
-	^super new initialize
+	^ super new initialize
 ]
 
 { #category : #accessing }
 GlorpPreparedStatement >> busy [
-	^busy.
+
+	^ busy
 ]
 
 { #category : #accessing }
 GlorpPreparedStatement >> busy: aBoolean [
-	busy := aBoolean.
+
+	busy := aBoolean
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #initialization }
 GlorpPreparedStatement >> glorpNoticeOfExpiryIn: aSession [
-	self release.
+
+	self release
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GlorpPreparedStatement >> initialize [
-	busy := false.
+
+	busy := false
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #initialization }
 GlorpPreparedStatement >> release [
+
 	super release.
 	statement isNil ifFalse: [
 		| stmt |
 		stmt := statement.
 		statement := nil.
-		stmt disconnect].
+		stmt disconnect ]
 ]
 
 { #category : #accessing }
 GlorpPreparedStatement >> signature [
-	^signature
+
+	^ signature
 ]
 
 { #category : #accessing }
 GlorpPreparedStatement >> signature: aString [
+
 	signature := aString
 ]
 
 { #category : #accessing }
 GlorpPreparedStatement >> statement [
-	^statement
+
+	^ statement
 ]
 
 { #category : #accessing }
 GlorpPreparedStatement >> statement: aStatementHandle [
+
 	statement := aStatementHandle
 ]

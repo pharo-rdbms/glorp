@@ -5,20 +5,20 @@ This represents a function that prints postfix, meaning its name comes after its
 Class {
 	#name : #PostfixFunction,
 	#superclass : #FunctionExpression,
-	#category : 'Glorp-Expressions'
+	#category : #'Glorp-Expressions'
 }
 
 { #category : #printing }
 PostfixFunction >> printSQLOn: aStream withParameters: aDictionary [
-	
+
 	base printSQLOn: aStream withParameters: aDictionary.
 	self printsIntoJoins ifFalse: [^self].
-	aStream nextPutAll: ' '; nextPutAll: function.
+	aStream nextPutAll: ' '; nextPutAll: function
 ]
 
 { #category : #printing }
 PostfixFunction >> printUnqualifiedSQLOn: aStream withParameters: aDictionary [
-	
+
 	base printUnqualifiedSQLOn: aStream withParameters: aDictionary.
-	aStream nextPutAll: ' '; nextPutAll: function.
+	aStream nextPutAll: ' '; nextPutAll: function
 ]

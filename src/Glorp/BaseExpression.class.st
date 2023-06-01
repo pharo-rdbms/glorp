@@ -17,18 +17,22 @@ Class {
 	#category : #'Glorp-Expressions'
 }
 
-{ #category : #accessing }
+{ #category : #preparing }
 BaseExpression >> additionalExpressions [
+
 	| expressions |
 	expressions := OrderedCollection new.
-	self descriptor typeMapping addTypeMappingCriteriaTo: expressions in: self.
+	self descriptor typeMapping
+		addTypeMappingCriteriaTo: expressions
+		in: self.
 	expressions addAll: self multipleTableExpressions.
-	^expressions
+	^ expressions
 ]
 
 { #category : #preparing }
 BaseExpression >> additionalExpressionsOn: anExpression [
-	^#().
+
+	^ #(  )
 ]
 
 { #category : #preparing }
@@ -38,102 +42,118 @@ BaseExpression >> asExpressionJoiningSource: source toTarget: target [
 	(customer.ADDRESS.STREET = 'Main') AND (customer.CUSTOMER.ADDRESS_ID = customer.ADDRESS.ID)
 	The primary key expression for the relationship has been translated into field references into the customer and address tables in a particular context."
 
-	^source.
+	^ source
 ]
 
 { #category : #preparing }
 BaseExpression >> availableSubSelectNumber [
-	availableSubSelectNumber := availableSubSelectNumber isNil ifTrue: [1] ifFalse: [availableSubSelectNumber + 1].
-	^availableSubSelectNumber.
+
+	availableSubSelectNumber := availableSubSelectNumber isNil
+		                            ifTrue: [ 1 ]
+		                            ifFalse: [ availableSubSelectNumber + 1 ].
+	^ availableSubSelectNumber
 ]
 
 { #category : #api }
 BaseExpression >> base [
 
-	^nil.
+	^ nil
 ]
 
 { #category : #testing }
 BaseExpression >> canBeUsedForRetrieve [
 	"Return true if this is a valid argument for a retrieve: clause"
-	^true.
+
+	^ true
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 BaseExpression >> canHaveBase [
 	"Return true if this type of expression can have a base expression on which other things can be built. We don't have a base, but we *are* a base, so return true"
-	^true.
+
+	^ true
 ]
 
 { #category : #testing }
 BaseExpression >> canPrint [
 	"Return true if we can print into a where clause"
-	^false.
+
+	^ false
 ]
 
-{ #category : #printing }
+{ #category : #introspection }
 BaseExpression >> className [
 
-	^'Base'.
+	^ 'Base'
 ]
 
 { #category : #preparing }
 BaseExpression >> controlsTables [
 
-	^true.
+	^ true
 ]
 
 { #category : #accessing }
 BaseExpression >> descriptor [
 
-	^descriptor
+	^ descriptor
 ]
 
 { #category : #accessing }
 BaseExpression >> descriptor: aDescriptor [
+
 	descriptor := aDescriptor
 ]
 
 { #category : #preparing }
 BaseExpression >> fieldsForSelectStatement [
-	^self descriptor mappedFields.
+
+	^ self descriptor mappedFields
 ]
 
 { #category : #api }
-BaseExpression >> getParameter: aDatabaseField [ 
-	^ParameterExpression forField: aDatabaseField basedOn: self.
+BaseExpression >> getParameter: aDatabaseField [
+
+	^ ParameterExpression forField: aDatabaseField basedOn: self
 ]
 
 { #category : #accessing }
 BaseExpression >> hasDescriptor [
 
-	^self descriptor notNil.
+	^ self descriptor notNil
 ]
 
 { #category : #accessing }
 BaseExpression >> mappedFieldCount [
-	^self descriptor mappedFields size
+
+	^ self descriptor mappedFields size
 ]
 
 { #category : #accessing }
 BaseExpression >> mappedFields [
-	^self descriptor mappedFields collect: [:each | self translateField: each].
+
+	^ self descriptor mappedFields collect: [ :each |
+		  self translateField: each ]
 ]
 
 { #category : #testing }
 BaseExpression >> mapsSimpleObject [
 	"Try to do a fast test for this, to look for the pseudo-descriptors that direct to-many mappings use."
-	^self descriptor mappings size = 1 and: [(self descriptor mappingForAttributeNamed: #myValue) notNil].
+
+	^ self descriptor mappings size = 1 and: [
+		  (self descriptor mappingForAttributeNamed: #myValue) notNil ]
 ]
 
 { #category : #accessing }
 BaseExpression >> multipleTableExpressions [
-	^self descriptor multipleTableJoin 
-		collect: [:each | each asExpressionJoiningSource: self toTarget: self]
+
+	^ self descriptor multipleTableJoin collect: [ :each |
+		  each asExpressionJoiningSource: self toTarget: self ]
 ]
 
 { #category : #printing }
-BaseExpression >> printOn: aStream [ 
+BaseExpression >> printOn: aStream [
+
 	aStream
 		nextPutAll: self className;
 		nextPut: $(.
@@ -142,8 +162,11 @@ BaseExpression >> printOn: aStream [
 ]
 
 { #category : #printing }
-BaseExpression >> printOnlySelfOn: aStream [ 
-	self descriptor isNil ifTrue: [aStream nextPutAll: 'Empty Base'. ^self].
+BaseExpression >> printOnlySelfOn: aStream [
+
+	self descriptor isNil ifTrue: [
+		aStream nextPutAll: 'Empty Base'.
+		^ self ].
 	aStream print: self descriptor describedClass.
 	self printTableAliasesOn: aStream
 ]
@@ -186,27 +209,31 @@ BaseExpression >> referenceClass [
 
 { #category : #accessing }
 BaseExpression >> system [
-	self descriptor isNil ifTrue: [^nil].
-	^self descriptor system.
+
+	self descriptor isNil ifTrue: [ ^ nil ].
+	^ self descriptor system
 ]
 
 { #category : #accessing }
 BaseExpression >> table [
 
-	^self descriptor primaryTable.
+	^ self descriptor primaryTable
 ]
 
 { #category : #accessing }
 BaseExpression >> tables [
 
-	^self descriptor isNil ifTrue: [#()] ifFalse: [self descriptor tables].
+	^ self descriptor isNil
+		  ifTrue: [ #(  ) ]
+		  ifFalse: [ self descriptor tables ]
 ]
 
 { #category : #preparing }
 BaseExpression >> tablesToPrint [
 	"We derive the base's tables from the fields that are being selected, but make sure that at least the primary table is listed."
-	self descriptor tables isEmpty ifTrue: [^#()].
-	^Array with: (self aliasedTableFor: self descriptor primaryTable).
+
+	self descriptor tables isEmpty ifTrue: [ ^ #(  ) ].
+	^ Array with: (self aliasedTableFor: self descriptor primaryTable)
 ]
 
 { #category : #accessing }
@@ -216,19 +243,23 @@ BaseExpression >> targetDescriptor [
 
 { #category : #accessing }
 BaseExpression >> trueBase [
-	^self.
+
+	^ self
 ]
 
 { #category : #navigating }
 BaseExpression >> ultimateBaseExpression [
 
-	^self
+	^ self
 ]
 
 { #category : #mapping }
 BaseExpression >> valueInBuilder: anElementBuilder [
 	"If we ever get here, this is because we're being used as the reverse of a direct to-many mapping, so we expect to have a descriptor with only one mapping, named #myValue"
+
 	| mapping |
 	mapping := self descriptor mappingForAttributeNamed: #myValue.
-	^mapping valueInBuilder: anElementBuilder as: (self get: #myValue) field.
+	^ mapping
+		  valueInBuilder: anElementBuilder
+		  as: (self get: #myValue) field
 ]

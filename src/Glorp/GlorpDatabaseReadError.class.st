@@ -16,45 +16,53 @@ Class {
 		'databaseError',
 		'accessor'
 	],
-	#category : 'Glorp-Exceptions'
+	#category : #'Glorp-Exceptions'
 }
 
 { #category : #'*Glorp' }
 GlorpDatabaseReadError class >> mayResume [
-	^true.
+
+	^ true
 ]
 
 { #category : #accessing }
 GlorpDatabaseReadError >> accessor [
-	^accessor
+
+	^ accessor
 ]
 
 { #category : #accessing }
 GlorpDatabaseReadError >> accessor: aDatabaseAccessor [
+
 	accessor := aDatabaseAccessor
 ]
 
 { #category : #accessing }
 GlorpDatabaseReadError >> command [
-	^command
+
+	^ command
 ]
 
 { #category : #accessing }
 GlorpDatabaseReadError >> command: aDatabaseCommand [
+
 	command := aDatabaseCommand
 ]
 
 { #category : #accessing }
 GlorpDatabaseReadError >> databaseError [
-	^databaseError
+
+	^ databaseError
 ]
 
 { #category : #accessing }
 GlorpDatabaseReadError >> databaseError: aDatabaseErrorObject [
+
 	databaseError := aDatabaseErrorObject
 ]
 
 { #category : #accessing }
 GlorpDatabaseReadError >> session [
-	^command session.
+
+	^ command session
 ]

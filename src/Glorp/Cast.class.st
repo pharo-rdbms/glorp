@@ -6,7 +6,7 @@ It doesn't work yet, since printing of constants doesn't like having functions i
 Class {
 	#name : #Cast,
 	#superclass : #PrefixFunction,
-	#category : 'Glorp-Expressions'
+	#category : #'Glorp-Expressions'
 }
 
 { #category : #'instance creation' }
@@ -17,17 +17,22 @@ Cast class >> value: anObject as: aDatabaseType [
 	^self new base: anObject asGlorpExpression; arguments: (Array with: aDatabaseType asGlorpExpression)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Cast >> initialize [
+
 	super initialize.
 	function := 'CAST'.
-	separator := ' AS '.
+	separator := ' AS '
 ]
 
 { #category : #preparing }
 Cast >> rebuildOn: aBaseExpression startingFrom: anExpression withOuterScopeBase: ultimateBaseExpression [
-	^super rebuildOn: aBaseExpression startingFrom: anExpression withOuterScopeBase: ultimateBaseExpression.
-"	| rebuilt |
+
+	^ super
+		  rebuildOn: aBaseExpression
+		  startingFrom: anExpression
+		  withOuterScopeBase: ultimateBaseExpression
+	"	| rebuilt |
 	self == anExpression ifTrue: [^aBaseExpression].
 	rebuilt := (base rebuildOn: aBaseExpression startingFrom: anExpression withOuterScopeBase: ultimateBaseExpression).
 	rebuilt := self class value: base as: arguments first.
@@ -37,5 +42,6 @@ Cast >> rebuildOn: aBaseExpression startingFrom: anExpression withOuterScopeBase
 
 { #category : #accessing }
 Cast >> type [
-	^arguments last value.
+
+	^ arguments last value
 ]

@@ -23,18 +23,25 @@ CompoundSelectCommand >> arrayBoundFields [
 
 { #category : #accessing }
 CompoundSelectCommand >> bindingTypes [
-	^self commands inject: #() into: [:sum :each | sum, each bindingTypes].
+
+	^ self commands
+		  inject: #(  )
+		  into: [ :sum :each | sum , each bindingTypes ]
 ]
 
 { #category : #accessing }
 CompoundSelectCommand >> bindings [
-	^commands inject: #() into: [:sum :each | sum, each bindings].
+
+	^ commands inject: #(  ) into: [ :sum :each | sum , each bindings ]
 ]
 
 { #category : #accessing }
 CompoundSelectCommand >> commands [
-	commands isNil ifTrue: [commands := query queries collect: [:each | each sqlWith: parameters]].
-	^commands.
+
+	commands isNil ifTrue: [
+		commands := query queries collect: [ :each |
+			            each sqlWith: parameters ] ].
+	^ commands
 ]
 
 { #category : #testing }
@@ -62,11 +69,12 @@ CompoundSelectCommand >> hasOrdering [
 
 { #category : #accessing }
 CompoundSelectCommand >> parameters: aDictionary [
+
 	parameters := aDictionary.
-	commands := nil.
+	commands := nil
 ]
 
-{ #category : #accessing }
+{ #category : #printing }
 CompoundSelectCommand >> printSQL [
 	"Access doesn't like parenthesies around the first in a group of compound commands."
 
@@ -80,7 +88,7 @@ CompoundSelectCommand >> printSQL [
 			self platform supportsAliasInCompoundQuery ifTrue: [self nextPut: $( ]].
 	skipFirst := self platform parenthesizeAllButFirstCommandInCompoundQuery.
 	GlorpHelper
-		do: 
+		do:
 			[:each |
 			(self platform parenthesizeCommandsInCompoundQuery and: [skipFirst not])
 				ifTrue: [self nextPut: $(].
@@ -91,14 +99,14 @@ CompoundSelectCommand >> printSQL [
 		for: self commands
 		separatedBy: [query printOperationOn: self].
 	(self requiresWrapperQuery and: [self platform supportsAliasInCompoundQuery])
-		ifTrue: 
+		ifTrue:
 			[self nextPut: $).
 			query printCompoundSelectAliasesOn: self].
-		
+
 	query printOrderingOn: self.
 	query printGroupingOn: self.
 	query printPostLimitOn: self.
-	query printOffsetOn: self.
+	query printOffsetOn: self
 ]
 
 { #category : #testing }

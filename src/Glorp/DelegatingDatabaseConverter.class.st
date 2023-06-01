@@ -36,13 +36,15 @@ DelegatingDatabaseConverter class >> named: aSymbol hostedBy: anObject fromStToD
 ]
 
 { #category : #converting }
-DelegatingDatabaseConverter >> convert: anObject fromDatabaseRepresentationAs: aDatabaseType [ 
-	^host perform: dbToStSelector with: anObject with: aDatabaseType
+DelegatingDatabaseConverter >> convert: anObject fromDatabaseRepresentationAs: aDatabaseType [
+
+	^ host perform: dbToStSelector with: anObject with: aDatabaseType
 ]
 
 { #category : #converting }
-DelegatingDatabaseConverter >> convert: anObject toDatabaseRepresentationAs: aDatabaseType [ 
-	^host perform: stToDbSelector with: anObject with: aDatabaseType.
+DelegatingDatabaseConverter >> convert: anObject toDatabaseRepresentationAs: aDatabaseType [
+
+	^ host perform: stToDbSelector with: anObject with: aDatabaseType
 ]
 
 { #category : #initialization }

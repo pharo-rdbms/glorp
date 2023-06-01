@@ -12,43 +12,50 @@ Class {
 		'maximumSize',
 		'items'
 	],
-	#category : 'Glorp-Core'
+	#category : #'Glorp-Core'
 }
 
-{ #category : #'*Glorp' }
+{ #category : #'instance creation' }
 FixedSizeQueue class >> maximumSize: anInteger [
-	^self basicNew maximumSize: anInteger.
+
+	^ self basicNew maximumSize: anInteger
 ]
 
-{ #category : #'*Glorp' }
+{ #category : #'instance creation' }
 FixedSizeQueue class >> new [
-	self error: 'must supply a size'.
+
+	self error: 'must supply a size'
 ]
 
-{ #category : #'*Glorp' }
+{ #category : #'instance creation' }
 FixedSizeQueue class >> new: anInteger [
-	^self maximumSize: anInteger.
+
+	^ self maximumSize: anInteger
 ]
 
 { #category : #api }
 FixedSizeQueue >> add: anObject [
+
 	items add: anObject.
-	items size > maximumSize ifTrue: [items removeFirst]
+	items size > maximumSize ifTrue: [ items removeFirst ]
 ]
 
 { #category : #accessing }
 FixedSizeQueue >> maximumSize [
-	^maximumSize
+
+	^ maximumSize
 ]
 
 { #category : #accessing }
 FixedSizeQueue >> maximumSize: anInteger [
+
 	maximumSize := anInteger.
 	items := OrderedCollection new: maximumSize + 1
 ]
 
 { #category : #printing }
 FixedSizeQueue >> printOn: aStream [
+
 	super printOn: aStream.
 	aStream nextPutAll: '('.
 	aStream nextPutAll: items size printString.

@@ -8,7 +8,7 @@ Class {
 	#classVars : [
 		'Announcements'
 	],
-	#category : 'Glorp-Exceptions'
+	#category : #'Glorp-Exceptions'
 }
 
 { #category : #'exception compatibility' }
@@ -42,35 +42,39 @@ GlorpError class >> signal: aString [
 { #category : #testing }
 GlorpError >> ancestorOf: anExceptionThingy [
 	"VA Compatibility"
-	^self handles: anExceptionThingy
+
+	^ self handles: anExceptionThingy
 ]
 
 { #category : #accessing }
 GlorpError >> databaseError [
-"rh 8/1/2004 21:26 for #getMessageText"
+	"rh 8/1/2004 21:26 for #getMessageText"
 
-	^self class name
+	^ self class name
 ]
 
-{ #category : #printing }
+{ #category : #accessing }
 GlorpError >> description [
 	"Make sure that we've populated our messageText before calling the superclass implementation."
+
 	self getMessageText.
-	^super description.
+	^ super description
 ]
 
 { #category : #accessing }
 GlorpError >> getMessageText [
-	
-	^self databaseError
+
+	^ self databaseError
 ]
 
 { #category : #accessing }
 GlorpError >> getVisualAgeMessageText [
-	
+
 	| tempTag |
 	tempTag := self basicTag.
-	^tempTag isNil ifTrue: [self printString] ifFalse: [tempTag errorText].
+	^ tempTag isNil
+		  ifTrue: [ self printString ]
+		  ifFalse: [ tempTag errorText ]
 ]
 
 { #category : #accessing }
@@ -86,20 +90,23 @@ GlorpError >> getVisualWorksMessageText [
 	^messageText.
 ]
 
-{ #category : #testing }
+{ #category : #'private - testing' }
 GlorpError >> isResumable [
-	^self class mayResume.
+
+	^ self class mayResume
 ]
 
 { #category : #accessing }
 GlorpError >> messageText [
-	(messageText isNil or: [messageText isEmpty]) ifTrue: [
-		messageText := self getMessageText].
-	^messageText.
+
+	(messageText isNil or: [ messageText isEmpty ]) ifTrue: [
+		messageText := self getMessageText ].
+	^ messageText
 ]
 
 { #category : #accessing }
 GlorpError >> session [
 	"We don't know what our session is, return nil by default."
-	^nil.
+
+	^ nil
 ]

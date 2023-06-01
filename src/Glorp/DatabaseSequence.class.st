@@ -17,74 +17,83 @@ Class {
 	#instVars : [
 		'reservedNumbers'
 	],
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #'*Glorp' }
 DatabaseSequence class >> named: aString [
-	^self new name: aString.
+
+	^ self new name: aString
 ]
 
 { #category : #'*Glorp' }
 DatabaseSequence class >> new [
 
-	^super new initialize.
+	^ super new initialize
 ]
 
 { #category : #sequencing }
 DatabaseSequence >> creationString [
 
-	^'Create sequence ', self qualifiedName.
+	^ 'Create sequence ' , self qualifiedName
 ]
 
 { #category : #sequencing }
 DatabaseSequence >> dropString [
 
-	^'Drop string unspecified for this type of sequence'.
+	^ 'Drop string unspecified for this type of sequence'
 ]
 
 { #category : #sequencing }
-DatabaseSequence >> getSequenceValueFromDatabaseFor: aField in: aRow using: aSession [ 
-	self subclassResponsibility.
+DatabaseSequence >> getSequenceValueFromDatabaseFor: aField in: aRow using: aSession [
+
+	self subclassResponsibility
 ]
 
 { #category : #sequencing }
 DatabaseSequence >> hasReservedNumbers [
-	^reservedNumbers notNil and: [reservedNumbers isEmpty not].
+
+	^ reservedNumbers notNil and: [ reservedNumbers isEmpty not ]
 ]
 
-{ #category : #'initialize/release' }
+{ #category : #initialization }
 DatabaseSequence >> initialize [
 ]
 
 { #category : #testing }
 DatabaseSequence >> isIdentityColumn [
-	^false.
+
+	^ false
 ]
 
 { #category : #sequencing }
 DatabaseSequence >> nextReservedNumber [
-	^reservedNumbers removeFirst.
+
+	^ reservedNumbers removeFirst
 ]
 
 { #category : #sequencing }
 DatabaseSequence >> postWriteAssignSequenceValueFor: aField in: aRow using: anAccessor [
-	self subclassResponsibility.
+
+	self subclassResponsibility
 ]
 
 { #category : #sequencing }
 DatabaseSequence >> preWriteAssignSequenceValueFor: aField in: aRow using: anAccessor [
+
 	self hasReservedNumbers
-		ifTrue: [aRow at: aField put: self nextReservedNumber]
-		ifFalse:
-			[self
+		ifTrue: [ aRow at: aField put: self nextReservedNumber ]
+		ifFalse: [
+			self
 				getSequenceValueFromDatabaseFor: aField
 				in: aRow
-				using: anAccessor].
+				using: anAccessor ]
 ]
 
 { #category : #accessing }
 DatabaseSequence >> reservedNumbers [
-	reservedNumbers isNil ifTrue: [reservedNumbers := OrderedCollection new: 50].
-	^reservedNumbers.
+
+	reservedNumbers isNil ifTrue: [
+		reservedNumbers := OrderedCollection new: 50 ].
+	^ reservedNumbers
 ]

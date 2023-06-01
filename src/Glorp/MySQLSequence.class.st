@@ -4,7 +4,7 @@ This is a sequence type for MySQL AutoIncrement fields.
 Class {
 	#name : #MySQLSequence,
 	#superclass : #NamedSequence,
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #sequencing }
@@ -13,14 +13,16 @@ MySQLSequence >> getSequenceValueFromDatabaseFor: aField in: aRow using: aSessio
 
 { #category : #testing }
 MySQLSequence >> isIdentityColumn [
-	^true.
+
+	^ true
 ]
 
 { #category : #sequencing }
-MySQLSequence >> postWriteAssignSequenceValueFor: aDatabaseField in: aDatabaseRow using: anAccessor [ 
+MySQLSequence >> postWriteAssignSequenceValueFor: aDatabaseField in: aDatabaseRow using: anAccessor [
+
 	aDatabaseRow at: aDatabaseField
-		put: ((anAccessor 
-				executeSQLString: 'SELECT LAST_INSERT_ID()') first at: 1).
+		put: ((anAccessor
+				executeSQLString: 'SELECT LAST_INSERT_ID()') first at: 1)
 ]
 
 { #category : #sequencing }

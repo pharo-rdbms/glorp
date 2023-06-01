@@ -4,7 +4,7 @@ A command to insert our set of rows.
 Class {
 	#name : #InsertCommand,
 	#superclass : #RowBasedCommand,
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #accessing }
@@ -57,7 +57,7 @@ InsertCommand >> bindingTypes [
 		ifFalse: [self singleRowBoundFields collect: [:each | each type]].
 ]
 
-{ #category : #accessing }
+{ #category : #printing }
 InsertCommand >> printSQL [
 	| iterations |
 	iterations := self shouldUseGroupWriting

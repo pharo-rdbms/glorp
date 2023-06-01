@@ -6,7 +6,7 @@ ValidationError is a superclass for all errors that are raise while validating a
 Class {
 	#name : #ValidationError,
 	#superclass : #GlorpError,
-	#category : 'Glorp-Exceptions'
+	#category : #'Glorp-Exceptions'
 }
 
 { #category : #'*Glorp' }
@@ -15,17 +15,20 @@ ValidationError class >> mayResume [
 	^true
 ]
 
-{ #category : #printing }
+{ #category : #accessing }
 ValidationError >> description [
-	^self messageText
+
+	^ self messageText
 ]
 
 { #category : #accessing }
 ValidationError >> model [
-	^self parameter
+
+	^ self parameter
 ]
 
 { #category : #accessing }
 ValidationError >> model: aClass [
+
 	self parameter: aClass
 ]

@@ -16,36 +16,42 @@ Class {
 		'databaseError',
 		'accessor'
 	],
-	#category : 'Glorp-Exceptions'
+	#category : #'Glorp-Exceptions'
 }
 
 { #category : #accessing }
 GlorpDatabaseWriteError >> accessor [
-	^accessor
+
+	^ accessor
 ]
 
 { #category : #accessing }
 GlorpDatabaseWriteError >> accessor: anObject [
+
 	accessor := anObject
 ]
 
 { #category : #accessing }
 GlorpDatabaseWriteError >> command [
-	^command
+
+	^ command
 ]
 
 { #category : #accessing }
 GlorpDatabaseWriteError >> command: aDatabaseCommand [
+
 	command := aDatabaseCommand
 ]
 
 { #category : #accessing }
 GlorpDatabaseWriteError >> databaseError [
-	^databaseError
+
+	^ databaseError
 ]
 
 { #category : #accessing }
 GlorpDatabaseWriteError >> databaseError: aDatabaseErrorObject [
+
 	databaseError := aDatabaseErrorObject
 ]
 
@@ -58,10 +64,11 @@ GlorpDatabaseWriteError >> initialize [
 	command := nil.
 	databaseError := nil.
 	" *** And replace this comment with additional initialization code *** "
-	^self
+	^ self
 ]
 
 { #category : #accessing }
 GlorpDatabaseWriteError >> session [
-	^command session.
+
+	^ command session
 ]

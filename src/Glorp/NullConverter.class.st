@@ -4,15 +4,17 @@ This is a no-op converter. When converting in either direction, it just returns 
 Class {
 	#name : #NullConverter,
 	#superclass : #DatabaseConverter,
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #converting }
 NullConverter >> convert: anObject fromDatabaseRepresentationAs: aDatabaseType [
-	^anObject.
+
+	^ anObject
 ]
 
 { #category : #converting }
 NullConverter >> convert: anObject toDatabaseRepresentationAs: aDatabaseType [
-	^anObject.
+
+	^ anObject
 ]

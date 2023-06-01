@@ -9,7 +9,7 @@ Instance Variables:
 Class {
 	#name : #UniqueConstraint,
 	#superclass : #DatabaseTableConstraint,
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #'*Glorp' }
@@ -67,12 +67,13 @@ UniqueConstraint >> matchesUniqueConstraint: aConstraint [
 ]
 
 { #category : #printing }
-UniqueConstraint >> printForConstraintNames: aCollection on: aStream maxLength: maxLength [ 
+UniqueConstraint >> printForConstraintNames: aCollection on: aStream maxLength: maxLength [
+
 	| constraintName |
 	constraintName := self table name.
 	aCollection do:
 		[:each | constraintName := constraintName, each name].
-	constraintName size > maxLength 
+	constraintName size > maxLength
 		ifTrue: [constraintName := constraintName copyFrom: 1 to: maxLength].
 	aStream nextPutAll: constraintName
 ]

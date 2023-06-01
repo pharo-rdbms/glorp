@@ -13,23 +13,27 @@ Class {
 
 { #category : #'*Glorp' }
 SQLStringCommand class >> for: aString [
-	^self new setSQLString: aString.
+
+	^ self new setSQLString: aString
 ]
 
 { #category : #accessing }
 SQLStringCommand >> arrayBoundFields [
 	"Don't have enough information to do this, I don't think"
-	^#()
+
+	^ #(  )
 ]
 
 { #category : #accessing }
 SQLStringCommand >> bindingTypes [
-	^#()
+
+	^ #(  )
 ]
 
 { #category : #accessing }
 SQLStringCommand >> bindings [
-	^parameters.
+
+	^ parameters
 ]
 
 { #category : #initialization }
@@ -37,35 +41,40 @@ SQLStringCommand >> initialize [
 
 	super initialize.
 	maximumBlobSizeToRetrieveDirectly := super maximumLobSizeToRetrieveDirectly.
-	parameters := #()
+	parameters := #(  )
 ]
 
 { #category : #accessing }
 SQLStringCommand >> maximumLobSizeToRetrieveDirectly [
-	^maximumBlobSizeToRetrieveDirectly
+
+	^ maximumBlobSizeToRetrieveDirectly
 ]
 
 { #category : #accessing }
 SQLStringCommand >> maximumLobSizeToRetrieveDirectly: anInteger [
+
 	maximumBlobSizeToRetrieveDirectly := anInteger
 ]
 
 { #category : #accessing }
 SQLStringCommand >> parameterTypeSignature [
-	^''
+
+	^ ''
 ]
 
 { #category : #accessing }
 SQLStringCommand >> parameters [
-	^parameters.
+
+	^ parameters
 ]
 
 { #category : #accessing }
 SQLStringCommand >> parameters: anArray [
+
 	parameters := anArray
 ]
 
-{ #category : #executing }
+{ #category : #printing }
 SQLStringCommand >> printSQL [
 	" *** This method was defined by Glorp.DatabaseCommand as a subclass responsibility.
 	Replace its body with a proper implementation. *** "
@@ -75,7 +84,8 @@ SQLStringCommand >> printSQL [
 
 { #category : #accessing }
 SQLStringCommand >> setSQLString: aString [
-	sqlString := aString.
+
+	sqlString := aString
 ]
 
 { #category : #testing }

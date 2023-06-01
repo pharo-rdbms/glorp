@@ -3,11 +3,11 @@ Extension { #name : #DatabaseTable }
 { #category : #'*Glorp' }
 DatabaseTable class >> named: aString [
 
-	^self new name: aString.
+	^ self new name: aString
 ]
 
 { #category : #'*Glorp' }
 DatabaseTable class >> new [
 
-	^super new initialize.
+	^ super new initialize
 ]

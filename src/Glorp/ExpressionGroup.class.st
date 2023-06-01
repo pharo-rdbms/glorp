@@ -10,31 +10,34 @@ Class {
 	#instVars : [
 		'children'
 	],
-	#category : 'Glorp-Expressions'
+	#category : #'Glorp-Expressions'
 }
 
 { #category : #'instance creation' }
 ExpressionGroup class >> with: anExpression [
 
-	^(self new) 
+	^ (self new)
 		add: anExpression
 ]
 
 { #category : #accessing }
 ExpressionGroup >> add: anExpression [
+
 	anExpression isNil ifTrue: [^self].
-	children add: anExpression.
+	children add: anExpression
 ]
 
 { #category : #accessing }
 ExpressionGroup >> addAll: anExpressionCollection [
-	anExpressionCollection isNil ifTrue: [^self].
-	children addAll: anExpressionCollection.
+
+	anExpressionCollection isNil ifTrue: [^self].	
+	children addAll: anExpressionCollection
 ]
 
 { #category : #accessing }
 ExpressionGroup >> children [
-	^children.
+
+	^ children
 ]
 
 { #category : #iterating }
@@ -43,37 +46,41 @@ ExpressionGroup >> do: aBlock skipping: aSet [
 
 	(aSet includes: self) ifTrue: [^self].
 	aSet add: self.
-	children do: 	[:each | each do: aBlock skipping: aSet].
-	aBlock value: self.
+	children do: [:each | each do: aBlock skipping: aSet].
+	aBlock value: self
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 ExpressionGroup >> initialize [
+
 	super initialize.
 	children := OrderedCollection new.
 ]
 
 { #category : #accessing }
 ExpressionGroup >> isEmpty [
-	^self size = 0.
+
+	^ self size = 0
 ]
 
 { #category : #printing }
 ExpressionGroup >> printTreeOn: aStream [
 
-	children do: [:each |
+	children do: [ :each |
 		aStream nextPut: $(.
 		each printOn: aStream.
 		aStream nextPut: $).
-		aStream cr].
+		aStream cr ]
 ]
 
 { #category : #accessing }
 ExpressionGroup >> queryLevelBaseExpression [
-	^nil.
+
+	^ nil
 ]
 
 { #category : #accessing }
 ExpressionGroup >> size [
-	^children size.
+
+	^ children size
 ]

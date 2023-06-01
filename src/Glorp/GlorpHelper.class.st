@@ -4,12 +4,13 @@ This is a helper class for methods that I'd like to be able to add as extensions
 Class {
 	#name : #GlorpHelper,
 	#superclass : #Object,
-	#category : 'Glorp-Exceptions'
+	#category : #'Glorp-Exceptions'
 }
 
 { #category : #classes }
 GlorpHelper class >> dialect [
 	"Provide a way to refer to the dialect class from an extension or class that doesn't include the Glorp namespace, while still avoiding explicit namespace imports (which confuse other dialects when the 'pool dictionaries' don't exist)."
+
 	| glorpNamespace |
 	glorpNamespace := Smalltalk at: #Glorp ifAbsent: [nil].
 	^((glorpNamespace isNil ifTrue: [Smalltalk] ifFalse: [glorpNamespace]) at: #Dialect ifAbsent: [Smalltalk at: #Dialect])
@@ -30,7 +31,8 @@ GlorpHelper class >> do: aBlock for: aCollection separatedBy: separatorBlock [
 
 { #category : #'*Glorp' }
 GlorpHelper class >> glorpConstantExpressionClass [
-	^self dialect glorpConstantExpressionClass
+
+	^ self dialect glorpConstantExpressionClass
 ]
 
 { #category : #helpers }
@@ -47,8 +49,8 @@ GlorpHelper class >> print: printBlock on: stream for: aCollection separatedBy: 
 { #category : #helpers }
 GlorpHelper class >> separate: aCollection by: aOneArgumentBlock [
 
-	^aCollection inject: Dictionary new into: [:dict :each |
-		| val |
-		val := aOneArgumentBlock value: each.
-		(dict at: val ifAbsentPut: [OrderedCollection new]) add: each]
+	^ aCollection inject: Dictionary new into: [ :dict :each |
+		  | val |
+		  val := aOneArgumentBlock value: each.
+		  (dict at: val ifAbsentPut: [ OrderedCollection new ]) add: each ]
 ]

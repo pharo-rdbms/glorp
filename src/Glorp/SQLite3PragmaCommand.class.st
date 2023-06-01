@@ -4,10 +4,10 @@ Pragma command for SQL3
 Class {
 	#name : #SQLite3PragmaCommand,
 	#superclass : #SQLStringSelectCommand,
-	#category : 'Glorp-Core'
+	#category : #'Glorp-Core'
 }
 
-{ #category : #sql }
+{ #category : #printing }
 SQLite3PragmaCommand >> printSQL [
 
 	stream nextPutAll: 'PRAGMA '.

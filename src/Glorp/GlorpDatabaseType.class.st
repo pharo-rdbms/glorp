@@ -87,12 +87,12 @@ GlorpDatabaseType >> generatesOverExistingValues [
 
 { #category : #SQL }
 GlorpDatabaseType >> glorpPrintSQLOn: aCommand [
-	aCommand nextPutAll: self typeString.
+	aCommand nextPutAll: self typeString
 ]
 
 { #category : #SQL }
 GlorpDatabaseType >> glorpPrintSelectSQLOn: aCommand [
-	self printSelectSQLOn: aCommand withParameters: #().
+	self printSelectSQLOn: aCommand withParameters: #()
 ]
 
 { #category : #testing }
@@ -207,17 +207,17 @@ GlorpDatabaseType >> precision: anInteger [
 	^self error: ((self class name asString), ' is not a variable precision type.')
 ]
 
-{ #category : #SQL }
+{ #category : #printing }
 GlorpDatabaseType >> print: aValue on: aStream [
 	aValue glorpPrintSQLOn: aStream.
 ]
 
-{ #category : #SQL }
+{ #category : #printing }
 GlorpDatabaseType >> printCollection: aCollection on: aStream [
 	aCollection glorpPrintSQLOn: aStream for: self.
 ]
 
-{ #category : #SQL }
+{ #category : #printing }
 GlorpDatabaseType >> printNullCastOn: aStream [
 	"Some platforms, eg., DB2, need to cast NULL for collections, as in
 	SELECT ... WHERE ... IN (CAST(NULL AS type))."
@@ -230,7 +230,7 @@ GlorpDatabaseType >> printNullCastOn: aStream [
 	expr printSelectSQLOn: aStream withParameters: #()
 ]
 
-{ #category : #SQL }
+{ #category : #printing }
 GlorpDatabaseType >> printSelectSQLOn: aCommand withParameters: aDictionary [
 	aCommand nextPutAll: self typeString.
 ]

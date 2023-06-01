@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'session'
 	],
-	#category : 'Glorp-Core'
+	#category : #'Glorp-Core'
 }
 
 { #category : #'*Glorp' }
@@ -101,7 +101,7 @@ PersistentObject >> = anObject [
 
 	| descriptor myKey |
 	self class = anObject yourSelf class ifFalse: [^false].
-	descriptor := self descriptor.	
+	descriptor := self descriptor.
 
 	"If the primary keys aren't equal, then we know for sure we are unequal. Otherwise we have to check further."
 	myKey := descriptor primaryKeyCollectionFor: self.
@@ -109,9 +109,9 @@ PersistentObject >> = anObject [
 		ifFalse: [^false].
 
 	"If the primary key contains nils, then fall back to the default equality comparison. If they don't, and are equal, then the objects are equal."
-	^(myKey includes: nil) 
+	^(myKey includes: nil)
 		ifTrue: [super = anObject yourSelf]
-		ifFalse: [true].
+		ifFalse: [true]
 ]
 
 { #category : #actions }
@@ -217,11 +217,13 @@ PersistentObject >> rollbackUnitOfWork [
 
 { #category : #accessing }
 PersistentObject >> session [
-	session isNil ifTrue: [session := self class getSession].
-	^session.
+
+	session isNil ifTrue: [ session := self class getSession ].
+	^ session
 ]
 
 { #category : #accessing }
 PersistentObject >> session: aGlorpSession [
+
 	session := aGlorpSession
 ]

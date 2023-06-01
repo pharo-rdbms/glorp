@@ -14,30 +14,35 @@ Class {
 		'attributeNames',
 		'readableMappings'
 	],
-	#category : 'Glorp-Exceptions'
+	#category : #'Glorp-Exceptions'
 }
 
 { #category : #accessing }
 MultipleMappingsForInstanceVariable >> attributeNames [
-	^attributeNames
+
+	^ attributeNames
 ]
 
 { #category : #accessing }
 MultipleMappingsForInstanceVariable >> attributeNames: anObject [
+
 	attributeNames := anObject
 ]
 
 { #category : #accessing }
 MultipleMappingsForInstanceVariable >> messageText [
-	^'Multiple readable mappings for one instance variable:<1s>' expandMacrosWith: self readableMappings  printString
+
+	^'Multiple readable mappings for one instance variable:<1s>' expandMacrosWith: self readableMappings printString
 ]
 
 { #category : #accessing }
 MultipleMappingsForInstanceVariable >> readableMappings [
-	^readableMappings
+
+	^ readableMappings
 ]
 
 { #category : #accessing }
 MultipleMappingsForInstanceVariable >> readableMappings: anObject [
+
 	readableMappings := anObject
 ]

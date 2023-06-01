@@ -12,21 +12,24 @@ Class {
 	#instVars : [
 		'expectedTables'
 	],
-	#category : 'Glorp-Exceptions'
+	#category : #'Glorp-Exceptions'
 }
 
 { #category : #accessing }
 NoTableFound >> expectedTables [
-	^expectedTables
+
+	^ expectedTables
 ]
 
 { #category : #accessing }
 NoTableFound >> expectedTables: aCollection [
+
 	expectedTables := aCollection
 ]
 
 { #category : #accessing }
 NoTableFound >> messageText [
+
 	messageText ifNotNil: [^messageText].
 	self model isString ifTrue: [^'No table <1s> found' expandMacrosWith: self model].
 	^'No table found for <1s>, expected to see one of  <2s>' expandMacrosWith: self model name with: self expectedTables printString
@@ -34,5 +37,6 @@ NoTableFound >> messageText [
 
 { #category : #printing }
 NoTableFound >> printOn: aStream [
+
 	aStream nextPutAll: self messageText
 ]

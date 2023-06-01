@@ -14,7 +14,7 @@ Instance Variables
 Class {
 	#name : #DB2Sequence,
 	#superclass : #OracleSequence,
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #private }
@@ -34,13 +34,13 @@ DB2Sequence >> backupReserveCommand: anInteger in: aSession [
 	command setSQLString: stream contents.
 	command parameters: (Array with: anInteger).
 	command session: aSession.
-	^command.
+	^ command
 ]
 
 { #category : #public }
 DB2Sequence >> creationString [
 
-	^'create sequence ', self qualifiedName.
+	^ 'create sequence ', self qualifiedName
 ]
 
 { #category : #accessing }
@@ -52,12 +52,13 @@ DB2Sequence >> name: aString [
 DB2Sequence >> nextSequenceNumberSelectString [
 	"Using SYSIBM is not ideal because it's supposed to be internal, but it seems to be accepted."
 
-	^'SELECT NEXT VALUE FOR ' , self qualifiedName , ' FROM SYSIBM.SYSDUMMY1'
+	^ 'SELECT NEXT VALUE FOR ', self qualifiedName, ' FROM SYSIBM.SYSDUMMY1'
 ]
 
 { #category : #SQL }
 DB2Sequence >> tableSelectCommandFor: aTable in: aSession reserving: anInteger [
 	"Don't bind the number in the fetch first nn clause."
+
 	| stream |
 	(tableSelectCommand notNil and: [tableSelectCommand parameters includes: anInteger]) ifFalse:
 			[stream := WriteStream on: (String new: 200).
@@ -73,5 +74,5 @@ DB2Sequence >> tableSelectCommandFor: aTable in: aSession reserving: anInteger [
 			tableSelectCommand setSQLString: stream contents.
 			tableSelectCommand blockFactor: anInteger.
 			tableSelectCommand session: aSession].
-	^tableSelectCommand.
+	^tableSelectCommand
 ]

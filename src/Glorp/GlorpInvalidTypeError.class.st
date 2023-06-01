@@ -14,30 +14,35 @@ Class {
 		'object',
 		'expectedType'
 	],
-	#category : 'Glorp-Exceptions'
+	#category : #'Glorp-Exceptions'
 }
 
 { #category : #accessing }
 GlorpInvalidTypeError >> defaultMessageText [
-	^'Object being written does not match the type of the attribute: ''', self object printString,  ''' ~= ''' , self expectedType printString, ''''.
+
+	^'Object being written does not match the type of the attribute: ''', self object printString,  ''' ~= ''' , self expectedType printString, ''''
 ]
 
 { #category : #accessing }
 GlorpInvalidTypeError >> expectedType [
-	^expectedType
+
+	^ expectedType
 ]
 
 { #category : #accessing }
 GlorpInvalidTypeError >> expectedType: aGlorpClassModel [
+
 	expectedType := aGlorpClassModel
 ]
 
 { #category : #accessing }
 GlorpInvalidTypeError >> object [
-	^object
+
+	^ object
 ]
 
 { #category : #accessing }
 GlorpInvalidTypeError >> object: anObject [
+
 	object := anObject
 ]

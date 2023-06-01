@@ -13,27 +13,29 @@ Class {
 	#instVars : [
 		'argumentTypes'
 	],
-	#category : 'Glorp-Expressions'
+	#category : #'Glorp-Expressions'
 }
 
-{ #category : #'As yet unclassified' }
-IIF >> argumentTypes: anArray [ 
-	argumentTypes := anArray.
+{ #category : #accessing }
+IIF >> argumentTypes: anArray [
+
+	argumentTypes := anArray
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 IIF >> initialize [
+
 	super initialize.
 	function := 'IIF'.
 	separator := ' '.
-	argumentTypes := OrderedCollection new: 3.
+	argumentTypes := OrderedCollection new: 3
 ]
 
 { #category : #printing }
 IIF >> printBasicSQLOn: aStream withParameters: aDictionary forSelect: aBoolean [
 	"Example: IIF(Condition, ReturnIfTrue, ReturnIfValue)
 		IIF ( base? = arg1, arg2, arg3 ) AS alias"
-	
+
 	aStream
 		nextPutAll: 'IIF( '.
 	aBoolean

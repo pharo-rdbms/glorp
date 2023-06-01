@@ -4,7 +4,7 @@ This implements SQL Server sequences, which aren't really sequences at all, but 
 Class {
 	#name : #SQLServerSequence,
 	#superclass : #NamedSequence,
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #sequencing }
@@ -13,14 +13,16 @@ SQLServerSequence >> getSequenceValueFromDatabaseFor: aField in: aRow using: aSe
 
 { #category : #testing }
 SQLServerSequence >> isIdentityColumn [
-	^true.
+
+	^ true
 ]
 
 { #category : #sequencing }
-SQLServerSequence >> postWriteAssignSequenceValueFor: aDatabaseField in: aDatabaseRow using: anAccessor [ 
-	aDatabaseRow at: aDatabaseField
-		put: ((anAccessor 
-				executeSQLString: 'SELECT @@IDENTITY') first at: 1).
+SQLServerSequence >> postWriteAssignSequenceValueFor: aDatabaseField in: aDatabaseRow using: anAccessor [
+
+	aDatabaseRow
+		at: aDatabaseField
+		put: ((anAccessor executeSQLString: 'SELECT @@IDENTITY') first at: 1)
 ]
 
 { #category : #sequencing }

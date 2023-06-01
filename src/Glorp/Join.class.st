@@ -148,7 +148,7 @@ Join >> additionalExpressionsIn: aQuery [
 { #category : #accessing }
 Join >> allControlledTables [
 
-	^self allTables.
+	^ self allTables
 ]
 
 { #category : #accessing }
@@ -166,8 +166,9 @@ Join >> allTables [
 { #category : #preparing }
 Join >> allTablesToPrint [
 
-	^targets inject: Set new into: [:sum :each | 
-		sum add: each table. sum].
+	^ targets inject: Set new into: [ :sum :each |
+		  sum add: each table.
+		  sum ]
 ]
 
 { #category : #accessing }
@@ -176,7 +177,7 @@ Join >> allTargetFields [
 	^targets
 ]
 
-{ #category : #converting }
+{ #category : #preparing }
 Join >> asExpressionJoiningSource: source toTarget: target [
 	"Create a general expression which represents this relationship where the values of the targets (which are normally parameters) are supplied out of the context provided by 'target' and the source fields are referencing things out of the context of source. Produces something suitable for ANDing into an expression when doing a join
    Example: If we had CUSTOMER.ADDRESS_ID = ADDRESS.ID as a parameter, and we want to AND this into an expression [:customer | customer address street = 'Main'] then we have customer as a base, and we get 

@@ -39,117 +39,137 @@ DatabaseCommand class >> new [
 
 { #category : #accessing }
 DatabaseCommand >> arrayBoundFields [
+
 	self subclassResponsibility
 ]
 
 { #category : #accessing }
 DatabaseCommand >> bindingTypes [
-	self subclassResponsibility.
+
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 DatabaseCommand >> bindings [
-	self subclassResponsibility.
+
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 DatabaseCommand >> blockFactor [
-	^5  "A reasonable default if we don't know"
+
+	^ 5 "A reasonable default if we don't know"
 ]
 
 { #category : #testing }
 DatabaseCommand >> canBind: aValue to: aType [
-	useBinding ifFalse: [^false].
-	^self platform canBind: aValue to: aType underlyingType.
+
+	useBinding ifFalse: [ ^ false ].
+	^ self platform canBind: aValue to: aType underlyingType
 ]
 
 { #category : #'stream behaviour' }
 DatabaseCommand >> contents [
-	^stream contents.
+
+	^ stream contents
 ]
 
 { #category : #'stream behaviour' }
 DatabaseCommand >> cr [
-	stream cr.
+
+	stream cr
 ]
 
 { #category : #executing }
 DatabaseCommand >> executeBoundIn: anAccessor [
-	^anAccessor executeCommandBound: self.
+
+	^ anAccessor executeCommandBound: self
 ]
 
 { #category : #executing }
 DatabaseCommand >> executeUnboundIn: anAccessor [
-	^anAccessor executeCommandUnbound: self.
+
+	^ anAccessor executeCommandUnbound: self
 ]
 
 { #category : #testing }
 DatabaseCommand >> hasMultipleRows [
-	^false.
+
+	^ false
 ]
 
 { #category : #initialization }
 DatabaseCommand >> initialize [
+
 	useBinding := true.
-	stream := WriteStream on: (String new: 100).
+	stream := WriteStream on: (String new: 100)
 ]
 
 { #category : #testing }
 DatabaseCommand >> isDeleteCommand [
 
-	^false
+	^ false
 ]
 
 { #category : #testing }
 DatabaseCommand >> isReadCommand [
-	^false.
+
+	^ false
 ]
 
 { #category : #accessing }
 DatabaseCommand >> maximumLobSizeToRetrieveDirectly [
-	^32768.
+
+	^ 32768
 ]
 
 { #category : #testing }
-DatabaseCommand >> needsRowCount [ 
+DatabaseCommand >> needsRowCount [
 
-	^false.
+	^ false
 ]
 
 { #category : #'stream behaviour' }
 DatabaseCommand >> nextPut: aCharacter [
-	^stream nextPut: aCharacter.
+
+	^ stream nextPut: aCharacter
 ]
 
 { #category : #'stream behaviour' }
 DatabaseCommand >> nextPutAll: aString [
-	^stream nextPutAll: aString.
+
+	^ stream nextPutAll: aString
 ]
 
 { #category : #'stream behaviour' }
 DatabaseCommand >> nextPutString: aString [
-	^self nextPutAll: aString.
+
+	^ self nextPutAll: aString
 ]
 
 { #category : #accessing }
 DatabaseCommand >> parameterTypeSignature [
-	self subclassResponsibility.
+
+	self subclassResponsibility
 ]
 
 { #category : #'As yet unclassified' }
 DatabaseCommand >> platform [
-	self session isNil ifTrue: [^nil].
-	^self session platform.
+
+	self session isNil ifTrue: [ ^ nil ].
+	^ self session platform
 ]
 
 { #category : #accessing }
 DatabaseCommand >> platform: aDatabasePlatform [
-	self error: 'This API is obsolete. Pass the session instead'.
+
+	self error: 'This API is obsolete. Pass the session instead'
 ]
 
 { #category : #'stream behaviour' }
 DatabaseCommand >> policy [
-	^stream policy.
+
+	^ stream policy
 ]
 
 { #category : #'stream behaviour' }
@@ -158,75 +178,88 @@ DatabaseCommand >> print: anObject [
 	anObject printOn: self
 ]
 
-{ #category : #executing }
+{ #category : #printing }
 DatabaseCommand >> printSQL [
-	self subclassResponsibility.
+
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 DatabaseCommand >> query [
-	^nil.
+
+	^ nil
 ]
 
 { #category : #accessing }
 DatabaseCommand >> session [
-	^session.
+
+	^ session
 ]
 
 { #category : #'As yet unclassified' }
 DatabaseCommand >> session: aGlorpSession [
-	session := aGlorpSession.
+
+	session := aGlorpSession
 ]
 
 { #category : #testing }
 DatabaseCommand >> shouldUseGroupWriting [
-	^(self hasMultipleRows and: [self platform supportsGroupWritingFor: self])
+
+	^ self hasMultipleRows and: [
+		  self platform supportsGroupWritingFor: self ]
 ]
 
 { #category : #accessing }
 DatabaseCommand >> signature [
-	^self sqlString, self parameterTypeSignature.
+
+	^ self sqlString , self parameterTypeSignature
 ]
 
 { #category : #'stream behaviour' }
 DatabaseCommand >> space [
-	stream space.
+
+	stream space
 ]
 
 { #category : #accessing }
 DatabaseCommand >> sqlString [
+
 	sqlString isNil ifTrue: [
-		stream isNil ifTrue: [stream := WriteStream on: (String new: 100)].
+		stream isNil ifTrue: [ stream := WriteStream on: (String new: 100) ].
 		self printSQL.
 		sqlString := stream contents.
-		stream := nil].
-	^sqlString.
+		stream := nil ].
+	^ sqlString
 ]
 
 { #category : #testing }
 DatabaseCommand >> succeeded [
 
-	^self subclassResponsibility.
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
 DatabaseCommand >> system [
-	self session isNil ifTrue: [^nil].
-	^self session system.
+
+	self session isNil ifTrue: [ ^ nil ].
+	^ self session system
 ]
 
 { #category : #reporting }
 DatabaseCommand >> tables [
 	"Return a list of the tables we will affect"
-	^self subclassResponsibility.
+
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
 DatabaseCommand >> useBinding [
-	^useBinding
+
+	^ useBinding
 ]
 
 { #category : #accessing }
 DatabaseCommand >> useBinding: aBoolean [
+
 	useBinding := aBoolean
 ]

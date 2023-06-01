@@ -79,93 +79,108 @@ RelationExpression >> asExpressionJoiningSource: source toTarget: target [
 
 { #category : #converting }
 RelationExpression >> asField [
-	^self
+
+	^ self
 ]
 
 { #category : #converting }
 RelationExpression >> asGeneralGlorpExpression [
 	"Convert the result to a general (tree-format) expression, if it's the more limited join expression."
+
 	| result |
 	result := self copy.
 	result leftChild: leftChild asGeneralGlorpExpression.
 	result rightChild: rightChild asGeneralGlorpExpression.
-	^result.
+	^ result
 ]
 
 { #category : #converting }
 RelationExpression >> asGeneralGlorpExpressionWithFields [
 	"Convert the result to a general (tree-format) expression, if it's the more limited join expression."
+
 	| result |
 	result := self copy.
 	result leftChild: leftChild asGeneralGlorpExpressionWithFields.
 	result rightChild: rightChild asGeneralGlorpExpressionWithFields.
-	^result.
+	^ result
 ]
 
 { #category : #converting }
 RelationExpression >> asIndependentJoins [
-	| |
+
 	"If this is an ANDed clause, referring to two different tables split it into independent joins"
-	relation == #AND ifFalse: [^Array with: self].
-	leftChild tablesForANSIJoin asSortedCollection = rightChild tablesForANSIJoin asSortedCollection
-		ifTrue: [^Array with: self].
-	^(Array with: leftChild with: rightChild) inject: OrderedCollection new into: [:sum :each |
-		sum addAll: each asIndependentJoins. sum].
+	relation == #AND ifFalse: [ ^ Array with: self ].
+	leftChild tablesForANSIJoin asSortedCollection
+	= rightChild tablesForANSIJoin asSortedCollection ifTrue: [
+		^ Array with: self ].
+	^ (Array with: leftChild with: rightChild)
+		  inject: OrderedCollection new
+		  into: [ :sum :each |
+			  sum addAll: each asIndependentJoins.
+			  sum ]
 ]
 
 { #category : #converting }
 RelationExpression >> asJoin [
+
 	| leftField rightField |
 	leftField := self leftChild field.
 	rightField := self rightChild field.
-	(leftField notNil and: [rightField notNil]) ifTrue: [^Join from: leftField to: rightField].
-	^leftChild asJoin, rightChild asJoin.
+	(leftField notNil and: [ rightField notNil ]) ifTrue: [
+		^ Join from: leftField to: rightField ].
+	^ leftChild asJoin , rightChild asJoin
 ]
 
 { #category : #'As yet unclassified' }
 RelationExpression >> assembleCompositePrimaryKeyFrom: anArray and: anotherArray [
 	"The arrays will be the same size, and if both have non-nil values in a given slot, those values will be the same.  This is caused by the calling method; the array is the size the table's compiosite primary key must be and the values are the values are derived from the field positions."
 
-	1 to: anotherArray size do:
-		[:index || other | other := anotherArray at: index.
-		other == DatabaseRow emptySlot ifFalse: [anArray at: index put: other]].
-	^anArray
+	1 to: anotherArray size do: [ :index |
+		| other |
+		other := anotherArray at: index.
+		other == DatabaseRow emptySlot ifFalse: [
+			anArray at: index put: other ] ].
+	^ anArray
 ]
 
 { #category : #accessing }
 RelationExpression >> beOuterJoin [
+
 	outerJoin := true.
 	leftChild beOuterJoin.
-	rightChild beOuterJoin.
+	rightChild beOuterJoin
 ]
 
 { #category : #preparing }
 RelationExpression >> bindingIn: aCommand [
 
-	^self convertValueOf: rightChild in: aCommand parameters.
+	^ self convertValueOf: rightChild in: aCommand parameters
 ]
 
 { #category : #preparing }
 RelationExpression >> bindingType [
 	"If we're to be used for binding, return the field type to be bound to"
 
-	^self leftChild bindingType.
+	^ self leftChild bindingType
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 RelationExpression >> canHaveBase [
 	"Return true if this type of expression can have a base expression on which other things can be built. Doesn't say whether we actually have a valid one or not."
-	^true.
+
+	^ true
 ]
 
 { #category : #'As yet unclassified' }
 RelationExpression >> canUseBinding [
 	"Return true if we can use binding for our right child's value"
-	^self expectsCollectionArgument not.
+
+	^ self expectsCollectionArgument not
 ]
 
 { #category : #preparing }
 RelationExpression >> condenseBooleanEquality [
+
 	(relation = #AND | (relation = #OR)) ifFalse: [^self].
 	(leftChild isGlorpExpression and: [leftChild isConstantExpression])
 		ifTrue: [
@@ -180,13 +195,14 @@ RelationExpression >> condenseBooleanEquality [
 			(relation = #OR and: [rightChild value = true]) ifTrue: [^rightChild].
 			(relation = #OR and: [rightChild value = false]) ifTrue: [^leftChild]].
 
-	^self.
+	^self
 ]
 
 { #category : #preparing }
 RelationExpression >> condenseBooleanEqualityExpressions [
+
 	leftChild := leftChild condenseBooleanEquality.
-	rightChild := rightChild condenseBooleanEquality.
+	rightChild := rightChild condenseBooleanEquality
 ]
 
 { #category : #preparing }
@@ -219,80 +235,90 @@ RelationExpression >> condensePrimaryKeyComparison [
 { #category : #preparing }
 RelationExpression >> condensePrimaryKeyComparisons [
 	"Because we're replacing the expression, we need to do it at the parent and replace the previous child"
+
 	leftChild := leftChild condensePrimaryKeyComparison.
-	rightChild := rightChild condensePrimaryKeyComparison.
+	rightChild := rightChild condensePrimaryKeyComparison
 ]
 
 { #category : #iterating }
 RelationExpression >> convertValueOf: anObject in: aDictionary [
+
 	| translated convertedValue |
-	translated := anObject isGlorpExpression 
-		ifTrue: [anObject valueIn: aDictionary]
-		ifFalse: [anObject].
-	translated isGlorpExpression ifTrue: [^translated].
-	convertedValue := self expectsCollectionArgument 
-		ifTrue: [translated collect: [:each | self leftChild convertedDbValueOf: each]]
-		ifFalse: [self leftChild convertedDbValueOf: translated].
-	^convertedValue.
+	translated := anObject isGlorpExpression
+		              ifTrue: [ anObject valueIn: aDictionary ]
+		              ifFalse: [ anObject ].
+	translated isGlorpExpression ifTrue: [ ^ translated ].
+	convertedValue := self expectsCollectionArgument
+		                  ifTrue: [
+			                  translated collect: [ :each |
+				                  self leftChild convertedDbValueOf: each ] ]
+		                  ifFalse: [
+		                  self leftChild convertedDbValueOf: translated ].
+	^ convertedValue
 ]
 
 { #category : #'As yet unclassified' }
 RelationExpression >> convertedDbValueOf: anObject [
 	"Assume that our types match, so we can ask either child to do the conversion. That isn't guaranteed, but should at least work for the common cases."
-	^leftChild convertedDbValueOf: anObject.
+
+	^ leftChild convertedDbValueOf: anObject
 ]
 
 { #category : #copying }
 RelationExpression >> createFor: arguments withBase: anExpression symbol: aSymbol [
 	"Create a copy of our expression with the given parameters. Used in function creation, for 'functions' like isNil that really just turn into relations."
 
-	^self class
-		named: relation
-		basedOn: anExpression
-		withArguments: (Array with: rightChild).
+	^ self class
+		  named: relation
+		  basedOn: anExpression
+		  withArguments: (Array with: rightChild)
 ]
 
 { #category : #iterating }
 RelationExpression >> do: aBlock skipping: aSet [
+
 	| clauses |
-	(aSet includes: self) ifTrue: [^self].
+	(aSet includes: self) ifTrue: [ ^ self ].
 	aSet add: self.
 	leftChild hasImpliedClauses
-		ifTrue:
-			[clauses := leftChild allRelationsFor: self.
-			clauses do: [:each | each do: aBlock skipping: aSet]]
-		ifFalse:
-			[leftChild do: aBlock skipping: aSet.
+		ifTrue: [
+			clauses := leftChild allRelationsFor: self.
+			clauses do: [ :each | each do: aBlock skipping: aSet ] ]
+		ifFalse: [
+			leftChild do: aBlock skipping: aSet.
 			rightChild do: aBlock skipping: aSet.
-			aBlock value: self.].
+			aBlock value: self ]
 ]
 
 { #category : #'As yet unclassified' }
 RelationExpression >> expectsCollectionArgument [
-	^self relationsWithCollectionArguments includes: relation.
+
+	^ self relationsWithCollectionArguments includes: relation
 ]
 
 { #category : #converting }
 RelationExpression >> generalExpressionPart [
+
 	| left right |
 	left := leftChild generalExpressionPart.
 	right := rightChild generalExpressionPart.
-	(left isNil and: [right isNil]) ifTrue: [^nil].
-	left isNil ifTrue: [^right].
-	right isNil ifTrue: [^left].
-	^self.
+	(left isNil and: [ right isNil ]) ifTrue: [ ^ nil ].
+	left isNil ifTrue: [ ^ right ].
+	right isNil ifTrue: [ ^ left ].
+	^ self
 ]
 
 { #category : #api }
 RelationExpression >> get: aSymbol withArguments: anArray [
 	"We treat NOT as a function, so we have to check for functions here"
+
 	| functionExpression |
 	functionExpression := self getFunction: aSymbol withArguments: anArray.
 	functionExpression isNil ifFalse: [^functionExpression].
 	^anArray size = 1
 		ifTrue: [RelationExpression named: aSymbol basedOn: self withArguments: anArray]
 		ifFalse: ["This is either an error, or something defined as a selector on relation expressions"
-			self perform: aSymbol withArguments: anArray.].
+			self perform: aSymbol withArguments: anArray.]
 ]
 
 { #category : #preparing }
@@ -300,42 +326,51 @@ RelationExpression >> hasBindableExpressionsIn: aCommand [
 	"Return true if our right-child can be used for binding. We need to do this at this level because the expressions themselves don't know what type they'll be matched against"
 
 	| translated |
-	rightChild canBind ifFalse: [^false].
+	rightChild canBind ifFalse: [ ^ false ].
 	translated := self convertValueOf: rightChild in: aCommand parameters.
-	^self useBindingFor: translated to: leftChild field type in: aCommand.
+	^ self
+		  useBindingFor: translated
+		  to: leftChild field type
+		  in: aCommand
 ]
 
 { #category : #accessing }
 RelationExpression >> isOuterJoin [
-	outerJoin isNil ifTrue: [outerJoin := false].
-	^outerJoin.
+
+	outerJoin isNil ifTrue: [ outerJoin := false ].
+	^ outerJoin
 ]
 
 { #category : #accessing }
 RelationExpression >> leftChild [
-	^leftChild
+
+	^ leftChild
 ]
 
 { #category : #accessing }
-RelationExpression >> leftChild: anExpression [ 
+RelationExpression >> leftChild: anExpression [
+
 	leftChild := anExpression
 ]
 
 { #category : #iterating }
 RelationExpression >> mappableSourceFieldsDo: aBlock [
 	"Used when we are emulating a Join"
-	self allSourceFields do: [:source |
-		source isMappable ifTrue: [aBlock value: source]].
+
+	self allSourceFields do: [ :source |
+		source isMappable ifTrue: [ aBlock value: source ] ]
 ]
 
 { #category : #mapping }
 RelationExpression >> mappedFields [
-	^Array with: self
+
+	^ Array with: self
 ]
 
 { #category : #mapping }
 RelationExpression >> mappedFieldsCount [
-	^1
+
+	^ 1
 ]
 
 { #category : #'private/initializing' }
@@ -347,14 +382,21 @@ RelationExpression >> named: aSymbol basedOn: anExpression withArguments: anArra
 	leftChild := anExpression.
 
 	"The only time we don't expect anExpression to have a base is if it's a constant, in which case the other side should be a variable expression and thus have a base."
-	base := anExpression canHaveBase ifTrue: [anExpression ultimateBaseExpression] ifFalse: [anArray first ultimateBaseExpression].
+	base := anExpression canHaveBase
+		        ifTrue: [ anExpression ultimateBaseExpression ]
+		        ifFalse: [ anArray first ultimateBaseExpression ].
 	right := anArray first.
-	right isGlorpExpression ifFalse: [rightChild := right asGlorpExpressionOn: base. ^self].
+	right isGlorpExpression ifFalse: [
+		rightChild := right asGlorpExpressionOn: base.
+		^ self ].
 	rightBase := right ultimateBaseExpression.
 	rightChild := rightBase ~= base
-		ifTrue: [
-			right asGlorpExpressionOn: ((rightBase notNil and: [rightBase hasDescriptor]) ifTrue: ["Correlated subselect" rightBase] ifFalse: [base])]
-		ifFalse: [right].
+		              ifTrue: [
+			              right asGlorpExpressionOn:
+				              ((rightBase notNil and: [ rightBase hasDescriptor ])
+					               ifTrue: [ "Correlated subselect" rightBase ]
+					               ifFalse: [ base ]) ]
+		              ifFalse: [ right ]
 ]
 
 { #category : #'private/initializing' }
@@ -371,18 +413,20 @@ RelationExpression >> operationFor: aSymbol [
 	 aSymbol == #in: ifTrue: [^#IN].
 	 aSymbol == #notIn: ifTrue: [^#'NOT IN'].
 
-	^aSymbol.
+	^aSymbol
 ]
 
 { #category : #accessing }
 RelationExpression >> outerJoin [
-	outerJoin isNil ifTrue: [outerJoin := false].
-	^outerJoin.
+
+	outerJoin isNil ifTrue: [ outerJoin := false ].
+	^ outerJoin
 ]
 
 { #category : #accessing }
 RelationExpression >> outerJoin: aBoolean [
-	outerJoin := aBoolean.
+
+	outerJoin := aBoolean
 ]
 
 { #category : #'As yet unclassified' }
@@ -423,18 +467,26 @@ RelationExpression >> primaryKeyFromDictionary: aDictionary [
 
 { #category : #'printing SQL' }
 RelationExpression >> printBasicSQLOn: aCommand withParameters: aDictionary [
+
 	aCommand nextPut: $(.
 	leftChild printSQLOn: aCommand withParameters: aDictionary.
-	self printComparisonTo: rightChild withParameters: aDictionary on: aCommand.
+	self
+		printComparisonTo: rightChild
+		withParameters: aDictionary
+		on: aCommand.
 	self printOracleOuterJoinOn: aCommand.
 	aCommand nextPut: $)
 ]
 
 { #category : #'printing SQL' }
 RelationExpression >> printBasicUnqualifiedSQLOn: aCommand withParameters: aDictionary [
+
 	aCommand nextPut: $(.
 	leftChild printUnqualifiedSQLOn: aCommand withParameters: aDictionary.
-	self printUnqualifiedComparisonTo: rightChild withParameters: aDictionary on: aCommand.
+	self
+		printUnqualifiedComparisonTo: rightChild
+		withParameters: aDictionary
+		on: aCommand.
 	self printOracleOuterJoinOn: aCommand.
 	aCommand nextPut: $)
 ]
@@ -464,77 +516,82 @@ RelationExpression >> printForANSIJoinTo: table on: aCommand [
 	"Print ourselves as table JOIN otherTable USING (criteria). Return the table we joined"
 
 	self outerJoin
-		ifTrue: [aCommand nextPutAll: ' LEFT OUTER JOIN ']
-		ifFalse: [aCommand nextPutAll: ' INNER JOIN '].
+		ifTrue: [ aCommand nextPutAll: ' LEFT OUTER JOIN ' ]
+		ifFalse: [ aCommand nextPutAll: ' INNER JOIN ' ].
 	aCommand nextPutAll: table sqlTableName.
 	aCommand nextPutAll: ' ON '.
 	self printSQLOn: aCommand withParameters: aCommand parameters.
-	^table.
+	^ table
 ]
 
 { #category : #'printing SQL' }
 RelationExpression >> printMicrosoftOuterJoinOn: aCommand [
-	self isOuterJoin ifFalse: [^self].
+
+	self isOuterJoin ifFalse: [ ^ self ].
 	aCommand platform useMicrosoftOuterJoins ifTrue: [
-		aCommand nextPutAll: '*'].
+		aCommand nextPutAll: '*' ]
 ]
 
 { #category : #printing }
 RelationExpression >> printOnlySelfOn: aStream [
 
-	aStream nextPutAll: relation.
+	aStream nextPutAll: relation
 ]
 
 { #category : #'printing SQL' }
 RelationExpression >> printOracleOuterJoinOn: aCommand [
-	self isOuterJoin ifFalse: [^self].
-	(self leftChild class == self class and: [self leftChild isOuterJoin]) ifTrue: [^self].
-	(self rightChild class == self class and: [self rightChild isOuterJoin]) ifTrue: [^self].
+
+	self isOuterJoin ifFalse: [ ^ self ].
+	(self leftChild class == self class and: [
+		 self leftChild isOuterJoin ]) ifTrue: [ ^ self ].
+	(self rightChild class == self class and: [
+		 self rightChild isOuterJoin ]) ifTrue: [ ^ self ].
 	aCommand platform useOracleOuterJoins ifTrue: [
-		aCommand nextPutAll: ' (+) '].
+		aCommand nextPutAll: ' (+) ' ]
 ]
 
 { #category : #'printing SQL' }
 RelationExpression >> printRelationOn: aStream [
+
 	aStream space.
 	self printMicrosoftOuterJoinOn: aStream.
-	aStream 
+	aStream
 		nextPutAll: self relation;
-		space.
+		space
 ]
 
 { #category : #'printing SQL' }
 RelationExpression >> printSQLOn: aStream withParameters: aDictionary [
+
 	self leftChild hasImpliedClauses
-		ifTrue:
-			[| impliedClauses |
+		ifTrue: [
+			| impliedClauses |
 			impliedClauses := self leftChild allRelationsFor: self.
 			impliedClauses outerJoin: self outerJoin.
-			impliedClauses
-				printSQLOn: aStream
-				withParameters: aDictionary]
-		ifFalse:
-			[self
-				printBasicSQLOn: aStream
-				withParameters: aDictionary].
+			impliedClauses printSQLOn: aStream withParameters: aDictionary ]
+		ifFalse: [
+		self printBasicSQLOn: aStream withParameters: aDictionary ]
 ]
 
 { #category : #'printing SQL' }
 RelationExpression >> printSelectSQLOn: aStream withParameters: aDictionary [
-	self printSQLOn: aStream withParameters: aDictionary.
+
+	self printSQLOn: aStream withParameters: aDictionary
 ]
 
 { #category : #'printing SQL' }
 RelationExpression >> printSimpleValueComparisonTo: value on: aStream [
+
 	value isNil
-		ifTrue: [self printWithNullOn: aStream]
-		ifFalse:
-			[self printRelationOn: aStream.
-			self printValue: value on: aStream].
+		ifTrue: [ self printWithNullOn: aStream ]
+		ifFalse: [
+			self printRelationOn: aStream.
+			self printValue: value on: aStream ]
 ]
 
 { #category : #printing }
-RelationExpression >> printTreeOn: aStream [ 
+RelationExpression >> printTreeOn: aStream [
+
 	aStream
 		print: leftChild;
 		space;
@@ -560,11 +617,12 @@ RelationExpression >> printUnqualifiedComparisonTo: value withParameters: aDicti
 		ifFalse:
 			[self
 				printSimpleValueComparisonTo: translated
-				on: aStream].
+				on: aStream]
 ]
 
 { #category : #'printing SQL' }
 RelationExpression >> printUnqualifiedSQLOn: aStream withParameters: aDictionary [
+
 	self leftChild hasImpliedClauses
 		ifTrue:
 			[| impliedClauses |
@@ -576,7 +634,7 @@ RelationExpression >> printUnqualifiedSQLOn: aStream withParameters: aDictionary
 		ifFalse:
 			[self
 				printBasicUnqualifiedSQLOn: aStream
-				withParameters: aDictionary].
+				withParameters: aDictionary]
 ]
 
 { #category : #'printing SQL' }
@@ -606,7 +664,9 @@ RelationExpression >> printWithNullOn: aStream [
 { #category : #navigating }
 RelationExpression >> queryLevelBaseExpression [
 
-	^leftChild canHaveBase ifTrue: [leftChild queryLevelBaseExpression] ifFalse: [rightChild queryLevelBaseExpression].
+	^ leftChild canHaveBase
+		  ifTrue: [ leftChild queryLevelBaseExpression ]
+		  ifFalse: [ rightChild queryLevelBaseExpression ]
 ]
 
 { #category : #preparing }
@@ -626,26 +686,32 @@ RelationExpression >> rebuildOn: aBaseExpression startingFrom: anExpression with
 { #category : #accessing }
 RelationExpression >> relation [
 
-	^relation.
+	^ relation
 ]
 
 { #category : #accessing }
 RelationExpression >> relation: aSymbol [
 
-	relation := aSymbol.
+	relation := aSymbol
 ]
 
 { #category : #'As yet unclassified' }
 RelationExpression >> relationsWithCollectionArguments [
-	^#(#IN #'NOT IN')
+
+	^ #( #IN #'NOT IN' )
 ]
 
 { #category : #preparing }
 RelationExpression >> removeNonJoinParts [
 	"Remove anything that's not an actual join. Only useful if we have something that has mixed joins and general expressions, where we assume we don't want to use the general ones, because they're not field level. Also only meaningful to remove this for ANDs and ORs, not sub-components."
-	(relation = #AND or: [relation = #OR]) ifFalse: [^self].
-	leftChild := leftChild isJoin ifTrue: [leftChild] ifFalse: [true asGlorpExpression].
-	rightChild := rightChild isJoin ifTrue: [rightChild] ifFalse: [true asGlorpExpression].
+
+	(relation = #AND or: [ relation = #OR ]) ifFalse: [ ^ self ].
+	leftChild := leftChild isJoin
+		             ifTrue: [ leftChild ]
+		             ifFalse: [ true asGlorpExpression ].
+	rightChild := rightChild isJoin
+		              ifTrue: [ rightChild ]
+		              ifFalse: [ true asGlorpExpression ]
 ]
 
 { #category : #preparing }

@@ -23,64 +23,83 @@ Class {
 
 { #category : #'*Glorp' }
 ForeignKeyConstraint class >> sourceField: aDatabaseField targetField: anotherDatabaseField [
-	^self
-		sourceField: aDatabaseField
-		targetField: anotherDatabaseField
-		suffixExpression: nil.
+
+	^ self
+		  sourceField: aDatabaseField
+		  targetField: anotherDatabaseField
+		  suffixExpression: nil
 ]
 
 { #category : #'*Glorp' }
 ForeignKeyConstraint class >> sourceField: aDatabaseField targetField: anotherDatabaseField suffixExpression: suffixExpression [
-	^(self new)
-		sourceField: aDatabaseField targetField: anotherDatabaseField suffixExpression: suffixExpression;
-		yourself.
+
+	^ self new
+		  sourceField: aDatabaseField
+		  targetField: anotherDatabaseField
+		  suffixExpression: suffixExpression;
+		  yourself
 ]
 
 { #category : #'*Glorp' }
 ForeignKeyConstraint class >> sourceFields: sourceFields targetFields: targetFields [
-	^self
-		sourceFields: sourceFields
-		targetFields: targetFields
-		suffixExpression: nil.
+
+	^ self
+		  sourceFields: sourceFields
+		  targetFields: targetFields
+		  suffixExpression: nil
 ]
 
 { #category : #'*Glorp' }
 ForeignKeyConstraint class >> sourceFields: sourceFields targetFields: targetFields suffixExpression: suffixExpression [
-	^(self new)
-		sourceFields: sourceFields targetFields: targetFields suffixExpression: suffixExpression;
-		yourself.
+
+	^ self new
+		  sourceFields: sourceFields
+		  targetFields: targetFields
+		  suffixExpression: suffixExpression;
+		  yourself
 ]
 
 { #category : #accessing }
 ForeignKeyConstraint >> addSourceField: aField [
-	(self sourceFields allSatisfy: [:each | aField table = each table]) ifFalse: [self error: 'Fields in foreign key constraints must all have the same source table'].
-	self sourceFields add: aField.
+
+	(self sourceFields allSatisfy: [ :each | aField table = each table ])
+		ifFalse: [
+			self error:
+				'Fields in foreign key constraints must all have the same source table' ].
+	self sourceFields add: aField
 ]
 
 { #category : #accessing }
 ForeignKeyConstraint >> addTargetField: aField [
-	(self targetFields allSatisfy: [:each | aField table = each table]) ifFalse: [self error: 'Fields in foreign key constraints must all have the same target table'].
-	self targetFields add: aField.
+
+	(self targetFields allSatisfy: [ :each | aField table = each table ])
+		ifFalse: [
+			self error:
+				'Fields in foreign key constraints must all have the same target table' ].
+	self targetFields add: aField
 ]
 
 { #category : #converting }
 ForeignKeyConstraint >> asJoin [
-	^Join fromAll: self sourceFields toAll: self targetFields.
+
+	^ Join fromAll: self sourceFields toAll: self targetFields
 ]
 
 { #category : #converting }
 ForeignKeyConstraint >> asReverseJoin [
-	^Join fromAll: self targetFields toAll: self sourceFields.
+
+	^ Join fromAll: self targetFields toAll: self sourceFields
 ]
 
 { #category : #printing }
 ForeignKeyConstraint >> creationStringFor: aPlatform [
 
-	^aPlatform createForeignKeyConstraintAddStatement: self
+	^ aPlatform createForeignKeyConstraintAddStatement: self
 ]
 
-{ #category : #printing }
+{ #category : #accessing }
 ForeignKeyConstraint >> generateName [
+
 	| stream maxLength tableLength roomToBeVerbose shortTableLength longTableLength |
 	self sourceFields isEmpty ifTrue: [^'INVALID CONSTRAINT'].
 	"Figure out if we have room for verbose separators or if we should maximize the space for the table/field names"
@@ -95,38 +114,40 @@ ForeignKeyConstraint >> generateName [
 	roomToBeVerbose ifTrue: [stream nextPutAll: '_TO_'].
 	self printForConstraintName: self targetFields first on: stream maxLength: tableLength.
 	stream nextPutAll: (roomToBeVerbose ifTrue: ['_REF'] ifFalse: ['R']).
-	^stream contents.
+	^ stream contents
 ]
 
 { #category : #initialization }
 ForeignKeyConstraint >> initialize [
 
 	self sourceFields: (OrderedCollection new: 2).
-	targetFields := OrderedCollection new: 2.
+	targetFields := OrderedCollection new: 2
 ]
 
 { #category : #testing }
 ForeignKeyConstraint >> isForeignKeyConstraint [
 
-	^true
+	^ true
 ]
 
 { #category : #testing }
 ForeignKeyConstraint >> isImaginary [
-	^self targetTable isImaginary or: [self sourceTable isImaginary].
+
+	^ self targetTable isImaginary or: [ self sourceTable isImaginary ]
 ]
 
 { #category : #testing }
 ForeignKeyConstraint >> isSimilarForeignKeyConstraint: aConstraint [
 
 	self sourceFields size ~= aConstraint sourceFields size ifTrue: [^false].
-	self sourceFields asSortedCollection with: aConstraint sourceFields asSortedCollection do: [:field1 :field2 | 
+	self sourceFields asSortedCollection with: aConstraint sourceFields asSortedCollection do: [:field1 :field2 |
 		(field1 matchesField: field2) ifFalse: [^false]].
 
 	self targetFields size ~= aConstraint targetFields size ifTrue: [^false].
-	self targetFields asSortedCollection with: aConstraint targetFields asSortedCollection do: [:field1 :field2 | 
+	self targetFields asSortedCollection with: aConstraint targetFields asSortedCollection do: [:field1 :field2 |
 		(field1 matchesField: field2) ifFalse: [^false]].
-	^true
+
+	^ true
 ]
 
 { #category : #comparing }
@@ -135,42 +156,47 @@ ForeignKeyConstraint >> isTheSameAs: aForeignKeyConstraint [
 	self name asUppercase = aForeignKeyConstraint name asUppercase ifFalse: [^false].
 	self suffixExpression = aForeignKeyConstraint suffixExpression ifFalse: [^false].
 	self sourceFields size ~= aForeignKeyConstraint sourceFields size ifTrue: [^false].
-	self sourceFields asSortedCollection with: aForeignKeyConstraint sourceFields asSortedCollection do: [:a :b | (a isTheSameAs: b) ifFalse: [^false]].	
+	self sourceFields asSortedCollection with: aForeignKeyConstraint sourceFields asSortedCollection do: [:a :b | (a isTheSameAs: b) ifFalse: [^false]].
 	self targetFields size ~= aForeignKeyConstraint targetFields size ifTrue: [^false].
-	self targetFields asSortedCollection with: aForeignKeyConstraint targetFields asSortedCollection do: [:a :b | (a isTheSameAs: b) ifFalse: [^false]].	
+	self targetFields asSortedCollection with: aForeignKeyConstraint targetFields asSortedCollection do: [:a :b | (a isTheSameAs: b) ifFalse: [^false]].
 	self shouldCreateInDatabase = aForeignKeyConstraint shouldCreateInDatabase ifFalse: [^false].
-	^true.
+
+	^ true
 ]
 
 { #category : #testing }
 ForeignKeyConstraint >> matchesForeignKeyConstraint: aConstraint [
 	name asUppercase = aConstraint name asUppercase ifFalse: [^false].
 	self sourceFields size ~= aConstraint sourceFields size ifTrue: [^false].
-	self sourceFields with: aConstraint sourceFields do: [:field1 :field2 | 
+	self sourceFields with: aConstraint sourceFields do: [:field1 :field2 |
 		(field1 matchesField: field2) ifFalse: [^false]].
 
 	self targetFields size ~= aConstraint targetFields size ifTrue: [^false].
-	self targetFields with: aConstraint targetFields do: [:field1 :field2 | 
+	self targetFields with: aConstraint targetFields do: [:field1 :field2 |
 		(field1 matchesField: field2) ifFalse: [^false]].
-	^true
+
+	^ true
 ]
 
 { #category : #printing }
-ForeignKeyConstraint >> printForConstraintName: aField on: aStream maxLength: maxLength [ 
+ForeignKeyConstraint >> printForConstraintName: aField on: aStream maxLength: maxLength [
+
 	| constraintName |
 	constraintName := aField table name , '_' , aField name.
-	constraintName size > maxLength 
-		ifTrue: [constraintName := constraintName copyFrom: 1 to: maxLength].
+	constraintName size > maxLength ifTrue: [
+		constraintName := constraintName copyFrom: 1 to: maxLength ].
 	aStream nextPutAll: constraintName
 ]
 
 { #category : #testing }
 ForeignKeyConstraint >> refersToTable: aTable [
-	^self targetTable yourself == aTable.
+
+	^ self targetTable yourself == aTable
 ]
 
 { #category : #relationships }
 ForeignKeyConstraint >> rowsRelatedTo: aRow [
+
 	| myWrapper relatedRows sourceField targetField allWrappers |
 	"Note that we don't care which field, as presumably all of them must point the same place for a composite key, so grab the first pair"
 	sourceField := self sourceFields first.
@@ -184,96 +210,109 @@ ForeignKeyConstraint >> rowsRelatedTo: aRow [
 		do: [:eachWrapper |
 			(eachWrapper containedBy glorpAtIdentity: targetField ifAbsent: [#()])
 				do: [:eachRow | eachRow == aRow ifFalse: [relatedRows add: eachRow]]].
-	^relatedRows.
+	^relatedRows
 ]
 
 { #category : #accessing }
 ForeignKeyConstraint >> someSourceField [
 	"Return any one of our source fields"
-	^self sourceFields first.
+
+	^ self sourceFields first
 ]
 
 { #category : #accessing }
 ForeignKeyConstraint >> sourceField: aField [
+
 	self sourceFields isEmpty ifFalse: [self error: 'Adding a field to a non-empty constraint'].
-	self sourceFields add: aField.
+	self sourceFields add: aField
 ]
 
 { #category : #initialization }
 ForeignKeyConstraint >> sourceField: aDatabaseField targetField: anotherDatabaseField [
+
 	self
 		sourceField: aDatabaseField
 		targetField: anotherDatabaseField
-		suffixExpression: nil.
+		suffixExpression: nil
 ]
 
 { #category : #initialization }
 ForeignKeyConstraint >> sourceField: aDatabaseField targetField: anotherDatabaseField suffixExpression: suffixExpressionString [
+
 	self
 		sourceField: aDatabaseField;
 		targetField: anotherDatabaseField;
-		suffixExpression: suffixExpressionString.
+		suffixExpression: suffixExpressionString
 ]
 
 { #category : #accessing }
 ForeignKeyConstraint >> sourceFields [
-	^sourceFields
+
+	^ sourceFields
 ]
 
 { #category : #accessing }
 ForeignKeyConstraint >> sourceFields: aCollection [
-	
-	sourceFields := aCollection.
+
+	sourceFields := aCollection
 ]
 
 { #category : #initialization }
 ForeignKeyConstraint >> sourceFields: sourceFieldCollection targetFields: targetFieldCollection suffixExpression: suffixExpressionString [
+
 	self
 		sourceFields: sourceFieldCollection;
 		targetFields: targetFieldCollection;
-		suffixExpression: suffixExpressionString.
+		suffixExpression: suffixExpressionString
 ]
 
 { #category : #accessing }
 ForeignKeyConstraint >> sourceTable [
 	"All the source fields have to come from the same table, so just pick one"
-	^self sourceFields first table.
+
+	^ self sourceFields first table
 ]
 
 { #category : #accessing }
 ForeignKeyConstraint >> suffixExpression [
-	^suffixExpression
+
+	^ suffixExpression
 ]
 
 { #category : #accessing }
 ForeignKeyConstraint >> suffixExpression: anObject [
-	suffixExpression := anObject.
+
+	suffixExpression := anObject
 ]
 
 { #category : #accessing }
 ForeignKeyConstraint >> table [
-	^self sourceTable.
+
+	^ self sourceTable
 ]
 
 { #category : #accessing }
 ForeignKeyConstraint >> targetField: aField [
 
 	self targetFields isEmpty ifFalse: [self error: 'Adding a field to a non-empty constraint'].
-	self targetFields add: aField.
+	self targetFields add: aField
 ]
 
 { #category : #accessing }
 ForeignKeyConstraint >> targetFields [
-	^targetFields
+
+	^ targetFields
 ]
 
 { #category : #accessing }
 ForeignKeyConstraint >> targetFields: aCollection [
-	targetFields := aCollection.
+
+	targetFields := aCollection
 ]
 
 { #category : #accessing }
 ForeignKeyConstraint >> targetTable [
 	"All the target fields have to come from the same table, so just pick one"
-	^self targetFields isEmpty ifTrue: [nil] ifFalse: [self targetFields first table].
+
+	^ self targetFields isEmpty ifTrue: [nil] ifFalse: [self targetFields first table]
 ]

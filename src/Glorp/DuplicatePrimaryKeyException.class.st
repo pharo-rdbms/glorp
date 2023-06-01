@@ -9,7 +9,7 @@ Class {
 		'existingObject',
 		'newObject'
 	],
-	#category : 'Glorp-Exceptions'
+	#category : #'Glorp-Exceptions'
 }
 
 { #category : #'as yet unclassified' }
@@ -22,25 +22,30 @@ DuplicatePrimaryKeyException class >> new: newObject existing: existingObject [
 
 { #category : #accessing }
 DuplicatePrimaryKeyException >> defaultMessageText [
-	^'Duplicate objects with same primary key'.
+
+	^ 'Duplicate objects with same primary key'
 ]
 
 { #category : #accessing }
 DuplicatePrimaryKeyException >> existingObject [
-	^existingObject
+
+	^ existingObject
 ]
 
 { #category : #accessing }
 DuplicatePrimaryKeyException >> existingObject: anObject [
+
 	existingObject := anObject
 ]
 
 { #category : #accessing }
 DuplicatePrimaryKeyException >> newObject [
-	^newObject
+
+	^ newObject
 ]
 
 { #category : #accessing }
 DuplicatePrimaryKeyException >> newObject: anObject [
+
 	newObject := anObject
 ]

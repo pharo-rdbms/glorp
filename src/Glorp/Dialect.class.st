@@ -24,13 +24,13 @@ Dialect class >> addSeconds: seconds to: aTime [
 { #category : #'general portability' }
 Dialect class >> argumentCountFor: aBlock [
 
-	^aBlock argumentCount
+	^ aBlock argumentCount
 ]
 
 { #category : #numbers }
 Dialect class >> coerceToDoublePrecisionFloat: aNumber [
 
-	^aNumber asFloat
+	^ aNumber asFloat
 ]
 
 { #category : #files }
@@ -38,19 +38,21 @@ Dialect class >> contentsOfFileNamed: aString [
 	"Given a text file name, read its contents"
 
 	| stream contents |
-	stream := (Dialect smalltalkAt: #MultiByteFileStream) oldFileNamed: aString.
-	[ contents := stream contents ]
-		ensure: [ stream close ].
+	stream := (Dialect smalltalkAt: #MultiByteFileStream) oldFileNamed:
+		          aString.
+	[ contents := stream contents ] ensure: [ stream close ].
 	^ contents
 ]
 
 { #category : #strings }
 Dialect class >> convert: aString toByteArrayWithEncoding: encodingName [
+
 	^ aString convertToEncoding: encodingName
 ]
 
 { #category : #strings }
 Dialect class >> convert: aByteArray toStringWithEncoding: encodingName [
+
 	^ aByteArray asString convertToEncoding: encodingName
 ]
 
@@ -62,13 +64,14 @@ Dialect class >> dateAndTimeClass [
 
 { #category : #private }
 Dialect class >> determineDialect [
+
 	^ dialectName := #Pharo
 ]
 
 { #category : #'*Glorp' }
 Dialect class >> dialectName [
 
-	dialectName isNil ifTrue: [self determineDialect.].
+	dialectName isNil ifTrue: [ self determineDialect ].
 	^ dialectName
 ]
 
@@ -76,12 +79,14 @@ Dialect class >> dialectName [
 Dialect class >> dialectVersion [
 	"Glorp does not need to consult dialect versions at the moment.  This method is currently made available purely as a precaution, in case Glorp experimenters should wish to add a dialect-version-requiring feature."
 
-	^self dialectName, SystemVersion current imageVersionString
+	^ self dialectName , SystemVersion current imageVersionString
 ]
 
 { #category : #numbers }
 Dialect class >> doesPrecisionOf: aNumber equal: aPrecision [
-	^aNumber class == self fixedPointClass and: [aNumber scale = aPrecision]
+
+	^ aNumber class == self fixedPointClass and: [
+		  aNumber scale = aPrecision ]
 ]
 
 { #category : #numbers }
@@ -93,17 +98,19 @@ Dialect class >> doublePrecisionFloatClass [
 { #category : #'*Glorp' }
 Dialect class >> error [
 
-	^Error
+	^ Error
 ]
 
 { #category : #'general portability' }
 Dialect class >> fitHashIntoSmallInteger: aNumber [
-	^aNumber
+
+	^ aNumber
 ]
 
 { #category : #'class lookup' }
 Dialect class >> fixedPointClass [
-	^ScaledDecimal 
+
+	^ ScaledDecimal
 ]
 
 { #category : #'general portability' }
@@ -114,12 +121,14 @@ Dialect class >> garbageCollect [
 
 { #category : #'forward references' }
 Dialect class >> glorpConstantExpressionClass [
-	^ConstantExpression
+
+	^ ConstantExpression
 ]
 
 { #category : #'general portability' }
 Dialect class >> identitySetClass [
-	^IdentitySet 
+
+	^ IdentitySet
 ]
 
 { #category : #reflection }
@@ -130,13 +139,15 @@ Dialect class >> instVarNameFor: aName [
 
 { #category : #'general portability' }
 Dialect class >> isBlock: anObject [
-	
-	^anObject isBlock
+
+	^ anObject isBlock
 ]
 
 { #category : #numbers }
 Dialect class >> isFloatingPoint: aNumber [
-	^aNumber class == self doublePrecisionFloatClass or: [aNumber class == Float]
+
+	^ aNumber class == self doublePrecisionFloatClass or: [
+		  aNumber class == Float ]
 ]
 
 { #category : #identifying }
@@ -147,8 +158,8 @@ Dialect class >> isHeadless [
 
 { #category : #'general portability' }
 Dialect class >> isNamespaceAware [
-	isNamespaceAware isNil
-		ifTrue: [ isNamespaceAware := false ].
+
+	isNamespaceAware isNil ifTrue: [ isNamespaceAware := false ].
 	^ isNamespaceAware
 ]
 
@@ -160,42 +171,51 @@ Dialect class >> isPharo [
 
 { #category : #numbers }
 Dialect class >> isScaleOf: aNumber lessThanOrEqualTo: aScale [
-	^aNumber class == self fixedPointClass and: [aNumber scale <= aScale].
+
+	^ aNumber class == self fixedPointClass and: [
+		  aNumber scale <= aScale ]
 ]
 
 { #category : #'class lookup' }
 Dialect class >> lookedUpNames [
-	lookedUpNames isNil ifTrue: [lookedUpNames := IdentityDictionary new].
-	^lookedUpNames.
+
+	lookedUpNames isNil ifTrue: [ lookedUpNames := IdentityDictionary new ].
+	^ lookedUpNames
 ]
 
 { #category : #'class lookup' }
 Dialect class >> lookupClassNamed: aString inContextOf: aClass [
 	"Look up the class by name, but use the namespace of the class. Mostly useful if we're trying to guess from unqualified names in dialects with namespaces."
-	^self lookupClassNamed: aString inContextOf: aClass ifAbsent: [nil]
+
+	^ self
+		  lookupClassNamed: aString
+		  inContextOf: aClass
+		  ifAbsent: [ nil ]
 ]
 
 { #category : #'class lookup' }
 Dialect class >> lookupClassNamed: aString inContextOf: aClass ifAbsent: aBlock [
 	"Look up the class by name, but use the namespace of the class. Mostly useful if we're trying to guess from unqualified names in dialects with namespaces."
-	
-	^self smalltalkAt: aString ifAbsent: aBlock
+
+	^ self smalltalkAt: aString ifAbsent: aBlock
 ]
 
 { #category : #collections }
 Dialect class >> needsCollectionMementoFor: aCollection [
-	^true
+
+	^ true
 ]
 
 { #category : #dates }
 Dialect class >> newDateWithYears: years months: months days: days [
 
-	^Date newDay: days month: months year: years
+	^ Date newDay: days month: months year: years
 ]
 
 { #category : #'general portability' }
 Dialect class >> newIdentitySet [
-	^self identitySetClass new
+
+	^ self identitySetClass new
 ]
 
 { #category : #dates }
@@ -207,7 +227,7 @@ Dialect class >> newTimeWithHours: hours minutes: minutes seconds: seconds milli
 { #category : #dates }
 Dialect class >> newTimestampFromDate: aDate time: aTime [
 
-	^self timestampClass date: aDate time: aTime
+	^ self timestampClass date: aDate time: aTime
 ]
 
 { #category : #dates }
@@ -220,7 +240,7 @@ Dialect class >> newTimestampWithYears: years
 	milliseconds: millis
 	offset: offset [
 
-	^self timestampClass 
+	^ self timestampClass 
 			year: years
 			month: months
 			day: days
@@ -236,7 +256,7 @@ Dialect class >> newTimestampWithYears: years
 Dialect class >> quitTheImage [
 	"Quit the entire image"
 
-	^(self smalltalkAt: #SmalltalkImage) current snapshot: false andQuit: true
+	^ (self smalltalkAt: #SmalltalkImage) current snapshot: false andQuit: true
 ]
 
 { #category : #dates }
@@ -256,18 +276,19 @@ Dialect class >> reset [
 { #category : #reflection }
 Dialect class >> selectorsFor: aClass do: aBlock [
 
-	^aClass methodDict keysDo: aBlock
+	^ aClass methodDict keysDo: aBlock
 ]
 
 { #category : #numbers }
 Dialect class >> singlePrecisionFloatClass [
+
 	^ Float
 ]
 
 { #category : #numbers }
 Dialect class >> smallDoublePrecisionFloatClass [
 
-	^self doublePrecisionFloatClass
+	^ self doublePrecisionFloatClass
 ]
 
 { #category : #'class lookup' }
@@ -306,13 +327,13 @@ Dialect class >> smalltalkAt: aName ifAbsent: aBlock [
 { #category : #dates }
 Dialect class >> supportsMillisecondsInTimeStamps [
 
-	^true
+	^ true
 ]
 
 { #category : #dates }
 Dialect class >> supportsMillisecondsInTimes [
 
-	^true
+	^ true
 ]
 
 { #category : #dates }
@@ -332,7 +353,6 @@ Dialect class >> timestampClass [
 Dialect class >> timestampNow [
 
 	^ self timestampClass current
-	
 ]
 
 { #category : #dates }

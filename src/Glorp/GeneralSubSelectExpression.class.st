@@ -15,7 +15,7 @@ Class {
 		'query',
 		'base'
 	],
-	#category : 'Glorp-Expressions'
+	#category : #'Glorp-Expressions'
 }
 
 { #category : #'instance creation' }
@@ -26,9 +26,10 @@ GeneralSubSelectExpression class >> basedOn: anExpression [
 
 { #category : #preparing }
 GeneralSubSelectExpression >> addBoundExpressionsIn: aCommand to: boundExpressions [
+
 	self query session: aCommand query session.
 	self query prepare.
-	self query addBoundExpressionsIn: aCommand to: boundExpressions.
+	self query addBoundExpressionsIn: aCommand to: boundExpressions
 ]
 
 { #category : #preparing }
@@ -49,42 +50,48 @@ GeneralSubSelectExpression >> asJoin [
 
 { #category : #api }
 GeneralSubSelectExpression >> base [
-	^base
+
+	^ base
 ]
 
 { #category : #accessing }
 GeneralSubSelectExpression >> base: anExpression [
-	base := anExpression.
+
+	base := anExpression
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 GeneralSubSelectExpression >> canHaveBase [
 	"Return true if this type of expression can have a base expression on which other things can be built. Doesn't say whether we actually have a valid one or not."
-	^true.
+
+	^ true
 ]
 
 { #category : #converting }
 GeneralSubSelectExpression >> convertedDbValueOf: anObject [
-	^anObject.
+
+	^ anObject
 ]
 
 { #category : #accessing }
 GeneralSubSelectExpression >> descriptor [
-	^base system descriptorFor: query resultClass.
+
+	^ base system descriptorFor: query resultClass
 ]
 
 { #category : #accessing }
 GeneralSubSelectExpression >> field [
-	^nil.
+
+	^ nil
 ]
 
 { #category : #api }
-GeneralSubSelectExpression >> get: aSymbol withArguments: anArray [ 
+GeneralSubSelectExpression >> get: aSymbol withArguments: anArray [
 
 	| functionExpression |
 	functionExpression := self getFunction: aSymbol withArguments: anArray.
 	functionExpression isNil ifFalse: [^functionExpression].
-	^RelationExpression
+	^ RelationExpression
 		named: aSymbol
 		basedOn: self
 		withArguments: anArray
@@ -93,25 +100,29 @@ GeneralSubSelectExpression >> get: aSymbol withArguments: anArray [
 { #category : #api }
 GeneralSubSelectExpression >> getField: aField [
 	"This is rather a hack on the use of get:, but I think it should be all right because we should never run into one of these in normal expression generation. The issue is that if we do an expression of the form (x = aQuery) where the query returns an object of the same class as X. We want to rewrite that into a primary key comparison for the database, so we want to do a get: against aQuery. But the only thing that seems to sensibly translate into is a retrieve: clause and return the query. That will only work for a single level get:, but I think that a multi-level one, from converting a block, shouldn't ever get to a general sub-select."
-	query retrieve: [:each | each getField: aField].
+
+	query retrieve: [ :each | each getField: aField ]
 ]
 
 { #category : #api }
 GeneralSubSelectExpression >> getMapping: aMapping named: aSymbol [
 	"Suppose we do an expression of the form (x = aQuery) where the query returns an object of the same class as X. We want to rewrite that into a primary key comparison for the database, so we want to do a getMapping:named: against aQuery. But the only thing that seems to sensibly translate into is a retrieve: clause and return the query. That will only work for a single level get:, but I think that a multi-level one, from converting a block, shouldn't ever get to a general sub-select."
-	query retrieve: aSymbol.
+
+	query retrieve: aSymbol
 ]
 
 { #category : #testing }
 GeneralSubSelectExpression >> isMappable [
 	"Return true if we're something that can be returned in a select statement."
-	^false.
+
+	^ false
 ]
 
 { #category : #accessing }
 GeneralSubSelectExpression >> mappedFields [
 	"Let's try this and see if it works returning empty"
-	^#().
+
+	^ #(  )
 ]
 
 { #category : #printing }
@@ -123,39 +134,45 @@ GeneralSubSelectExpression >> printOnlySelfOn: aStream [
 ]
 
 { #category : #printing }
-GeneralSubSelectExpression >> printSQLOn: aStream withParameters: aDictionary [ 
+GeneralSubSelectExpression >> printSQLOn: aStream withParameters: aDictionary [
+
 	| command |
 	aStream nextPutAll: '('.
 	self query session: aStream query session.
 	command := self query sqlWith: aDictionary.
 	aStream nextPutAll: command sqlString.
-	aStream nextPutAll: ')'.
+	aStream nextPutAll: ')'
 ]
 
 { #category : #printing }
 GeneralSubSelectExpression >> printSelectSQLOn: aStream withParameters: aDictionary [
-	self printSQLOn: aStream withParameters: aDictionary.
+
+	self printSQLOn: aStream withParameters: aDictionary
 ]
 
 { #category : #printing }
 GeneralSubSelectExpression >> printTreeOn: aStream [
+
 	aStream nextPutAll: 'subselect('.
 	query printOn: aStream.
-	aStream nextPutAll: ')'.
+	aStream nextPutAll: ')'
 ]
 
 { #category : #accessing }
 GeneralSubSelectExpression >> query [
-	^query
+
+	^ query
 ]
 
 { #category : #accessing }
 GeneralSubSelectExpression >> query: aQuery [
+
 	query := aQuery
 ]
 
 { #category : #preparing }
 GeneralSubSelectExpression >> rebuildOn: aBaseExpression startingFrom: anExpression withOuterScopeBase: ultimateBaseExpression [
+
 	| rebuiltBase rebuilt |
 	self == anExpression ifTrue: [^aBaseExpression].
 	rebuiltBase := base rebuildOn: aBaseExpression startingFrom: anExpression withOuterScopeBase: ultimateBaseExpression.
@@ -168,10 +185,12 @@ GeneralSubSelectExpression >> rebuildOn: aBaseExpression startingFrom: anExpress
 
 { #category : #accessing }
 GeneralSubSelectExpression >> type [
-	^query resultType.
+
+	^ query resultType
 ]
 
 { #category : #navigating }
 GeneralSubSelectExpression >> ultimateBaseExpression [
-	^base ultimateBaseExpression.
+
+	^ base ultimateBaseExpression
 ]

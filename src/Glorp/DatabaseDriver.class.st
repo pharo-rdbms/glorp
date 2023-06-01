@@ -7,27 +7,31 @@ Class {
 	#instVars : [
 		'connection'
 	],
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #executing }
 DatabaseDriver >> basicExecuteSQLString: aString [
-	^self subclassResponsibility.
+
+	^ self subclassResponsibility
 ]
 
 { #category : #transactions }
 DatabaseDriver >> beginTransaction [
-self subclassResponsibility.
+
+	self subclassResponsibility
 ]
 
 { #category : #transactions }
 DatabaseDriver >> commitTransaction [
-	^self subclassResponsibility.
+
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
 DatabaseDriver >> connect: aLogin [
-	^self subclassResponsibility.
+
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -42,20 +46,24 @@ DatabaseDriver >> connection: anObject [
 
 { #category : #accessing }
 DatabaseDriver >> connectionClass [
-	^self subclassResponsibility.
+
+	^ self subclassResponsibility
 ]
 
 { #category : #testing }
 DatabaseDriver >> isConnected [
-	^ self subclassResponsibility 
+
+	^ self subclassResponsibility
 ]
 
 { #category : #login }
 DatabaseDriver >> logout [
-^self subclassResponsibility.
+
+	^ self subclassResponsibility
 ]
 
 { #category : #transactions }
 DatabaseDriver >> rollbackTransaction [
-	^self subclassResponsibility.
+
+	^ self subclassResponsibility
 ]

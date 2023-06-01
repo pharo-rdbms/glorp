@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'trueBase'
 	],
-	#category : 'Glorp-Expressions'
+	#category : #'Glorp-Expressions'
 }
 
 { #category : #'instance creation' }
@@ -24,29 +24,31 @@ SubSelectBaseExpression class >> on: aBaseExpression [
 SubSelectBaseExpression >> additionalExpressions [
 	"We effectively take over the join for the thing we're based on, because we want it to happen in the subselect, not in the main one."
 
-	^trueBase additionalExpressionsOn: self.
+	^ trueBase additionalExpressionsOn: self
 ]
 
 { #category : #preparing }
 SubSelectBaseExpression >> additionalExpressionsOn: anExpression [
-	^trueBase additionalExpressionsOn: anExpression.
+
+	^ trueBase additionalExpressionsOn: anExpression
 ]
 
-{ #category : #accessing }
+{ #category : #api }
 SubSelectBaseExpression >> base [
-	^trueBase base.
+
+	^ trueBase base
 ]
 
-{ #category : #printing }
+{ #category : #introspection }
 SubSelectBaseExpression >> className [
 
-	^'SubSelectBase'.
+	^ 'SubSelectBase'
 ]
 
 { #category : #converting }
 SubSelectBaseExpression >> convertedDbValueOf: anObject [
 
-	^self trueBase mapping convertedDbValueOf: anObject.
+	^ self trueBase mapping convertedDbValueOf: anObject
 ]
 
 { #category : #accessing }
@@ -56,24 +58,29 @@ SubSelectBaseExpression >> descriptor [
 
 { #category : #accessing }
 SubSelectBaseExpression >> field [
-	^self trueBase mapping field.
+
+	^ self trueBase mapping field
 ]
 
 { #category : #accessing }
 SubSelectBaseExpression >> join [
-	^self trueBase join.
+
+	^ self trueBase join
 ]
 
 { #category : #printing }
 SubSelectBaseExpression >> printSQLOn: aStream withParameters: aDictionary [
 	"If I'm ever going to print this directly, it's because I'm participating in a direct to-many relationship, so I do have a valid field"
-	(self translateField: self field) printSQLOn: aStream withParameters: aDictionary.
+
+	(self translateField: self field)
+		printSQLOn: aStream
+		withParameters: aDictionary
 ]
 
 { #category : #navigating }
 SubSelectBaseExpression >> queryLevelBaseExpression [
 
-	^self
+	^ self
 ]
 
 { #category : #preparing }
@@ -94,17 +101,20 @@ SubSelectBaseExpression >> representsDerivedObject [
 
 { #category : #accessing }
 SubSelectBaseExpression >> table [
-	^self trueBase table
+
+	^ self trueBase table
 ]
 
 { #category : #accessing }
 SubSelectBaseExpression >> trueBase [
-	^trueBase
+
+	^ trueBase
 ]
 
 { #category : #accessing }
 SubSelectBaseExpression >> trueBase: aBaseExpression [
-	trueBase := aBaseExpression.
+
+	trueBase := aBaseExpression
 ]
 
 { #category : #navigating }
@@ -115,6 +125,7 @@ SubSelectBaseExpression >> ultimateBaseExpression [
 
 { #category : #preparing }
 SubSelectBaseExpression >> validate [
+
 	super validate.
-	trueBase validate.
+	trueBase validate
 ]

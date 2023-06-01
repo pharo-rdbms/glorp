@@ -68,31 +68,33 @@ DatabaseRow class >> newForTable: aTable withOwner: anObject [
 
 { #category : #comparing }
 DatabaseRow >> = aRow [
-	self class == aRow class ifFalse: [^false].
-	^self equals: aRow.
+
+	self class == aRow class ifFalse: [ ^ false ].
+	^ self equals: aRow
 ]
 
 { #category : #accessing }
 DatabaseRow >> at: aField [
 
-	^self at: aField ifAbsent: [self error: 'missing field'].
+	^ self at: aField ifAbsent: [ self error: 'missing field' ]
 ]
 
 { #category : #private }
-DatabaseRow >> at: aField forcePut: aValue [ 
+DatabaseRow >> at: aField forcePut: aValue [
 	"Write the value. If there's a previous value, overwrite it. Use with extreme caution."
+
 	| wrapper |
 	aValue isGlorpExpression ifTrue: [self error: 'cannot store expressions in rows'].
 	aField table == self table ifFalse: [self error: 'Invalid table'].
 	wrapper := self contentsAt: aField ifAbsentPut: [FieldValueWrapper new].
 	wrapper privateSetContents: aValue.
-	^wrapper.
+	^ wrapper
 ]
 
 { #category : #accessing }
 DatabaseRow >> at: aField ifAbsent: absentBlock [
 
-	^(self wrapperAt: aField ifAbsent: [^absentBlock value]) contents.
+	^ (self wrapperAt: aField ifAbsent: [^absentBlock value]) contents
 ]
 
 { #category : #accessing }
@@ -100,23 +102,23 @@ DatabaseRow >> at: aField ifAbsentPut: absentBlock [
 
 	| old |
 	old := contents at: aField position.
-	old == self class emptySlot 
+	old == self class emptySlot
 		ifTrue: absentBlock
-		ifFalse: [^old contents].
+		ifFalse: [^old contents]
 ]
 
 { #category : #accessing }
-DatabaseRow >> at: aField put: aValue [ 
-	
+DatabaseRow >> at: aField put: aValue [
+
 	"For generated fields, we expect the real value to be provided later by the database, so don't write a nil value"
-	
+
 	| wrapper |
 "	aValue isGlorpExpression ifTrue: [self error: 'cannot store expressions in rows']."
 	aField table == self table ifFalse: [self error: 'Invalid table'].
 	wrapper := self contentsAt: aField ifAbsentPut: [FieldValueWrapper new].
 	(aValue isNil and: [aField isGenerated]) ifFalse: [wrapper contents: aValue].
 	wrapper isNowContainedBy: self and: aField.
-	^wrapper.
+	^wrapper
 ]
 
 { #category : #accessing }
@@ -124,7 +126,7 @@ DatabaseRow >> atFieldNamed: aString [
 
 	| field |
 	field := table fieldNamed: aString.
-	^self at: field
+	^ self at: field
 ]
 
 { #category : #accessing }
@@ -132,7 +134,7 @@ DatabaseRow >> atFieldNamed: aString ifAbsent: aBlock [
 
 	| field |
 	field := table fieldNamed: aString ifAbsent: aBlock.
-	^self at: field ifAbsent: aBlock.
+	^ self at: field ifAbsent: aBlock
 ]
 
 { #category : #accessing }
@@ -140,7 +142,7 @@ DatabaseRow >> atFieldNamed: aString put: anObject [
 
 	| field |
 	field := table fieldNamed: aString.
-	^self at: field put: anObject
+	^ self at: field put: anObject
 ]
 
 { #category : #accessing }
@@ -148,17 +150,20 @@ DatabaseRow >> contentsAt: aField ifAbsentPut: absentBlock [
 
 	| old newValue |
 	old := contents at: aField position.
-	^old == self class emptySlot 
-		ifTrue: [
-			newValue := absentBlock value.
-			contents at: aField position put: newValue.
-			newValue]
-		ifFalse: [old].
+	^ old == self class emptySlot
+		  ifTrue: [
+			  newValue := absentBlock value.
+			  contents at: aField position put: newValue.
+			  newValue ]
+		  ifFalse: [ old ]
 ]
 
 { #category : #accessing }
 DatabaseRow >> doesNotUnderstand: aMessage [
-	^self atFieldNamed: aMessage selector asString ifAbsent: [super doesNotUnderstand: aMessage].
+
+	^ self
+		  atFieldNamed: aMessage selector asString
+		  ifAbsent: [ super doesNotUnderstand: aMessage ]
 ]
 
 { #category : #printing }
@@ -167,17 +172,18 @@ DatabaseRow >> equalityStringForField: aDatabaseField [
 	| stream |
 	stream := WriteStream on: (String new: 50).
 	self printEqualityStringForField: aDatabaseField on: stream.
-	^stream contents.
+	^ stream contents
 ]
 
 { #category : #testing }
-DatabaseRow >> equals: aRow [ 
-	self forDeletion = aRow forDeletion ifFalse: [^false].
-	self fieldsAndValuesDo: 
-			[:eachField :eachWrapper | 
+DatabaseRow >> equals: aRow [
+
+	self forDeletion = aRow forDeletion ifFalse: [ ^ false ].
+	self fieldsAndValuesDo:
+			[:eachField :eachWrapper |
 			| otherValue |
-			otherValue := aRow at: eachField ifAbsent: [self class missingFieldIndicator].
-			eachWrapper = otherValue ifFalse: [^false]].
+			otherValue := aRow at: eachField ifAbsent: [ self class missingFieldIndicator ].
+			eachWrapper = otherValue ifFalse: [ ^false ]].
 	^true
 ]
 
@@ -190,44 +196,54 @@ DatabaseRow >> expectsToGetValueFor: aField [
 	testBlock := [:eachField | (eachField ~~ aField and: [eachField type isSerial]) ifTrue: [^true]].
 	(Array with: wrapper), innerWrappers do: [:eachWrapper |
 		containing := eachWrapper containedBy.
-		containing glorpIsCollection 
+		containing glorpIsCollection
 			ifTrue: [containing keysDo: testBlock]
 			ifFalse: [testBlock value: containing key]].
-	^false.
+	^false
 ]
 
 { #category : #enumerating }
-DatabaseRow >> fieldValuesDo: aBlock [ 
-	contents do: [:each | each == self class emptySlot ifFalse: [aBlock value: each]].
+DatabaseRow >> fieldValuesDo: aBlock [
+
+	contents do: [ :each |
+		each == self class emptySlot ifFalse: [ aBlock value: each ] ]
 ]
 
 { #category : #accessing }
 DatabaseRow >> fields [
-	^self table fields select: [:each | (self includesField: each)].
+
+	^ self table fields select: [ :each | self includesField: each ]
 ]
 
 { #category : #initialization }
-DatabaseRow >> fieldsAndValidValuesDo: aBlock [ 
+DatabaseRow >> fieldsAndValidValuesDo: aBlock [
 	"If iterating over fields and values, we include wrappers with no value assigned yet. This might or might not be what we want. This one just iterates over ones with actual values"
 	self isEmpty ifTrue: [^self].
 	table fields do: [:each |  | value |
 		value := self at: each ifAbsent: [self class missingFieldIndicator].
 		value == self class missingFieldIndicator ifFalse: [
-			aBlock value: each value: value]].
+			aBlock value: each value: value]]
 ]
 
 { #category : #initialization }
-DatabaseRow >> fieldsAndValuesDo: aBlock [ 
-	table isNil ifTrue: [^self].
-	table fields do: [:each | aBlock value: each value: (self at: each ifAbsent: [self class missingFieldIndicator])]
+DatabaseRow >> fieldsAndValuesDo: aBlock [
+
+	table isNil ifTrue: [ ^ self ].
+	table fields do: [ :each |
+		aBlock
+			value: each
+			value:
+			(self at: each ifAbsent: [ self class missingFieldIndicator ]) ]
 ]
 
 { #category : #enumerating }
-DatabaseRow >> fieldsDo: aBlock [ 
-	1 to: contents size do: [:i |
+DatabaseRow >> fieldsDo: aBlock [
+
+	1 to: contents size do: [ :i |
 		| value |
 		value := contents at: i.
-		(value == self class emptySlot) ifFalse: [aBlock value: (self table fields at: i)]].
+		value == self class emptySlot ifFalse: [
+			aBlock value: (self table fields at: i) ] ]
 ]
 
 { #category : #printing }
@@ -235,157 +251,170 @@ DatabaseRow >> fieldsNeedingUpdate [
 	"Return a list of the fields that are different from the previous version (if we know what that was)"
 
 	| result |
-	oldVersion isNil ifTrue: [^self nonPrimaryKeyFields].
+	oldVersion isNil ifTrue: [ ^ self nonPrimaryKeyFields ].
 	result := OrderedCollection new: contents size.
-	self fieldsDo: 
-			[:each | 
-			each isPrimaryKey 
-				ifFalse: 
-					[(oldVersion at: each ifAbsent: [self class missingFieldIndicator]) 
-						= (self at: each) ifFalse: [result add: each]]].
-	^result
+	self fieldsDo: [ :each |
+		each isPrimaryKey ifFalse: [
+			(oldVersion at: each ifAbsent: [ self class missingFieldIndicator ])
+			= (self at: each) ifFalse: [ result add: each ] ] ].
+	^ result
 ]
 
 { #category : #accessing }
 DatabaseRow >> forDeletion [
-	^forDeletion.
+
+	^ forDeletion
 ]
 
 { #category : #accessing }
 DatabaseRow >> forDeletion: aBoolean [
-	forDeletion := aBoolean.
+
+	forDeletion := aBoolean
 ]
 
 { #category : #printing }
 DatabaseRow >> hasOldVersion [
-	^oldVersion notNil
+
+	^ oldVersion notNil
 ]
 
 { #category : #querying }
 DatabaseRow >> hasValueFor: aField [
 
-	^(self wrapperAt: aField ifAbsent: [^false]) hasValue.
+	^ (self wrapperAt: aField ifAbsent: [ ^ false ]) hasValue
 ]
 
 { #category : #testing }
 DatabaseRow >> hash [
+
 	| basic |
 	basic := self table hash.
-	self fieldsAndValuesDo: 
-			[:eachField :eachValue | 
-			basic := basic bitXor: eachField hash.
-			basic := basic bitXor: eachValue hash].
-	^basic.
+	self fieldsAndValuesDo: [ :eachField :eachValue |
+		basic := basic bitXor: eachField hash.
+		basic := basic bitXor: eachValue hash ].
+	^ basic
 ]
 
 { #category : #accessing }
 DatabaseRow >> includesField: aField [
-	^(contents at: aField position) ~~ self class emptySlot.
+
+	^ (contents at: aField position) ~~ self class emptySlot
 ]
 
 { #category : #initialization }
 DatabaseRow >> initialize [
+
 	shouldBeWritten := true.
 	forDeletion := false.
-	generated := false.
+	generated := false
 ]
 
 { #category : #testing }
 DatabaseRow >> isEmpty [
+
 	| empty |
-	contents isNil ifTrue: [^true].
+	contents isNil ifTrue: [ ^ true ].
 	empty := self class emptySlot.
-	contents do: [:each | each == empty ifFalse: [^false]].
-	^true.
+	contents do: [ :each | each == empty ifFalse: [ ^ false ] ].
+	^ true
 ]
 
 { #category : #enumerating }
 DatabaseRow >> keysAndValuesDo: aBlock [
-	1 to: contents size do: [:i |
-		| value | 
+
+	1 to: contents size do: [ :i |
+		| value |
 		value := contents at: i.
 		value == self class emptySlot ifFalse: [
-			aBlock value: (self table fields at: i) value: value contents]].
+			aBlock value: (self table fields at: i) value: value contents ] ]
 ]
 
 { #category : #accessing }
 DatabaseRow >> lockKeyFields [
 
-	^table lockKeyFields
+	^ table lockKeyFields
 ]
 
 { #category : #sequencing }
-DatabaseRow >> needsValueFromSequence: aSequence [ 
-	self table fields do: 
-			[:each | 
-			((self shouldGenerateValueFor: each) and: [each type sequence == aSequence]) 
-				ifTrue: [^true]].
-	^false
+DatabaseRow >> needsValueFromSequence: aSequence [
+
+	self table fields do: [ :each |
+		((self shouldGenerateValueFor: each) and: [
+			 each type sequence == aSequence ]) ifTrue: [ ^ true ] ].
+	^ false
 ]
 
 { #category : #accessing }
 DatabaseRow >> nonGeneratedFields [
 	"Return a list of our fields that are not generated"
+
 	| result |
 	result := OrderedCollection new: contents size.
-	self table fields do: [:field | 
-		field isGenerated not ifTrue: [result add: field]].
-	^result.
+	self table fields do: [ :field |
+		field isGenerated not ifTrue: [ result add: field ] ].
+	^ result
 ]
 
 { #category : #accessing }
 DatabaseRow >> nonGeneratedFieldsWithValues [
 	"Return a list of our fields that a) are not generated or b) have values. That is, exclude values we expect the database to generate"
+
 	| result |
 	result := OrderedCollection new: contents size.
-	self fieldsAndValidValuesDo: [:field :value | 
-		(value notNil or: [field isGenerated not]) ifTrue: [result add: field]].
-	^result.
+	self fieldsAndValidValuesDo: [ :field :value |
+		(value notNil or: [ field isGenerated not ]) ifTrue: [
+			result add: field ] ].
+	^ result
 ]
 
 { #category : #accessing }
 DatabaseRow >> nonPrimaryKeyFields [
+
 	| result |
 	result := OrderedCollection new: contents size.
-	self fieldsDo: [:field | 
-		field isPrimaryKey ifFalse: [result add: field]].
-	^result.
+	self fieldsDo: [ :field |
+		field isPrimaryKey ifFalse: [ result add: field ] ].
+	^ result
 ]
 
 { #category : #accessing }
 DatabaseRow >> numberOfFields [
-	^contents
-		inject: 0
-		into:
-			[:sum :each | sum + (each == self class emptySlot ifTrue: [0] ifFalse: [1])].
+
+	^ contents inject: 0 into: [ :sum :each |
+		  sum + (each == self class emptySlot
+			   ifTrue: [ 0 ]
+			   ifFalse: [ 1 ]) ]
 ]
 
 { #category : #accessing }
 DatabaseRow >> oldVersionAt: aField ifAbsent: aBlock [
-	oldVersion isNil ifTrue: [^aBlock value].
-	^oldVersion at: aField ifAbsent: aBlock.
+
+	oldVersion isNil ifTrue: [ ^ aBlock value ].
+	^ oldVersion at: aField ifAbsent: aBlock
 ]
 
 { #category : #accessing }
 DatabaseRow >> owner [
 
-	^owner.
+	^ owner
 ]
 
 { #category : #accessing }
 DatabaseRow >> owner: anObject [
 
-	owner := anObject.
+	owner := anObject
 ]
 
 { #category : #accessing }
 DatabaseRow >> parent [
-	^parent
+
+	^ parent
 ]
 
 { #category : #accessing }
 DatabaseRow >> parent: aDatabaseRow [
-	parent := aDatabaseRow.
+
+	parent := aDatabaseRow
 ]
 
 { #category : #sequencing }
@@ -393,46 +422,49 @@ DatabaseRow >> postWriteAssignSequencesUsing: anAccessor [
 
 	self table fields do: [:each |
 		(self hasValueFor: each) ifFalse: [
-			each type postWriteAssignSequenceValueFor: each in: self using: anAccessor]].
+			each type postWriteAssignSequenceValueFor: each in: self using: anAccessor]]
 ]
 
 { #category : #sequencing }
 DatabaseRow >> preWriteAssignSequencesUsing: aSession [
 	"Skip if we've already been generated"
+
 	generated ifTrue: [^self].
-	self table fields do: 
-			[:each | 
-			(self shouldGenerateValueFor: each in: aSession) 
-				ifTrue: 
-					[each type 
+	self table fields do:
+			[:each |
+			(self shouldGenerateValueFor: each in: aSession)
+				ifTrue:
+					[each type
 						preWriteAssignSequenceValueFor: each
 						in: self
 						using: (aSession isNil ifTrue: [nil] ifFalse: [aSession accessor])]].
-	generated := true.
+	generated := true
 ]
 
 { #category : #accessing }
 DatabaseRow >> primaryKey [
 
-	| |
 	self table primaryKeyFields isEmpty ifTrue: [^nil].
-	^self table hasCompositePrimaryKey 
+	^self table hasCompositePrimaryKey
 		ifTrue: [
-			self table primaryKeyFields 
+			self table primaryKeyFields
 				collect: [:each | 	self at: each]]
-		ifFalse: [self at: self table primaryKeyFields first ifAbsent: [nil]].
+		ifFalse: [self at: self table primaryKeyFields first ifAbsent: [nil]]
 ]
 
 { #category : #printing }
-DatabaseRow >> printEqualityStringForField: aDatabaseField on: aCommand [ 
+DatabaseRow >> printEqualityStringForField: aDatabaseField on: aCommand [
 	"Get around PostgreSQL bug.  Qualified names cannot appear in SET expression."
-	aCommand nextPutAll: (aDatabaseField platform nameForColumn: aDatabaseField name).
+
+	aCommand nextPutAll:
+		(aDatabaseField platform nameForColumn: aDatabaseField name).
 	aCommand nextPutAll: ' = '.
 	self printValueOfField: aDatabaseField on: aCommand
 ]
 
 { #category : #printing }
 DatabaseRow >> printEqualityTemplateForField: aDatabaseField on: aCommand [
+
 	"Get around PostgreSQL bug.  Qualified names cannot appear in SET expression."
 	| bind |
 	aCommand nextPutAll: (aDatabaseField platform nameForColumn: aDatabaseField name).
@@ -440,32 +472,39 @@ DatabaseRow >> printEqualityTemplateForField: aDatabaseField on: aCommand [
 	bind := aCommand canBind: (self at: aDatabaseField ifAbsent: [nil]) to: aDatabaseField type.
 	bind
 		ifTrue: [aCommand nextPutAll: '?']
-		ifFalse: [self printValueOfField: aDatabaseField on: aCommand].
+		ifFalse: [self printValueOfField: aDatabaseField on: aCommand]
 ]
 
 { #category : #printing }
 DatabaseRow >> printEqualityTemplateForField: aDatabaseField on: aCommand withBinding: aBoolean [
+
 	"Get around PostgreSQL bug.  Qualified names cannot appear in SET expression."
 	aCommand nextPutAll: (aDatabaseField platform nameForColumn: aDatabaseField name).
 	aCommand nextPutAll: ' = '.
-	aBoolean 
+	aBoolean
 		ifTrue: [aCommand nextPutAll: '?']
-		ifFalse: [self printValueOfField: aDatabaseField on: aCommand].
+		ifFalse: [self printValueOfField: aDatabaseField on: aCommand]
 ]
 
 { #category : #printing }
-DatabaseRow >> printFieldNamesOn: aWriteStream [ 
+DatabaseRow >> printFieldNamesOn: aWriteStream [
+
 	GlorpHelper 
 		do: [:each | aWriteStream nextPutAll: each name]
 		for: self table fields
-		separatedBy: [aWriteStream nextPutAll: ','].
+		separatedBy: [aWriteStream nextPutAll: ',']
 ]
 
 { #category : #printing }
 DatabaseRow >> printLockEqualityForField: aDatabaseField on: aStream [
+
 	| expression |
-	expression := ((BaseExpression new getTable: aDatabaseField table) getField: aDatabaseField) get: #= withArguments: (Array with: (oldVersion at: aDatabaseField)).
-	expression printSQLOn: aStream withParameters: #().
+	expression := ((BaseExpression new getTable: aDatabaseField table)
+		               getField: aDatabaseField)
+		              get: #=
+		              withArguments:
+		              (Array with: (oldVersion at: aDatabaseField)).
+	expression printSQLOn: aStream withParameters: #(  )
 ]
 
 { #category : #printing }
@@ -479,44 +518,47 @@ DatabaseRow >> printOn: aStream [
 		eachField printOn: aStream.
 		aStream nextPutAll: '->'.
 		eachWrapper printOn: aStream.
-		aStream cr.].
+		aStream cr.]
 ]
 
 { #category : #printing }
-DatabaseRow >> printPrimaryKeyStringOn: aStream [ 
+DatabaseRow >> printPrimaryKeyStringOn: aStream [
 	"If there is no primary key (i.e. this is a link table) use all the values that we have"
+
 	| fields |
-	fields := table primaryKeyFields isEmpty 
+	fields := table primaryKeyFields isEmpty
 		ifTrue: [self fields]
 		ifFalse: [table primaryKeyFields].
 	GlorpHelper
 		do:  [:eachField |
 			self printEqualityStringForField: eachField on: aStream]
 		for: fields
-		separatedBy: [aStream nextPutAll: ' AND '].
+		separatedBy: [aStream nextPutAll: ' AND ']
 ]
 
 { #category : #printing }
 DatabaseRow >> printPrimaryKeyTemplateOn: aStream [
 	"If there is no primary key (i.e. this is a link table) use all the values that we have"
 	| fields |
-	fields := table primaryKeyFields isEmpty 
+	fields := table primaryKeyFields isEmpty
 		ifTrue: [self fields]
 		ifFalse: [table primaryKeyFields].
 	GlorpHelper
 		do:  [:eachField |
 			self printEqualityTemplateForField: eachField on: aStream]
 		for: fields
-		separatedBy: [aStream nextPutAll: ' AND '].
+		separatedBy: [aStream nextPutAll: ' AND ']
 ]
 
 { #category : #printing }
-DatabaseRow >> printValueOfField: aDatabaseField on: aWriteStream [ 
-	aDatabaseField type print: (self at: aDatabaseField ifAbsent: [nil]) on: aWriteStream.
+DatabaseRow >> printValueOfField: aDatabaseField on: aWriteStream [
+
+	aDatabaseField type print: (self at: aDatabaseField ifAbsent: [nil]) on: aWriteStream
 ]
 
 { #category : #relationships }
 DatabaseRow >> relatedRowsIn: aRowMap [
+
 	| relatedRows |
 	relatedRows := OrderedCollection new.
 	self table foreignKeyConstraints
@@ -527,18 +569,21 @@ DatabaseRow >> relatedRowsIn: aRowMap [
 
 { #category : #querying }
 DatabaseRow >> shouldBeWritten [
-	table isNil ifTrue: [^shouldBeWritten].
-	^shouldBeWritten and: [table shouldBeWritten].
+
+	table isNil ifTrue: [ ^ shouldBeWritten ].
+	^ shouldBeWritten and: [ table shouldBeWritten ]
 ]
 
 { #category : #configuring }
-DatabaseRow >> shouldBeWritten: aBoolean [ 
+DatabaseRow >> shouldBeWritten: aBoolean [
+
 	shouldBeWritten := aBoolean
 ]
 
 { #category : #sequencing }
 DatabaseRow >> shouldGenerateValueFor: aField [
-	^self shouldGenerateValueFor: aField in: nil.
+
+	^ self shouldGenerateValueFor: aField in: nil
 ]
 
 { #category : #sequencing }
@@ -553,11 +598,13 @@ DatabaseRow >> shouldGenerateValueFor: aField in: aSession [
 
 { #category : #accessing }
 DatabaseRow >> status [
-	^status
+
+	^ status
 ]
 
 { #category : #accessing }
 DatabaseRow >> status: aSymbol [
+
 	status := aSymbol
 ]
 
@@ -565,14 +612,15 @@ DatabaseRow >> status: aSymbol [
 DatabaseRow >> table [
 	"Private - Answer the value of the receiver's ''table'' instance variable."
 
-	^table
+	^ table
 ]
 
 { #category : #configuring }
 DatabaseRow >> table: aDatabaseTable [
+
 	table := aDatabaseTable.
-	contents := Array new: (aDatabaseTable fields size).
-	contents atAllPut: self class emptySlot.
+	contents := Array new: aDatabaseTable fields size.
+	contents atAllPut: self class emptySlot
 ]
 
 { #category : #api }
@@ -593,30 +641,30 @@ DatabaseRow >> unifyField: eachSourceField withField: eachTargetField inRow: tar
 
 { #category : #accessing }
 DatabaseRow >> values [
+
 	| result |
 	result := OrderedCollection new.
-	self keysAndValuesDo: [:key :value |
-		result add: value].
-	^result
+	self keysAndValuesDo: [ :key :value | result add: value ].
+	^ result
 ]
 
 { #category : #configuring }
-DatabaseRow >> withAllFieldsIn: aRow [ 
+DatabaseRow >> withAllFieldsIn: aRow [
 	"aRow represents our original state. Make sure that we have all the fields in aRow, using nil values for any that are missing. This is needed if, e.g. we have been removed from a 1-many relationship, so we don't get a value generated for our foreign key, but we should still write it as a nil. We have to distinguish this from the case of a value that simply hasn't changed."
 
 	aRow isEmpty ifTrue: [^self].
 	oldVersion := aRow.
 	self numberOfFields = table fields size ifTrue: [^self].
-	aRow fieldsAndValidValuesDo: 
-			[:eachField :eachValue | 
+	aRow fieldsAndValidValuesDo:
+			[:eachField :eachValue |
 			(self includesField: eachField) ifFalse: [self at: eachField put: nil]].
-	^self
+	^ self
 ]
 
 { #category : #accessing }
 DatabaseRow >> wrapperAt: aField [
 
-	^self wrapperAt: aField ifAbsent: [self error: 'Field not found'].
+	^ self wrapperAt: aField ifAbsent: [ self error: 'Field not found' ]
 ]
 
 { #category : #accessing }
@@ -625,14 +673,15 @@ DatabaseRow >> wrapperAt: aField ifAbsent: aBlock [
 	| thing |
 	contents isNil ifTrue: [^aBlock value].
 	thing := contents at: aField position.
-	^thing == self class emptySlot ifTrue: aBlock ifFalse: [thing].
+	^thing == self class emptySlot ifTrue: aBlock ifFalse: [thing]
 ]
 
 { #category : #accessing }
 DatabaseRow >> wrapperAt: aField put: aWrapper [
+
 	| old |
 	old := contents at: aField position.
-	old == aWrapper ifTrue: [^self].
+	old == aWrapper ifTrue: [ ^ self ].
 	contents at: aField position put: aWrapper.
-	aWrapper isNowContainedBy: self and: aField.
+	aWrapper isNowContainedBy: self and: aField
 ]

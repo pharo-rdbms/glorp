@@ -10,16 +10,18 @@ Subclasses must implement the following messages:
 Class {
 	#name : #VersionGenerator,
 	#superclass : #GlorpDatabaseValueGenerator,
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #sequencing }
 VersionGenerator >> nextValueFor: aField in: aRow [
-	self subclassResponsibility.
+
+	self subclassResponsibility
 ]
 
 { #category : #sequencing }
 VersionGenerator >> preWriteAssignSequenceValueFor: aField in: aRow using: anAccessor [
 	"Overwrite a pre-existing value in the field if necessary"
-	aRow at: aField forcePut: (self nextValueFor: aField in: aRow).
+
+	aRow at: aField forcePut: (self nextValueFor: aField in: aRow)
 ]

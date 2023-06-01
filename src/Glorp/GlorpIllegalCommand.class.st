@@ -12,25 +12,29 @@ Class {
 	#instVars : [
 		'command'
 	],
-	#category : 'Glorp-Exceptions'
+	#category : #'Glorp-Exceptions'
 }
 
 { #category : #accessing }
 GlorpIllegalCommand >> command [
-	^command
+
+	^ command
 ]
 
 { #category : #accessing }
 GlorpIllegalCommand >> command: aDatabaseCommand [
+
 	command := aDatabaseCommand
 ]
 
 { #category : #accessing }
 GlorpIllegalCommand >> defaultMessageText [
-	^'Illegal Command'
+
+	^ 'Illegal Command'
 ]
 
 { #category : #accessing }
 GlorpIllegalCommand >> session [
-	^command session.
+
+	^ command session
 ]

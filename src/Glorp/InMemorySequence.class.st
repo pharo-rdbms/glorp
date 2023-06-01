@@ -11,26 +11,26 @@ Class {
 	#instVars : [
 		'count'
 	],
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #'*Glorp' }
 InMemorySequence class >> default [
 
-	^self new.
+	^ self new
 ]
 
-{ #category : #public }
+{ #category : #sequencing }
 InMemorySequence >> getSequenceValueFromDatabaseFor: aField in: aRow using: aSession [
 
-	aRow at: aField put: (count := count + 1).
+	aRow at: aField put: (count := count + 1)
 ]
 
-{ #category : #'initialize/release' }
+{ #category : #initialization }
 InMemorySequence >> initialize [
 
 	super initialize.
-	count := 0.
+	count := 0
 ]
 
 { #category : #sequencing }
@@ -44,5 +44,5 @@ InMemorySequence >> postWriteAssignSequenceValueFor: aField in: aRow using: anAc
 { #category : #sequencing }
 InMemorySequence >> preWriteAssignSequenceValueFor: aField in: aRow [
 
-	aRow at: aField put: (count := count + 1).
+	aRow at: aField put: (count := count + 1)
 ]

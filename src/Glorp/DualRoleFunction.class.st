@@ -9,51 +9,58 @@ Class {
 		'whereClauseVersion',
 		'selectListVersion'
 	],
-	#category : 'Glorp-Expressions'
+	#category : #'Glorp-Expressions'
 }
 
 { #category : #accessing }
 DualRoleFunction >> arguments [
-	^arguments.
+
+	^ arguments
 ]
 
 { #category : #accessing }
 DualRoleFunction >> arguments: anArray [
+
 	arguments := anArray.
 	whereClauseVersion arguments: anArray.
-	selectListVersion arguments: anArray.
+	selectListVersion arguments: anArray
 ]
 
 { #category : #converting }
 DualRoleFunction >> asField [
-	^self.
+
+	^ self
 ]
 
 { #category : #accessing }
 DualRoleFunction >> base: anExpression [
+
 	base := anExpression.
 	"whereClauseVersion base: anExpression."
-	selectListVersion base: anExpression.
+	selectListVersion base: anExpression
 ]
 
 { #category : #accessing }
 DualRoleFunction >> basicArguments: anArray [
-	arguments := anArray.
+
+	arguments := anArray
 ]
 
 { #category : #accessing }
 DualRoleFunction >> basicBase: anExpression [
-	base := anExpression.
+
+	base := anExpression
 ]
 
 { #category : #copying }
 DualRoleFunction >> copy [
+
 	| new |
 	new := super copy.
 	"We need to make sure we copy these before the base gets set. This is horribly ugly."
 	new selectListVersion: selectListVersion copy.
 	new whereClauseVersion: whereClauseVersion copy.
-	^new.
+	^ new
 ]
 
 { #category : #copying }
@@ -76,69 +83,87 @@ DualRoleFunction >> createFor: argumentList withBase: anExpression symbol: aSymb
 DualRoleFunction >> do: aBlock skipping: aSet [
 	"Iterate over the expression tree. Keep track of who has already been visited, so we don't get trapped in cycles or visit nodes twice."
 
-	(aSet includes: self) ifTrue: [^self].
+	(aSet includes: self) ifTrue: [ ^ self ].
 	super do: aBlock skipping: aSet.
-	arguments do: [:each |
-		each do: aBlock skipping: aSet].
+	arguments do: [ :each | each do: aBlock skipping: aSet ]
 ]
 
 { #category : #accessing }
 DualRoleFunction >> field [
-	^whereClauseVersion field.
+
+	^ whereClauseVersion field
 ]
 
 { #category : #printing }
 DualRoleFunction >> printSQLOn: aStream withParameters: aDictionary [
-	whereClauseVersion printSQLOn: aStream withParameters: aDictionary.
+
+	whereClauseVersion printSQLOn: aStream withParameters: aDictionary
 ]
 
 { #category : #printing }
 DualRoleFunction >> printSelectSQLOn: aStream withParameters: aDictionary [
-	selectListVersion printSelectSQLOn: aStream withParameters: aDictionary.
+
+	selectListVersion
+		printSelectSQLOn: aStream
+		withParameters: aDictionary
 ]
 
 { #category : #preparing }
 DualRoleFunction >> rebuildOn: aBaseExpression startingFrom: anExpression withOuterScopeBase: ultimateBaseExpression [
-	| rebuilt |
-	self == anExpression ifTrue: [^aBaseExpression].
-	"Rebuilding just one of them will rebuild our whole structure, since it all comes from the same definition."
-	rebuilt := whereClauseVersion rebuildOn: aBaseExpression startingFrom: anExpression withOuterScopeBase: ultimateBaseExpression.
-	rebuilt == whereClauseVersion ifTrue: [^self].
 
-	rebuilt arguments: (self arguments collect: [:each | each rebuildOn: aBaseExpression startingFrom: anExpression withOuterScopeBase: ultimateBaseExpression]).
-	^rebuilt.
+	| rebuilt |
+	self == anExpression ifTrue: [ ^ aBaseExpression ].
+	"Rebuilding just one of them will rebuild our whole structure, since it all comes from the same definition."
+	rebuilt := whereClauseVersion
+		           rebuildOn: aBaseExpression
+		           startingFrom: anExpression
+		           withOuterScopeBase: ultimateBaseExpression.
+	rebuilt == whereClauseVersion ifTrue: [ ^ self ].
+
+	rebuilt arguments: (self arguments collect: [ :each |
+			 each
+				 rebuildOn: aBaseExpression
+				 startingFrom: anExpression
+				 withOuterScopeBase: ultimateBaseExpression ]).
+	^ rebuilt
 ]
 
 { #category : #accessing }
 DualRoleFunction >> selectListVersion [
-	^selectListVersion.
+
+	^ selectListVersion
 ]
 
 { #category : #accessing }
 DualRoleFunction >> selectListVersion: aFunctionExpression [
-	selectListVersion := aFunctionExpression.
+
+	selectListVersion := aFunctionExpression
 ]
 
 { #category : #accessing }
 DualRoleFunction >> symbol: aSymbol [
+
 	symbol := aSymbol.
 	whereClauseVersion symbol: aSymbol.
-	selectListVersion symbol: aSymbol.
+	selectListVersion symbol: aSymbol
 ]
 
 { #category : #accessing }
 DualRoleFunction >> type: aSymbol [
+
 	super type: aSymbol.
 	whereClauseVersion type: aSymbol.
-	selectListVersion type: aSymbol.
+	selectListVersion type: aSymbol
 ]
 
 { #category : #accessing }
 DualRoleFunction >> whereClauseVersion [
-	^whereClauseVersion.
+
+	^ whereClauseVersion
 ]
 
 { #category : #accessing }
 DualRoleFunction >> whereClauseVersion: aFunctionExpression [
-	whereClauseVersion := aFunctionExpression.
+
+	whereClauseVersion := aFunctionExpression
 ]

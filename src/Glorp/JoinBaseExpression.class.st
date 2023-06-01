@@ -6,7 +6,7 @@ However, this means that when we're trying to rebuild this expression and fit it
 Class {
 	#name : #JoinBaseExpression,
 	#superclass : #BaseExpression,
-	#category : 'Glorp-Expressions'
+	#category : #'Glorp-Expressions'
 }
 
 { #category : #preparing }
@@ -16,5 +16,5 @@ JoinBaseExpression >> asExpressionJoiningSource: source toTarget: target [
 	(customer.ADDRESS.STREET = 'Main') AND (customer.CUSTOMER.ADDRESS_ID = customer.ADDRESS.ID)
 	The primary key expression for the relationship has been translated into field references into the customer and address tables in a particular context."
 
-	^target.
+	^ target
 ]

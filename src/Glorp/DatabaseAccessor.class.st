@@ -48,48 +48,49 @@ DatabaseAccessor class >> classForThisPlatform [
 	^PharoDatabaseAccessor
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 DatabaseAccessor class >> forLogin: aLogin [ 
 	^self classForThisPlatform new currentLogin: aLogin
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'settings - logging' }
 DatabaseAccessor class >> loggingEnabled [
 	LoggingEnabled isNil ifTrue: [LoggingEnabled := false].
 	^LoggingEnabled
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'settings - logging' }
 DatabaseAccessor class >> loggingEnabled: aBoolean [ 
 	LoggingEnabled := aBoolean
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 DatabaseAccessor class >> new [
 
 	^super new initialize.
 ]
 
 { #category : #executing }
-DatabaseAccessor >> addConstraint: aConstraint [ 
-	
-	^self 
+DatabaseAccessor >> addConstraint: aConstraint [
+
+	^ self
 		addConstraint: aConstraint
 		ifError: [ :ex | 	| msg|
 				msg := ex messageText.
 				msg isEmpty ifTrue: [msg := 'No error message provided for top level exception.'].
 				Transcript cr; show: ('Add constraint <1s> ERROR: (<2s>) ' expandMacrosWith: aConstraint name with: msg).
-				ex return: nil].
+				ex return: nil ]
 ]
 
 { #category : #executing }
 DatabaseAccessor >> addConstraint: aConstraint ifError: aBlock [
+
 	| addString |
 	addString := self platform createConstraintAddStatement: aConstraint.
-	addString isEmpty ifTrue: [^self].
-	^self
-		executeInDDLOperation: [ self executeSQLStringNoResult: addString ]
-		ifError: aBlock
+	addString isEmpty ifTrue: [ ^ self ].
+	^ self
+		  executeInDDLOperation: [ self executeSQLStringNoResult: addString ]
+		  ifError: aBlock
 ]
 
 { #category : #executing }
@@ -107,85 +108,95 @@ DatabaseAccessor >> addFields: aCollection [
 { #category : #executing }
 DatabaseAccessor >> addFields: aCollection ifError: aBlock [
 
-	aCollection
-		do: 	[:aField | 
-			self execute: [self executeSQLStringNoResult: (self platform createAddColumnStatementFor: aField)]
-				ifError: aBlock ].
+	aCollection do: [ :aField |
+		self
+			execute: [
+				self executeSQLStringNoResult:
+					(self platform createAddColumnStatementFor: aField) ]
+			ifError: aBlock ]
 ]
 
 { #category : #permissions }
 DatabaseAccessor >> allowCommand: aCommand during: aBlock [
+
 	| oldCommands |
 	oldCommands := self deniedCommands.
-	((self deniedCommands ifNil: [#()]) includes: aCommand)
-		ifTrue: [deniedCommands := deniedCommands copyWithout: aCommand].
-	aBlock ensure: [deniedCommands := oldCommands].
+	((self deniedCommands ifNil: [ #(  ) ]) includes: aCommand) ifTrue: [
+		deniedCommands := deniedCommands copyWithout: aCommand ].
+	aBlock ensure: [ deniedCommands := oldCommands ]
 ]
 
 { #category : #permissions }
 DatabaseAccessor >> alsoDenyCommand: aCommand [
+
 	self deniedCommands isNil
-		ifTrue: [self denyCommand: aCommand]
-		ifFalse:
-			[self deniedCommands: self deniedCommands , (Array with: aCommand)].
+		ifTrue: [ self denyCommand: aCommand ]
+		ifFalse: [
+		self deniedCommands: self deniedCommands , (Array with: aCommand) ]
 ]
 
 { #category : #executing }
 DatabaseAccessor >> alterField: aField newType: aType [ 
 
-	^self 
+	^ self 
 		alterField: aField 
 		newType: aType 
 		ifError: [ :ex | 	| msg|
 				msg := ex messageText.
 				msg isEmpty ifTrue: [msg := 'No error message provided for top level exception.'].
 				Transcript cr; show: ('Alter column <1s> to set new type <2s> ERROR: (<3s>) ' expandMacrosWith: aField name with: aType sqlString with: msg).
-				ex return: nil].
+				ex return: nil]
 ]
 
 { #category : #executing }
 DatabaseAccessor >> alterField: aField newType: aType ifError: aBlock [
 
-	^self doDDLOperation: [
-		self 
-			execute: [self executeSQLStringNoResult: 
-						(self platform createAlterColumnStatement: aField newType: aType)]
-			ifError: aBlock ]
+	^ self doDDLOperation: [
+		  self
+			  execute: [
+				  self executeSQLStringNoResult:
+					  (self platform
+						   createAlterColumnStatement: aField
+						   newType: aType) ]
+			  ifError: aBlock ]
 ]
 
 { #category : #executing }
 DatabaseAccessor >> alterField: aField setDefault: aType [
 
-	self 
-		alterField: aField 
-		setDefault: aType 
+	self
+		alterField: aField
+		setDefault: aType
 		ifError: [ :ex | 	| msg|
 				msg := ex messageText.
 				msg isEmpty ifTrue: [msg := 'No error message provided for top level exception.'].
 				Transcript cr; show: ('Alter column  <1s> to set default <2s>  ERROR: (<2s>) ' expandMacrosWith: aField name with: aType sqlString with: msg).
-				ex return: nil].
+				ex return: nil]
 ]
 
 { #category : #executing }
 DatabaseAccessor >> alterField: aField setDefault: anObject ifError: aBlock [
 
-	^self doDDLOperation: [
-		self 
-			execute: [self executeSQLStringNoResult: 
-						(self platform createAlterColumnStatement: aField setDefault: anObject )]
-			ifError: aBlock ]
+	^ self doDDLOperation: [
+		  self
+			  execute: [
+				  self executeSQLStringNoResult:
+					  (self platform
+						   createAlterColumnStatement: aField
+						   setDefault: anObject) ]
+			  ifError: aBlock ]
 ]
 
 { #category : #executing }
 DatabaseAccessor >> alterFieldDropDefault: aField [
 
-	self 
-		alterFieldDropDefault: aField 
+	self
+		alterFieldDropDefault: aField
 		ifError: [ :ex | 	| msg|
 				msg := ex messageText.
 				msg isEmpty ifTrue: [msg := 'No error message provided for top level exception.'].
 				Transcript cr; show: ('Alter column  <1s> to drop default ERROR: (<2s>) ' expandMacrosWith: aField name  with: msg).
-				ex return: nil].
+				ex return: nil]
 ]
 
 { #category : #executing }
@@ -201,13 +212,13 @@ DatabaseAccessor >> alterFieldDropDefault: aField ifError: aBlock [
 { #category : #executing }
 DatabaseAccessor >> alterFieldDropNotNull: aField [
 
-	self 
-		alterFieldDropNotNull: aField 
+	self
+		alterFieldDropNotNull: aField
 		ifError: [ :ex | 	| msg|
 				msg := ex messageText.
 				msg isEmpty ifTrue: [msg := 'No error message provided for top level exception.'].
 				Transcript cr; show: ('Alter column  <1s> to drop not null ERROR: (<2s>) ' expandMacrosWith: aField name  with: msg).
-				ex return: nil].
+				ex return: nil]
 ]
 
 { #category : #executing }
@@ -221,99 +232,116 @@ DatabaseAccessor >> alterFieldDropNotNull: aField ifError: aBlock [
 ]
 
 { #category : #executing }
-DatabaseAccessor >> alterFieldSetNotNull: aField [	
+DatabaseAccessor >> alterFieldSetNotNull: aField [
 
-	self 
+	self
 		alterFieldSetNotNull: aField
 		ifError: [ :ex | 	| msg|
 				msg := ex messageText.
 				msg isEmpty ifTrue: [msg := 'No error message provided for top level exception.'].
 				Transcript cr; show: ('Alter column  <1s> to set not null ERROR: (<2s>) ' expandMacrosWith: aField name  with: msg).
-				ex return: nil].
+				ex return: nil]
 ]
 
 { #category : #executing }
 DatabaseAccessor >> alterFieldSetNotNull: aField ifError: aBlock [
 
 	^self doDDLOperation: [
-		self 
-			execute: [self executeSQLStringNoResult: 
+		self
+			execute: [self executeSQLStringNoResult:
 						(self platform createAlterColumnStatementSetNotNull: aField)]
 			ifError: aBlock ]
 ]
 
 { #category : #executing }
 DatabaseAccessor >> basicExecuteSQLString: aString [
-	self subclassResponsibility.
+
+	self subclassResponsibility
 ]
 
 { #category : #executing }
 DatabaseAccessor >> basicExecuteSQLString: aString bindingArray: aBindingArray [
-	self subclassResponsibility.
+
+	self subclassResponsibility
 ]
 
 { #category : #executing }
 DatabaseAccessor >> basicExecuteSQLString: aString returnResult: returnResult binding: aBindingArray doing: aBlock [
-	^self subclassResponsibility
+
+	^ self subclassResponsibility
 ]
 
 { #category : #executing }
 DatabaseAccessor >> basicExecuteSQLStringNoResult: aString doing: aBlock [
-	^self basicExecuteSQLString: aString returnResult: false binding: nil doing: aBlock.
+
+	^ self
+		  basicExecuteSQLString: aString
+		  returnResult: false
+		  binding: nil
+		  doing: aBlock
 ]
 
 { #category : #permissions }
 DatabaseAccessor >> beReadOnly [
-	self denyWrites.
+
+	self denyWrites
 ]
 
 { #category : #transactions }
 DatabaseAccessor >> beginTransaction [
-	^self subclassResponsibility.
+
+	^ self subclassResponsibility
 ]
 
 { #category : #permissions }
 DatabaseAccessor >> checkPermissionFor: command [
-	deniedCommands isNil ifTrue: [^self].
-	(deniedCommands includes: command class)
-		ifTrue: [(GlorpIllegalCommand new command: command) signal].
+
+	deniedCommands isNil ifTrue: [ ^ self ].
+	(deniedCommands includes: command class) ifTrue: [
+		(GlorpIllegalCommand new command: command) signal ]
 ]
 
 { #category : #transactions }
 DatabaseAccessor >> commitTransaction [
-	^self subclassResponsibility.
+
+	^ self subclassResponsibility
 ]
 
 { #category : #cursors }
 DatabaseAccessor >> completedCommand: aCommand [
 	"Indicate that we've completed the command. Release associated resources."
-	^self.
+
+	^ self
 ]
 
 { #category : #accessing }
 DatabaseAccessor >> connection [
-	^connection
+
+	^ connection
 ]
 
 { #category : #accessing }
 DatabaseAccessor >> connection: aPlatformDatabaseConnection [
+
 	connection := aPlatformDatabaseConnection
 ]
 
 { #category : #accessing }
 DatabaseAccessor >> connectionClass [
-	^self connectionClassForLogin: currentLogin
+
+	^ self connectionClassForLogin: currentLogin
 ]
 
 { #category : #accessing }
 DatabaseAccessor >> connectionClassForLogin: aLogin [
-	^self subclassResponsibility.
+
+	^ self subclassResponsibility
 ]
 
 { #category : #copying }
 DatabaseAccessor >> copy [
 
-	^self shallowCopy postCopy.
+	^ self shallowCopy postCopy
 ]
 
 { #category : #executing }
@@ -1000,7 +1028,7 @@ DatabaseAccessor >> renameField: aDatabaseField to: nameString ifError: errorBlo
 DatabaseAccessor >> renameTable: aDatabaseTable to: newTableName inPlatform: aDatabasePlatform ifError: errorBlock [
 
 	| sqlStatement |
-	sqlStatement := aDatabasePlatform sqlStatementToRenameTable: aDatabaseTable to: newTableName.	
+	sqlStatement := aDatabasePlatform sqlStatementToRenameTable: aDatabaseTable to: newTableName.
 	self
 		executeInDDLOperation: [ self executeSQLStringNoResult: sqlStatement ]
 		ifError: errorBlock
@@ -1014,32 +1042,38 @@ DatabaseAccessor >> reset [
 
 { #category : #permissions }
 DatabaseAccessor >> resetPermissions [
-	self permitEverything.
+
+	self permitEverything
 ]
 
 { #category : #accessing }
 DatabaseAccessor >> returnRowCount: aBoolean [
-	^self.
+
+	^ self
 ]
 
 { #category : #accessing }
 DatabaseAccessor >> reusePreparedStatements [
-	^reusePreparedStatements and: [self useBinding].
+
+	^ reusePreparedStatements and: [ self useBinding ]
 ]
 
 { #category : #accessing }
 DatabaseAccessor >> reusePreparedStatements: aBoolean [
-	reusePreparedStatements := aBoolean.
+
+	reusePreparedStatements := aBoolean
 ]
 
 { #category : #transactions }
 DatabaseAccessor >> rollbackTransaction [
-	^self subclassResponsibility.
+
+	^ self subclassResponsibility
 ]
 
 { #category : #executing }
 DatabaseAccessor >> rowCount [
-	^self subclassResponsibility
+
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -1051,10 +1085,11 @@ DatabaseAccessor >> schema [
 { #category : #login }
 DatabaseAccessor >> showDialog: aString [
 
-	self subclassResponsibility.
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
 DatabaseAccessor >> useBinding [
-	^self platform useBinding.
+
+	^ self platform useBinding
 ]

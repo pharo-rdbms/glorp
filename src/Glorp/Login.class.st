@@ -31,44 +31,50 @@ Class {
 	#category : #'Glorp-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 Login class >> new [
-	^super new initialize.
+
+	^ super new initialize
 ]
 
-{ #category : #accessing }
-Login >> = aLogin [ 
-	^self class == aLogin class and: 
-			[self name = aLogin name and: 
-					[self database class = aLogin database class and: 
-							[self username = aLogin username and: 
-									[self connectString = aLogin connectString]]]]
+{ #category : #comparing }
+Login >> = aLogin [
+
+	^ self class == aLogin class and: [
+		  self name = aLogin name and: [
+			  self database class = aLogin database class and: [
+				  self username = aLogin username and: [
+					  self connectString = aLogin connectString ] ] ] ]
 ]
 
 { #category : #converting }
 Login >> asGlorpLogin [
 	"Polymorph with objects that know how to convert themselves to Logins, e.g. Store ConnectionProfiles."
 
-	^self
+	^ self
 ]
 
 { #category : #accessing }
 Login >> connectString [
-	^connectString
+
+	^ connectString
 ]
 
 { #category : #accessing }
-Login >> connectString: aString [ 
+Login >> connectString: aString [
+
 	connectString := aString
 ]
 
 { #category : #accessing }
 Login >> database [
-	^database
+
+	^ database
 ]
 
 { #category : #accessing }
-Login >> database: aDatabasePlatform [ 
+Login >> database: aDatabasePlatform [
+
 	database := aDatabasePlatform
 ]
 
@@ -93,6 +99,7 @@ Login >> databaseName [
 
 { #category : #accessing }
 Login >> databaseName: aDatabaseName [
+
 	databaseName := aDatabaseName
 ]
 
@@ -104,17 +111,21 @@ Login >> discardPassword [
 
 { #category : #accessing }
 Login >> encodingStrategy [
-	^encodingStrategy
+
+	^ encodingStrategy
 ]
 
 { #category : #accessing }
 Login >> encodingStrategy: anEncodingStrategy [
-	encodingStrategy := anEncodingStrategy.
+
+	encodingStrategy := anEncodingStrategy
 ]
 
 { #category : #accessing }
 Login >> hash [
-	^self name hash + self database class hash + self username hash + self connectString hash
+
+	^ self name hash + self database class hash + self username hash
+	  + self connectString hash
 ]
 
 { #category : #accessing }
@@ -136,7 +147,8 @@ Login >> host [
 
 { #category : #accessing }
 Login >> host: aHost [
-	host := aHost.
+
+	host := aHost
 ]
 
 { #category : #initialization }
@@ -156,31 +168,38 @@ Login >> isSSL [
 
 { #category : #accessing }
 Login >> name [
-	name isNil ifTrue: [^self connectString] ifFalse: [^name].
+
+	name isNil
+		ifTrue: [ ^ self connectString ]
+		ifFalse: [ ^ name ]
 ]
 
 { #category : #accessing }
 Login >> name: aString [
-	name := aString.
+
+	name := aString
 ]
 
 { #category : #accessing }
 Login >> password [
 	"Return the password for this login. If we are in a secure mode, then erase the password as soon as it is accessed."
+
 	| returnValue |
 	returnValue := password.
-	secure ifTrue: [password := nil].
-	^returnValue.
+	secure ifTrue: [ password := nil ].
+	^ returnValue
 ]
 
 { #category : #accessing }
-Login >> password: aString [ 
+Login >> password: aString [
+
 	password := aString
 ]
 
 { #category : #accessing }
 Login >> platform [
-	^self database.
+
+	^ self database
 ]
 
 { #category : #accessing }
@@ -204,7 +223,8 @@ Login >> port [
 
 { #category : #accessing }
 Login >> port: aPort [
-	port := aPort.
+
+	port := aPort
 ]
 
 { #category : #printing }
@@ -218,46 +238,54 @@ Login >> printOn: aStream [
 	connectString printOn: aStream.
 	aStream nextPutAll: ', '.
 	schema printOn: aStream.
-	aStream nextPutAll: ')'.
+	aStream nextPutAll: ')'
 ]
 
 { #category : #accessing }
 Login >> schema [
-	^schema
+
+	^ schema
 ]
 
 { #category : #accessing }
 Login >> schema: aString [
-	schema := aString.
+
+	schema := aString
 ]
 
 { #category : #accessing }
 Login >> secure [
-	^secure
+
+	^ secure
 ]
 
 { #category : #accessing }
 Login >> secure: aBoolean [
+
 	secure := aBoolean
 ]
 
 { #category : #'session creation' }
 Login >> sessionForDescriptorSystem: aDescriptorSystemClass [
 	"Create a session for this login, using aDescriptorSystemClass for its metadata"
-	^aDescriptorSystemClass sessionForLogin: self.
+
+	^ aDescriptorSystemClass sessionForLogin: self
 ]
 
 { #category : #initialization }
 Login >> setSSL [
+
 	settings at: #ssl put: true
 ]
 
 { #category : #accessing }
 Login >> username [
-	^username
+
+	^ username
 ]
 
 { #category : #accessing }
-Login >> username: aString [ 
+Login >> username: aString [
+
 	username := aString
 ]

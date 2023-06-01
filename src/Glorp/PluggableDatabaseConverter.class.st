@@ -14,37 +14,45 @@ Class {
 		'stToDb',
 		'dbToSt'
 	],
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #converting }
-PluggableDatabaseConverter >> convert: anObject fromDatabaseRepresentationAs: aDatabaseType [ 
-	^dbToSt isNil ifTrue: [anObject] ifFalse: [dbToSt value: anObject]
+PluggableDatabaseConverter >> convert: anObject fromDatabaseRepresentationAs: aDatabaseType [
+
+	^ dbToSt isNil
+		  ifTrue: [ anObject ]
+		  ifFalse: [ dbToSt value: anObject ]
 ]
 
 { #category : #converting }
-PluggableDatabaseConverter >> convert: anObject toDatabaseRepresentationAs: aDatabaseType [ 
-	^stToDb isNil ifTrue: [anObject] ifFalse: [stToDb value: anObject]
+PluggableDatabaseConverter >> convert: anObject toDatabaseRepresentationAs: aDatabaseType [
+
+	^ stToDb isNil
+		  ifTrue: [ anObject ]
+		  ifFalse: [ stToDb value: anObject ]
 ]
 
 { #category : #accessing }
 PluggableDatabaseConverter >> dbToSt [
-	^dbToSt
+
+	^ dbToSt
 ]
 
 { #category : #accessing }
 PluggableDatabaseConverter >> dbToStConverter: aBlock [
 
-	dbToSt := aBlock.
+	dbToSt := aBlock
 ]
 
 { #category : #accessing }
 PluggableDatabaseConverter >> stToDb [
-	^stToDb
+
+	^ stToDb
 ]
 
 { #category : #accessing }
 PluggableDatabaseConverter >> stToDbConverter: aBlock [
 
-	stToDb := aBlock.
+	stToDb := aBlock
 ]

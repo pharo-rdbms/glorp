@@ -27,31 +27,37 @@ DatabaseConverter class >> new [
 ]
 
 { #category : #converting }
-DatabaseConverter >> convert: anObject fromDatabaseRepresentationAs: aDatabaseType [ 
+DatabaseConverter >> convert: anObject fromDatabaseRepresentationAs: aDatabaseType [
+
 	self subclassResponsibility
 ]
 
 { #category : #converting }
-DatabaseConverter >> convert: anObject toDatabaseRepresentationAs: aDatabaseType [ 
+DatabaseConverter >> convert: anObject toDatabaseRepresentationAs: aDatabaseType [
+
 	self subclassResponsibility
 ]
 
 { #category : #initialization }
 DatabaseConverter >> initialize [
-	name := #unnamed.
+
+	name := #unnamed
 ]
 
 { #category : #accessing }
 DatabaseConverter >> name [
-	^name.
+
+	^ name
 ]
 
 { #category : #accessing }
 DatabaseConverter >> name: aString [
-	name := aString.
+
+	name := aString
 ]
 
 { #category : #printing }
 DatabaseConverter >> printOn: aString [
-	aString nextPutAll: 'DatabaseConverter(', name, ')'.
+
+	aString nextPutAll: 'DatabaseConverter(' , name , ')'
 ]

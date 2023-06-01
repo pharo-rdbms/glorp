@@ -73,8 +73,8 @@ TimedStrongCachePolicy >> timeoutSeconds: anInteger [
 	timeout := anInteger.
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 TimedStrongCachePolicy >> totalSeconds [
 
-	^Dialect totalSeconds.
+	^ Dialect totalSeconds
 ]

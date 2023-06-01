@@ -4,11 +4,12 @@ This implements postgresql sequences using nextVal. The mechanism is similar to 
 Class {
 	#name : #PGSequence,
 	#superclass : #NamedSequence,
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #private }
 PGSequence >> backupReserveCommand: anInteger in: aSession [
+
 	| stream command |
 	stream := WriteStream on: (String new: 200).
 	stream nextPutAll: 'select '.
@@ -21,10 +22,10 @@ PGSequence >> backupReserveCommand: anInteger in: aSession [
 	command setSQLString: stream contents.
 	command parameters: (Array with: anInteger).
 	command session: aSession.
-	^command.
+	^command
 ]
 
-{ #category : #SQL }
+{ #category : #sequencing }
 PGSequence >> getSequenceValueFromDatabaseFor: aDatabaseField in: aDatabaseRow using: anAccessor [
 
 	| statement rows pk |
@@ -35,26 +36,26 @@ PGSequence >> getSequenceValueFromDatabaseFor: aDatabaseField in: aDatabaseRow u
 	rows := anAccessor executeSQLString: statement.
 	pk := rows first first.
 
-	aDatabaseRow at: aDatabaseField put: pk.
+	aDatabaseRow at: aDatabaseField put: pk
 ]
 
-{ #category : #SQL }
+{ #category : #sequencing }
 PGSequence >> postWriteAssignSequenceValueFor: aDatabaseField in: aDatabaseRow using: anAccessor [
 
 "No-op;  for user information, we show, commented, the code that was provided here circa Glorp 0.2.*.
 	aDatabaseRow at: aDatabaseField
-		put: (aSession accessor 
+		put: (aSession accessor
 				executeSQLString: 'SELECT CURRVAL(' , self qualifiedName 	, ')')."
 ]
 
-{ #category : #SQL }
+{ #category : #private }
 PGSequence >> reserveViaBackupMechanism: anInteger in: aSession [
 	"The regular mechanism didn't work, (probably because there weren't enough rows in the table), try a different technique."
 
 	| command row |
 	command := self backupReserveCommand: anInteger in: aSession.
 	row := (aSession accessor executeCommand: command) first.
-	self reservedNumbers addAll: row.
+	self reservedNumbers addAll: row
 ]
 
 { #category : #SQL }
@@ -71,17 +72,19 @@ PGSequence >> tableSelectCommandFor: aTable in: aSession reserving: anInteger [
 			tableSelectCommand parameters: (Array with: anInteger).
 			tableSelectCommand setSQLString: stream contents.
 			tableSelectCommand session: aSession].
-	^tableSelectCommand.
+	^tableSelectCommand
 ]
 
 { #category : #SQL }
 PGSequence >> tableToSelectFromFor: aTable [
 	"Sometimes it's inefficient to select sequence values against our own table and we can use a database-specific system table instead to be much faster. Subclasses can override where this is the case"
-	^(DatabaseTable named: 'pg_attribute').
+
+	^ DatabaseTable named: 'pg_attribute'
 ]
 
 { #category : #SQL }
 PGSequence >> tableToSelectFromIn: session for: aTable [
 	"Sometimes it's inefficient to select sequence values against our own table and we can use a database-specific system table instead to be much faster. Subclasses can override where this is the case"
-	^(session databaseTableClass named: 'pg_attribute').
+
+	^ session databaseTableClass named: 'pg_attribute'
 ]

@@ -21,7 +21,7 @@ PrimaryKeyConstraint class >> forTable: aDatabaseTable fields: collDatabaseField
 { #category : #printing }
 PrimaryKeyConstraint >> creationStringFor: aPlatform [
 
-	^aPlatform createPrimaryKeyConstraintAddStatement: self
+	^ aPlatform createPrimaryKeyConstraintAddStatement: self
 ]
 
 { #category : #initialization }
@@ -39,47 +39,49 @@ PrimaryKeyConstraint >> forTable: aDatabaseTable fields: collDatabaseFields [
 	self primaryKeyFields: collDatabaseFields
 ]
 
-{ #category : #printing }
+{ #category : #accessing }
 PrimaryKeyConstraint >> generateName [
 
-	^self table name, '_PK'.
+	^ self table name, '_PK'
 ]
 
 { #category : #testing }
 PrimaryKeyConstraint >> isPrimaryKeyConstraint [
 
-	^true
+	^ true
 ]
 
 { #category : #comparing }
 PrimaryKeyConstraint >> isTheSameAs: aPrimaryKeyConstraint [
 	"Validate that two constraints are exactly the same. Most useful for testing purposes, rather than normal usage, which is why we don't just use the #= method."
+
 	self name asUppercase = aPrimaryKeyConstraint name asUppercase ifFalse: [^false].
 	self primaryKeyFields size = aPrimaryKeyConstraint primaryKeyFields size ifFalse: [^false].
 	self primaryKeyFields asSortedCollection with: aPrimaryKeyConstraint primaryKeyFields asSortedCollection do: [:a :b | (a isTheSameAs: b) ifFalse: [^false]].	
 	self shouldCreateInDatabase = aPrimaryKeyConstraint shouldCreateInDatabase ifFalse: [^false].
-	^true.
+	^ true
 ]
 
 { #category : #testing }
 PrimaryKeyConstraint >> matchesPrimaryKeyConstraint: aConstraint [
+
 	name = aConstraint name ifFalse: [^false].
 	self primaryKeyFields size ~= aConstraint primaryKeyFields size ifTrue: [^false].
-	self primaryKeyFields with: aConstraint primaryKeyFields do: [ :field1 :field2 | 
+	self primaryKeyFields with: aConstraint primaryKeyFields do: [ :field1 :field2 |
 		(field1 matchesField: field2) ifFalse: [^false]].
-	^true
+	^ true
 ]
 
 { #category : #accessing }
 PrimaryKeyConstraint >> primaryKeyConstraintName [
 
-	^self table name, '_PK'.
+	^ self table name, '_PK'
 ]
 
 { #category : #accessing }
 PrimaryKeyConstraint >> primaryKeyFields [
 
-	^fields
+	^ fields
 ]
 
 { #category : #accessing }

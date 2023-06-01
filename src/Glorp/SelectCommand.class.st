@@ -24,63 +24,72 @@ Class {
 
 { #category : #'*Glorp' }
 SelectCommand class >> forQuery: aQuery parameters: aDictionary [
-	^(self new)
-		query: aQuery;
-		parameters: aDictionary;
-		yourself.
+
+	^ self new
+		  query: aQuery;
+		  parameters: aDictionary;
+		  yourself
 ]
 
 { #category : #'*Glorp' }
 SelectCommand class >> forQuery: aQuery parameters: aDictionary useBinding: aBoolean session: aSession [
-	^(self new)
-		query: aQuery;
-		parameters: aDictionary;
-		useBinding: aBoolean;
-		session: aSession;
-		yourself.
+
+	^ self new
+		  query: aQuery;
+		  parameters: aDictionary;
+		  useBinding: aBoolean;
+		  session: aSession;
+		  yourself
 ]
 
 { #category : #accessing }
 SelectCommand >> blockFactor: anInteger [
-	blockFactor := anInteger.
+
+	blockFactor := anInteger
 ]
 
 { #category : #testing }
 SelectCommand >> canBind: aValue to: aType [
-	aValue isNil ifTrue: [^false].
-	^super canBind: aValue to: aType.
+
+	aValue isNil ifTrue: [ ^ false ].
+	^ super canBind: aValue to: aType
 ]
 
 { #category : #testing }
 SelectCommand >> isReadCommand [
-	^true.
+
+	^ true
 ]
 
 { #category : #accessing }
 SelectCommand >> parameterTypeSignature [
+
 	| result |
 	result := WriteStream on: String new.
-	self bindings do: [:each | result nextPutAll: each class name].
-	^result contents.
+	self bindings do: [ :each | result nextPutAll: each class name ].
+	^ result contents
 ]
 
 { #category : #accessing }
 SelectCommand >> parameters [
-	^parameters
+
+	^ parameters
 ]
 
 { #category : #accessing }
 SelectCommand >> parameters: aDictionary [
+
 	parameters := aDictionary
 ]
 
-{ #category : #accessing }
+{ #category : #printing }
 SelectCommand >> printSQL [
-	self subclassResponsibility.
+
+	self subclassResponsibility
 ]
 
 { #category : #testing }
 SelectCommand >> succeeded [
 
-	^true.
+	^ true
 ]

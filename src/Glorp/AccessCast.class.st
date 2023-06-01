@@ -13,7 +13,7 @@ This class attempts to find the correct conversion function for the intended CAS
 Class {
 	#name : #AccessCast,
 	#superclass : #Cast,
-	#category : 'Glorp-Expressions'
+	#category : #'Glorp-Expressions'
 }
 
 { #category : #functions }
@@ -29,18 +29,20 @@ AccessCast >> castFunctionName [
 				at: #boolean put: 'CBOOL';
 				yourself.
 	targetType := arguments first.
-	^conversionFunctions at: targetType value selector
+	^ conversionFunctions at: targetType value selector
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AccessCast >> initialize [
+
 	super initialize.
 	function := 'CAST'.
-	separator := ''.
+	separator := ''
 ]
 
 { #category : #printing }
 AccessCast >> printBasicSQLOn: aStream withParameters: aDictionary forSelect: aBoolean [
+
 	aStream
 		nextPutAll: self castFunctionName;
 		nextPut: $(.
@@ -52,5 +54,5 @@ AccessCast >> printBasicSQLOn: aStream withParameters: aDictionary forSelect: aB
 		ifTrue:
 			[aStream
 				nextPutAll: ' AS ';
-				nextPutAll: alias].
+				nextPutAll: alias]
 ]
