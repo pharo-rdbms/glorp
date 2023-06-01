@@ -140,7 +140,7 @@ DirectMapping >> fieldsForDescriptorSelectStatement [
 	^self shouldProxy ifTrue: [self descriptor primaryTable primaryKeyFields] ifFalse: [super fieldsForDescriptorSelectStatement]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 DirectMapping >> from: anAttributeName to: aField [
 
 	| type |
@@ -150,7 +150,7 @@ DirectMapping >> from: anAttributeName to: aField [
 	self type: type
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 DirectMapping >> from: anAttributeName type: aClass to: aField [
 
 	self
@@ -159,7 +159,7 @@ DirectMapping >> from: anAttributeName type: aClass to: aField [
 		type: aClass
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 DirectMapping >> fromPseudoVariable: anAttributeName to: aField [
 
 	^self fromPseudoVariable: anAttributeName
@@ -167,14 +167,14 @@ DirectMapping >> fromPseudoVariable: anAttributeName to: aField [
 		to: aField
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 DirectMapping >> fromPseudoVariable: anAttributeName type: aClass to: aField [
 
 	self from: anAttributeName type: aClass to: aField.
 	self beForPseudoVariable
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 DirectMapping >> initialize [
 	super initialize.
 	shouldProxy := false.
@@ -278,7 +278,7 @@ DirectMapping >> referencedIndependentObjectsFrom: anObject [
 	^#()
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 DirectMapping >> setConverterBetween: aClass and: aDbField [ 
 	aClass isNil ifTrue: [^self].
 	converter := descriptor ifNotNil: 

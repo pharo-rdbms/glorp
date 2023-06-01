@@ -16,7 +16,7 @@ Class {
 		'constantValue',
 		'valueIsSession'
 	],
-	#category : 'Glorp-Mappings'
+	#category : #'Glorp-Mappings'
 }
 
 { #category : #accessing }
@@ -57,7 +57,7 @@ ConstantMapping >> getValueFrom: anObject [
 	^constantValue
 ]
 
-{ #category : #'initialize/release' }
+{ #category : #initialization }
 ConstantMapping >> initialize [
 
 	super initialize.

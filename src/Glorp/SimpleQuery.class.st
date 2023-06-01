@@ -338,7 +338,7 @@ SimpleQuery >> hasTracing [
 	^builders notNil
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 SimpleQuery >> initResultClass: aClass whereClause: anExpression singleObject: aBoolean [ 
 	super 
 		initResultClass: aClass

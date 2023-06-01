@@ -4,7 +4,7 @@ Class {
 	#category : #'Glorp-Types'
 }
 
-{ #category : #initialize }
+{ #category : #initialization }
 GlorpPGArrayType >> initialize [
 	super initialize.
 	typeString := 'ARRAY'.

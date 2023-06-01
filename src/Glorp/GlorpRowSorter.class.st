@@ -22,7 +22,7 @@ Class {
 		'items',
 		'childCache'
 	],
-	#category : 'Glorp-UnitOfWork'
+	#category : #'Glorp-UnitOfWork'
 }
 
 { #category : #'*Glorp' }
@@ -79,7 +79,7 @@ GlorpRowSorter >> initialVisit [
 	children isEmpty ifTrue: [queue add: current].
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 GlorpRowSorter >> initialize [
 	queue := OrderedCollection new: 100.
 	sorted := OrderedCollection new: 100.

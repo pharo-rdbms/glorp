@@ -18,7 +18,7 @@ Class {
 		'subclasses',
 		'attributes'
 	],
-	#category : 'Glorp-Mappings'
+	#category : #'Glorp-Mappings'
 }
 
 { #category : #'instance creation' }
@@ -93,7 +93,7 @@ GlorpClassModel >> hasAttributeNamed: aSymbol [
 	^false
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GlorpClassModel >> initialize [
 	attributes := OrderedCollection new
 ]

@@ -4,10 +4,10 @@ Character type
 Class {
 	#name : #GlorpCharType,
 	#superclass : #GlorpAbstractStringType,
-	#category : 'Glorp-Types'
+	#category : #'Glorp-Types'
 }
 
-{ #category : #initialize }
+{ #category : #initialization }
 GlorpCharType >> initialize [
 	super initialize.
 	typeString := 'char'.

@@ -20,7 +20,7 @@ Class {
 		'sequence',
 		'increment'
 	],
-	#category : 'Glorp-Types'
+	#category : #'Glorp-Types'
 }
 
 { #category : #accessing }
@@ -43,13 +43,13 @@ GlorpSerialType >> increment: anInteger [
 	increment := anInteger.
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 GlorpSerialType >> initialize [
 	super initialize.
 	generated := true.
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 GlorpSerialType >> initializeForField: aDatabaseField in: aDescriptorSystem [
 	sequence isNil
 		ifFalse: [ ^ self ].

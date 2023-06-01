@@ -4,10 +4,10 @@ MSSQL Float type
 Class {
 	#name : #GlorpMSSQLFloatType,
 	#superclass : #GlorpAbstractNumericType,
-	#category : 'Glorp-Types'
+	#category : #'Glorp-Types'
 }
 
-{ #category : #SQL }
+{ #category : #converting }
 GlorpMSSQLFloatType >> converterForStType: aClass [
 
 	^self platform converterNamed: #numberToDouble.
@@ -18,7 +18,7 @@ GlorpMSSQLFloatType >> impliedSmalltalkType [
 	^Float.
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 GlorpMSSQLFloatType >> initialize [
 	super initialize.
 	typeString := 'float'.

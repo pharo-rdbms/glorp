@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'keys'
 	],
-	#category : 'Glorp-UnitOfWork'
+	#category : #'Glorp-UnitOfWork'
 }
 
 { #category : #'*Glorp' }
@@ -76,7 +76,7 @@ MultipleRowMapKey >> hash [
 	^hash
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 MultipleRowMapKey >> initialize [
 	keys := (SortedCollection new: 4) sortBlock: self sortBlock
 ]
@@ -109,7 +109,7 @@ MultipleRowMapKey >> reverseAdjustIn: aRowMapForMementos [
 	^adjusted
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #accessing }
 MultipleRowMapKey >> sortBlock [
 	^[:a :b | a identityHash <= b identityHash]
 ]

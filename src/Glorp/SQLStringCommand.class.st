@@ -32,7 +32,7 @@ SQLStringCommand >> bindings [
 	^parameters.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 SQLStringCommand >> initialize [
 
 	super initialize.

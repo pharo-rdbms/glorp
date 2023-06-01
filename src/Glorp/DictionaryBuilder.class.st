@@ -14,7 +14,7 @@ Class {
 		'keyBuilder',
 		'valueBuilder'
 	],
-	#category : 'Glorp-Queries'
+	#category : #'Glorp-Queries'
 }
 
 { #category : #'building objects' }
@@ -79,7 +79,7 @@ DictionaryBuilder >> reconcileWithBuilders: oldCollection andCopy: newCollection
 	valueBuilder := newCollection at: valueIndex
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 DictionaryBuilder >> setup [
 	"Do any initialization once we've got our parameters"
 	| base collectionType |

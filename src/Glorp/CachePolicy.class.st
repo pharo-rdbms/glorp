@@ -15,7 +15,7 @@ Class {
 		'expiryAction',
 		'numberOfElements'
 	],
-	#category : 'Glorp-Core'
+	#category : #'Glorp-Core'
 }
 
 { #category : #'*Glorp' }
@@ -37,7 +37,7 @@ CachePolicy >> cacheEntryFor: anObject [
 	^anObject.
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 CachePolicy >> collectionForExtraReferences [
 	^nil.
 ]
@@ -75,7 +75,7 @@ CachePolicy >> hasExpired: aCacheEntry [
 	^false.
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 CachePolicy >> initialize [
 
 	numberOfElements := 100.
@@ -88,7 +88,7 @@ CachePolicy >> markEntryAsCurrent: aCacheEntry in: aCache [
 	^self.
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 CachePolicy >> newItemsIn: aCache [
 	^self dictionaryClass new: 20.
 ]

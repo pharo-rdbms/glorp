@@ -33,7 +33,7 @@ Class {
 		'missingFieldIndicator',
 		'emptySlot'
 	],
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #'*Glorp' }
@@ -206,7 +206,7 @@ DatabaseRow >> fields [
 	^self table fields select: [:each | (self includesField: each)].
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 DatabaseRow >> fieldsAndValidValuesDo: aBlock [ 
 	"If iterating over fields and values, we include wrappers with no value assigned yet. This might or might not be what we want. This one just iterates over ones with actual values"
 	self isEmpty ifTrue: [^self].
@@ -216,7 +216,7 @@ DatabaseRow >> fieldsAndValidValuesDo: aBlock [
 			aBlock value: each value: value]].
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 DatabaseRow >> fieldsAndValuesDo: aBlock [ 
 	table isNil ifTrue: [^self].
 	table fields do: [:each | aBlock value: each value: (self at: each ifAbsent: [self class missingFieldIndicator])]
@@ -283,7 +283,7 @@ DatabaseRow >> includesField: aField [
 	^(contents at: aField position) ~~ self class emptySlot.
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 DatabaseRow >> initialize [
 	shouldBeWritten := true.
 	forDeletion := false.

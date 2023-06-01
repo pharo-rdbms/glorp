@@ -16,7 +16,7 @@ Class {
 		'stToDbSelector',
 		'dbToStSelector'
 	],
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #'*Glorp' }
@@ -45,7 +45,7 @@ DelegatingDatabaseConverter >> convert: anObject toDatabaseRepresentationAs: aDa
 	^host perform: stToDbSelector with: anObject with: aDatabaseType.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 DelegatingDatabaseConverter >> hostedBy: anObject fromStToDb: stDbSelector fromDbToSt: dbStSelector [
 
 	host := anObject.
@@ -53,7 +53,7 @@ DelegatingDatabaseConverter >> hostedBy: anObject fromStToDb: stDbSelector fromD
 	dbToStSelector := dbStSelector
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 DelegatingDatabaseConverter >> named: aSymbol hostedBy: anObject fromStToDb: stDbSelector fromDbToSt: dbStSelector [
 
 	name := aSymbol.

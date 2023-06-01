@@ -17,7 +17,7 @@ Class {
 		'valueMapping',
 		'associationDescriptor'
 	],
-	#category : 'Glorp-Mappings'
+	#category : #'Glorp-Mappings'
 }
 
 { #category : #mapping }
@@ -73,7 +73,7 @@ DictionaryMapping >> chooseBaseForMapping: aMapping from: base and: phantomExpre
 		ifFalse: [phantomExpression]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #'accessing - defaults' }
 DictionaryMapping >> defaultCollectionType [
 	^Dictionary
 ]
@@ -90,7 +90,7 @@ DictionaryMapping >> glorpCanHaveDescriptorDirectly [
 	^true
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 DictionaryMapping >> initialize [
 	super initialize.
 	usesLinkTable := true.
@@ -102,7 +102,7 @@ DictionaryMapping >> initializeRuntimeMappings [
 	self initializeValueMapping.
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 DictionaryMapping >> initializeValueMapping [
 	| referenceDescriptor |
 	self descriptor system privateAndBasicAddDescriptorFor: self as: self associationDescriptor.
@@ -112,7 +112,7 @@ DictionaryMapping >> initializeValueMapping [
 	(referenceDescriptor isNil or: [referenceDescriptor tables isEmpty]) ifTrue: [self initializeValueMappingJoin].
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 DictionaryMapping >> initializeValueMappingJoin [
 	| tables |
 	"We don't know which of these will come first in the descriptor, so call the other initialization if it looks like we have enough information, and it hasn't been done"

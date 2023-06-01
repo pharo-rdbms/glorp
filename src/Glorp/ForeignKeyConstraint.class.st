@@ -18,7 +18,7 @@ Class {
 		'sourceFields',
 		'targetFields'
 	],
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #'*Glorp' }
@@ -98,7 +98,7 @@ ForeignKeyConstraint >> generateName [
 	^stream contents.
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 ForeignKeyConstraint >> initialize [
 
 	self sourceFields: (OrderedCollection new: 2).
@@ -199,7 +199,7 @@ ForeignKeyConstraint >> sourceField: aField [
 	self sourceFields add: aField.
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 ForeignKeyConstraint >> sourceField: aDatabaseField targetField: anotherDatabaseField [
 	self
 		sourceField: aDatabaseField
@@ -207,7 +207,7 @@ ForeignKeyConstraint >> sourceField: aDatabaseField targetField: anotherDatabase
 		suffixExpression: nil.
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 ForeignKeyConstraint >> sourceField: aDatabaseField targetField: anotherDatabaseField suffixExpression: suffixExpressionString [
 	self
 		sourceField: aDatabaseField;
@@ -226,7 +226,7 @@ ForeignKeyConstraint >> sourceFields: aCollection [
 	sourceFields := aCollection.
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 ForeignKeyConstraint >> sourceFields: sourceFieldCollection targetFields: targetFieldCollection suffixExpression: suffixExpressionString [
 	self
 		sourceFields: sourceFieldCollection;

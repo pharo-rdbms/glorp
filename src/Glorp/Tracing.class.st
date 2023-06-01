@@ -21,7 +21,7 @@ Class {
 		'alsoFetchExpressions',
 		'query'
 	],
-	#category : 'Glorp-Queries'
+	#category : #'Glorp-Queries'
 }
 
 { #category : #'instance creation' }
@@ -93,7 +93,7 @@ Tracing >> copy [
 	^self shallowCopy postCopy
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Tracing >> initialize [
 
 	base := BaseExpression new.

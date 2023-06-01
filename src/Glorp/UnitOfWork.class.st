@@ -28,7 +28,7 @@ Class {
 		'commitPhase',
 		'deleting'
 	],
-	#category : 'Glorp-UnitOfWork'
+	#category : #'Glorp-UnitOfWork'
 }
 
 { #category : #'instance creation' }
@@ -215,7 +215,7 @@ UnitOfWork >> hasPendingDeletions [
 	^deletedObjects isEmpty not
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 UnitOfWork >> initialize [
 
 	transaction := ObjectTransaction new.
@@ -468,7 +468,7 @@ UnitOfWork >> registeredObjectsDo: aBlock [
 			aBlock value: each]]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 UnitOfWork >> reinitialize [
 
 	rowMap := RowMap new.

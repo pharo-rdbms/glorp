@@ -4,7 +4,7 @@ Class {
 	#category : #'Glorp-Types'
 }
 
-{ #category : #initialize }
+{ #category : #initialization }
 GlorpJSONBType >> initialize [
 	super initialize.
 	typeString := 'jsonb'.

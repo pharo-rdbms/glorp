@@ -34,7 +34,7 @@ Class {
 		'debugRead',
 		'debugWrite'
 	],
-	#category : 'Glorp-Mappings'
+	#category : #'Glorp-Mappings'
 }
 
 { #category : #'instance creation' }
@@ -146,7 +146,7 @@ Mapping >> convertedDbValueOf: stValue [
 	^stValue
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Mapping >> copyAttributeAttributes [
 	"We have an attributemodel that was created before we actually had a descriptor. It's possible that it had properties set. Make sure we copy them. If necessary, initialize things that require it."
 	| oldAttribute |
@@ -261,13 +261,13 @@ Mapping >> includesSubFieldsInSelectStatement [
 	^false
 ]
 
-{ #category : #'initialize/release' }
+{ #category : #initialization }
 Mapping >> initialize [
 	debugRead := false.
 	debugWrite := false.
 ]
 
-{ #category : #'initialize/release' }
+{ #category : #initialization }
 Mapping >> initializeAttribute [
 	"This is where we can initialize aspects of the attribute, if required. The motivating example is initializing the collection type of the attribute if it wasn't set. We need it to have some type, but we don't want to initialize it while we're doing basic initialization and aren't yet properly attached to a descriptor or class model"
 ]

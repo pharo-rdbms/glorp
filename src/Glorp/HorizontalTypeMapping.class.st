@@ -14,7 +14,7 @@ Class {
 		'mappedClass',
 		'isAbstract'
 	],
-	#category : 'Glorp-Mappings'
+	#category : #'Glorp-Mappings'
 }
 
 { #category : #'instance creation' }
@@ -52,7 +52,7 @@ HorizontalTypeMapping >> mapFromObject: anObject intoRowsIn: aRowMap [
 	"do nothing"
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 HorizontalTypeMapping >> mappedClass: aClass [
 	mappedClass := aClass
 ]

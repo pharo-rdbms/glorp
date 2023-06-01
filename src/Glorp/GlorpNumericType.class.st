@@ -17,7 +17,7 @@ Class {
 		'precision',
 		'scale'
 	],
-	#category : 'Glorp-Types'
+	#category : #'Glorp-Types'
 }
 
 { #category : #comparing }
@@ -56,7 +56,7 @@ GlorpNumericType >> impliedSmalltalkType [
 	^super impliedSmalltalkType
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 GlorpNumericType >> initialize [
 	super initialize.
 	typeString := 'numeric'.

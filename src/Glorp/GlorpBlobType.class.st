@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'queryType'
 	],
-	#category : 'Glorp-Types'
+	#category : #'Glorp-Types'
 }
 
 { #category : #comparing }
@@ -26,7 +26,7 @@ GlorpBlobType >> = aType [
 	^true.
 ]
 
-{ #category : #types }
+{ #category : #converting }
 GlorpBlobType >> converterForStType: aClass [
 	self platform isPostgreSQLPlatform ifTrue: [
 		(aClass includesBehavior: String) ifTrue: [^self platform converterNamed: #stringToSQLString].
@@ -48,13 +48,13 @@ GlorpBlobType >> impliedSmalltalkType [
 	^ByteArray.
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 GlorpBlobType >> initialize [
 	super initialize.
 	typeString := 'blob'
 ]
 
-{ #category : #SQL }
+{ #category : #printing }
 GlorpBlobType >> print: aValue on: aStream [
 	self platform printBlob: (aValue isNil ifTrue: [nil] ifFalse: [aValue asByteArray]) on: aStream for: self.
 ]

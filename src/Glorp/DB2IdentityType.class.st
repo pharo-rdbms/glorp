@@ -5,10 +5,10 @@ DB2IdentityType represents identity column types in DB2. Glorp prefers sequences
 Class {
 	#name : #DB2IdentityType,
 	#superclass : #GlorpSerialType,
-	#category : 'Glorp-Types'
+	#category : #'Glorp-Types'
 }
 
-{ #category : #initialize }
+{ #category : #initialization }
 DB2IdentityType >> initializeForField: aDatabaseField in: aDescriptorSystem [
 
 	sequence isNil ifFalse: [^self].

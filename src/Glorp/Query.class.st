@@ -242,7 +242,7 @@ Query >> hasOrdering [
 	^self ordering notNil
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 Query >> initialize [
 
 	prepared := false.

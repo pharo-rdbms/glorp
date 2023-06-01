@@ -91,7 +91,7 @@ GlorpVirtualCollection >> last [
 	^self realObjects last.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GlorpVirtualCollection >> on: aClass in: aSession [
 	query := aSession queryClass read: aClass.
 	session := aSession.

@@ -21,7 +21,7 @@ Class {
 		'otherwiseCase',
 		'conditionalFieldMapping'
 	],
-	#category : 'Glorp-Mappings'
+	#category : #'Glorp-Mappings'
 }
 
 { #category : #mapping }
@@ -142,7 +142,7 @@ ConditionalMapping >> if: conditionSelector then: aMapping [
 	(descriptor mappings includes: aMapping) ifTrue: [self error: 'Mapping is part of a conditional and part of the main descriptor. Be sure to send newMapping: to the conditional, not to the descriptor']
 ]
 
-{ #category : #'initialize/release' }
+{ #category : #initialization }
 ConditionalMapping >> initialize [
 	
 	super initialize.

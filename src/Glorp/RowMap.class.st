@@ -14,7 +14,7 @@ Class {
 		'rowDictionary',
 		'hasDeletions'
 	],
-	#category : 'Glorp-UnitOfWork'
+	#category : #'Glorp-UnitOfWork'
 }
 
 { #category : #'instance creation' }
@@ -198,7 +198,7 @@ RowMap >> includesRowForTable: aTable withKey: aKey [
 	^(self isDeleted: row) not
 ]
 
-{ #category : #'initialize/release' }
+{ #category : #'initialize-release' }
 RowMap >> initialize [
       self initialize: 17
 ]

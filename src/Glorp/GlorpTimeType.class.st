@@ -4,10 +4,10 @@ Time type
 Class {
 	#name : #GlorpTimeType,
 	#superclass : #GlorpDatabaseType,
-	#category : 'Glorp-Types'
+	#category : #'Glorp-Types'
 }
 
-{ #category : #'conversion-times' }
+{ #category : #converting }
 GlorpTimeType >> converterForStType: aClass [
 
 	^self platform converterNamed: #time.

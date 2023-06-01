@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'timeout'
 	],
-	#category : 'Glorp-Core'
+	#category : #'Glorp-Core'
 }
 
 { #category : #'wrap/unwrap' }
@@ -40,7 +40,7 @@ TimedExpiryCachePolicy >> hasExpired: aCacheEntry [
 	^(self totalSeconds - (aCacheEntry at: 1)) >= timeout.
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 TimedExpiryCachePolicy >> initialize [
 
 	super initialize.

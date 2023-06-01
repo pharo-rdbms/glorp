@@ -28,7 +28,7 @@ Class {
 		'canRead',
 		'canWrite'
 	],
-	#category : 'Glorp-Mappings'
+	#category : #'Glorp-Mappings'
 }
 
 { #category : #'instance creation' }
@@ -205,7 +205,7 @@ GlorpAttributeModel >> getValueFrom: anObject [
 	^real perform: self name
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GlorpAttributeModel >> initialize [
 	canRead := true.
 	canWrite := true

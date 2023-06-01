@@ -16,7 +16,7 @@ Class {
 		'availableTables',
 		'query'
 	],
-	#category : 'Glorp-Queries'
+	#category : #'Glorp-Queries'
 }
 
 { #category : #'instance creation' }
@@ -87,7 +87,7 @@ JoinPrinter >> rootTable [
 	^self allTables first
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 JoinPrinter >> setUp [
 	availableTables := Set new
 ]

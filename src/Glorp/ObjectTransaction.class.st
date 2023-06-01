@@ -19,7 +19,7 @@ Class {
 		'undoMap',
 		'collectionMementos'
 	],
-	#category : 'Glorp-UnitOfWork'
+	#category : #'Glorp-UnitOfWork'
 }
 
 { #category : #'*Glorp' }
@@ -60,12 +60,12 @@ ObjectTransaction >> commit [
 	self initializeUndoMap
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 ObjectTransaction >> initialize [
 	self initializeUndoMap.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ObjectTransaction >> initializeUndoMap [
 
 	undoMap := IdentityDictionary new: 1000.

@@ -4,10 +4,10 @@ This is a to-many relationship in which we use a link table to the collection, r
 Class {
 	#name : #ManyToManyMapping,
 	#superclass : #ToManyMapping,
-	#category : 'Glorp-Mappings'
+	#category : #'Glorp-Mappings'
 }
 
-{ #category : #initializing }
+{ #category : #initialization }
 ManyToManyMapping >> initialize [
 	super initialize.
 	usesLinkTable := true.

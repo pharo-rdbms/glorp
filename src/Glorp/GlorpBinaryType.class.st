@@ -9,7 +9,7 @@ GlorpBinaryType >> converterForStType: aClass [
 	^self platform byteaConverter 
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 GlorpBinaryType >> initialize [ 
 	super initialize.
 	typeString := #bytea

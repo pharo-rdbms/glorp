@@ -29,7 +29,7 @@ Class {
 		'sqlString',
 		'session'
 	],
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #'*Glorp' }
@@ -88,7 +88,7 @@ DatabaseCommand >> hasMultipleRows [
 	^false.
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 DatabaseCommand >> initialize [
 	useBinding := true.
 	stream := WriteStream on: (String new: 100).

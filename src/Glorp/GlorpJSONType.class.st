@@ -9,7 +9,7 @@ GlorpJSONType >> converterForStType: aClass [
 	 ^self platform converterNamed: #jsonToString.
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 GlorpJSONType >> initialize [
 	super initialize.
 	typeString := 'json'.

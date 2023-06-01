@@ -14,7 +14,7 @@ UDBCSQLite3Platform >> boolean [
 	^self typeNamed: #boolean ifAbsentPut: [GlorpBooleanType new typeString: 'boolean'].
 ]
 
-{ #category : #'conversion-boolean' }
+{ #category : #'conversion - boolean' }
 UDBCSQLite3Platform >> convertIntegerToBoolean: anInteger for: aType [
 
 	"UDBC SQLite transparently returns Smalltalk true/false/nil for SQL columns declared as boolean."
@@ -29,7 +29,7 @@ UDBCSQLite3Platform >> isUDBCSQLite3Platform [
 	^ true
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 UDBCSQLite3Platform >> printDate: aTimestamp isoFormatOn: stream [
 	"Print the date as yyyy-mm-dd"
 	| monthNumber dayOfMonth |
@@ -46,7 +46,7 @@ UDBCSQLite3Platform >> printDate: aTimestamp isoFormatOn: stream [
 
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 UDBCSQLite3Platform >> printTime: aTimeString for: aType [
 	
 	aTimeString isNil ifTrue: [^'NULL'].
@@ -57,7 +57,7 @@ UDBCSQLite3Platform >> printTime: aTimeString for: aType [
 
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 UDBCSQLite3Platform >> printTime: aTimestamp isoFormatOn: stream milliseconds: aBoolean [
 	"Print the time as hh:mm:ss.mmm"
 	| ms |
@@ -78,7 +78,7 @@ UDBCSQLite3Platform >> printTime: aTimestamp isoFormatOn: stream milliseconds: a
 
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 UDBCSQLite3Platform >> printTimestamp: aTimestampString on: stream for: aType [
 
 	aTimestampString isNil ifTrue: [stream nextPutAll: 'NULL'. ^self].
@@ -87,7 +87,7 @@ UDBCSQLite3Platform >> printTimestamp: aTimestampString on: stream for: aType [
 	stream nextPut: $'.
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 UDBCSQLite3Platform >> readDate: anObject for: aType [
 	"From DatabasePlatform."
 
@@ -98,7 +98,7 @@ UDBCSQLite3Platform >> readDate: anObject for: aType [
 	^anObject asDate.
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 UDBCSQLite3Platform >> readTime: anObject for: aType [
 	"From DatabasePlatform."
 
@@ -109,7 +109,7 @@ UDBCSQLite3Platform >> readTime: anObject for: aType [
 	^anObject asTime.
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 UDBCSQLite3Platform >> readTimestamp: anObject for: aType [
 	"From DatabasePlatform."
 
@@ -143,7 +143,7 @@ UDBCSQLite3Platform >> supportsRowCount [
 	^ true
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 UDBCSQLite3Platform >> toDate: anObject for: aType [
 	"From DatabasePlatform."
 
@@ -153,7 +153,7 @@ UDBCSQLite3Platform >> toDate: anObject for: aType [
 	^anObject asDate
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 UDBCSQLite3Platform >> toTime: anObject for: aType [
 	"From DatabasePlatform."
 
@@ -162,7 +162,7 @@ UDBCSQLite3Platform >> toTime: anObject for: aType [
 	^anObject asTime.
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 UDBCSQLite3Platform >> toTimestamp: anObject for: aType [
 	"From DatabasePlatform."
 

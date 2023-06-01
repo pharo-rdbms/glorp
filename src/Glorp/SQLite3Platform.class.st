@@ -66,7 +66,7 @@ SQLite3Platform >> clob [
 	^self typeNamed: #clob ifAbsentPut: [GlorpClobType new typeString: 'text'].
 ]
 
-{ #category : #'conversion-boolean' }
+{ #category : #'conversion - boolean' }
 SQLite3Platform >> convertIntegerToBoolean: anInteger for: aType [
 	"This method accomodates an error in earlier SQLite 3 dlls. For the table_info() PRAGMA, 99 means True."
 
@@ -228,7 +228,7 @@ SQLite3Platform >> parenthesizeCommandsInCompoundQuery [
 	^false
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 SQLite3Platform >> printDate: aDateString for: aType [
 	"SQLite does not suppport any time-related types.  We convert them all to strings via the to... methods, so parameters to this method should be Strings of the form '1959-09-30'."
 
@@ -238,7 +238,7 @@ SQLite3Platform >> printDate: aDateString for: aType [
 	^aDateString printString
 ]
 
-{ #category : #'database-specific' }
+{ #category : #'database - specific' }
 SQLite3Platform >> printOffset: anInteger on: aCommand [
 	"SQLite cannot have an offset without a limit.  A negative limit is treated as an infinite limit.  We cannot set it as an actual limit value;  that would hit limitMakesSense optimisation and abort the trip to the database.  So we add it here."
 
@@ -248,7 +248,7 @@ SQLite3Platform >> printOffset: anInteger on: aCommand [
 	anInteger printOn: aCommand.
 ]
 
-{ #category : #'database-specific' }
+{ #category : #'database - specific' }
 SQLite3Platform >> printPostLimit: anInteger on: aCommand [
 	aCommand
 		nextPutAll: ' LIMIT '.
@@ -309,7 +309,7 @@ SQLite3Platform >> printSqlStatementToTestExistenceOfTable: tableName inSchema: 
 		nextPut: $;
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 SQLite3Platform >> printTime: aTimeString for: aType [
 	"SQLite does not suppport any time-related types.  We convert them all to strings via the to... methods, so parameters to this method should be Strings of the form 10:20:23."
 
@@ -319,7 +319,7 @@ SQLite3Platform >> printTime: aTimeString for: aType [
 	^aTimeString printString
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 SQLite3Platform >> printTimestamp: aTimestampString on: stream for: aType [
 	"SQLite does not suppport any time-related types.  We convert them all to strings via the to... methods, so parameters to this method should be Strings of the form '1959-03-27 10:20:23'."
 
@@ -331,7 +331,7 @@ SQLite3Platform >> printTimestamp: aTimestampString on: stream for: aType [
 	stream nextPut: $'.
 ]
 
-{ #category : #'database-specific' }
+{ #category : #'database - specific' }
 SQLite3Platform >> queryWithUnsupportedOperationsEliminatedFrom: aQuery do: aBlock [
 	"SQLite3 does not allow LIMIT{OFFSET} in subqueries.  As far as is known at time of writing (2011jun07), Glorp will only generate such queries in the case of a readOneOf: on a superclass which is mapped by horizontal inheritance to its subclasses' tables:  if shouldUseSingleQuery is true, it will present a series of UNION ALLed subselects on each subclass table where only one is expected to match.
 
@@ -470,7 +470,7 @@ SQLite3Platform >> timestamp [
 	^self typeNamed: #timestamp ifAbsentPut: [GlorpTimeStampType new typeString: 'timestamp']
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 SQLite3Platform >> toDate: anObject for: aType [
 	"SQLite does not handle timestamps;  all such must be treated as strings and the to... and read... formats must agree.  SQLite does use column-default-value UTC functions:
 	CURRENT_DATE format YYYY-MM-DD
@@ -487,7 +487,7 @@ so our string conversions must agree with these formats."
 	^stream contents
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 SQLite3Platform >> toTime: anObject for: aType [
 	"SQLite does not handle timestamps;  all such must be treated as strings and the to... and read... formats must agree.  SQLite does use column-default-value UTC functions:
 	CURRENT_DATE format YYYY-MM-DD
@@ -504,7 +504,7 @@ so our string conversions must agree with these formats."
 	^stream contents
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 SQLite3Platform >> toTimestamp: anObject for: aType [
 	"SQLite does not handle timestamps;  all such must be treated as strings and the to... and read... formats must agree.  SQLite does use column-default-value UTC functions:
 	CURRENT_DATE format YYYY-MM-DD

@@ -4,7 +4,7 @@ CLOB type
 Class {
 	#name : #GlorpClobType,
 	#superclass : #GlorpAbstractStringType,
-	#category : 'Glorp-Types'
+	#category : #'Glorp-Types'
 }
 
 { #category : #testing }
@@ -13,7 +13,7 @@ GlorpClobType >> hasParameters [
 	^false.
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 GlorpClobType >> initialize [
 	super initialize.
 	typeString := 'text'.

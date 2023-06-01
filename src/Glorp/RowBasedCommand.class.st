@@ -23,7 +23,7 @@ Class {
 		'rowCount',
 		'failed'
 	],
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #'*Glorp' }
@@ -184,7 +184,7 @@ RowBasedCommand >> hasMultipleRows [
 	^allRows notNil and: [allRows size > 1].
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 RowBasedCommand >> initialize [
 	super initialize.
 	failed := false.

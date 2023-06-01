@@ -8,7 +8,7 @@ Class {
 		'tableName',
 		'type'
 	],
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #'*Glorp' }
@@ -24,7 +24,7 @@ PrimaryKeyConstraint >> creationStringFor: aPlatform [
 	^aPlatform createPrimaryKeyConstraintAddStatement: self
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 PrimaryKeyConstraint >> forTable: aTable [
 
 	super forTable: aTable.
@@ -32,7 +32,7 @@ PrimaryKeyConstraint >> forTable: aTable [
 	self primaryKeyFields:  table primaryKeyFields
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 PrimaryKeyConstraint >> forTable: aDatabaseTable fields: collDatabaseFields [
 
 	self forTable: aDatabaseTable.

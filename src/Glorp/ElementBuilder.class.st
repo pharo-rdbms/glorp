@@ -160,7 +160,7 @@ ElementBuilder >> hasFieldTranslations [
 	^self fieldTranslations notNil
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 ElementBuilder >> initialize [
 ]
 
@@ -252,7 +252,7 @@ ElementBuilder >> session [
 	^expression descriptor session
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ElementBuilder >> setup [
 	"Do any initialization required once we've got our parameters"
 	^self

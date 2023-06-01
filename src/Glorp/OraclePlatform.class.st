@@ -4,7 +4,7 @@ This is a platform for Oracle databases. Currently there's only one, but it migh
 Class {
 	#name : #OraclePlatform,
 	#superclass : #DatabasePlatform,
-	#category : 'Glorp-Platforms'
+	#category : #'Glorp-Platforms'
 }
 
 { #category : #'as yet unclassified' }
@@ -50,7 +50,7 @@ OraclePlatform >> clob [
 	^self typeNamed: #clob ifAbsentPut: [GlorpClobType new typeString: 'clob'].
 ]
 
-{ #category : #'database-specific' }
+{ #category : #'database - specific' }
 OraclePlatform >> compoundOperationFor: aSymbol [
 	"Return the platform specific version of a compound statement symbol"
 	aSymbol == #EXCEPT ifTrue: [^'MINUS'].
@@ -307,7 +307,7 @@ OraclePlatform >> primaryKeysAreAutomaticallyUnique [
 	^true.
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 OraclePlatform >> printBlob: aByteArray on: aStream for: aType [
 	aByteArray isNil ifTrue: [^aStream nextPutAll: 'NULL'].
 	aStream nextPutAll: 'HEXTORAW('''.

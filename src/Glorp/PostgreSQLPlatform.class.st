@@ -12,7 +12,7 @@ PostgreSQLPlatform class >> useBindingByDefault [
 	^false
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 PostgreSQLPlatform >> NeoJSONReaderSQLStringToJSONObject: aString for: aType [
 	aString isNil
 		ifTrue: [ ^ nil ].
@@ -46,7 +46,7 @@ PostgreSQLPlatform >> boolean [
 	^self typeNamed: #boolean ifAbsentPut: [GlorpBooleanType new typeString: 'boolean'].
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 PostgreSQLPlatform >> byteArrayToSQLStringConverter [
 
 	^DelegatingDatabaseConverter
@@ -82,13 +82,13 @@ PostgreSQLPlatform >> clob [
 	^self typeNamed: #clob ifAbsentPut: [GlorpClobType new typeString: 'text'].
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 PostgreSQLPlatform >> convertByteArrayToSQLString: aByteArray for: aType [
 
 	^aByteArray ifNotNil: [:array | array asString]
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 PostgreSQLPlatform >> convertEscapeSQLStringToByteArray: aString [
 	^ ByteArray
 		new: aString size // 4
@@ -106,7 +106,7 @@ PostgreSQLPlatform >> convertEscapeSQLStringToByteArray: aString [
 							ifFalse: [ nextChar asInteger ]) ] ]
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 PostgreSQLPlatform >> convertHexSQLStringToByteArray: aString [
 	^ ByteArray
 		new: aString size // 2 - 1
@@ -115,7 +115,7 @@ PostgreSQLPlatform >> convertHexSQLStringToByteArray: aString [
 			[ in atEnd ] whileFalse: [ out nextPut: (Number readFrom: (in next: 2) base: 16) ] ]
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 PostgreSQLPlatform >> convertSQLStringToByteArray: aString for: aType [
 	aString isNil
 		ifTrue: [ ^ nil ].
@@ -124,7 +124,7 @@ PostgreSQLPlatform >> convertSQLStringToByteArray: aString for: aType [
 		ifFalse: [ self convertEscapeSQLStringToByteArray: aString ]
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 PostgreSQLPlatform >> convertSQLStringToString: aString for: aType [
 	aString isNil
 		ifTrue: [ ^ nil ].
@@ -180,7 +180,7 @@ PostgreSQLPlatform >> float8 [
 	^self typeNamed: #float8 ifAbsentPut: [GlorpDoubleType new].
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 PostgreSQLPlatform >> hexPrintBlob: aByteArray on: aStream for: aType [
 
 	aStream nextPutAll: 'E'''.
@@ -250,7 +250,7 @@ PostgreSQLPlatform >> numeric [
 	^self typeNamed: #numeric ifAbsentPut: [GlorpNumericType new].
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 PostgreSQLPlatform >> printBlob: aByteArray on: aStream for: aType [
 
 	aByteArray isNil ifTrue: [^aStream nextPutAll: 'NULL'].
@@ -259,7 +259,7 @@ PostgreSQLPlatform >> printBlob: aByteArray on: aStream for: aType [
 
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 PostgreSQLPlatform >> printDate: aDate for: aType [
 	"Print a date (or timestamp) as yyyy-mm-dd"
 	| stream |
@@ -273,21 +273,21 @@ PostgreSQLPlatform >> printDate: aDate for: aType [
 	^stream contents.
 ]
 
-{ #category : #'database-specific' }
+{ #category : #'database - specific' }
 PostgreSQLPlatform >> printOffset: anInteger on: aCommand [
 	aCommand
 		nextPutAll: ' OFFSET '.
 	anInteger printOn: aCommand.
 ]
 
-{ #category : #'database-specific' }
+{ #category : #'database - specific' }
 PostgreSQLPlatform >> printPostLimit: anInteger on: aCommand [
 	aCommand
 		nextPutAll: ' LIMIT '.
 	anInteger printOn: aCommand.
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 PostgreSQLPlatform >> printTime: aTime for: aType [
 	"Print a time (or timestamp) as hh:mm:ss.fff"
 	| stream |
@@ -301,7 +301,7 @@ PostgreSQLPlatform >> printTime: aTime for: aType [
 	^stream contents.
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 PostgreSQLPlatform >> printTimestamp: aTimestamp on: stream for: aType [
 	aTimestamp isNil ifTrue: [stream nextPutAll: 'NULL'. ^self].
 	stream nextPut: $'.
@@ -355,7 +355,7 @@ PostgreSQLPlatform >> sqlTextCurrentServerUTCTimestamp [
 	^'SELECT CURRENT_TIMESTAMP AT TIME ZONE ''UTC'' '
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 PostgreSQLPlatform >> stringToSQLStringConverter [
 
 	^DelegatingDatabaseConverter

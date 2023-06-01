@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'queries'
 	],
-	#category : 'Glorp-Queries'
+	#category : #'Glorp-Queries'
 }
 
 { #category : #accessing }
@@ -39,7 +39,7 @@ CompositeQuery >> executeWithParameters: parameterArray in: aSession [
 	^results contents
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 CompositeQuery >> initialize [
 	super initialize.
 	queries := OrderedCollection new.

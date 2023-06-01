@@ -4,7 +4,7 @@ Pragma mapping for SQLite3
 Class {
 	#name : #SQLite3PragmaMapping,
 	#superclass : #ToManyMapping,
-	#category : 'Glorp-Mappings'
+	#category : #'Glorp-Mappings'
 }
 
 { #category : #mapping }
@@ -23,7 +23,7 @@ SQLite3PragmaMapping >> buildQuery [
 	^query
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 SQLite3PragmaMapping >> initialize [
 	"Initialize a newly created instance. This method must answer the receiver."
 

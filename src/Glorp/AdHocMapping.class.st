@@ -74,7 +74,7 @@ AdHocMapping >> field [
 	^fields first
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AdHocMapping >> forAttribute: aSymbol fromDb: fromBlock toDb: toBlock mappingFields: aFieldCollection [
 	self
 		setAttribute: aSymbol
@@ -89,7 +89,7 @@ AdHocMapping >> hasImpliedClauses [
 	^true
 ]
 
-{ #category : #'initialize/release' }
+{ #category : #initialization }
 AdHocMapping >> initialize [
 
 	super initialize.
@@ -160,7 +160,7 @@ AdHocMapping >> referencedIndependentObjectsFrom: anObject [
 	^otherDescriptor isNil ifTrue: [#()] ifFalse: [Array with: object]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AdHocMapping >> setAttribute: aSymbol fromDb: fromBlock toDb: toBlock mappingFields: aFieldCollection [
  
 	self attributeName: aSymbol.

@@ -208,7 +208,7 @@ FunctionExpression >> convertedDbValueOf: anObject [
 	^(self converterForStType: anObject class) convert: anObject toDatabaseRepresentationAs: self type.
 ]
 
-{ #category : #accessing }
+{ #category : #converting }
 FunctionExpression >> converterForStType: aClass [
 	^self type notNil 
 		ifTrue: [self type converterForStType: aClass]

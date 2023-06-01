@@ -4,10 +4,10 @@ VARCHAR type
 Class {
 	#name : #GlorpVarCharType,
 	#superclass : #GlorpAbstractStringType,
-	#category : 'Glorp-Types'
+	#category : #'Glorp-Types'
 }
 
-{ #category : #initialize }
+{ #category : #initialization }
 GlorpVarCharType >> initialize [
 	super initialize.
 	typeString := 'varchar'.

@@ -308,7 +308,7 @@ AbstractReadQuery >> hasTracing [
 	^false
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 AbstractReadQuery >> initResultClass: aClass whereClause: theCriteria singleObject: aBoolean [ 
 	resultClass := aClass.
 	self whereClause: ((theCriteria isNil or: [theCriteria = true or: [theCriteria = false]]) ifTrue: [EmptyExpression on: theCriteria] ifFalse: [theCriteria]).
@@ -316,7 +316,7 @@ AbstractReadQuery >> initResultClass: aClass whereClause: theCriteria singleObje
 	aBoolean ifTrue: [self limit: 1]
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 AbstractReadQuery >> initialize [
 	
 	super initialize.

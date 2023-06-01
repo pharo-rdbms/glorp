@@ -4,7 +4,7 @@ Double type
 Class {
 	#name : #GlorpDoubleType,
 	#superclass : #GlorpAbstractNumericType,
-	#category : 'Glorp-Types'
+	#category : #'Glorp-Types'
 }
 
 { #category : #converting }
@@ -18,7 +18,7 @@ GlorpDoubleType >> impliedSmalltalkType [
 	^Dialect doublePrecisionFloatClass.
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 GlorpDoubleType >> initialize [
 	super initialize.
 	typeString := 'double precision'.

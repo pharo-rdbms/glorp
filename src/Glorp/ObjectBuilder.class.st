@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'queryCache'
 	],
-	#category : 'Glorp-Queries'
+	#category : #'Glorp-Queries'
 }
 
 { #category : #'building objects' }
@@ -111,7 +111,7 @@ ObjectBuilder >> findInstanceForRow: aRow proxyType: proxyType [
 	self canCache ifTrue: [self session cacheAt: self key put: instance]
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ObjectBuilder >> initialize [
 
 	requiresPopulating := false.

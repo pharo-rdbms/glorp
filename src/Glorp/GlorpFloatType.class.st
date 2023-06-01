@@ -4,7 +4,7 @@ Float type
 Class {
 	#name : #GlorpFloatType,
 	#superclass : #GlorpAbstractNumericType,
-	#category : 'Glorp-Types'
+	#category : #'Glorp-Types'
 }
 
 { #category : #converting }
@@ -18,7 +18,7 @@ GlorpFloatType >> impliedSmalltalkType [
 	^Float.
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 GlorpFloatType >> initialize [
 	super initialize.
 	typeString := 'float4'.

@@ -4,7 +4,7 @@ This is a platform for the Microsoft SQL Server database.
 Class {
 	#name : #SQLServerPlatform,
 	#superclass : #DatabasePlatform,
-	#category : 'Glorp-Platforms'
+	#category : #'Glorp-Platforms'
 }
 
 { #category : #'as yet unclassified' }
@@ -42,7 +42,7 @@ SQLServerPlatform >> boolean [
 	^self bit.
 ]
 
-{ #category : #'conversion-boolean' }
+{ #category : #'conversion - boolean' }
 SQLServerPlatform >> booleanToBooleanConverter [
 	^DelegatingDatabaseConverter
 		named: #booleanToBoolean
@@ -63,7 +63,7 @@ SQLServerPlatform >> char [
 	^self typeNamed: #char ifAbsentPut: [GlorpCharType new].
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 SQLServerPlatform >> charactersThatNeedEscaping [
 	"There seem to be all kind of contradictory bits of information about what sql server does/requires for escaped characters, all of which differ from standard sql. Empirically the only thing that requires escaping appears to be single quote"
 	^#($' ).
@@ -75,7 +75,7 @@ SQLServerPlatform >> clob [
 	^self typeNamed: #clob ifAbsentPut: [GlorpClobType new typeString: 'varchar(max)'].
 ]
 
-{ #category : #'database-specific' }
+{ #category : #'database - specific' }
 SQLServerPlatform >> compoundOperationFor: aSymbol [
 	"Return the platform specific version of a compound statement symbol"
 	aSymbol == #INTERSECT ifTrue: [^'WHERE EXISTS'].
@@ -203,7 +203,7 @@ SQLServerPlatform >> date [
 	^self timestamp.
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 SQLServerPlatform >> dateConverter [
 	"SQL server doesn't have plain dates, and doesn't accept them"
 	^DelegatingDatabaseConverter
@@ -213,7 +213,7 @@ SQLServerPlatform >> dateConverter [
 		fromDbToSt: #readDate:for:.	"#printDate:for:"
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 SQLServerPlatform >> dateToTimestampConversion: aDate for: aType [
 	aDate isNil ifTrue: [^aDate].
 	^aDate asTimestamp.
@@ -229,7 +229,7 @@ SQLServerPlatform >> double [
 	^self float.
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 SQLServerPlatform >> escapeFor: aCharacter [
 	^String with: $' with: aCharacter.
 "	^'\', (aCharacter asInteger printStringRadix: 16)."
@@ -389,7 +389,7 @@ SQLServerPlatform >> nvarchar [
 	^self typeNamed: #nvarchar ifAbsentPut: [GlorpVarCharType new typeString: 'nvarchar'].
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 SQLServerPlatform >> printBlob: aByteArray on: aStream for: aType [
 	aByteArray isNil ifTrue: [^aStream nextPutAll: 'NULL'].
 	aStream nextPutAll: '0x'.
@@ -397,7 +397,7 @@ SQLServerPlatform >> printBlob: aByteArray on: aStream for: aType [
 		each printOn: aStream paddedWith: $0 to: 2 base: 16].
 ]
 
-{ #category : #'conversion-boolean' }
+{ #category : #'conversion - boolean' }
 SQLServerPlatform >> printBoolean: aBoolean for: aType [
 	"If the platform is MS SQL Server, a boolean object in a SELECT needs to be converted to  BIT type, since T, Y, or true make SQLServer complain. "
 	
@@ -410,7 +410,7 @@ SQLServerPlatform >> printBoolean: aBoolean for: aType [
 	^'CONVERT( BIT, ' , string , ' )'.
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 SQLServerPlatform >> printDate: aDate for: aType [
 	"Print a date (or timestamp) as yyyy-mm-dd"
 	| stream |
@@ -424,7 +424,7 @@ SQLServerPlatform >> printDate: aDate for: aType [
 	^stream contents.
 ]
 
-{ #category : #'database-specific' }
+{ #category : #'database - specific' }
 SQLServerPlatform >> printPreLimit: anInteger on: aCommand [
 	aCommand
 		nextPutAll: ' TOP '.
@@ -470,7 +470,7 @@ SQLServerPlatform >> printSqlStatementToTestExistenceOfTable: tableName inSchema
 		nextPut: $;
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 SQLServerPlatform >> printTime: aTime for: aType [
 	"Print a time (or timestamp) as hh:mm:ss.fff"
 	| stream |
@@ -485,7 +485,7 @@ SQLServerPlatform >> printTime: aTime for: aType [
 	^stream contents.
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 SQLServerPlatform >> printTimestamp: aTimestamp on: stream for: aType [
 	aTimestamp isNil ifTrue: [stream nextPutAll: 'NULL'. ^self].
 	stream nextPutAll: '{ ts '''.
@@ -499,7 +499,7 @@ SQLServerPlatform >> printTimestamp: aTimestamp on: stream for: aType [
 	stream nextPutAll: ''' }'.
 ]
 
-{ #category : #'database-specific' }
+{ #category : #'database - specific' }
 SQLServerPlatform >> queryWithUnsupportedOperationsEliminatedFrom: aQuery do: aBlock [
 	"If aQuery has operations that we don't support, rewrite it to do them in terms of lower level operations. In particular, rewrite INTERSECT/EXCEPT operations into EXISTS clauses in a single query. Pass the new query to aBlock."
 	| newQuery |
@@ -513,7 +513,7 @@ SQLServerPlatform >> real [
 	^self float.
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 SQLServerPlatform >> removeNestedParensFromString: aString [
 	"Return a Smalltalk instance of the type indicated by aGlorpType.  SQL-Server wraps aString in parentheses, so uwrap it first.  If aString is nil, ensure we return nil."
 
@@ -628,7 +628,7 @@ SQLServerPlatform >> tinyint [
 	^self typeNamed: #tinyInt ifAbsentPut: [GlorpIntegerType new typeString: 'tinyint'].
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 SQLServerPlatform >> toGlorpType: aGlorpType fromString: aString [
 	"Since SQL-Server wraps the string in parentheses, uwrap it first."
 

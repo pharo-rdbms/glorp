@@ -112,7 +112,7 @@ DatabasePlatform >> areSequencesExplicitlyCreated [
 	self subclassResponsibility.
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 DatabasePlatform >> asTimestamp: anObject for: aType [
 	anObject isNil ifTrue: [^nil].
 	^anObject class = Time
@@ -157,7 +157,7 @@ DatabasePlatform >> booleanFalse [
 ^ 0.
 ]
 
-{ #category : #'conversion-boolean' }
+{ #category : #'conversion - boolean' }
 DatabasePlatform >> booleanToBooleanConverter [
 	^DelegatingDatabaseConverter
 		named: #booleanToBoolean
@@ -166,7 +166,7 @@ DatabasePlatform >> booleanToBooleanConverter [
 		fromDbToSt: #convertDBBooleanToBoolean:for:.
 ]
 
-{ #category : #'conversion-boolean' }
+{ #category : #'conversion - boolean' }
 DatabasePlatform >> booleanToIntegerConverter [
 	^DelegatingDatabaseConverter
 		named: #booleanToInteger
@@ -175,7 +175,7 @@ DatabasePlatform >> booleanToIntegerConverter [
 		fromDbToSt: #convertIntegerToBoolean:for:.
 ]
 
-{ #category : #'conversion-boolean' }
+{ #category : #'conversion - boolean' }
 DatabasePlatform >> booleanToStringTFConverter [
 	^DelegatingDatabaseConverter
 		named: #booleanToString
@@ -184,7 +184,7 @@ DatabasePlatform >> booleanToStringTFConverter [
 		fromDbToSt: #convertTFToBoolean:for:.
 ]
 
-{ #category : #'conversion-boolean' }
+{ #category : #'conversion - boolean' }
 DatabasePlatform >> booleanToStringYNConverter [
 	^DelegatingDatabaseConverter
 		named: #booleanToString
@@ -193,7 +193,7 @@ DatabasePlatform >> booleanToStringYNConverter [
 		fromDbToSt: #convertYNToBoolean:for:.
 ]
 
-{ #category : #'conversion-boolean' }
+{ #category : #'conversion - boolean' }
 DatabasePlatform >> booleanToStringYesNoConverter [
 	^DelegatingDatabaseConverter
 		named: #booleanToString
@@ -202,12 +202,12 @@ DatabasePlatform >> booleanToStringYesNoConverter [
 		fromDbToSt: #convertYesNoToBoolean:for:.
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 DatabasePlatform >> byteArrayToString: aByteArray for: aType [
 	^aByteArray isNil ifTrue: [nil] ifFalse: [Dialect convert: aByteArray toStringWithEncoding: self characterEncoding].
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 DatabasePlatform >> byteArrayToStringConverter [
 	^DelegatingDatabaseConverter
 		named: #byteArrayToString
@@ -216,7 +216,7 @@ DatabasePlatform >> byteArrayToStringConverter [
 		fromDbToSt: #convertByteArrayToString:for:.
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 DatabasePlatform >> byteaConverter [
 	^DelegatingDatabaseConverter
 		named: #bytea
@@ -318,43 +318,43 @@ DatabasePlatform >> columnNameSeparatorString [
 	^','
 ]
 
-{ #category : #'database-specific' }
+{ #category : #'database - specific' }
 DatabasePlatform >> compoundOperationFor: aSymbol [
 	"Return the platform specific version of a compound statement symbol"
 	^aSymbol.
 ]
 
-{ #category : #'conversion-boolean' }
+{ #category : #'conversion - boolean' }
 DatabasePlatform >> convertBooleanToDBBoolean: aBoolean for: aType [
 	(self usesNullForFalse and: [aBoolean isNil]) ifTrue: [^false].
 	^aBoolean.
 ]
 
-{ #category : #'conversion-boolean' }
+{ #category : #'conversion - boolean' }
 DatabasePlatform >> convertBooleanToInteger: aBoolean for: aType [
 	aBoolean isNil ifTrue: [^nil].
 	^aBoolean ifTrue: [1] ifFalse: [0].
 ]
 
-{ #category : #'conversion-boolean' }
+{ #category : #'conversion - boolean' }
 DatabasePlatform >> convertBooleanToTF: aBoolean for: aType [
 	aBoolean isNil ifTrue: [^aBoolean].
 	^aBoolean ifTrue: ['T'] ifFalse: ['F'].
 ]
 
-{ #category : #'conversion-boolean' }
+{ #category : #'conversion - boolean' }
 DatabasePlatform >> convertBooleanToYN: aBoolean for: aType [
 	aBoolean isNil ifTrue: [^aBoolean].
 	^aBoolean ifTrue: ['Y'] ifFalse: ['N'].
 ]
 
-{ #category : #'conversion-boolean' }
+{ #category : #'conversion - boolean' }
 DatabasePlatform >> convertBooleanToYesNo: aBoolean for: aType [
 	aBoolean isNil ifTrue: [^aBoolean].
 	^aBoolean ifTrue: ['YES'] ifFalse: ['NO'].
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 DatabasePlatform >> convertByteArrayToSQLString: aByteArray for: aType [
 	"This is a slightly misleading name. Really what we want is conversion to a Blob-type of field. So if it's a bytearray, we can just let the driver take care of that conversion, but if we're given a string, we should convert it."
 
@@ -366,18 +366,18 @@ DatabasePlatform >> convertByteArrayToSQLString: aByteArray for: aType [
 		ifFalse: [aByteArray].
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 DatabasePlatform >> convertByteArrayToString: aByteArray for: aType [
 	
 	^aByteArray ifNotNil: [ aByteArray asString ]
 ]
 
-{ #category : #'conversion-boolean' }
+{ #category : #'conversion - boolean' }
 DatabasePlatform >> convertDBBooleanToBoolean: aBoolean for: aType [
 	^aBoolean.
 ]
 
-{ #category : #'conversion-boolean' }
+{ #category : #'conversion - boolean' }
 DatabasePlatform >> convertIntegerToBoolean: anInteger for: aType [
 	anInteger isNil ifTrue: [^anInteger].
 	anInteger = 1 ifTrue: [^true].
@@ -385,12 +385,12 @@ DatabasePlatform >> convertIntegerToBoolean: anInteger for: aType [
 	self error: 'invalid boolean conversion'.
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 DatabasePlatform >> convertStringToByteArray: aString for: aType [
 	^aString ifNotNil:  [aString asByteArray]
 ]
 
-{ #category : #'conversion-boolean' }
+{ #category : #'conversion - boolean' }
 DatabasePlatform >> convertTFToBoolean: aString for: aType [
 	aString isNil ifTrue: [^aString].
 	aString = 'T' ifTrue: [^true].
@@ -398,32 +398,32 @@ DatabasePlatform >> convertTFToBoolean: aString for: aType [
 	self error: 'invalid boolean conversion'.
 ]
 
-{ #category : #'conversion-numbers' }
+{ #category : #'conversion - numbers' }
 DatabasePlatform >> convertToDecimal: aNumber for: type [
 
  	aNumber isNil ifTrue: [^nil].
 	^ScaledDecimal newFromNumber: aNumber scale: type scale.
 ]
 
-{ #category : #'conversion-numbers' }
+{ #category : #'conversion - numbers' }
 DatabasePlatform >> convertToDouble: aNumber for: type [ 
 
 	aNumber isNil ifTrue: [^nil].
 	^Dialect coerceToDoublePrecisionFloat: aNumber
 ]
 
-{ #category : #'conversion-numbers' }
+{ #category : #'conversion - numbers' }
 DatabasePlatform >> convertToFloat: aNumber for: aType [ 
 	aNumber isNil ifTrue: [^nil].
 	^aNumber asFloat.
 ]
 
-{ #category : #'conversion-numbers' }
+{ #category : #'conversion - numbers' }
 DatabasePlatform >> convertToInteger: aNumber for: aType [ 
 	^aNumber isNil ifTrue: [aNumber] ifFalse: [aNumber asNumber asInteger].
 ]
 
-{ #category : #'conversion-numbers' }
+{ #category : #'conversion - numbers' }
 DatabasePlatform >> convertToNumber: aNumber for: aType [
 	"Convert to an arbitrary numeric type. Make sure our precision matches. *Hate* floating point"
 
@@ -437,7 +437,7 @@ DatabasePlatform >> convertToNumber: aNumber for: aType [
 	^aNumber isInteger ifTrue: [result rounded] ifFalse: [result].
 ]
 
-{ #category : #'conversion-boolean' }
+{ #category : #'conversion - boolean' }
 DatabasePlatform >> convertYNToBoolean: aString for: aType [
 	aString isNil ifTrue: [^aString].
 	aString = 'Y' ifTrue: [^true].
@@ -445,7 +445,7 @@ DatabasePlatform >> convertYNToBoolean: aString for: aType [
 	self error: 'invalid boolean conversion'.
 ]
 
-{ #category : #'conversion-boolean' }
+{ #category : #'conversion - boolean' }
 DatabasePlatform >> convertYesNoToBoolean: aString for: aType [
 	aString isNil ifTrue: [^aString].
 	aString asUppercase = 'YES' ifTrue: [^true].
@@ -831,7 +831,7 @@ DatabasePlatform >> date [
 	^self timestamp.
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 DatabasePlatform >> dateConverter [
 	^DelegatingDatabaseConverter
 		named: #date
@@ -900,7 +900,7 @@ DatabasePlatform >> endColumnQuote [
 	^'"'.
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 DatabasePlatform >> escapeFor: aCharacter [
 	aCharacter = $' ifTrue: [^''''''].
 	^String with: $\ with: aCharacter.
@@ -977,13 +977,13 @@ DatabasePlatform >> integer [
 	^self typeNamed: #integer ifAbsentPut: [GlorpIntegerType new].
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 DatabasePlatform >> integerToString: anInteger for: aType [
 	anInteger isNil ifTrue: [^nil].
 	^self padString: anInteger printString for: aType.
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 DatabasePlatform >> integerToStringConverter [
 	^DelegatingDatabaseConverter
 		named: #integerToString
@@ -1125,12 +1125,12 @@ DatabasePlatform >> newDatabaseSequenceNamed: aString [
 	^self databaseSequenceClass named: aString.
 ]
 
-{ #category : #'conversion-null' }
+{ #category : #'conversion - null' }
 DatabasePlatform >> nullConversion: anObject for: aType [
 	^anObject.
 ]
 
-{ #category : #'conversion-null' }
+{ #category : #'conversion - null' }
 DatabasePlatform >> nullConverter [
 	^NullConverter new
 		name: #null.
@@ -1142,7 +1142,7 @@ DatabasePlatform >> number [
 	^self typeNamed: #number ifAbsentPut: [GlorpNumericType new].
 ]
 
-{ #category : #'conversion-numbers' }
+{ #category : #'conversion - numbers' }
 DatabasePlatform >> numberToDecimalConverter [
 
 	^DelegatingDatabaseConverter
@@ -1152,7 +1152,7 @@ DatabasePlatform >> numberToDecimalConverter [
 		fromDbToSt: #convertToDecimal:for:.
 ]
 
-{ #category : #'conversion-numbers' }
+{ #category : #'conversion - numbers' }
 DatabasePlatform >> numberToDoubleConverter [
 	^DelegatingDatabaseConverter
 		named: #numberToDouble
@@ -1161,7 +1161,7 @@ DatabasePlatform >> numberToDoubleConverter [
 		fromDbToSt: #convertToDouble:for:.
 ]
 
-{ #category : #'conversion-numbers' }
+{ #category : #'conversion - numbers' }
 DatabasePlatform >> numberToFloatConverter [
 	^DelegatingDatabaseConverter
 		named: #numberToFloat
@@ -1170,7 +1170,7 @@ DatabasePlatform >> numberToFloatConverter [
 		fromDbToSt: #convertToFloat:for:.
 ]
 
-{ #category : #'conversion-numbers' }
+{ #category : #'conversion - numbers' }
 DatabasePlatform >> numberToIntegerConverter [
 	^DelegatingDatabaseConverter
 		named: #numberToInteger
@@ -1179,7 +1179,7 @@ DatabasePlatform >> numberToIntegerConverter [
 		fromDbToSt: #convertToInteger:for:.
 ]
 
-{ #category : #'conversion-numbers' }
+{ #category : #'conversion - numbers' }
 DatabasePlatform >> numberToNumberConverter [
 	^DelegatingDatabaseConverter
 		named: #numberToNumber
@@ -1198,7 +1198,7 @@ DatabasePlatform >> nvarchar [
 	^self subclassResponsibility.
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 DatabasePlatform >> padString: aString for: aType [
 	"Between 0.3.140.1 and 7.10 inclusive, Glorp trimmed strings that were too long for fixed-length fields.  This is no longer done, so such strings (sometimes too long only because the database platform measuresStringFieldWidthsInBytes and the string has multi-byte characters) will normally cause database errors (intentionally:  overlong strings should not be submitted to such fields)."
 
@@ -1212,7 +1212,7 @@ DatabasePlatform >> padString: aString for: aType [
 	^aString , padding
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 DatabasePlatform >> padTrimmedString: aString for: aType [
 	| padding trimmed |
 	aString isNil ifTrue: [^nil].
@@ -1226,7 +1226,7 @@ DatabasePlatform >> padTrimmedString: aString for: aType [
 	^aString , padding
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 DatabasePlatform >> paddingCharacter [
 	^1 asCharacter.
 ]
@@ -1289,7 +1289,7 @@ DatabasePlatform >> primaryKeysAreAutomaticallyUnique [
 	^false.
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 DatabasePlatform >> printBlob: aByteArray on: aStream for: aType [
 	aByteArray isNil ifTrue: [^aStream nextPutAll: 'NULL'].
 	aStream nextPutAll: 'X'''.
@@ -1298,7 +1298,7 @@ DatabasePlatform >> printBlob: aByteArray on: aStream for: aType [
 	aStream nextPut: $'.
 ]
 
-{ #category : #'conversion-boolean' }
+{ #category : #'conversion - boolean' }
 DatabasePlatform >> printBoolean: aBoolean for: aType [
 	"If the platform is MS SQL Server, a boolean object in a SELECT needs to be converted to  BIT type, since T, Y, or true make SQLServer complain. "
 	| stream |
@@ -1362,7 +1362,7 @@ DatabasePlatform >> printDDLTableNameFor: aGLORPDatabaseTable on: sqlStatementSt
 			ifFalse: [aGLORPDatabaseTable qualifiedName]).
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 DatabasePlatform >> printDate: aTimestamp isoFormatOn: stream [
 	"Print the date as yyyy-mm-dd"
 	| monthNumber dayOfMonth |
@@ -1376,7 +1376,7 @@ DatabasePlatform >> printDate: aTimestamp isoFormatOn: stream [
 	stream nextPutAll: (GlorpDatabaseType padToTwoDigits: dayOfMonth).
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 DatabasePlatform >> printEscapedString: aString on: aCommand [
 	"In this method, aCommand only needs its polymorphic stream protocol, but the parameter is sure to be a command, not a stream, if this method is called."
 
@@ -1389,22 +1389,22 @@ DatabasePlatform >> printEscapedString: aString on: aCommand [
 			ifFalse: [aCommand nextPut: char]].
 ]
 
-{ #category : #'database-specific' }
+{ #category : #'database - specific' }
 DatabasePlatform >> printOffset: anInteger on: aCommand [
 	"By default, do nothing"
 ]
 
-{ #category : #'database-specific' }
+{ #category : #'database - specific' }
 DatabasePlatform >> printOffset: anInteger on: aCommand withLimit: aBoolean [
 	self printOffset: anInteger  on: aCommand. 
 ]
 
-{ #category : #'database-specific' }
+{ #category : #'database - specific' }
 DatabasePlatform >> printPostLimit: anInteger on: aCommand [
 	"By default, do nothing"
 ]
 
-{ #category : #'database-specific' }
+{ #category : #'database - specific' }
 DatabasePlatform >> printPreLimit: anInteger on: aCommand [
 	"By default, do nothing"
 ]
@@ -1593,7 +1593,7 @@ DatabasePlatform >> printSqlStatementToTestExistenceOfTable: tableName inSchema:
 		nextPut: $;
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 DatabasePlatform >> printTime: aTime isoFormatOn: aStream [ 
 
 	self
@@ -1603,7 +1603,7 @@ DatabasePlatform >> printTime: aTime isoFormatOn: aStream [
 	^self
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 DatabasePlatform >> printTime: aTimestamp isoFormatOn: stream milliseconds: aBoolean [
 	"Print the time as hh:mm:ss.mmm"
 	| ms |
@@ -1621,14 +1621,14 @@ DatabasePlatform >> printTime: aTimestamp isoFormatOn: stream milliseconds: aBoo
 	stream nextPutAll: (GlorpDatabaseType padToThreeDigits: ms).
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 DatabasePlatform >> printTimestamp: aTimestamp on: aStream for: aType [
 	aTimestamp isNil ifTrue: [aTimestamp glorpPrintSQLOn: aStream. ^self].
 
 	aStream nextPut: $'; nextPutAll: aTimestamp printString; nextPut: $'.
 ]
 
-{ #category : #'database-specific' }
+{ #category : #'database - specific' }
 DatabasePlatform >> queryWithUnsupportedOperationsEliminatedFrom: aQuery do: aBlock [
 	"If aQuery has operations that we don't support, rewrite it to do them in terms of lower level operations. In particular, rewrite INTERSECT/EXCEPT operations into EXISTS clauses in a single query. Pass the new query to aBlock."
 	^self.
@@ -1639,7 +1639,7 @@ DatabasePlatform >> raw [
 	^self blob.
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 DatabasePlatform >> readDate: anObject for: aType [
 	"format '2003-03-13"
 	anObject isNil ifTrue: [^nil].
@@ -1649,7 +1649,7 @@ DatabasePlatform >> readDate: anObject for: aType [
 	^anObject asDate.
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 DatabasePlatform >> readDateFromStream: aStream for: aType [
 	"Seems like we get to do this ourselves, in a lowest common denominator kind of way. Translate into GMT if we've got a timezone."
 	"assumes ISO format.
@@ -1664,7 +1664,7 @@ DatabasePlatform >> readDateFromStream: aStream for: aType [
 	^Dialect newDateWithYears: years months: months days: days.
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 DatabasePlatform >> readTime: anObject for: aType [
 	"format 15:29:28.337-05  (timezone optional)"
 	anObject isNil ifTrue: [^nil].
@@ -1674,7 +1674,7 @@ DatabasePlatform >> readTime: anObject for: aType [
 	^anObject asTime.
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 DatabasePlatform >> readTimeFromStream: aStream for: aType [
 	"Seems like we get to do this ourselves, in a lowest common denominator kind of way. Ignore timezones right now"
 	"assumes ISO format.
@@ -1700,7 +1700,7 @@ DatabasePlatform >> readTimeFromStream: aStream for: aType [
 	"^Dialect addSeconds: (timeZoneOffset * -1* 60 * 60) to: aTime."
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 DatabasePlatform >> readTimestamp: anObject for: aType [
 	"Seems like we get to do this ourselves, in a lowest common denominator kind of way. Translate into GMT if we've got a timezone."
 
@@ -1718,7 +1718,7 @@ DatabasePlatform >> readTimestamp: anObject for: aType [
 	^anObject asDateAndTime.
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 DatabasePlatform >> readTimestampFromStream: aStream for: aType [
 
 	| years months days hours minutes seconds millisecondAccumulator milliseconds timeZoneOffset |
@@ -1985,21 +1985,21 @@ DatabasePlatform >> startColumnQuote [
 	^'"'.
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 DatabasePlatform >> stringToByteArray: aString for: aType [
 	| string |
 	string := self unpadString: aString for: aType.
 	^string isNil ifTrue: [nil] ifFalse: [Dialect convert: string toByteArrayWithEncoding: self characterEncoding].
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 DatabasePlatform >> stringToInteger: aString for: aType [
 	| string |
 	string := self unpadString: aString for: aType.
 	^string isNil ifTrue: [nil] ifFalse: [string asNumber truncated].
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 DatabasePlatform >> stringToStringConverter [
 	^DelegatingDatabaseConverter
 		named: #stringToString
@@ -2008,14 +2008,14 @@ DatabasePlatform >> stringToStringConverter [
 		fromDbToSt: #unpadString:for:.
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 DatabasePlatform >> stringToSymbol: aString for: aType [
 	| string |
 	string := self unpadString: aString for: aType.
 	^string isNil ifTrue: [nil] ifFalse: [string asSymbol].
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 DatabasePlatform >> stringToTrimmedStringConverter [
 	"Between 0.3.140.1 and 7.10 inclusive, Glorp routinely trimmed strings that were too long for fixed-length fields in the stringToString converter.  It no longer does this, but if a particular Mapping wants trimming (e.g. StoreProperty has a searchString summary field for its comment's text blob, so the longest initial length of text that can be written to the search field is always OK), then assign this converter to the Mapping in the descriptor."
 
@@ -2171,13 +2171,13 @@ DatabasePlatform >> supportsVariableSizedNumerics [
 	^true.
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 DatabasePlatform >> symbolToString: aSymbol for: aType [
 	aSymbol isNil ifTrue: [^nil].
 	^self padString: aSymbol asString for: aType.
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 DatabasePlatform >> symbolToStringConverter [
 	^DelegatingDatabaseConverter
 		named: #symbolToString
@@ -2202,7 +2202,7 @@ DatabasePlatform >> time [
 	self subclassResponsibility.
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 DatabasePlatform >> timeConverter [
 	^DelegatingDatabaseConverter
 		named: #time
@@ -2216,7 +2216,7 @@ DatabasePlatform >> timestamp [
 	self subclassResponsibility.
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 DatabasePlatform >> timestampConverter [
 	^DelegatingDatabaseConverter
 		named: #timestamp
@@ -2225,7 +2225,7 @@ DatabasePlatform >> timestampConverter [
 		fromDbToSt: #readTimestamp:for:.	"#printTimestamp:for:"
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 DatabasePlatform >> timestampToDateConverter [
 	^DelegatingDatabaseConverter
 		named: #timestampToDate
@@ -2239,14 +2239,14 @@ DatabasePlatform >> tinyint [
 	^self number
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 DatabasePlatform >> toByteaSQLString: aByteArray for: aType [
 	^String streamContents: [ :s | 
 		s nextPut: $\. 
 		aByteArray printHexOn: s ]
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 DatabasePlatform >> toDate: anObject for: aType [
 	"SQL supports adding an integer to a date, meaning incrementing the date by that number of days, so we pass integer values here as well as dates."
 
@@ -2256,7 +2256,7 @@ DatabasePlatform >> toDate: anObject for: aType [
 	^anObject asDate
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 DatabasePlatform >> toGlorpType: aGlorpType fromString: aString [
 	"Return a Smalltalk instance of the type indicated by aGlorpType."
 	
@@ -2267,14 +2267,14 @@ DatabasePlatform >> toGlorpType: aGlorpType fromString: aString [
 			aClass readFrom: aString readStream]
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 DatabasePlatform >> toTime: anObject for: aType [
 	anObject isNil ifTrue: [^nil].
 	anObject class = Time ifTrue: [^anObject].
 	^anObject asTime.
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 DatabasePlatform >> toTimestamp: anObject for: aType [
 	"SQL supports adding an integer to a date, meaning incrementing the date by that number of days.  Oracle and SQLServer use Timestamp and Date as synonyms, so we pass integer values here as well as in #toDate:for:."
 
@@ -2284,7 +2284,7 @@ DatabasePlatform >> toTimestamp: anObject for: aType [
 	^anObject asDateAndTime
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 DatabasePlatform >> trimString: aString for: aType [ 
 	| trimmedString length excess |
 	aType width isNil ifTrue: [^aString].
@@ -2408,7 +2408,7 @@ DatabasePlatform >> typesWithValues [
 	^self types.
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 DatabasePlatform >> unpadString: aString for: aType [
 	aString isNil ifTrue: [^nil].
 	^aType isVariableWidth 

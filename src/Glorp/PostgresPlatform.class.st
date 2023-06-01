@@ -58,7 +58,7 @@ PostgresPlatform >> boolean [
 	^self typeNamed: #boolean ifAbsentPut: [GlorpBooleanType new typeString: 'boolean'].
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 PostgresPlatform >> byteArrayToSQLStringConverter [
 
 	^DelegatingDatabaseConverter
@@ -116,12 +116,12 @@ PostgresPlatform >> clob [
 	^self typeNamed: #clob ifAbsentPut: [GlorpClobType new typeString: 'text'].
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 PostgresPlatform >> convertJSONObjectToSQLString: anObject for: aType [
 	^anObject ifNotNil: [ NeoJSONWriter toString: anObject ]
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 PostgresPlatform >> convertSQLStringToByteArray: aString for: aType [
 
 	| aStream str | 
@@ -140,7 +140,7 @@ PostgresPlatform >> convertSQLStringToByteArray: aString for: aType [
 	^aStream contents
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 PostgresPlatform >> convertSQLStringToJSONObject: anObject for: aType [
 	^anObject isString 
 		ifTrue: [ NeoJSONReader fromString: anObject ] 
@@ -172,7 +172,7 @@ PostgresPlatform >> doublePrecision [
 	^self double
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 PostgresPlatform >> encodeAsBase64String: aByteArray [
 	"Pure inline of Base64FastCoder's method."
 
@@ -286,7 +286,7 @@ PostgresPlatform >> json [
 	^self typeNamed: #json ifAbsentPut: [GlorpJSONType new]
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 PostgresPlatform >> jsonToStringConverter [
 
 	^DelegatingDatabaseConverter
@@ -326,7 +326,7 @@ PostgresPlatform >> numeric [
 	^self typeNamed: #numeric ifAbsentPut: [GlorpNumericType new].
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 PostgresPlatform >> postLoginInitializeFromAccessor: aDatabaseAccessor [
 	"If we cannot get the standard_conforming_strings state, assume the database is too old to understand it."
 
@@ -344,14 +344,14 @@ PostgresPlatform >> postLoginInitializeFromAccessor: aDatabaseAccessor [
 		ifFalse: [charactersThatNeedEscaping := #($' $\)].
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 PostgresPlatform >> printBlob: aByteArray on: aStream for: aType [
 	aByteArray isNil ifTrue: [^aStream nextPutAll: 'NULL'].
 	Dialect isSqueak ifTrue: [^self squeakPrintBlob: aByteArray on: aStream for: aType].
 	aStream nextPutAll: (self encodeAsBase64String: aByteArray) printString
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 PostgresPlatform >> printDate: aDate for: aType [
 	"Print a date (or timestamp) as yyyy-mm-dd"
 	| stream |
@@ -365,14 +365,14 @@ PostgresPlatform >> printDate: aDate for: aType [
 	^stream contents.
 ]
 
-{ #category : #'database-specific' }
+{ #category : #'database - specific' }
 PostgresPlatform >> printOffset: anInteger on: aCommand [
 	aCommand
 		nextPutAll: ' OFFSET '.
 	anInteger printOn: aCommand.
 ]
 
-{ #category : #'database-specific' }
+{ #category : #'database - specific' }
 PostgresPlatform >> printPostLimit: anInteger on: aCommand [
 	aCommand
 		nextPutAll: ' LIMIT '.
@@ -390,7 +390,7 @@ PostgresPlatform >> printSqlStatementToListColumnsInTable: aDatabaseTable inSche
 		nextPutAll: ('SELECT column_name as name, data_type as type, character_maximum_length as length, (is_nullable=''YES'')::int as nullable, column_default as default_value, (SELECT count(*) FROM pg_attribute a LEFT OUTER JOIN  pg_index i  ON a.attrelid = i.indrelid AND a.attnum = ANY(i.indkey) WHERE  i.indrelid = ''{1}''::regclass AND i.indisprimary AND a.attname=column_name) as pk  FROM information_schema.columns where table_name=''{1}''' format: {aDatabaseTable. schemaString })
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 PostgresPlatform >> printTime: aTime for: aType [
 	"Print a time (or timestamp) as hh:mm:ss.fff"
 	| stream |
@@ -404,7 +404,7 @@ PostgresPlatform >> printTime: aTime for: aType [
 	^stream contents.
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 PostgresPlatform >> printTimestamp: aTimestamp on: stream for: aType [
 	aTimestamp isNil ifTrue: [stream nextPutAll: 'NULL'. ^self].
 	stream nextPut: $'.

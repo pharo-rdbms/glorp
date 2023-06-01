@@ -18,7 +18,7 @@ Class {
 		'myReceiver',
 		'query'
 	],
-	#category : 'Glorp-Queries'
+	#category : #'Glorp-Queries'
 }
 
 { #category : #'as yet unclassified' }
@@ -276,7 +276,7 @@ MessageArchiver >> privateGlorpSelector [
 	^mySelector
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 MessageArchiver >> receiver: aMessageCollector selector: aSymbol arguments: aCollection [
 
 	myReceiver := aMessageCollector.

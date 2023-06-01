@@ -16,7 +16,7 @@ Class {
 		'tables',
 		'visitedTables'
 	],
-	#category : 'Glorp-UnitOfWork'
+	#category : #'Glorp-UnitOfWork'
 }
 
 { #category : #'instance creation' }
@@ -46,7 +46,7 @@ TableSorter >> hasBeenVisited: aTable [
 	^visitedTables includes: aTable
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 TableSorter >> initialize [
 	tables := OrderedCollection new: 100.
 	visitedTables := IdentitySet new: 100

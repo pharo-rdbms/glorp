@@ -123,11 +123,11 @@ GlorpDatabaseType >> impliedSmalltalkType [
 	^Object.
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 GlorpDatabaseType >> initialize [
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 GlorpDatabaseType >> initializeForField: aDatabaseField in: aDescriptorSystem [
 ]
 

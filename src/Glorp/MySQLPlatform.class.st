@@ -136,12 +136,12 @@ MySQLPlatform >> clob [
 	^self typeNamed: #clob ifAbsentPut: [GlorpMySQLClobType new typeString: 'LONGTEXT'].
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 MySQLPlatform >> convertJSONObjectToSQLString: anObject for: aType [
 	^anObject ifNotNil: [ NeoJSONWriter toString: anObject ]
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 MySQLPlatform >> convertSQLStringToJSONObject: anObject for: aType [
 	^anObject isString 
 		ifTrue: [ NeoJSONReader fromString: anObject ] 
@@ -269,7 +269,7 @@ MySQLPlatform >> json [
 	^self typeNamed: #json ifAbsentPut: [GlorpJSONType new]
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 MySQLPlatform >> jsonToStringConverter [
 
 	^DelegatingDatabaseConverter
@@ -325,7 +325,7 @@ MySQLPlatform >> numeric: precisionCommaScale [
 	^self numeric precision: precision; scale: scale; yourself
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 MySQLPlatform >> printDate: aDate for: aType [
 	| stream |
 	aDate isNil ifTrue: [^'NULL'].
@@ -338,7 +338,7 @@ MySQLPlatform >> printDate: aDate for: aType [
 	^stream contents.
 ]
 
-{ #category : #'database-specific' }
+{ #category : #'database - specific' }
 MySQLPlatform >> printOffset: anInteger on: aCommand [
 	"MySQL cannot have an offset without a limit.  A very large number, like 256T, is equivalent to an infinite limit. We only print it here if there is no limit, but there is an offset."
 
@@ -348,7 +348,7 @@ MySQLPlatform >> printOffset: anInteger on: aCommand [
 	anInteger printOn: aCommand.
 ]
 
-{ #category : #'database-specific' }
+{ #category : #'database - specific' }
 MySQLPlatform >> printPostLimit: anInteger on: aCommand [
     aCommand
         nextPutAll: ' LIMIT '.
@@ -380,7 +380,7 @@ MySQLPlatform >> printSqlStatementToListColumnsInTable: aDatabaseTable inSchema:
 		
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 MySQLPlatform >> printTime: aTime for: aType [
 	| stream |
 	aTime isNil ifTrue: [^'NULL'].
@@ -394,7 +394,7 @@ MySQLPlatform >> printTime: aTime for: aType [
 	^stream contents.
 ]
 
-{ #category : #'conversion-times' }
+{ #category : #'conversion - times' }
 MySQLPlatform >> printTimestamp: aTimestamp on: stream for: aType [
 	aTimestamp isNil ifTrue: [stream nextPutAll: 'NULL'. ^self].
 	stream nextPut: $".
@@ -409,7 +409,7 @@ MySQLPlatform >> printTimestamp: aTimestamp on: stream for: aType [
 	stream nextPut: $".
 ]
 
-{ #category : #'database-specific' }
+{ #category : #'database - specific' }
 MySQLPlatform >> queryWithUnsupportedOperationsEliminatedFrom: aQuery do: aBlock [
 	"If aQuery has operations that we don't support, rewrite it to do them in terms of lower level operations. In particular, rewrite INTERSECT/EXCEPT operations into EXISTS clauses in a single query. Pass the new query to aBlock."
 	| newQuery |
@@ -447,7 +447,7 @@ MySQLPlatform >> startColumnQuote [
 	^'`'.
 ]
 
-{ #category : #'conversion-strings' }
+{ #category : #'conversion - strings' }
 MySQLPlatform >> stringToByteArrayOneWayConverter [
 	"This is a special converter for MySQL that is a null conversion on the way out, but converts the byte arrays that we get back from blobs into strings."
 	^DelegatingDatabaseConverter

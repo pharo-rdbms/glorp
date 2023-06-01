@@ -4,21 +4,21 @@ Date and time type
 Class {
 	#name : #GlorpDateAndTimeType,
 	#superclass : #GlorpDatabaseType,
-	#category : 'Glorp-Types'
+	#category : #'Glorp-Types'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #converting }
 GlorpDateAndTimeType >> converterForStType: aClass [
 
 	^self platform converterNamed: #dateAndTime.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GlorpDateAndTimeType >> impliedSmalltalkType [
 	^Dialect dateAndTimeClass
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #printing }
 GlorpDateAndTimeType >> print: aValue on: aStream [
 
 	aValue isNil

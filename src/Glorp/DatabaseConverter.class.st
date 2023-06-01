@@ -17,7 +17,7 @@ Class {
 	#instVars : [
 		'name'
 	],
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #'*Glorp' }
@@ -36,7 +36,7 @@ DatabaseConverter >> convert: anObject toDatabaseRepresentationAs: aDatabaseType
 	self subclassResponsibility
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 DatabaseConverter >> initialize [
 	name := #unnamed.
 ]

@@ -79,7 +79,7 @@ CompoundQuery >> hasOffset [
 	^ self offset isNotNil
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 CompoundQuery >> initialize [
 	super initialize.
 	requiresDistinct := true.

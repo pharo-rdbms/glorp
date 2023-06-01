@@ -14,7 +14,7 @@ Class {
 		'name',
 		'fields'
 	],
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #'*Glorp' }
@@ -36,12 +36,12 @@ DatabaseIndex class >> new [
 	^super new initialize.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 DatabaseIndex >> addField: aField [
 	^fields add: aField
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 DatabaseIndex >> addFields: aCollection [
 	fields addAll: aCollection
 ]
@@ -75,7 +75,7 @@ DatabaseIndex >> indexesField: aField [
 	^fields includes: aField.
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 DatabaseIndex >> initialize [
 	fields := OrderedCollection new: 2.
 ]

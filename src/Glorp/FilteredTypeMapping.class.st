@@ -39,7 +39,7 @@ FilteredTypeMapping >> addTypeMappingCriteriaTo: collection in: base [
 			 ifFalse: [ l in: r ])
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 FilteredTypeMapping >> buildKeyDictionary [
 	| subclassDescriptor |
 	keyDictionary := Dictionary new.
@@ -70,7 +70,7 @@ FilteredTypeMapping >> field [
 	^field.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 FilteredTypeMapping >> field: aField keyedBy: aKey [
 	field := aField.
 	key := aKey

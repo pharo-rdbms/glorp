@@ -31,7 +31,7 @@ Class {
 		'replacementSubSelect',
 		'uniqueConstraints'
 	],
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #'*Glorp' }
@@ -440,7 +440,7 @@ DatabaseTable >> indexes [
 	^indexes.
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 DatabaseTable >> initialize [
 
 	schema := ''.
@@ -539,7 +539,7 @@ DatabaseTable >> platform [
 	^nil.
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 DatabaseTable >> postInitializeIn: aDescriptorSystem [
 	"Any initialization that happens after all the fields have been added"
 	1 to: fields size do: [:i |

@@ -125,7 +125,7 @@ CacheManager >> hasObjectExpiredOfClass: aClass withKey: key [
 	^cache hasExpired: key.
 ]
 
-{ #category : #'initialize/release' }
+{ #category : #initialization }
 CacheManager >> initialize [
 
 	subCaches := IdentityDictionary new: 100.
@@ -153,7 +153,7 @@ CacheManager >> lookupClass: aClass key: aKey ifAbsentPut: failBlock [
 	^(self cacheForClass: aClass) at: aKey ifAbsentPut: failBlock.
 ]
 
-{ #category : #'initialize/release' }
+{ #category : #initialization }
 CacheManager >> makeCacheFor: aClass [ 
 	| rootClass cache |
 	rootClass := session isNil ifTrue: [aClass] ifFalse: [session lookupRootClassFor: aClass].
@@ -176,7 +176,7 @@ CacheManager >> numberOfElements [
 		sum + each numberOfElements].
 ]
 
-{ #category : #'initialize/release' }
+{ #category : #initialization }
 CacheManager >> release [
 	subCaches do: [:each | each release].
 ]

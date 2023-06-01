@@ -11,7 +11,7 @@ Class {
 		'shouldCreateInDatabase',
 		'fields'
 	],
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #'*Glorp' }
@@ -60,7 +60,7 @@ DatabaseTableConstraint >> fields: anObject [
 	fields := anObject
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 DatabaseTableConstraint >> forTable: aTable [
 
 	table := aTable
@@ -72,7 +72,7 @@ DatabaseTableConstraint >> generateName [
 	^self subclassResponsibility
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 DatabaseTableConstraint >> initialize [
 
 	shouldCreateInDatabase := true.

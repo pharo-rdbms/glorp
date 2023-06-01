@@ -81,7 +81,7 @@ FieldExpression >> convertedDbValueOf: anObject [
 	^anObject
 ]
 
-{ #category : #accessing }
+{ #category : #converting }
 FieldExpression >> converterForStType: aClass [
 	^self field converterForStType: aClass.
 ]

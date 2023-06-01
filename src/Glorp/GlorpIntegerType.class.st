@@ -4,7 +4,7 @@ Integer type
 Class {
 	#name : #GlorpIntegerType,
 	#superclass : #GlorpAbstractIntegerType,
-	#category : 'Glorp-Types'
+	#category : #'Glorp-Types'
 }
 
 { #category : #comparing }
@@ -19,7 +19,7 @@ GlorpIntegerType >> hash [
 	^self platform hash bitXor: self impliedSmalltalkType hash
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 GlorpIntegerType >> initialize [
 	super initialize.
 	typeString := 'integer'.

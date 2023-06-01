@@ -4,10 +4,10 @@ Text type
 Class {
 	#name : #GlorpTextType,
 	#superclass : #GlorpAbstractStringType,
-	#category : 'Glorp-Types'
+	#category : #'Glorp-Types'
 }
 
-{ #category : #initialize }
+{ #category : #initialization }
 GlorpTextType >> initialize [
 	super initialize.
 	typeString := 'text'.

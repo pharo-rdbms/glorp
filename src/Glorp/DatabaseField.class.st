@@ -28,7 +28,7 @@ Class {
 		'isLockKey',
 		'defaultValue'
 	],
-	#category : 'Glorp-Database'
+	#category : #'Glorp-Database'
 }
 
 { #category : #'*Glorp' }
@@ -138,7 +138,7 @@ DatabaseField >> impliedSmalltalkType [
 	^self type impliedSmalltalkType.
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 DatabaseField >> initialize [
 	isPrimaryKey := false.
 	isNullable := true.
@@ -271,7 +271,7 @@ DatabaseField >> position: anObject [
 	position := anObject
 ]
 
-{ #category : #initializing }
+{ #category : #initialization }
 DatabaseField >> postInitializeIn: aDescriptorSystem [
 	"Any initialization that has to be delayed until we're in the table"
 	type initializeForField: self in: aDescriptorSystem.
