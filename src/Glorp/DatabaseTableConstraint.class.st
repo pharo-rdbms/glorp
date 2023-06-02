@@ -2,7 +2,9 @@
 Abstract superclass reifying a constraint on a value in a column or between values in columns.
 
 "
-Class {
+Abstract superclass reifying a constraint on a value in a column or between values in columns.
+
+AbstractClass {
 	#name : #DatabaseTableConstraint,
 	#superclass : #Object,
 	#instVars : [
@@ -15,104 +17,90 @@ Class {
 }
 
 { #category : #'*Glorp' }
-DatabaseTableConstraint class >> forTable: aDatabaseTable [
-
+AbstractClass class >> forTable: aDatabaseTable [
 	^ self new
 		  forTable: aDatabaseTable;
 		  yourself
 ]
 
 { #category : #'*Glorp' }
-DatabaseTableConstraint class >> new [
+AbstractClass class >> new [
 	^super new initialize.
 ]
 
 { #category : #printing }
-DatabaseTableConstraint >> creationString [
-
+AbstractClass >> creationString [
 	^(self creationStringFor: self table platform) first.
 ]
 
 { #category : #printing }
-DatabaseTableConstraint >> creationStringFor: aPlatform [
-
+AbstractClass >> creationStringFor: aPlatform [
 	^self subclassResponsibility
 ]
 
 { #category : #printing }
-DatabaseTableConstraint >> dropString [
-
+AbstractClass >> dropString [
 	^self dropStringFor:  self table platform
 ]
 
 { #category : #printing }
-DatabaseTableConstraint >> dropStringFor: aPlatform [
-
+AbstractClass >> dropStringFor: aPlatform [
 	^aPlatform createConstraintDropStatement: self
 ]
 
 { #category : #accessing }
-DatabaseTableConstraint >> fields [
+AbstractClass >> fields [
 	^fields
 ]
 
 { #category : #accessing }
-DatabaseTableConstraint >> fields: anObject [
+AbstractClass >> fields: anObject [
 	fields := anObject
 ]
 
 { #category : #initialization }
-DatabaseTableConstraint >> forTable: aTable [
-
+AbstractClass >> forTable: aTable [
 	table := aTable
 ]
 
 { #category : #accessing }
-DatabaseTableConstraint >> generateName [
-
+AbstractClass >> generateName [
 	^self subclassResponsibility
 ]
 
 { #category : #initialization }
-DatabaseTableConstraint >> initialize [
-
+AbstractClass >> initialize [
 	shouldCreateInDatabase := true.
 ]
 
 { #category : #testing }
-DatabaseTableConstraint >> isForeignKeyConstraint [
-
+AbstractClass >> isForeignKeyConstraint [
 	^ false
 ]
 
 { #category : #testing }
-DatabaseTableConstraint >> isPrimaryKeyConstraint [
-
+AbstractClass >> isPrimaryKeyConstraint [
 	^ false
 ]
 
 { #category : #testing }
-DatabaseTableConstraint >> isUniqueConstraint [
-
+AbstractClass >> isUniqueConstraint [
 	^ false
 ]
 
 { #category : #accessing }
-DatabaseTableConstraint >> name [
-
+AbstractClass >> name [
 	name isNil ifTrue: [ name := self generateName ].
 	^ name
 ]
 
 { #category : #accessing }
-DatabaseTableConstraint >> name: aString [
-
+AbstractClass >> name: aString [
 	name := aString
 ]
 
 { #category : #printing }
-DatabaseTableConstraint >> printOn: aStream [
-
+AbstractClass >> printOn: aStream [
 	super printOn: aStream.
 	aStream
 		nextPut: $(;
@@ -121,26 +109,22 @@ DatabaseTableConstraint >> printOn: aStream [
 ]
 
 { #category : #accessing }
-DatabaseTableConstraint >> shouldCreateInDatabase [
-
+AbstractClass >> shouldCreateInDatabase [
 	^ shouldCreateInDatabase ifNil: [ true ]
 ]
 
 { #category : #accessing }
-DatabaseTableConstraint >> shouldCreateInDatabase: aBoolean [
+AbstractClass >> shouldCreateInDatabase: aBoolean [
 	"If false, then this is a constraint that we use for in-memory ordering, but it should not be created in the database, possibly for performance, or because it might cause a cycle"
-
 	shouldCreateInDatabase := aBoolean
 ]
 
 { #category : #accessing }
-DatabaseTableConstraint >> table [
-
+AbstractClass >> table [
 	^ table
 ]
 
 { #category : #accessing }
-DatabaseTableConstraint >> table: anObject [
-
+AbstractClass >> table: anObject [
 	table := anObject
 ]
