@@ -44,75 +44,76 @@ Class {
 	#category : #'Glorp-Mappings'
 }
 
-{ #category : #utility }
+{ #category : #utilities }
 DescriptorSystem class >> createTablesFor: aLogin [
 	"Create the tables for this descriptor system in the given database. This will fail if the tables already exist. Use recreateTables for that."
 
 	| session |
 	session := self sessionForLogin: aLogin.
 	session login.
-	[session createTables] ensure: 
-		[session logout]
+	[ session createTables ] ensure: [ session logout ]
 ]
 
 { #category : #configuration }
 DescriptorSystem class >> databaseTableClass [
 
-	^DatabaseTable
+	^ DatabaseTable
 ]
 
 { #category : #validation }
 DescriptorSystem class >> defaultValidateValue [
 	"Subclasses can define this not answer #always, and to set it to be things like #firstTime, #never, etc."
 
-	^#always
+	^ #always
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 DescriptorSystem class >> dropTablesFor: aLogin [
 	"Drop the tables for this descriptor system in the given database."
 
 	| session |
 	session := self sessionForLogin: aLogin.
 	session login.
-	[session dropTables] ensure: [session logout]
+	[ session dropTables ] ensure: [ session logout ]
 ]
 
 { #category : #'instance creation' }
 DescriptorSystem class >> forPlatform: dbPlatform [
 
-	^super new initialize;
-		platform: dbPlatform
+	^ super new
+		  initialize;
+		  platform: dbPlatform
 ]
 
 { #category : #configuration }
 DescriptorSystem class >> includeAllClassesWithDescriptorMethods [
 	"If this is true, the descriptor system will automatically include all classes that define the #glorpSetupDescriptor:forSystem: method on the class side. If false, it will only include classes which have descriptor methods defined in this class, or those explicitly added in the #constructAllClasses method."
-	^false
+
+	^ false
 ]
 
 { #category : #'instance creation' }
 DescriptorSystem class >> new [
 
-	^super new initialize
+	^ super new initialize
 ]
 
-{ #category : #utility }
+{ #category : #utilities }
 DescriptorSystem class >> recreateTablesFor: aLogin [
 	"Drop and recreate the tables for this descriptor system in the given database."
 
 	| session |
 	session := self sessionForLogin: aLogin.
 	session login.
-	[session recreateTables] ensure: [session logout]
+	[ session recreateTables ] ensure: [ session logout ]
 ]
 
 { #category : #'instance creation' }
 DescriptorSystem class >> sessionForAccessor: aDatabaseAccesor [.
-	"Create a session associated with the given accesseor, and using us as a descriptor system. 
+	"Create a session associated with the given accessor, and using us as a descriptor system. 
 	This is the easiest way to get a full blown session going."
 	
-	^(GlorpSession forSystem: (self forPlatform: aDatabaseAccesor platform))
+	^ (GlorpSession forSystem: (self forPlatform: aDatabaseAccesor platform))
 		accessor: aDatabaseAccesor;
 		yourself
 
@@ -121,6 +122,7 @@ DescriptorSystem class >> sessionForAccessor: aDatabaseAccesor [.
 { #category : #'instance creation' }
 DescriptorSystem class >> sessionForLogin: aGlorpLogin [
 	"Create a session associated with the given login, and using us as a descriptor system. This is the easiest way to get a full blown session going."
+
 	| system session |
 	system := self forPlatform: aGlorpLogin database.
 	session := GlorpSession new.
@@ -133,8 +135,9 @@ DescriptorSystem class >> sessionForLogin: aGlorpLogin [
 DescriptorSystem class >> validateDescriptorSystem [
 	"Subclasses can define this to do other things, and add their own behavior to do things like only first time, never, etc."
 
-	validateDescriptorSystem isNil ifTrue: [self validateDescriptorSystem: self defaultValidateValue].
-	^validateDescriptorSystem == #always
+	validateDescriptorSystem isNil ifTrue: [
+		self validateDescriptorSystem: self defaultValidateValue ].
+	^ validateDescriptorSystem == #always
 ]
 
 { #category : #validation }
@@ -146,17 +149,19 @@ DescriptorSystem class >> validateDescriptorSystem: aSymbol [
 
 { #category : #api }
 DescriptorSystem >> addClassModelFor: aClass [
-	^classModels
-		at: aClass
-		ifAbsentPut: [self newClassModelFor: aClass]
+
+	^ classModels
+		  at: aClass
+		  ifAbsentPut: [ self newClassModelFor: aClass ]
 ]
 
 { #category : #'initialize-release' }
 DescriptorSystem >> addClassesFromDescriptorMethodsFor: aClass [
+
 	| match |
 	match := 'descriptorFor'.
-	Dialect selectorsFor: aClass do: 
-			[:each | 
+	Dialect selectorsFor: aClass do:
+			[:each |
 			(each copyFrom: 1 to: (match size min: each size)) = match
 				ifTrue:
 					[| className actualClass |
@@ -170,99 +175,109 @@ DescriptorSystem >> addClassesFromDescriptorMethodsFor: aClass [
 
 { #category : #'initialize-release' }
 DescriptorSystem >> addTablesFromInitializeMethodsFor: aClass [
+
 	| match |
-	match := 'tableFor'. 
-	Dialect selectorsFor: aClass do:
-			[:each | 
-			(each copyFrom: 1 to: (match size min: each size)) = match
-				ifTrue:
-					[| tableName |
-					tableName := each copyFrom: match size + 1 to: each size - 1.
-					self tableNamed: tableName]]
+	match := 'tableFor'.
+	Dialect selectorsFor: aClass do: [ :each |
+		(each copyFrom: 1 to: (match size min: each size)) = match ifTrue: [
+			| tableName |
+			tableName := each copyFrom: match size + 1 to: each size - 1.
+			self tableNamed: tableName ] ]
 ]
 
 { #category : #callbacks }
 DescriptorSystem >> additionalRelatedRowsFor: aRow in: aRowMap [
 	"This method serves as a hook. It is called when sorting rows before writing to the database, and can be used to return a list of additional related rows that aren't found by the normal foreign key constraints. These rows will act as an ordering constraint, and will have to be written before aRow."
-	^nil
+
+	^ nil
 ]
 
 { #category : #accessing }
 DescriptorSystem >> allClassModels [
-	^self allClasses collect: [:each | 
+	^self allClasses collect: [:each |
 		self classModelFor: each]
 ]
 
 { #category : #accessing }
 DescriptorSystem >> allClasses [
-	allClasses isEmpty ifTrue: [allClasses := self constructAllClasses].
-	^allClasses
+
+	allClasses isEmpty ifTrue: [ allClasses := self constructAllClasses ].
+	^ allClasses
 ]
 
 { #category : #accessing }
 DescriptorSystem >> allDescriptors [
 
-	^self allClasses collect: [:each | 
-		self descriptorFor: each]
+	^ self allClasses collect: [ :each | self descriptorFor: each ]
 ]
 
 { #category : #accessing }
 DescriptorSystem >> allSequences [
-	sequences isEmpty ifFalse: [^sequences].
+
+	sequences isEmpty ifFalse: [ ^ sequences ].
 	sequences := self allSequencesFor: self allTables.
-	^sequences.
+	^ sequences
 ]
 
 { #category : #accessing }
 DescriptorSystem >> allSequencesFor: aCollection [
 	"Find all the sequences associated with aCollectionOfTables"
+
 	| result |
 	result := Dictionary new.
-	aCollection do: [:each |
-		each allSequences keysAndValuesDo: [:eachName :eachSequence |
-				result at: eachName put: eachSequence]].
-	^result
+	aCollection do: [ :each |
+		each allSequences keysAndValuesDo: [ :eachName :eachSequence |
+			result at: eachName put: eachSequence ] ].
+	^ result
 ]
 
 { #category : #accessing }
 DescriptorSystem >> allTableNames [
 	"Return a list of all the table names that this system uses."
-	^#()
+
+	^ #(  )
 ]
 
 { #category : #accessing }
 DescriptorSystem >> allTables [
-	tables isEmpty ifTrue: [self constructAllTables].
-	^tables.
+
+	tables isEmpty ifTrue: [ self constructAllTables ].
+	^ tables
 ]
 
 { #category : #accessing }
 DescriptorSystem >> cachePolicy [
 	"Return the default cache policy that will be used for descriptors that don't specify their own policy"
-	cachePolicy isNil ifTrue: [cachePolicy := CachePolicy default].
-	^cachePolicy.
+
+	cachePolicy isNil ifTrue: [ cachePolicy := CachePolicy default ].
+	^ cachePolicy
 ]
 
 { #category : #accessing }
 DescriptorSystem >> cachePolicy: aCachePolicy [
+
 	cachePolicy := aCachePolicy
 ]
 
 { #category : #testing }
 DescriptorSystem >> canUseGroupedWrites [
 	"We can use grouped writes as long as there are no identity columns in use"
-	self platform usesIdentityColumns ifFalse: [^true].
-	^(self allTables anySatisfy: [:each |
-		each primaryKeyFields anySatisfy: [:eachField |
-			eachField type isSerial and: [eachField type sequence isIdentityColumn]]]) not.
+
+	self platform usesIdentityColumns ifFalse: [ ^ true ].
+	^ (self allTables anySatisfy: [ :each |
+		   each primaryKeyFields anySatisfy: [ :eachField |
+			   eachField type isSerial and: [
+				   eachField type sequence isIdentityColumn ] ] ]) not
 ]
 
 { #category : #testing }
 DescriptorSystem >> canUseGroupedWritesFor: aTable [
 	"We can use grouped writes as long as there are no identity columns in use"
-	self platform usesIdentityColumns ifFalse: [^true].
-	^(aTable primaryKeyFields anySatisfy: [:eachField |
-			eachField type isSerial and: [eachField type sequence isIdentityColumn]]) not
+
+	self platform usesIdentityColumns ifFalse: [ ^ true ].
+	^ (aTable primaryKeyFields anySatisfy: [ :eachField |
+		   eachField type isSerial and: [
+			   eachField type sequence isIdentityColumn ] ]) not
 ]
 
 { #category : #api }

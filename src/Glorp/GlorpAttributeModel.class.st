@@ -33,44 +33,57 @@ Class {
 
 { #category : #'instance creation' }
 GlorpAttributeModel class >> named: aSymbol [
-	^self new name: aSymbol
+
+	^ self new name: aSymbol
 ]
 
 { #category : #'instance creation' }
 GlorpAttributeModel class >> named: aSymbol collection: aCollectionClass of: aClass [
-	^(self new)
-		name: aSymbol;
-		type: aClass;
-		collectionType: aCollectionClass
+
+	^ self new
+		  name: aSymbol;
+		  type: aClass;
+		  collectionType: aCollectionClass
 ]
 
 { #category : #'instance creation' }
 GlorpAttributeModel class >> named: aSymbol collectionOf: aClass [
-	^self named: aSymbol collection: OrderedCollection of: aClass
+
+	^ self named: aSymbol collection: OrderedCollection of: aClass
 ]
 
 { #category : #'instance creation' }
 GlorpAttributeModel class >> named: aSymbol dictionary: dictionaryClass from: keyClass to: valueClass [
-	^(self new)
-		name: aSymbol;
-		type: valueClass;
-		keyType: keyClass;
-		collectionType: dictionaryClass
+
+	^ self new
+		  name: aSymbol;
+		  type: valueClass;
+		  keyType: keyClass;
+		  collectionType: dictionaryClass
 ]
 
 { #category : #'instance creation' }
 GlorpAttributeModel class >> named: aSymbol dictionaryFrom: keyClass to: valueClass [
-	^self named: aSymbol dictionary: Dictionary from: keyClass to: valueClass
+
+	^ self
+		  named: aSymbol
+		  dictionary: Dictionary
+		  from: keyClass
+		  to: valueClass
 ]
 
 { #category : #'instance creation' }
 GlorpAttributeModel class >> named: aSymbol type: aClass [
-	^self new name: aSymbol; type: aClass
+
+	^ self new
+		  name: aSymbol;
+		  type: aClass
 ]
 
 { #category : #'instance creation' }
 GlorpAttributeModel class >> new [
-	^super new initialize
+
+	^ super new initialize
 ]
 
 { #category : #knitting }
