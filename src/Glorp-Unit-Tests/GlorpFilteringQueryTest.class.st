@@ -7,10 +7,6 @@ Class {
 	#category : #'Glorp-Unit-Tests-Tests'
 }
 
-{ #category : #support }
-GlorpFilteringQueryTest >> setUp [
-]
-
 { #category : #tests }
 GlorpFilteringQueryTest >> testSimple [
 

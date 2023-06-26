@@ -4,20 +4,24 @@ Class {
 	#category : #'Glorp-Unit-Tests-Tests'
 }
 
-{ #category : #support }
+{ #category : #asserting }
 GlorpExpressionTest >> assertIdentityOf: aBlock and: anotherBlock [
-	
- 	| base |
-	base := BaseExpression new.
-	self assert: (aBlock asGlorpExpressionOn: base) == (anotherBlock asGlorpExpressionOn: base)
-]
 
-{ #category : #support }
-GlorpExpressionTest >> denyIdentityOf: aBlock and: anotherBlock [
- 
 	| base |
 	base := BaseExpression new.
-	self deny: (aBlock asGlorpExpressionOn: base) == (anotherBlock asGlorpExpressionOn: base)
+	self
+		assert: (aBlock asGlorpExpressionOn: base)
+		identicalTo: (anotherBlock asGlorpExpressionOn: base)
+]
+
+{ #category : #asserting }
+GlorpExpressionTest >> denyIdentityOf: aBlock and: anotherBlock [
+
+	| base |
+	base := BaseExpression new.
+	self
+		deny: (aBlock asGlorpExpressionOn: base)
+		identicalTo: (anotherBlock asGlorpExpressionOn: base)
 ]
 
 { #category : #tests }
@@ -26,8 +30,9 @@ GlorpExpressionTest >> testAndOperation [
 	| expression fred base |
 	fred := 'Fred'.
 	base := BaseExpression new.
-	expression := [:a | (a firstName = fred) & (a firstName ~= fred)] asGlorpExpressionOn: base.
-	self assert: expression class == RelationExpression.
+	expression := [ :a | a firstName = fred & (a firstName ~= fred) ]
+		              asGlorpExpressionOn: base.
+	self assert: expression class identicalTo: RelationExpression.
 	self assert: expression relation equals: #AND
 ]
 
@@ -37,8 +42,9 @@ GlorpExpressionTest >> testAndOperation2 [
 	| expression fred base |
 	fred := 'Fred'.
 	base := BaseExpression new.
-	expression := [:a | (a firstName = fred) AND: (a firstName ~= fred)] asGlorpExpressionOn: base.
-	self assert: expression class == RelationExpression.
+	expression := [ :a | a firstName = fred AND: a firstName ~= fred ]
+		              asGlorpExpressionOn: base.
+	self assert: expression class identicalTo: RelationExpression.
 	self assert: expression relation equals: #AND
 ]
 
@@ -49,8 +55,9 @@ GlorpExpressionTest >> testAnySatisfyExists [
 	system useJoinsForAnySatisfy: false.
 	base := BaseExpression new.
 	base descriptor: (system descriptorFor: GlorpCustomer).
-	expression := [:a | a items anySatisfy: [:each | each id = 7]] asGlorpExpressionOn: base.
-	self assert: expression class == SubSelectExpression.
+	expression := [ :a | a items anySatisfy: [ :each | each id = 7 ] ]
+		              asGlorpExpressionOn: base.
+	self assert: expression class identicalTo: SubSelectExpression
 ]
 
 { #category : #tests }
@@ -60,27 +67,41 @@ GlorpExpressionTest >> testAnySatisfyJoin [
 	system useJoinsForAnySatisfy: true.
 	base := BaseExpression new.
 	base descriptor: (system descriptorFor: GlorpCustomer).
-	expression := [:a | a items anySatisfy: [:each | each id = 7]] asGlorpExpressionOn: base.
-	self assert: expression class == CollectionExpression.
-	self assert: expression leftChild == expression rightChild leftChild base.
+	expression := [ :a | a items anySatisfy: [ :each | each id = 7 ] ]
+		              asGlorpExpressionOn: base.
+	self assert: expression class identicalTo: CollectionExpression.
+	self
+		assert: expression leftChild
+		identicalTo: expression rightChild leftChild base
 ]
 
 { #category : #tests }
 GlorpExpressionTest >> testAnySatisfyPrintExists [
+
 	| expression |
 	system useJoinsForAnySatisfy: false.
-	expression := [:cust | cust transactions anySatisfy: [:each | each id = 7]] 
-				asGlorpExpressionForDescriptor: (system descriptorFor: GlorpCustomer).
-	self assert: (' EXISTS (SELECT s1t1.ID<n> FROM BANK_TRANS s1t1<n> WHERE *s1t1.ID = ?* AND *s1t2.ID = s1t1.OWNER_ID)*' expandMacros withUnixLineEndings match: expression sqlString withUnixLineEndings).
+	expression := [ :cust |
+	              cust transactions anySatisfy: [ :each | each id = 7 ] ]
+		              asGlorpExpressionForDescriptor:
+		              (system descriptorFor: GlorpCustomer).
+	self assert:
+		(' EXISTS (SELECT s1t1.ID<n> FROM BANK_TRANS s1t1<n> WHERE *s1t1.ID = ?* AND *s1t2.ID = s1t1.OWNER_ID)*'
+			 expandMacros withUnixLineEndings match:
+			 expression sqlString withUnixLineEndings)
 ]
 
 { #category : #tests }
 GlorpExpressionTest >> testAnySatisfyPrintJoin [
+
 	| expression |
 	system useJoinsForAnySatisfy: true.
-	expression := [:cust | cust transactions anySatisfy: [:each | each id = 7]] 
-				asGlorpExpressionForDescriptor: (system descriptorFor: GlorpCustomer).
-	self assert: '(BANK_TRANS.ID = 7)' equalsIgnoringOuterBrackets: expression sqlString.
+	expression := [ :cust |
+	              cust transactions anySatisfy: [ :each | each id = 7 ] ]
+		              asGlorpExpressionForDescriptor:
+		              (system descriptorFor: GlorpCustomer).
+	self
+		assert: '(BANK_TRANS.ID = 7)'
+		equalsIgnoringOuterBrackets: expression sqlString
 ]
 
 { #category : #tests }
@@ -88,32 +109,45 @@ GlorpExpressionTest >> testBetweenAnd [
 
 	| expression base |
 	base := BaseExpression new.
-	expression := [:a | a between: 3 and: 4] asGlorpExpressionOn: base.
-	self assert: expression class == InfixFunction.
+	expression := [ :a | a between: 3 and: 4 ] asGlorpExpressionOn: base.
+	self assert: expression class identicalTo: InfixFunction.
 	self assert: expression name equals: 'BETWEEN AND'.
-	self assert: (expression arguments collect: [:each | each value]) equals: (Array with: 3 with: 4)
+	self
+		assert: (expression arguments collect: [ :each | each value ])
+		equals: (Array with: 3 with: 4)
 ]
 
 { #category : #tests }
 GlorpExpressionTest >> testEqualityOperation [
+
 	| expression fred base |
 	fred := 'Fred'.
 	base := BaseExpression new.
-	expression := [:a | a firstName = fred] asGlorpExpressionOn: base.
-	self assert: expression leftChild == (base get: #firstName).
-	self assert: expression rightChild class == ConstantExpression.
-	self assert: expression rightChild value == fred.
-	self assert: expression relation == #=
+	expression := [ :a | a firstName = fred ] asGlorpExpressionOn: base.
+	self assert: expression leftChild identicalTo: (base get: #firstName).
+	self
+		assert: expression rightChild class
+		identicalTo: ConstantExpression.
+	self assert: expression rightChild value identicalTo: fred.
+	self assert: expression relation identicalTo: #=
 ]
 
 { #category : #tests }
 GlorpExpressionTest >> testFindingMapping [
+
 	| base baseDescriptor |
 	baseDescriptor := system descriptorFor: GlorpBankTransaction.
 	base := BaseExpression new descriptor: baseDescriptor.
-	self assert: (base get: #serviceCharge) mapping == (baseDescriptor mappingForAttributeNamed: #serviceCharge).
-	self assert: (base get: #serviceCharge) sourceDescriptor == (system descriptorFor: GlorpBankTransaction).
-	self assert: (base get: #serviceCharge) descriptor == (system descriptorFor: GlorpServiceCharge)
+	self
+		assert: (base get: #serviceCharge) mapping
+		identicalTo:
+		(baseDescriptor mappingForAttributeNamed: #serviceCharge).
+	self
+		assert: (base get: #serviceCharge) sourceDescriptor
+		identicalTo: (system descriptorFor: GlorpBankTransaction).
+	self
+		assert: (base get: #serviceCharge) descriptor
+		identicalTo: (system descriptorFor: GlorpServiceCharge)
 ]
 
 { #category : #tests }
@@ -128,11 +162,12 @@ GlorpExpressionTest >> testGetField [
 
 { #category : #tests }
 GlorpExpressionTest >> testGetFieldAmbiguous [
-	| |
-	self 
-		should: [[:pass | pass getField: 'ID']
-			asGlorpExpressionForDescriptor: (system descriptorFor: GlorpPassenger)]
-		raise: Dialect error.
+
+	self
+		should: [
+			[ :pass | pass getField: 'ID' ] asGlorpExpressionForDescriptor:
+				(system descriptorFor: GlorpPassenger) ]
+		raise: Dialect error
 ]
 
 { #category : #tests }
@@ -154,7 +189,7 @@ GlorpExpressionTest >> testIsNullPrint [
 		asGlorpExpressionForDescriptor: (system descriptorFor: GlorpCustomer).
 	stream := DatabaseCommand new session: system session.
 	expression printSQLOn: stream withParameters: Dictionary new.
-	self assert: '(GR_CUSTOMER.ID IS NULL)' equalsIgnoringOuterBrackets: expression sqlString.
+	self assert: '(GR_CUSTOMER.ID IS NULL)' equalsIgnoringOuterBrackets: expression sqlString
 ]
 
 { #category : #tests }
@@ -165,27 +200,29 @@ GlorpExpressionTest >> testJoinOperation [
 	personTable := system tableNamed: 'PERSON'.
 	base := BaseExpression new.
 	base descriptor: (system descriptorFor: GlorpPerson).
-	userExpression := [:aPerson | aPerson address number = 12]
-				asGlorpExpressionOn: base.
+	userExpression := [ :aPerson | aPerson address number = 12 ]
+		                  asGlorpExpressionOn: base.
 	query := SimpleQuery readOneOf: GlorpPerson where: userExpression.
 	query session: (GlorpSession new system: system).
-	self assert: (userExpression additionalExpressionsIn: query) size equals: 1.
+	self
+		assert: (userExpression additionalExpressionsIn: query) size
+		equals: 1.
 	query prepare.
 	expression := query whereClause.
 	self assert: query joins size equals: 1.
 	join := query joins first.
 	self
-		assert: expression == userExpression;
-		assert: expression relation == #=.
+		assert: expression identicalTo: userExpression;
+		assert: expression relation identicalTo: #=.
 	field1 := join leftChild field.
-	self assert: field1 table parent == personTable.
+	self assert: field1 table parent identicalTo: personTable.
 	self assert: field1 name equals: 'ADDRESS_ID'.
 	field2 := join rightChild field.
-	self assert: field2 table parent == addressTable.
-	self assert: field2 name equals:'ID'
+	self assert: field2 table parent identicalTo: addressTable.
+	self assert: field2 name equals: 'ID'
 ]
 
-{ #category : #tests }
+{ #category : #'tests - mapping' }
 GlorpExpressionTest >> testMappingBase [
 
 	| base |
@@ -193,25 +230,25 @@ GlorpExpressionTest >> testMappingBase [
 	self assert: (base get: #someAttribute) base == base
 ]
 
-{ #category : #tests }
+{ #category : #'tests - mapping' }
 GlorpExpressionTest >> testMappingExpressionIdentity [
  
 	self assertIdentityOf: [:a | a someAttribute] and: [:a | a someAttribute].
 ]
 
-{ #category : #tests }
+{ #category : #'tests - mapping' }
 GlorpExpressionTest >> testMappingExpressionIdentity2 [
 
 	self assertIdentityOf: [:a | a perform: #someAttribute] and: [:a | a someAttribute].
 ]
 
-{ #category : #tests }
+{ #category : #'tests - mapping' }
 GlorpExpressionTest >> testMappingExpressionIdentity3 [
 
 	self assertIdentityOf: [:a | a get: #someAttribute] and: [:a | a someAttribute].
 ]
 
-{ #category : #tests }
+{ #category : #'tests - mapping' }
 GlorpExpressionTest >> testMappingExpressionIdentity4 [
 
 	self denyIdentityOf: [:a | a get: #someAttribute] and: [:a | a someOtherAttribute].
@@ -225,7 +262,7 @@ GlorpExpressionTest >> testNotNullPrint [
 		asGlorpExpressionForDescriptor: (system descriptorFor: GlorpCustomer).
 	stream := DatabaseCommand new session: system session.
 	expression printSQLOn: stream withParameters: Dictionary new.
-	self assert: '(GR_CUSTOMER.ID IS NOT NULL)' equalsIgnoringOuterBrackets: stream contents.
+	self assert: '(GR_CUSTOMER.ID IS NOT NULL)' equalsIgnoringOuterBrackets: stream contents
 ]
 
 { #category : #tests }
@@ -234,24 +271,27 @@ GlorpExpressionTest >> testOrOperation [
 	| expression fred base |
 	fred := 'Fred'.
 	base := BaseExpression new.
-	expression := [:a | (a firstName = fred) | (a firstName ~= fred)] asGlorpExpressionOn: base.
-	self assert: expression class == RelationExpression.
+	expression := [ :a | a firstName = fred | (a firstName ~= fred) ]
+		              asGlorpExpressionOn: base.
+	self assert: expression class identicalTo: RelationExpression.
 	self assert: expression relation equals: #OR
 ]
 
 { #category : #tests }
 GlorpExpressionTest >> testOrOperation2 [
+
 	| expression fred base |
 	fred := 'Fred'.
 	base := BaseExpression new.
-	expression := [:a | (a firstName = fred) OR: (a firstName ~= fred)] asGlorpExpressionOn: base.
-	self assert: expression class == RelationExpression.
-	self assert: expression relation equals: #OR.
+	expression := [ :a | a firstName = fred OR: a firstName ~= fred ]
+		              asGlorpExpressionOn: base.
+	self assert: expression class identicalTo: RelationExpression.
+	self assert: expression relation equals: #OR
 ]
 
 { #category : #tests }
 GlorpExpressionTest >> testTwoLevelMappingExpressionIdentity [
 
-	self assertIdentityOf: [:a | a someAttribute someAttribute] and: [:a | a someAttribute someAttribute].
-	self denyIdentityOf: [:a | a someAttribute someAttribute] and: [:a | a someAttribute].
+	self assertIdentityOf: [:a | a someAttribute someAttribute ] and: [:a | a someAttribute someAttribute ].
+	self denyIdentityOf: [:a | a someAttribute someAttribute ] and: [:a | a someAttribute ]
 ]

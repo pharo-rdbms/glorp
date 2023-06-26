@@ -447,90 +447,64 @@ GlorpInflectorTest >> symbolToLowerCamelData [
  
 ]
 
-{ #category : #running }
+{ #category : #tests }
 GlorpInflectorTest >> testCamelToUnderscore [
 
 	self camelToUnderscoreData do: [ :ea |
-		self 
-			assert: (inflector underscore: ea key) 
-			equals: ea value 
-		]
-		
+		self assert: (inflector underscore: ea key) equals: ea value ]
 ]
 
-{ #category : #'tests - data' }
-GlorpInflectorTest >> testCamelToUnderscoreWithoutReverse [ 
-	
+{ #category : #tests }
+GlorpInflectorTest >> testCamelToUnderscoreWithoutReverse [
+
 	self camelToUnderscoreWithoutReverse do: [ :ea |
-		self 
-			assert: (inflector underscore: ea key) 
-			equals: ea value 
-		]
+		self assert: (inflector underscore: ea key) equals: ea value ]
 ]
 
-{ #category : #'tests - data' }
-GlorpInflectorTest >> testClassNameToTableName [ 
+{ #category : #tests }
+GlorpInflectorTest >> testClassNameToTableName [
+
 	inflector pluralizeTableNames: true.
 	self classNameToTableName do: [ :ea |
-		self 
-			assert: (inflector tableize: ea key) 
-			equals: ea value 
-		]
- 
+		self assert: (inflector tableize: ea key) equals: ea value ]
 ]
 
-{ #category : #'tests - data' }
-GlorpInflectorTest >> testOrdinalNumbers [ 
+{ #category : #tests }
+GlorpInflectorTest >> testOrdinalNumbers [
 
 	self ordinalNumbers do: [ :ea |
-		self 
-			assert: (inflector ordinalize: ea key) 
-			equals: ea value 
-		]
-
+		self assert: (inflector ordinalize: ea key) equals: ea value ]
 ]
 
-{ #category : #running }
+{ #category : #tests }
 GlorpInflectorTest >> testPluralToSingular [
 
 	self singularToPluralData do: [ :ea |
-		self 
-			assert: (inflector singularize: ea value) 
-			equals: ea key 
-		]
-		
+		self assert: (inflector singularize: ea value) equals: ea key ]
 ]
 
-{ #category : #running }
+{ #category : #tests }
 GlorpInflectorTest >> testSingularToPlural [
 
 	self singularToPluralData do: [ :ea |
-		self 
-			assert: (inflector pluralize: ea key) 
-			equals: ea value 
-		]
-		
+		self assert: (inflector pluralize: ea key) equals: ea value ]
 ]
 
-{ #category : #'tests - data' }
+{ #category : #tests }
 GlorpInflectorTest >> testSymbolToLowerCamelData [
+
 	self symbolToLowerCamelData do: [ :ea |
-		self 
-			assert: (inflector camelize: ea key capitalized: false) 
-			equals: ea value 
-		]
- 
+		self
+			assert: (inflector camelize: ea key capitalized: false)
+			equals: ea value ]
 ]
 
-{ #category : #'tests - data' }
+{ #category : #tests }
 GlorpInflectorTest >> testTableNameToClassName [
+
 	inflector pluralizeTableNames: true.
 	self classNameToTableName do: [ :ea |
-		self 
-			assert: (inflector classify: ea value) 
-			equals: ea key 
-		]
- 
+		self assert: (inflector classify: ea value) equals: ea key ]
 ]
 
 { #category : #'tests - data' }
