@@ -33,9 +33,11 @@ ASItem >> id: anObject [
 	id := anObject
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ASItem >> initialize [
-	bonuses := OrderedCollection new.
+
+	super initialize.
+	bonuses := OrderedCollection new
 ]
 
 { #category : #accessing }

@@ -43,7 +43,8 @@ GlorpVideoCreditStatus >> balanceOwing: aNumber [
 
 { #category : #accessing }
 GlorpVideoCreditStatus >> comments [
-	^comments.
+
+	^ comments
 ]
 
 { #category : #accessing }

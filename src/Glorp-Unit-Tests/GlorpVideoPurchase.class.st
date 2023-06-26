@@ -77,9 +77,10 @@ GlorpVideoPurchase >> printOn: aStream [
 	aStream nextPut: $).
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #accessing }
 GlorpVideoPurchase >> store: aGlorpVideoStore [
-	store := aGlorpVideoStore.
+
+	store := aGlorpVideoStore
 ]
 
 { #category : #accessing }

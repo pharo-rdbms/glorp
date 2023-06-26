@@ -34,12 +34,11 @@ ASCustomer >> id: anObject [
 	id := anObject
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ASCustomer >> initialize [
-	id := nil.
-	customer := nil.
-	name := nil.
-	orders := OrderedCollection new.
+
+	super initialize.
+	orders := OrderedCollection new
 ]
 
 { #category : #accessing }

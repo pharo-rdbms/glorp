@@ -72,7 +72,7 @@ GlorpInheritanceDescriptorSystem >> descriptorForGlorpEmployee: aDescriptor [
 ]
 
 { #category : #descriptors }
-GlorpInheritanceDescriptorSystem >> descriptorForGlorpImage: aDescriptor [ 
+GlorpInheritanceDescriptorSystem >> descriptorForGlorpImage: aDescriptor [
 	| table |
 	table := self tableNamed: 'GLORP_IMAGE'.
 	aDescriptor table: table.
@@ -84,7 +84,7 @@ GlorpInheritanceDescriptorSystem >> descriptorForGlorpImage: aDescriptor [
 		to: (table fieldNamed: 'location').
 	(aDescriptor newMapping: ManyToManyMapping) attributeName: #tags;
 		 referenceClass: GlorpTag;
-		
+
 		join: (Join
 				from: (table fieldNamed: 'id')
 				to: ((self tableNamed: 'IMAGETAGS')
