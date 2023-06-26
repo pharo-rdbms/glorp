@@ -9,6 +9,7 @@ Class {
 
 { #category : #support }
 GlorpSessionTest >> addCustomerToCache [
+
 	| customer |
 	customer := GlorpCustomer example1.
 	customer id: 3.
@@ -18,36 +19,44 @@ GlorpSessionTest >> addCustomerToCache [
 
 { #category : #tests }
 GlorpSessionTest >> helpTestUpdateWithExpiredExistingEntry: aCachePolicy [
+
 	| customer customer2 row table unitOfWork |
-	(session system descriptorFor: GlorpCustomer) 
-		cachePolicy: aCachePolicy.
+	(session system descriptorFor: GlorpCustomer) cachePolicy:
+		aCachePolicy.
 	customer := self addCustomerToCache.
 	customer2 := GlorpCustomer new.
 	customer2 id: customer id.
 	customer2 name: 'Barney Rubble'.
-	row := DatabaseRow newForTable: (table := system tableNamed: 'GR_CUSTOMER').
+	row := DatabaseRow newForTable:
+		       (table := system tableNamed: 'GR_CUSTOMER').
 	row at: (table fieldNamed: 'ID') put: customer id.
 	unitOfWork := UnitOfWork new.
 	unitOfWork session: session.
 	"Since there's already an object there, this shouldn't do anything"
 	unitOfWork updateSessionCacheFor: customer2 withRow: row.
-	self assert: (session expiredInstanceOf: GlorpCustomer key: 3) == customer.
+	self
+		assert: (session expiredInstanceOf: GlorpCustomer key: 3)
+		identicalTo: customer
 ]
 
 { #category : #tests }
 GlorpSessionTest >> helpTestUpdateWithoutExpiredExistingEntry: aCachePolicy [
+
 	| customer2 row table unitOfWork |
-	(session system descriptorFor: GlorpCustomer) 
-		cachePolicy: (TimedExpiryCachePolicy new timeout: 0).
+	(session system descriptorFor: GlorpCustomer) cachePolicy:
+		(TimedExpiryCachePolicy new timeout: 0).
 	customer2 := GlorpCustomer new.
 	customer2 id: 3.
 	customer2 name: 'Barney Rubble'.
-	row := DatabaseRow newForTable: (table := system tableNamed: 'GR_CUSTOMER').
+	row := DatabaseRow newForTable:
+		       (table := system tableNamed: 'GR_CUSTOMER').
 	row at: (table fieldNamed: 'ID') put: 3.
 	unitOfWork := UnitOfWork new.
 	unitOfWork session: session.
 	unitOfWork updateSessionCacheFor: customer2 withRow: row.
-	self assert: (session expiredInstanceOf: GlorpCustomer key: 3) == customer2.
+	self
+		assert: (session expiredInstanceOf: GlorpCustomer key: 3)
+		identicalTo: customer2
 ]
 
 { #category : #running }
@@ -61,19 +70,22 @@ GlorpSessionTest >> setUp [
 { #category : #tests }
 GlorpSessionTest >> testAddingDescriptors [
 
-	self assert: session system == system.
-	self assert: system session == session.
-	(session descriptorFor: GlorpAddress) session == session.
+	self assert: session system identicalTo: system.
+	self assert: system session identicalTo: session.
+	self
+		assert: (session descriptorFor: GlorpAddress) session
+		identicalTo: session
 ]
 
 { #category : #tests }
 GlorpSessionTest >> testDuplicateDetection [
+
 	| customer customer2 |
 	session beginUnitOfWork.
 	customer := self addCustomerToCache.
 	customer2 := customer copy.
 	self should: [session register: customer2] raise: Dialect error.
-	session rollbackUnitOfWork.
+	session rollbackUnitOfWork
 ]
 
 { #category : #tests }
@@ -87,6 +99,7 @@ GlorpSessionTest >> testExecuteQuery [
 
 { #category : #tests }
 GlorpSessionTest >> testHasExpired1 [
+
 	| customer |
 	customer := self addCustomerToCache.
 	self deny: (session hasExpired: customer)
@@ -94,8 +107,9 @@ GlorpSessionTest >> testHasExpired1 [
 
 { #category : #tests }
 GlorpSessionTest >> testHasExpired2 [
+
 	| customer |
-	(session system descriptorFor: GlorpCustomer) 
+	(session system descriptorFor: GlorpCustomer)
 		cachePolicy: (TimedExpiryCachePolicy new timeout: 0).
 	customer := self addCustomerToCache.
 	self assert: (session hasExpired: customer)
@@ -103,8 +117,9 @@ GlorpSessionTest >> testHasExpired2 [
 
 { #category : #tests }
 GlorpSessionTest >> testHasExpired3 [
+
 	| customer |
-	(session system descriptorFor: GlorpCustomer) 
+	(session system descriptorFor: GlorpCustomer)
 		cachePolicy: (TimedExpiryCachePolicy new timeout: 0).
 	customer := self addCustomerToCache.
 	self assert: (session hasExpired: customer)
@@ -114,16 +129,16 @@ GlorpSessionTest >> testHasExpired3 [
 GlorpSessionTest >> testHasObjectOfClassExpired1 [
 
 	self addCustomerToCache.
-	self deny: (session hasObjectExpiredOfClass: GlorpCustomer withKey: 3).
+	self deny: (session hasObjectExpiredOfClass: GlorpCustomer withKey: 3)
 ]
 
 { #category : #tests }
 GlorpSessionTest >> testHasObjectOfClassExpired2 [
 
-	(session system descriptorFor: GlorpCustomer) 
+	(session system descriptorFor: GlorpCustomer)
 		cachePolicy: (TimedExpiryCachePolicy new timeout: 0).
 	self addCustomerToCache.
-	self assert: (session hasObjectExpiredOfClass: GlorpCustomer withKey: 3).
+	self assert: (session hasObjectExpiredOfClass: GlorpCustomer withKey: 3)
 ]
 
 { #category : #tests }
@@ -142,20 +157,32 @@ GlorpSessionTest >> testSQLDeleteStringFor [
 
 { #category : #tests }
 GlorpSessionTest >> testUpdateWithExpiredExistingEntry [
-	self helpTestUpdateWithExpiredExistingEntry: (TimedExpiryCachePolicy new timeout: 0; expiryAction: #refresh).
+
+	self helpTestUpdateWithExpiredExistingEntry:
+		(TimedExpiryCachePolicy new
+			 timeout: 0;
+			 expiryAction: #refresh)
 ]
 
 { #category : #tests }
 GlorpSessionTest >> testUpdateWithExpiredExistingEntry2 [
-	self helpTestUpdateWithExpiredExistingEntry: (TimedStrongCachePolicy new timeout: 0; expiryAction: #refresh).
+
+	self helpTestUpdateWithExpiredExistingEntry:
+		(TimedStrongCachePolicy new
+			 timeout: 0;
+			 expiryAction: #refresh)
 ]
 
 { #category : #tests }
 GlorpSessionTest >> testUpdateWithoutExpiredExistingEntry [
-	self helpTestUpdateWithoutExpiredExistingEntry: (TimedExpiryCachePolicy new timeout: 0).
+
+	self helpTestUpdateWithoutExpiredExistingEntry:
+		(TimedExpiryCachePolicy new timeout: 0)
 ]
 
 { #category : #tests }
 GlorpSessionTest >> testUpdateWithoutExpiredExistingEntry2 [
-	self helpTestUpdateWithoutExpiredExistingEntry: (TimedStrongCachePolicy new timeout: 0).
+
+	self helpTestUpdateWithoutExpiredExistingEntry:
+		(TimedStrongCachePolicy new timeout: 0)
 ]

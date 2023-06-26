@@ -17,8 +17,9 @@ GlorpObjectTransactionTest >> setUp [
 
 { #category : #tests }
 GlorpObjectTransactionTest >> testArray [
+
 	| object |
-	object := #(1 2 3 4 5) copy.
+	object := #( 1 2 3 4 5 ) copy.
 	transaction begin.
 	transaction register: object.
 	object
@@ -26,27 +27,29 @@ GlorpObjectTransactionTest >> testArray [
 		at: 2 put: object.
 	transaction abort.
 	self
-		assert: (object at: 1) == 1;
-		assert: (object at: 2) == 2
+		assert: (object at: 1) identicalTo: 1;
+		assert: (object at: 2) identicalTo: 2
 ]
 
 { #category : #tests }
 GlorpObjectTransactionTest >> testBecome [
+
 	| object |
 	object := 'hello' copy.
 	transaction begin.
 	transaction register: object.
 	object become: Set new.
 	transaction abort.
-	self 
-		assert: object class == '' class;
-		assert: object = 'hello'.
+	self
+		assert: object class identicalTo: '' class;
+		assert: object equals: 'hello'
 ]
 
 { #category : #tests }
 GlorpObjectTransactionTest >> testCommit [
+
 	| array |
-	array := #(1 2 3 4 5) copy.
+	array := #( 1 2 3 4 5 ) copy.
 	transaction begin.
 	transaction register: array.
 	array
@@ -54,28 +57,34 @@ GlorpObjectTransactionTest >> testCommit [
 		at: 2 put: array.
 	transaction commit.
 	self
-		assert: (array at: 1) == #one;
-		assert: (array at: 2) == array
+		assert: (array at: 1) identicalTo: #one;
+		assert: (array at: 2) identicalTo: array
 ]
 
 { #category : #tests }
 GlorpObjectTransactionTest >> testHashedCollection [
+
 	| object originalMembers |
 	object := Set new.
-	originalMembers := #(#one #two #three 'four' 5 'vi' (1 2 3 4 5 6 7)) collect: [:each | each copy].
+	originalMembers := #( #one #two #three 'four' 5 'vi' #( 1 2 3 4 5 6 7 ) )
+		                   collect: [ :each | each copy ].
 	object addAll: originalMembers.
 	transaction begin.
 	transaction register: object.
-	object remove: #one; remove: (originalMembers at: 4).
+	object
+		remove: #one;
+		remove: (originalMembers at: 4).
 	object add: 1.
 	originalMembers last at: 7 put: 'seven'.
 	transaction abort.
 	self
-		assert: object size = originalMembers size;
+		assert: object size equals: originalMembers size;
 		assert: (object includes: originalMembers first);
 		assert: (object includes: (originalMembers at: 4));
-		assert: object size = (object rehash; size).
-	originalMembers do: [:each | self assert: (object includes: each)]
+		assert: object size equals: (object
+				 rehash;
+				 size).
+	originalMembers do: [ :each | self assert: (object includes: each) ]
 ]
 
 { #category : #tests }
@@ -92,6 +101,7 @@ GlorpObjectTransactionTest >> testRegisteredObjectsDoRecursively [
 
 { #category : #tests }
 GlorpObjectTransactionTest >> testString [
+
 	| object |
 	object := 'Hello, World!' copy.
 	transaction begin.
@@ -101,6 +111,6 @@ GlorpObjectTransactionTest >> testString [
 		at: 2 put: $E.
 	transaction abort.
 	self
-		assert: object first  == $H;
-		assert: (object at: 2) == $e
+		assert: object first identicalTo: $H;
+		assert: (object at: 2) identicalTo: $e
 ]

@@ -44,7 +44,7 @@ GlorpQueryTableAliasingTest >> setUp [
 { #category : #tests }
 GlorpQueryTableAliasingTest >> testAliasWithEmbeddedMapping [
 
-	self unfinished.
+	self unfinished
 ]
 
 { #category : #tests }
@@ -53,21 +53,23 @@ GlorpQueryTableAliasingTest >> testBuildingObject [
 	| customer |
 	elementBuilder instance: GlorpCustomer new.
 	elementBuilder requiresPopulating: true.
-	elementBuilder buildObjectFrom: #(12 'Name').
+	elementBuilder buildObjectFrom: #( 12 'Name' ).
 	customer := elementBuilder instance.
-	self assert: customer class == GlorpCustomer.
+	self assert: customer class identicalTo: GlorpCustomer.
 	self assert: customer id equals: 12.
 	self assert: customer name equals: 'Name'
 ]
 
 { #category : #tests }
 GlorpQueryTableAliasingTest >> testElementBuilderFields [
+
 	elementBuilder fieldsForSelectStatement
 		do: [:each | self assert: each table name equals: 't1']
 ]
 
 { #category : #tests }
 GlorpQueryTableAliasingTest >> testExpressionTableAlias [
+
 	| fields |
 	fields := expression translateFields: expression descriptor mappedFields.
 	fields do: [:each | self assert: each table name equals: 't1']
@@ -75,8 +77,9 @@ GlorpQueryTableAliasingTest >> testExpressionTableAlias [
 
 { #category : #tests }
 GlorpQueryTableAliasingTest >> testQueryPrintingFields [
+
 	| stream |
-	query 
+	query
 		initResultClass: GlorpCustomer
 		whereClause: expression
 		singleObject: true.
@@ -90,9 +93,15 @@ GlorpQueryTableAliasingTest >> testQueryPrintingFields [
 
 { #category : #tests }
 GlorpQueryTableAliasingTest >> testQueryPrintingSimpleWhereClause [
+
 	| string |
-	string := self helpTestPrintingWhereClause: ((expression get: #name) get: #= withArguments: #('Fred')).
-	self assert: '(t1.NAME = ''Fred'')' equalsIgnoringOuterBrackets: string.
+	string := self helpTestPrintingWhereClause:
+		          ((expression get: #name)
+			           get: #=
+			           withArguments: #( 'Fred' )).
+	self
+		assert: '(t1.NAME = ''Fred'')'
+		equalsIgnoringOuterBrackets: string
 ]
 
 { #category : #tests }

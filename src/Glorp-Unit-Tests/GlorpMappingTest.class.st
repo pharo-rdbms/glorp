@@ -7,35 +7,43 @@ Class {
 	#category : #'Glorp-Unit-Tests-Tests'
 }
 
-{ #category : #tests }
-GlorpMappingTest >> helperForMergedOneToOneReversingWriteOrder: aBoolean [ 
+{ #category : #utilities }
+GlorpMappingTest >> helperForMergedOneToOneReversingWriteOrder: aBoolean [
+
 	| account accountTable row |
-	account := GlorpBankExampleSystem new objectNumber: 1 ofClass: GlorpBankAccount.
+	account := GlorpBankExampleSystem new
+		           objectNumber: 1
+		           ofClass: GlorpBankAccount.
 	accountTable := system tableNamed: 'BANK_ACCT'.
-	aBoolean 
-		ifTrue: 
-			[self write: account.
-			self write: account accountNumber]
-		ifFalse: 
-			[self write: account accountNumber.
-			self write: account].
-	self assert: (rowMap includesRowForTable: accountTable withKey: account).
-	self assert: (rowMap includesRowForTable: accountTable
-				withKey: account accountNumber).
+	aBoolean
+		ifTrue: [ self write: account.
+					 self write: account accountNumber ]
+		ifFalse: [ self write: account accountNumber.
+					  self write: account ].
+	self assert:
+			(rowMap includesRowForTable: accountTable withKey: account).
+	self assert: (rowMap
+			 includesRowForTable: accountTable
+			 withKey: account accountNumber).
 	row := self rowFor: account.
-	self assert: (row at: (accountTable fieldNamed: 'ID')) = account id.
-	(Array with: row with: (self rowFor: account accountNumber)) do: 
-			[:each | 
-			self assert: (each at: (accountTable fieldNamed: 'BANK_CODE')) 
-						= account accountNumber bankCode.
-			self assert: (each at: (accountTable fieldNamed: 'BRANCH_NO')) 
-						= account accountNumber branchNumber.
-			self assert: (each at: (accountTable fieldNamed: 'ACCT_NO')) 
-						= account accountNumber accountNumber].
-	self assert: (rowMap numberOfEntriesForTable: accountTable) = 2
+	self
+		assert: (row at: (accountTable fieldNamed: 'ID'))
+		equals: account id.
+	(Array with: row with: (self rowFor: account accountNumber)) do: [
+		:each |
+		self
+			assert: (each at: (accountTable fieldNamed: 'BANK_CODE'))
+			equals: account accountNumber bankCode.
+		self
+			assert: (each at: (accountTable fieldNamed: 'BRANCH_NO'))
+			equals: account accountNumber branchNumber.
+		self
+			assert: (each at: (accountTable fieldNamed: 'ACCT_NO'))
+			equals: account accountNumber accountNumber ].
+	self assert: (rowMap numberOfEntriesForTable: accountTable) equals: 2
 ]
 
-{ #category : #tests }
+{ #category : #utilities }
 GlorpMappingTest >> helperForNestedMergedOneToOneReversingWriteOrder: aBoolean [ 
 	| trans transTable moneyTable row fieldNames fieldValues |
 	trans := GlorpBankExampleSystem new objectNumber: 1
@@ -81,11 +89,12 @@ GlorpMappingTest >> helperForNestedMergedOneToOneReversingWriteOrder: aBoolean [
 
 { #category : #support }
 GlorpMappingTest >> rowFor: anObject [
+
 	| descriptor |
 	descriptor := system descriptorFor: anObject.
-	descriptor isNil ifTrue: [^nil].
+	descriptor ifNil: [ ^ nil ].
 
-	^rowMap rowForTable: descriptor table withKey: anObject.
+	^ rowMap rowForTable: descriptor table withKey: anObject
 ]
 
 { #category : #running }
@@ -128,16 +137,19 @@ GlorpMappingTest >> testManyToMany [
 
 { #category : #tests }
 GlorpMappingTest >> testMergedOneToOne [
+
 	self helperForMergedOneToOneReversingWriteOrder: false
 ]
 
 { #category : #tests }
 GlorpMappingTest >> testMergedOneToOneReversingWrites [
+
 	self helperForMergedOneToOneReversingWriteOrder: true
 ]
 
 { #category : #tests }
 GlorpMappingTest >> testMissingDescriptor [
+
 	self assert: (system descriptorFor: nil) isNil.
 	self assert: (system descriptorFor: UndefinedObject) isNil.
 	self assert: (system descriptorFor: 3) isNil
@@ -191,7 +203,8 @@ GlorpMappingTest >> testNestedMergedOneToOne [
 
 { #category : #tests }
 GlorpMappingTest >> testNestedMergedOneToOneReversingWriteOrder [
-	self helperForNestedMergedOneToOneReversingWriteOrder: true.
+
+	self helperForNestedMergedOneToOneReversingWriteOrder: true
 ]
 
 { #category : #tests }
@@ -272,7 +285,7 @@ GlorpMappingTest >> testOneToOneWithProxy [
 	self deny: (rowMap includesRowForTable: addressTable withKey: person address).
 
 	self deny: ((self rowFor: person) hasValueFor: (personTable fieldNamed: 'ADDRESS_ID')).
-	self assert: rowMap numberOfEntries equals: 1.
+	self assert: rowMap numberOfEntries equals: 1
 ]
 
 { #category : #tests }
@@ -295,7 +308,7 @@ GlorpMappingTest >> testRowCreation [
 GlorpMappingTest >> write: anObject [
 
 	| descriptor |
-	descriptor := system descriptorFor: anObject. 
-	descriptor isNil ifTrue: [^self].
-	descriptor createRowsFor: anObject in: rowMap.
+	descriptor := system descriptorFor: anObject.
+	descriptor ifNil: [ ^ self ].
+	descriptor createRowsFor: anObject in: rowMap
 ]

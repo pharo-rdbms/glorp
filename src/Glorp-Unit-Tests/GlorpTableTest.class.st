@@ -15,14 +15,16 @@ GlorpTableTest >> keywordForConstraintsWhenDropping: aConstraint onPlatform: aDa
 		'DROP FOREIGN KEY'  for foreign key constraints
 		'DROP KEY' for unique constraints (it also supports DROP INDEX for this)"
 
-	(aDatabasePlatform isKindOf: MySQLPlatform) ifFalse: [^'CONSTRAINT'].
-	aConstraint isForeignKeyConstraint ifTrue: [^'FOREIGN KEY'].
-	aConstraint isPrimaryKeyConstraint ifTrue: [^'PRIMARY KEY'].
-	^'KEY'
+	(aDatabasePlatform isKindOf: MySQLPlatform) ifFalse: [
+		^ 'CONSTRAINT' ].
+	aConstraint isForeignKeyConstraint ifTrue: [ ^ 'FOREIGN KEY' ].
+	aConstraint isPrimaryKeyConstraint ifTrue: [ ^ 'PRIMARY KEY' ].
+	^ 'KEY'
 ]
 
 { #category : #running }
 GlorpTableTest >> setUp [
+
 	super setUp.
 	descriptors := system allDescriptors.
 	dbPlatform := system platform.
@@ -52,23 +54,43 @@ GlorpTableTest >> testCircularFieldRefs [
 
 { #category : #tests }
 GlorpTableTest >> testConstraintCreation [
+
 	| constraint dropWord |
 	constraint := ForeignKeyConstraint
-		sourceField: ((system tableNamed: 'BANK_ACCT') fieldNamed: 'BANK_CODE')
-		targetField: ((system tableNamed: 'PERSON') fieldNamed: 'ID').
-	self assert: constraint creationString =
-		( 'CONSTRAINT ', constraint name, ' FOREIGN KEY (BANK_CODE) REFERENCES PERSON (ID)').
-	dropWord := self keywordForConstraintsWhenDropping: constraint onPlatform: dbPlatform.	
-	dbPlatform supportsAlterTableForConstraints ifTrue:
-		[self assert: constraint dropString =
-			( 'ALTER TABLE BANK_ACCT DROP ', dropWord, ' ', constraint name)].
+		              sourceField:
+		              ((system tableNamed: 'BANK_ACCT') fieldNamed:
+			               'BANK_CODE')
+		              targetField:
+		              ((system tableNamed: 'PERSON') fieldNamed: 'ID').
+	self
+		assert: constraint creationString
+		equals: 'CONSTRAINT ' , constraint name
+			, ' FOREIGN KEY (BANK_CODE) REFERENCES PERSON (ID)'.
+	dropWord := self
+		            keywordForConstraintsWhenDropping: constraint
+		            onPlatform: dbPlatform.
+	dbPlatform supportsAlterTableForConstraints ifTrue: [
+		self
+			assert: constraint dropString
+			equals:
+			'ALTER TABLE BANK_ACCT DROP ' , dropWord , ' ' , constraint name ].
 	constraint := ForeignKeyConstraint
-		sourceField: ((system tableNamed: 'BANK_ACCT') fieldNamed: 'BANK_CODE')
-		targetField: ((system tableNamed: 'PERSON') fieldNamed: 'ID')
-		suffixExpression: 'ON DELETE CASCADE'.
-	self assert: constraint creationString = ('CONSTRAINT ', constraint name, ' FOREIGN KEY (BANK_CODE) REFERENCES PERSON (ID) ON DELETE CASCADE').
-	dbPlatform supportsAlterTableForConstraints ifTrue:
-		[self assert: constraint dropString = ('ALTER TABLE BANK_ACCT DROP ', dropWord, ' ',  constraint name)].
+		              sourceField:
+		              ((system tableNamed: 'BANK_ACCT') fieldNamed:
+			               'BANK_CODE')
+		              targetField:
+		              ((system tableNamed: 'PERSON') fieldNamed: 'ID')
+		              suffixExpression: 'ON DELETE CASCADE'.
+	self
+		assert: constraint creationString
+		equals: 'CONSTRAINT ' , constraint name
+			,
+			' FOREIGN KEY (BANK_CODE) REFERENCES PERSON (ID) ON DELETE CASCADE'.
+	dbPlatform supportsAlterTableForConstraints ifTrue: [
+		self
+			assert: constraint dropString
+			equals:
+			'ALTER TABLE BANK_ACCT DROP ' , dropWord , ' ' , constraint name ]
 ]
 
 { #category : #tests }
@@ -127,7 +149,7 @@ GlorpTableTest >> testPrimaryKeyFields [
 	table := system tableNamed: 'BANK_TRANS'.
 	pkFields := table primaryKeyFields.
 	self assert: pkFields size equals: 1.
-	self assert: (pkFields at: 1) == (table fieldNamed: 'ID')
+	self assert: (pkFields at: 1) identicalTo: (table fieldNamed: 'ID')
 ]
 
 { #category : #tests }
@@ -136,10 +158,10 @@ GlorpTableTest >> testPrimaryKeyFields2 [
 	| table field |
 	table := DatabaseTable new.
 	field := (DatabaseField named: 'FRED' type: (dbPlatform varChar: 10))
-		bePrimaryKey.
+		         bePrimaryKey.
 	table addField: field.
 	self assert: table primaryKeyFields size equals: 1.
-	self assert: (table primaryKeyFields at: 1) == field.
+	self assert: (table primaryKeyFields at: 1) identicalTo: field
 ]
 
 { #category : #tests }
@@ -159,7 +181,7 @@ GlorpTableTest >> testPrintingWithParent [
 	t1 := t copy.
 	t1 parent: t.
 	t1 name: 'foo'.
-	self assert: t1 sqlTableName equals: 'GR_CUSTOMER foo'.
+	self assert: t1 sqlTableName equals: 'GR_CUSTOMER foo'
 ]
 
 { #category : #tests }

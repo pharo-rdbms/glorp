@@ -10,21 +10,25 @@ Class {
 
 { #category : #accessing }
 GlorpTransformedFieldValueWrapperTest >> inner [
-	^inner
+
+	^ inner
 ]
 
 { #category : #accessing }
 GlorpTransformedFieldValueWrapperTest >> inner: aFieldValueWrapper [
+
 	inner := aFieldValueWrapper
 ]
 
 { #category : #accessing }
 GlorpTransformedFieldValueWrapperTest >> outer [
-	^outer
+
+	^ outer
 ]
 
 { #category : #accessing }
 GlorpTransformedFieldValueWrapperTest >> outer: aTransformingFieldValueWrapper [
+
 	outer := aTransformingFieldValueWrapper
 ]
 
@@ -33,7 +37,10 @@ GlorpTransformedFieldValueWrapperTest >> setUp [
 
 	super setUp.
 	inner := FieldValueWrapper new.
-	outer := TransformingFieldValueWrapper new innerWrapper: inner; forwardTransformation: [:a | a * 2]; inverseTransformation: [:a | a / 2]
+	outer := TransformingFieldValueWrapper new
+		         innerWrapper: inner;
+		         forwardTransformation: [ :a | a * 2 ];
+		         inverseTransformation: [ :a | a / 2 ]
 ]
 
 { #category : #tests }

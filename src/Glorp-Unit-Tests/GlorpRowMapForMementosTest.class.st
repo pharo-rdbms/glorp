@@ -25,7 +25,7 @@ GlorpRowMapForMementosTest >> setUp [
 	b1 := IdentityHashPrintingObject new.
 	c1 := IdentityHashPrintingObject new.
 	transaction := ObjectTransaction new.
-	transaction 
+	transaction
 		register: a1;
 		register: b1;
 		register: c1.
@@ -40,63 +40,75 @@ GlorpRowMapForMementosTest >> setUp [
 
 { #category : #tests }
 GlorpRowMapForMementosTest >> testAdjustMultipleRowMapKey [
+
 	| rowMapKey adjustedKey  |
 	rowMapKey := MultipleRowMapKey with: a1 with: b1 with: c1.
 	adjustedKey := rowMapKey adjustIn: rowMap correspondenceMap.
 	self assert: (adjustedKey keys includes: a2).
 	self assert: (adjustedKey keys includes: b2).
-	self assert: (adjustedKey keys includes: c2).
+	self assert: (adjustedKey keys includes: c2)
 ]
 
 { #category : #tests }
 GlorpRowMapForMementosTest >> testAdjustRowMapKey [
-	| rowMapKey adjustedKey  |
+
+	| rowMapKey adjustedKey |
 	rowMapKey := RowMapKey new.
-	rowMapKey key1: a1; key2: b1.
+	rowMapKey
+		key1: a1;
+		key2: b1.
 	adjustedKey := rowMapKey adjustIn: rowMap correspondenceMap.
-	self assert: (adjustedKey key1 == a2).
-	self assert: (adjustedKey key2 == b2).
+	self assert: adjustedKey key1 identicalTo: a2.
+	self assert: adjustedKey key2 identicalTo: b2
 ]
 
 { #category : #tests }
 GlorpRowMapForMementosTest >> testReverseAdjustMultipleRowMapKey [
+
 	| rowMapKey adjustedKey  |
 	rowMapKey := MultipleRowMapKey with: a2 with: b2 with: c2.
 	adjustedKey := rowMapKey reverseAdjustIn: rowMap.
 	self assert: (adjustedKey keys includes: a1).
 	self assert: (adjustedKey keys includes: b1).
-	self assert: (adjustedKey keys includes: c1).
+	self assert: (adjustedKey keys includes: c1)
 ]
 
 { #category : #tests }
 GlorpRowMapForMementosTest >> testReverseAdjustRowMapKey [
-	| rowMapKey adjustedKey  |
+
+	| rowMapKey adjustedKey |
 	rowMapKey := RowMapKey new.
-	rowMapKey key1: a2; key2: b2.
+	rowMapKey
+		key1: a2;
+		key2: b2.
 	adjustedKey := rowMapKey reverseAdjustIn: rowMap.
-	self assert: (adjustedKey key1 == a1).
-	self assert: (adjustedKey key2 == b1).
+	self assert: adjustedKey key1 identicalTo: a1.
+	self assert: adjustedKey key2 identicalTo: b1
 ]
 
 { #category : #tests }
 GlorpRowMapForMementosTest >> testRowForTableMultiple [
+
 	| rowMapKey row |
 	rowMapKey := MultipleRowMapKey with: a1 with: b1 with: c1.
 	row := rowMap findOrAddRowForTable: table1 withKey: rowMapKey.
 	row1 := rowMap findOrAddRowForTable: table1 withKey: rowMapKey.
 	row2 := rowMap rowForTable: table1 withKey: rowMapKey.
-	self assert: row == row1.
-	self assert: row == row2.
+	self assert: row identicalTo: row1.
+	self assert: row identicalTo: row2
 ]
 
 { #category : #tests }
 GlorpRowMapForMementosTest >> testRowForTableSingle [
+
 	| rowMapKey row |
 	rowMapKey := RowMapKey new.
-	rowMapKey key1: a1; key2: b1.
+	rowMapKey
+		key1: a1;
+		key2: b1.
 	row := rowMap findOrAddRowForTable: table1 withKey: rowMapKey.
 	row1 := rowMap findOrAddRowForTable: table1 withKey: rowMapKey.
 	row2 := rowMap rowForTable: table1 withKey: rowMapKey.
-	self assert: row == row1.
-	self assert: row == row2.
+	self assert: row identicalTo: row1.
+	self assert: row identicalTo: row2
 ]

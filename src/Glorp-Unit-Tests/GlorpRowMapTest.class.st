@@ -71,15 +71,18 @@ GlorpRowMapTest >> testCollapseMatchingInsertsAndDeletesWithUnknownFields [
 	row2 atFieldNamed: 'ONE_ID' put: 99.
 	row2 atFieldNamed: 'KEY' put: 5.
 	row1 forDeletion: true.
-	self shouldnt: [rowMap collapseMatchingInsertsAndDeletes] raise: Dialect error.
+	self shouldnt: [rowMap collapseMatchingInsertsAndDeletes] raise: Dialect error
 ]
 
 { #category : #tests }
 GlorpRowMapTest >> testRowForTableSingle [
+
 	| rowMapKey row |
 	rowMapKey := RowMapKey new.
-	rowMapKey key1: a1; key2: b1.
+	rowMapKey
+		key1: a1;
+		key2: b1.
 	row := rowMap findOrAddRowForTable: table1 withKey: rowMapKey.
 	row2 := rowMap rowForTable: table1 withKey: rowMapKey.
-	self assert: row == row2.
+	self assert: row identicalTo: row2
 ]

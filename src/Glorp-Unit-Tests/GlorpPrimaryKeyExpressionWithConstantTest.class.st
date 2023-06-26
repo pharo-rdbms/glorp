@@ -32,9 +32,11 @@ GlorpPrimaryKeyExpressionWithConstantTest >> testAsExpressionCompound [
 
 	e := compoundExpression asGeneralGlorpExpression.
 	self assert: (e rightChild isKindOf: RelationExpression).
-	self assert: (e rightChild relation == #=).
+	self assert: e rightChild relation identicalTo: #=.
 	self assert: (e rightChild leftChild isKindOf: FieldExpression).
-	self assert: e rightChild leftChild field == (personTable fieldNamed: 'ADDRESS_ID').
+	self
+		assert: e rightChild leftChild field
+		identicalTo: (personTable fieldNamed: 'ADDRESS_ID').
 	self assert: (e rightChild rightChild isKindOf: ConstantExpression).
 	self assert: e rightChild rightChild value equals: 'B'
 ]
@@ -45,10 +47,13 @@ GlorpPrimaryKeyExpressionWithConstantTest >> testAsExpressionSingle [
 	| e field param |
 	e := expression asGeneralGlorpExpression.
 	self assert: (e isKindOf: RelationExpression).
-	self assert: e relation == #=.
+	self assert: e relation identicalTo: #=.
 	field := e leftChild.
 	self assert: (field isKindOf: FieldExpression).
-	self assert: field field == ((system tableNamed: 'CUSTOMER_ACCT_LINK') fieldNamed: 'ACCT_ID').
+	self
+		assert: field field
+		identicalTo:
+		((system tableNamed: 'CUSTOMER_ACCT_LINK') fieldNamed: 'ACCT_ID').
 	param := e rightChild.
 	self assert: (param isKindOf: ConstantExpression).
 	self assert: param value equals: 7
@@ -69,7 +74,7 @@ GlorpPrimaryKeyExpressionWithConstantTest >> testCompoundSQLPrinting [
 GlorpPrimaryKeyExpressionWithConstantTest >> testParameterCount [
 
 	self assert: expression numberOfParameters equals: 1.
-	self assert: compoundExpression numberOfParameters equals: 2.
+	self assert: compoundExpression numberOfParameters equals: 2
 ]
 
 { #category : #tests }

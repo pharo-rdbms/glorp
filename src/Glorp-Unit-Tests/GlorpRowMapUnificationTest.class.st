@@ -173,7 +173,7 @@ GlorpRowMapUnificationTest >> testIteration [
 	self assert: (rows includes: r2)
 ]
 
-{ #category : #'tests-relatedrows' }
+{ #category : #'tests - related rows' }
 GlorpRowMapUnificationTest >> testRelatedRowInternal [
 
 	| cf1 r1 r2 r3 |
@@ -238,7 +238,7 @@ GlorpRowMapUnificationTest >> testStoreWithRowMapKey [
 	self assert: r1 owner == key1.
 ]
 
-{ #category : #'tests-transformation' }
+{ #category : #'tests - transformation' }
 GlorpRowMapUnificationTest >> testUnifyExtraOnSourceSideWithTransformationBeforeStoreForward [
 
 	rowMap
@@ -259,8 +259,9 @@ GlorpRowMapUnificationTest >> testUnifyExtraOnSourceSideWithTransformationBefore
 	self assert: ((rowMap rowForTable: t3 withKey: o3) at: f3) equals: 12
 ]
 
-{ #category : #'tests-transformation' }
+{ #category : #'tests - transformation' }
 GlorpRowMapUnificationTest >> testUnifyExtraOnSourceSideWithTransformationBeforeStoreInverse [
+
 	rowMap
 		unifyField: f1
 		key: o1
@@ -279,8 +280,9 @@ GlorpRowMapUnificationTest >> testUnifyExtraOnSourceSideWithTransformationBefore
 	self assert: ((rowMap rowForTable: t3 withKey: o3) at: f3) equals: 12
 ]
 
-{ #category : #'tests-transformation' }
+{ #category : #'tests - transformation' }
 GlorpRowMapUnificationTest >> testUnifyExtraOnTargetSideWithTransformationBeforeStoreForward [
+
 	rowMap
 		unifyField: f1
 		key: o1
@@ -299,8 +301,9 @@ GlorpRowMapUnificationTest >> testUnifyExtraOnTargetSideWithTransformationBefore
 	self assert: ((rowMap rowForTable: t3 withKey: o3) at: f3) equals: 24
 ]
 
-{ #category : #'tests-transformation' }
+{ #category : #'tests - transformation' }
 GlorpRowMapUnificationTest >> testUnifyExtraOnTargetSideWithTransformationBeforeStoreInverse [
+
 	rowMap
 		unifyField: f1
 		key: o1
@@ -319,7 +322,7 @@ GlorpRowMapUnificationTest >> testUnifyExtraOnTargetSideWithTransformationBefore
 	self assert: ((rowMap rowForTable: t3 withKey: o3) at: f3) equals: 24
 ]
 
-{ #category : #'tests-transformation' }
+{ #category : #'tests - transformation' }
 GlorpRowMapUnificationTest >> testUnifyWithTransformationAfterStoreForward [
 
 	(rowMap findOrAddRowForTable: t1 withKey: o1) at: f1 put: 12.
@@ -334,7 +337,7 @@ GlorpRowMapUnificationTest >> testUnifyWithTransformationAfterStoreForward [
 	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) equals: 24
 ]
 
-{ #category : #'tests-transformation' }
+{ #category : #'tests - transformation' }
 GlorpRowMapUnificationTest >> testUnifyWithTransformationAfterStoreInverse [
 	"This is a little tricky. If we set the value first, then impose the constraint, then we're effectively doubling what was set. I think this is actually right, but also a very weird case on top of weird scenarios to begin with"
 
@@ -350,7 +353,7 @@ GlorpRowMapUnificationTest >> testUnifyWithTransformationAfterStoreInverse [
 	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) equals: 24
 ]
 
-{ #category : #'tests-transformation' }
+{ #category : #'tests - transformation' }
 GlorpRowMapUnificationTest >> testUnifyWithTransformationBeforeStoreForward [
 
 	rowMap
@@ -365,7 +368,7 @@ GlorpRowMapUnificationTest >> testUnifyWithTransformationBeforeStoreForward [
 	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) equals: 24
 ]
 
-{ #category : #'tests-transformation' }
+{ #category : #'tests - transformation' }
 GlorpRowMapUnificationTest >> testUnifyWithTransformationBeforeStoreInverse [
 
 	rowMap

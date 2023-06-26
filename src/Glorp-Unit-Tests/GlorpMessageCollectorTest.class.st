@@ -25,10 +25,11 @@ GlorpMessageCollectorTest >> setUp [
 
 { #category : #tests }
 GlorpMessageCollectorTest >> testExpressionCreation [
+
 	| exp |
 	exp := collector foo asGlorpExpression.
-	self assert: exp name == #foo.
-	self assert: exp base class == BaseExpression
+	self assert: exp name identicalTo: #foo.
+	self assert: exp base class identicalTo: BaseExpression
 ]
 
 { #category : #tests }
@@ -46,6 +47,6 @@ GlorpMessageCollectorTest >> testMessageIntercept [
 
 	| foo |
 	foo := collector foo.
-	self assert: foo privateGlorpSelector == #foo.
-	self assert: foo privateGlorpReceiver == collector.
+	self assert: foo privateGlorpSelector identicalTo: #foo.
+	self assert: foo privateGlorpReceiver identicalTo: collector
 ]
