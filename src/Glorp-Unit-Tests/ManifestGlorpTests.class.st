@@ -18,7 +18,7 @@ ManifestGlorpTests class >> ruleEqualNilRuleV1FalsePositive [
 ManifestGlorpTests class >> ruleSentNotImplementedRuleV1FalsePositive [
 
 	<ignoreForCoverage>
-	^ #(#(#(#RGMethodDefinition #(#GlorpExpressionTest #testTwoLevelMappingExpressionIdentity #false)) #'2023-06-26T17:19:32.656259+02:00') )
+	^ #(#(#(#RGMethodDefinition #(#GlorpExpressionTest #testTwoLevelMappingExpressionIdentity #false)) #'2023-06-26T17:19:32.656259+02:00') #(#(#RGMethodDefinition #(#GlorpExpressionRebuildingTest #testRebuildDoubleInnerScopeNormallyWithExists #false)) #'2023-06-26T17:23:00.60756+02:00') #(#(#RGMethodDefinition #(#GlorpExpressionRebuildingTest #testRebuildDoubleInnerScopeNormallyWithJoins #false)) #'2023-06-26T17:23:08.036157+02:00') #(#(#RGMethodDefinition #(#GlorpExpressionRebuildingTest #testRebuildInnerScopeForSubquery #false)) #'2023-06-26T17:23:32.681276+02:00') #(#(#RGMethodDefinition #(#GlorpExpressionRebuildingTest #testRebuildInnerScopeNormally #false)) #'2023-06-26T17:23:39.17862+02:00') )
 ]
 
 { #category : #'code-critics' }

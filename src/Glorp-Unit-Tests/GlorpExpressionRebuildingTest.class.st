@@ -30,57 +30,69 @@ GlorpExpressionRebuildingTest >> testMapping [
 	self assert: rebuilt base == newBase.
 ]
 
-{ #category : #'tests-outer scope references' }
+{ #category : #'tests - outer scope references' }
 GlorpExpressionRebuildingTest >> testRebuildDoubleInnerScopeNormallyWithExists [
-	original := [:each | 
-	each foo
-		anySatisfyExists:
-			[:eachFoo | eachFoo things anySatisfyExists: [:eachThing | eachThing stuff = each fooThing]]]
-		asGlorpExpression.
+
+	original := [ :each |
+	            each foo anySatisfyExists: [ :eachFoo |
+		            eachFoo things anySatisfyExists: [ :eachThing |
+			            eachThing stuff = each fooThing ] ] ] asGlorpExpression.
 	rebuilt := original rebuildOn: newBase.
-	rebuilt do: [:each | self assert: each ultimateBaseExpression == newBase].
+	rebuilt do: [ :each |
+		self assert: each ultimateBaseExpression identicalTo: newBase ]
 ]
 
-{ #category : #'tests-outer scope references' }
+{ #category : #'tests - outer scope references' }
 GlorpExpressionRebuildingTest >> testRebuildDoubleInnerScopeNormallyWithJoins [
-	original := [:each | 
-	each foo
-		anySatisfyJoin:
-			[:eachFoo | eachFoo things anySatisfyJoin: [:eachThing | eachThing stuff = each fooThing]]]
-		asGlorpExpression.
+
+	original := [ :each |
+	            each foo anySatisfyJoin: [ :eachFoo |
+		            eachFoo things anySatisfyJoin: [ :eachThing |
+			            eachThing stuff = each fooThing ] ] ] asGlorpExpression.
 	rebuilt := original rebuildOn: newBase.
-	rebuilt do: [:each | self assert: each ultimateBaseExpression == newBase].
+	rebuilt do: [ :each |
+		self assert: each ultimateBaseExpression identicalTo: newBase ]
 ]
 
-{ #category : #'tests-outer scope references' }
+{ #category : #'tests - outer scope references' }
 GlorpExpressionRebuildingTest >> testRebuildInnerScopeForSubquery [
 
 	| foo |
-	original := [:each | each foo anySatisfyJoin: [:eachFoo | eachFoo thing = each fooThing]] asGlorpExpression.
+	original := [ :each |
+	            each foo anySatisfyJoin: [ :eachFoo |
+		            eachFoo thing = each fooThing ] ] asGlorpExpression.
 	"Just so that it prints distinctively"
-	original ultimateBaseExpression descriptor: (Descriptor new classModel: (GlorpClassModel for: Object)).
+	original ultimateBaseExpression descriptor:
+		(Descriptor new classModel: (GlorpClassModel for: Object)).
 	foo := original leftChild.
 	newBase := SubSelectBaseExpression on: foo.
 	rebuilt := original rightChild rebuildOn: newBase startingFrom: foo.
-	self assert: rebuilt leftChild base == newBase.
-	self assert: rebuilt leftChild ultimateBaseExpression == original ultimateBaseExpression.
-	self assert: rebuilt rightChild base == original ultimateBaseExpression.
+	self assert: rebuilt leftChild base identicalTo: newBase.
+	self
+		assert: rebuilt leftChild ultimateBaseExpression
+		identicalTo: original ultimateBaseExpression.
+	self
+		assert: rebuilt rightChild base
+		identicalTo: original ultimateBaseExpression
 ]
 
-{ #category : #'tests-outer scope references' }
+{ #category : #'tests - outer scope references' }
 GlorpExpressionRebuildingTest >> testRebuildInnerScopeNormally [
-	original := [:each | each foo anySatisfy: [:eachFoo | eachFoo thing = each fooThing]]
-		asGlorpExpression.
+
+	original := [ :each |
+	            each foo anySatisfy: [ :eachFoo |
+		            eachFoo thing = each fooThing ] ] asGlorpExpression.
 	rebuilt := original rebuildOn: newBase.
-	rebuilt do: [:each | self assert: each ultimateBaseExpression == newBase].
+	rebuilt do: [ :each |
+		self assert: each ultimateBaseExpression identicalTo: newBase ]
 ]
 
-{ #category : #'tests-outer scope references' }
+{ #category : #'tests - outer scope references' }
 GlorpExpressionRebuildingTest >> testRebuildMappingWithStart [
 
-	original := [:each | each foo bar] asGlorpExpression.
+	original := [ :each | each foo bar ] asGlorpExpression.
 	rebuilt := original rebuildOn: newBase startingFrom: original base.
-	self assert: rebuilt base == newBase.
+	self assert: rebuilt base identicalTo: newBase
 ]
 
 { #category : #tests }

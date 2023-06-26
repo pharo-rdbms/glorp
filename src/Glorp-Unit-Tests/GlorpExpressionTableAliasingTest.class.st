@@ -7,33 +7,37 @@ Class {
 	#category : #'Glorp-Unit-Tests-Tests'
 }
 
-{ #category : #support }
+{ #category : #utilities }
 GlorpExpressionTableAliasingTest >> helpTestBasicAliasing: aTable [
+
 	self deny: exp hasTableAliases.
 	exp assignTableAliasesStartingAt: 1 prefix: 's1t'.
 	self assert: exp hasTableAliases.
-	self assert: exp tableAliases size = 1.
-	self assert: (exp tableAliases at: aTable) name = 's1t1'.
+	self assert: exp tableAliases size equals: 1.
+	self assert: (exp tableAliases at: aTable) name equals: 's1t1'
 ]
 
 { #category : #tests }
 GlorpExpressionTableAliasingTest >> testBase [
+
 	exp := BaseExpression new.
 	exp descriptor: (system descriptorFor: GlorpCustomer).
-	self helpTestBasicAliasing: (system tableNamed: 'GR_CUSTOMER').
+	self helpTestBasicAliasing: (system tableNamed: 'GR_CUSTOMER')
 ]
 
 { #category : #tests }
 GlorpExpressionTableAliasingTest >> testMapping [
+
 	| base |
 	base := BaseExpression new.
 	base descriptor: (system descriptorFor: GlorpCustomer).
 	exp := base get: 'transactions'.
-	self helpTestBasicAliasing: (system tableNamed: 'BANK_TRANS').
+	self helpTestBasicAliasing: (system tableNamed: 'BANK_TRANS')
 ]
 
 { #category : #tests }
 GlorpExpressionTableAliasingTest >> testTable [
+
 	| base transTable |
 	base := BaseExpression new.
 	base descriptor: (system descriptorFor: GlorpCustomer).
