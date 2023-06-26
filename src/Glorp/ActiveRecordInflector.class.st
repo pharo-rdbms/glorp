@@ -367,17 +367,22 @@ ActiveRecordInflector >> uncountableRegexFrom: aString [
 
 { #category : #accessing }
 ActiveRecordInflector >> underscore: aString [
-	^String streamContents: [:s || in c first |
-		in := ReadStream on: aString.
-		c := in next.
-		first := true.
-		[c notNil and: [c isUppercase]] whileTrue: [ 
-			(in atEnd not and: [in peek isLowercase and: [ first not ]]) ifTrue: [s nextPut: $_]. 
-			s nextPut: c asLowercase. c := in next. first := false].
-		[ c notNil ] whileTrue: [ 
-			c isUppercase ifTrue: [ s nextPut: $_ ]. 
-			s nextPut: c asLowercase.
-			c := in next]
-		]
-	
+
+	^ String streamContents: [ :s | 
+		  | in c first prev |
+		  in := ReadStream on: aString.
+		  c := in next.
+		  first := true.
+		  prev := nil.
+
+		  [ c notNil ] whileTrue: [ 
+			  c isUppercase ifTrue: [ 
+				  (first not and: [ in atEnd not ]) ifTrue: [ 
+					  (in peek isLowercase or: [ prev isLowercase ]) ifTrue: [ 
+						  s nextPut: $_ ] ] ].
+
+			  prev := c.
+			  s nextPut: c asLowercase.
+			  c := in next.
+			  first := false ] ]
 ]

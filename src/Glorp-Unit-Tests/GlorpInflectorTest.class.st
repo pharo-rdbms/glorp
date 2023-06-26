@@ -21,7 +21,9 @@ GlorpInflectorTest >> camelToUnderscoreData [
     'SpecialGuest'          -> 'special_guest'.
     'ApplicationController' -> 'application_controller'.
     'Area51Controller'      -> 'area51_controller'.
-	 'UNIQUE' -> 'unique'
+	 'UNIQUE' -> 'unique'.
+	 'SumOfEVENTS' -> 'sum_of_events'.
+	 'BigRANDOMBag' -> 'big_random_bag'
   }
 
   
@@ -458,7 +460,7 @@ GlorpInflectorTest >> testCamelToUnderscore [
 
 { #category : #'tests-data' }
 GlorpInflectorTest >> testCamelToUnderscoreWithoutReverse [ 
-	<expectedFailure>
+	
 	self camelToUnderscoreWithoutReverse do: [ :ea |
 		self 
 			assert: (inflector underscore: ea key) 
