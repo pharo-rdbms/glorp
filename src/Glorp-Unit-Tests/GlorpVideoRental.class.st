@@ -1,3 +1,6 @@
+"
+An video rental store in the Video model
+"
 Class {
 	#name : #GlorpVideoRental,
 	#superclass : #GlorpTestModelClass,

@@ -9,58 +9,71 @@ Class {
 
 { #category : #accessing }
 GlorpVideoDescriptorSystem >> allTableNames [
-	^#('VIDEO_STORE' 'VIDEO_PURCHASE' 'VIDEO_RENTAL' 'VIDEO_PURCHASE_LINK' 'VIDEO_CUSTOMER' 'VIDEO_CREDIT_STATUS').
+
+	^ #( 'VIDEO_STORE' 'VIDEO_PURCHASE' 'VIDEO_RENTAL' 'VIDEO_PURCHASE_LINK'
+	     'VIDEO_CUSTOMER' 'VIDEO_CREDIT_STATUS' )
 ]
 
 { #category : #'class models' }
 GlorpVideoDescriptorSystem >> classModelForGlorpVideoCreditStatus: aClassModel [
-	aClassModel newAttributeNamed: #customer type: GlorpVideoCustomer.
-	aClassModel newAttributeNamed: #store type: GlorpVideoStore.
-	aClassModel newAttributeNamed: #balanceOwing type: Number.
-	aClassModel newAttributeNamed: #dateOwing type: Date.
-	aClassModel newAttributeNamed: #comments type: String.
+
+	aClassModel
+		newAttributeNamed: #customer type: GlorpVideoCustomer;
+		newAttributeNamed: #store type: GlorpVideoStore;
+		newAttributeNamed: #balanceOwing type: Number;
+		newAttributeNamed: #dateOwing type: Date;
+		newAttributeNamed: #comments type: String
 ]
 
 { #category : #'class models' }
 GlorpVideoDescriptorSystem >> classModelForGlorpVideoCustomer: aClassModel [
-	aClassModel newAttributeNamed: #name type: String.
-	aClassModel newAttributeNamed: #dateOfBirth type: Date.
-	aClassModel newAttributeNamed: #onlinePurchases collectionOf: GlorpVideoPurchase.
-	aClassModel newAttributeNamed: #inStorePurchases collectionOf: GlorpVideoPurchase.
-	aClassModel newAttributeNamed: #inStoreRentals collectionOf: GlorpVideoRental.	
-	aClassModel newAttributeNamed: #store type: GlorpVideoStore.
-	aClassModel newAttributeNamed: #creditStatus type: GlorpVideoCreditStatus.
+
+	aClassModel
+		newAttributeNamed: #name type: String;
+		newAttributeNamed: #dateOfBirth type: Date;
+		newAttributeNamed: #onlinePurchases collectionOf: GlorpVideoPurchase;
+		newAttributeNamed: #inStorePurchases collectionOf: GlorpVideoPurchase;
+		newAttributeNamed: #inStoreRentals collectionOf: GlorpVideoRental;
+		newAttributeNamed: #store type: GlorpVideoStore;
+		newAttributeNamed: #creditStatus type: GlorpVideoCreditStatus
 ]
 
 { #category : #'class models' }
 GlorpVideoDescriptorSystem >> classModelForGlorpVideoPurchase: aClassModel [
-	aClassModel newAttributeNamed: #id type: Integer.
-	aClassModel newAttributeNamed: #title type: String.
-	aClassModel newAttributeNamed: #price type: Number.
-	aClassModel newAttributeNamed: #inStore type: Boolean.
-	aClassModel newAttributeNamed: #customer type: GlorpVideoCustomer.	
-	aClassModel newAttributeNamed: #store type: GlorpVideoStore.
+
+	aClassModel
+		newAttributeNamed: #id type: Integer;
+		newAttributeNamed: #title type: String;
+		newAttributeNamed: #price type: Number;
+		newAttributeNamed: #inStore type: Boolean;
+		newAttributeNamed: #customer type: GlorpVideoCustomer;
+		newAttributeNamed: #store type: GlorpVideoStore
 ]
 
 { #category : #'class models' }
 GlorpVideoDescriptorSystem >> classModelForGlorpVideoRental: aClassModel [
-	aClassModel newAttributeNamed: #id type: Integer.
-	aClassModel newAttributeNamed: #title type: String.
-	aClassModel newAttributeNamed: #price type: Number.
-	aClassModel newAttributeNamed: #dueDate type: Date.
-	aClassModel newAttributeNamed: #customer type: GlorpVideoCustomer.
-	aClassModel newAttributeNamed: #store type: GlorpVideoStore.
+
+	aClassModel
+		newAttributeNamed: #id type: Integer;
+		newAttributeNamed: #title type: String;
+		newAttributeNamed: #price type: Number;
+		newAttributeNamed: #dueDate type: Date;
+		newAttributeNamed: #customer type: GlorpVideoCustomer;
+		newAttributeNamed: #store type: GlorpVideoStore
 ]
 
 { #category : #'class models' }
 GlorpVideoDescriptorSystem >> classModelForGlorpVideoStore: aClassModel [
-	aClassModel newAttributeNamed: #name type: String.
-	aClassModel newAttributeNamed: #purchases collectionOf: GlorpVideoPurchase.
-	aClassModel newAttributeNamed: #customers collectionOf: GlorpVideoCustomer.
+
+	aClassModel
+		newAttributeNamed: #name type: String;
+	  	newAttributeNamed: #purchases collectionOf: GlorpVideoPurchase;
+	  	newAttributeNamed: #customers collectionOf: GlorpVideoCustomer
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 GlorpVideoDescriptorSystem >> constructAllClasses [
+
 	^(super constructAllClasses)
 		add: GlorpVideoStore;
 		add: GlorpVideoCreditStatus;
@@ -80,8 +93,7 @@ GlorpVideoDescriptorSystem >> descriptorForGlorpVideoCreditStatus: aDescriptor [
 	(aDescriptor newMapping: DirectMapping) from: #dateOwing to: (table fieldNamed: 'DATE_OWING').
 	(aDescriptor newMapping: DirectMapping) from: #comments to: (table fieldNamed: 'COMMENTS').
 
-	(aDescriptor newMapping: OneToOneMapping)
-			attributeName: #customer.
+	(aDescriptor newMapping: OneToOneMapping) attributeName: #customer
 ]
 
 { #category : #descriptors }
@@ -106,7 +118,7 @@ GlorpVideoDescriptorSystem >> descriptorForGlorpVideoCustomer: aDescriptor [
 	(aDescriptor newMapping: ToManyMapping)
 		useLinkTable;
 		attributeName: #inStorePurchases;
-		linkTableJoin: (Join 
+		linkTableJoin: (Join
 			from: (table fieldNamed: 'STORE_ID')
 			to: (linkTable fieldNamed: 'STORE_ID'));
 		targetTableJoin: (Join
@@ -116,23 +128,23 @@ GlorpVideoDescriptorSystem >> descriptorForGlorpVideoCustomer: aDescriptor [
 			to: (purchaseTable fieldNamed: 'CUSTOMERBIRTHDATE')
 			from: 'T'
 			to: (purchaseTable fieldNamed: 'IN_STORE'));
-			constructRowMapKeyAs: [:customer :purchase | 
+			constructRowMapKeyAs: [:customer :purchase |
 					MultipleRowMapKey with: customer with: purchase with: customer videoStore yourself].
 
 	(aDescriptor newMapping: ToManyMapping)
 		useLinkTable;
 		attributeName: #onlinePurchases;
-		linkTableJoin: (Join 
+		linkTableJoin: (Join
 			from: (table fieldNamed: 'STORE_ID')
 			to: (linkTable fieldNamed: 'STORE_ID'));
-		targetTableJoin: (Join 	
+		targetTableJoin: (Join
 			from: (table fieldNamed: 'CUSTOMERNAME')
 			to: (purchaseTable fieldNamed: 'CUSTOMERNAME')
 			from: (table fieldNamed: 'BIRTHDATE')
 			to: (purchaseTable fieldNamed: 'CUSTOMERBIRTHDATE')
 			from: 'F'
 			to: (purchaseTable fieldNamed: 'IN_STORE'));
-			constructRowMapKeyAs: [:customer :purchase | 
+			constructRowMapKeyAs: [:customer :purchase |
 					MultipleRowMapKey with: customer with: purchase with: customer videoStore yourself].
 
 	"A complicated way of saying that the Store plus one other attribute has to be there"
@@ -140,7 +152,7 @@ GlorpVideoDescriptorSystem >> descriptorForGlorpVideoCustomer: aDescriptor [
 	aDescriptor imaginaryTableIsDefinedByRelationFrom: #store to: #inStoreRentals.
 	aDescriptor imaginaryTableIsDefinedByRelationFrom: #store to: #onlinePurchases.
 	aDescriptor imaginaryTableIsDefinedByRelationFrom: #store to: #creditStatus.
-	aDescriptor buildReplacementTableSelect.
+	aDescriptor buildReplacementTableSelect
 ]
 
 { #category : #descriptors }
@@ -157,11 +169,11 @@ GlorpVideoDescriptorSystem >> descriptorForGlorpVideoPurchase: aDescriptor [
 	(aDescriptor newMapping: OneToOneMapping)
 			useLinkTable;
 			attributeName: #store;
-			constructRowMapKeyAs: [:purchase :store | 
+			constructRowMapKeyAs: [:purchase :store |
 					MultipleRowMapKey with: purchase with: store with: purchase customer yourself].
 
 	(aDescriptor newMapping: OneToOneMapping)
-		attributeName: #customer.
+		attributeName: #customer
 ]
 
 { #category : #descriptors }
@@ -179,7 +191,7 @@ GlorpVideoDescriptorSystem >> descriptorForGlorpVideoRental: aDescriptor [
 	(aDescriptor newMapping: OneToOneMapping)
 		attributeName: #customer.
 	(aDescriptor newMapping: OneToOneMapping)
-			attributeName: #store.
+			attributeName: #store
 ]
 
 { #category : #descriptors }
@@ -199,39 +211,42 @@ GlorpVideoDescriptorSystem >> descriptorForGlorpVideoStore: aDescriptor [
 	(aDescriptor newMapping: ToManyMapping)
 		useLinkTable;
 		attributeName: #purchases;
-		constructRowMapKeyAs: [:store :purchase | 
+		constructRowMapKeyAs: [:store :purchase |
 					MultipleRowMapKey with: store with: purchase with: purchase customer yourself].
 	"No relationship to rentals at all"
 ]
 
 { #category : #examples }
 GlorpVideoDescriptorSystem >> exampleCreditStatus1 [
+
 	| example |
-	example := GlorpVideoCreditStatus new.	
+	example := GlorpVideoCreditStatus new.
 	example balanceOwing: 12.00.
 	example dateOwing: (Date today addDays: -1).
 	example comments: 'One'.
-	^example.
+	^ example
 ]
 
 { #category : #examples }
 GlorpVideoDescriptorSystem >> exampleCreditStatus2 [
+
 	| example |
-	example := GlorpVideoCreditStatus new.	
+	example := GlorpVideoCreditStatus new.
 	example balanceOwing: 22.00.
 	example dateOwing: (Date today addDays: -1).
 	example comments: 'Two'.
-	^example.
+	^ example
 ]
 
 { #category : #examples }
 GlorpVideoDescriptorSystem >> exampleCreditStatus3 [
+
 	| example |
-	example := GlorpVideoCreditStatus new.	
+	example := GlorpVideoCreditStatus new.
 	example balanceOwing: 33.00.
 	example dateOwing: (Date today addDays: -1).
 	example comments: 'Three'.
-	^example.
+	^ example
 ]
 
 { #category : #examples }

@@ -24,21 +24,25 @@ Class {
 { #category : #testing }
 GlorpVideoCreditStatus >> assertEqual: aCreditStatus [
 
-	self assert: customer name = aCreditStatus customer name.
-	self assert: customer dateOfBirth = aCreditStatus customer dateOfBirth.
-	self assert: balanceOwing = aCreditStatus balanceOwing.
-	self assert: dateOwing = aCreditStatus dateOwing.
-	self assert: comments = aCreditStatus comments.
+	self assert: customer name equals: aCreditStatus customer name.
+	self
+		assert: customer dateOfBirth
+		equals: aCreditStatus customer dateOfBirth.
+	self assert: balanceOwing equals: aCreditStatus balanceOwing.
+	self assert: dateOwing equals: aCreditStatus dateOwing.
+	self assert: comments equals: aCreditStatus comments
 ]
 
 { #category : #accessing }
 GlorpVideoCreditStatus >> balanceOwing [
-	^balanceOwing.
+
+	^ balanceOwing
 ]
 
 { #category : #accessing }
 GlorpVideoCreditStatus >> balanceOwing: aNumber [
-	balanceOwing := aNumber.
+
+	balanceOwing := aNumber
 ]
 
 { #category : #accessing }
@@ -49,25 +53,30 @@ GlorpVideoCreditStatus >> comments [
 
 { #category : #accessing }
 GlorpVideoCreditStatus >> comments: aString [
-	comments := aString.
+
+	comments := aString
 ]
 
 { #category : #accessing }
 GlorpVideoCreditStatus >> customer [
-	^customer.
+
+	^ customer
 ]
 
 { #category : #accessing }
 GlorpVideoCreditStatus >> customer: aCustomer [
-	customer := aCustomer.
+
+	customer := aCustomer
 ]
 
 { #category : #accessing }
 GlorpVideoCreditStatus >> dateOwing [
-	^dateOwing.
+
+	^ dateOwing
 ]
 
 { #category : #accessing }
 GlorpVideoCreditStatus >> dateOwing: aDate [
-	dateOwing := aDate.
+
+	dateOwing := aDate
 ]

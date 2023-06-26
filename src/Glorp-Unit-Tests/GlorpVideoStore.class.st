@@ -1,3 +1,6 @@
+"
+An video store in the Video model
+"
 Class {
 	#name : #GlorpVideoStore,
 	#superclass : #GlorpTestModelClass,

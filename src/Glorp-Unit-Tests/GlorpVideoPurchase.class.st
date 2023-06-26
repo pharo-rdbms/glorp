@@ -1,3 +1,6 @@
+"
+An video purchase in the Video model
+"
 Class {
 	#name : #GlorpVideoPurchase,
 	#superclass : #GlorpTestModelClass,
