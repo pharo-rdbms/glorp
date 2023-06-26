@@ -1,3 +1,6 @@
+"
+An bank transaction in the Bank model
+"
 Class {
 	#name : #GlorpBankTransaction,
 	#superclass : #Object,
@@ -24,11 +27,13 @@ GlorpBankTransaction class >> example2 [
 
 { #category : #accessing }
 GlorpBankTransaction >> amount [
-	^amount
+
+	^ amount
 ]
 
 { #category : #accessing }
-GlorpBankTransaction >> amount: aGlorpMoney [ 
+GlorpBankTransaction >> amount: aGlorpMoney [
+
 	amount := aGlorpMoney
 ]
 
@@ -36,7 +41,7 @@ GlorpBankTransaction >> amount: aGlorpMoney [
 GlorpBankTransaction >> id [
 	"Private - Answer the value of the receiver's ''id'' instance variable."
 
-	^id
+	^ id
 ]
 
 { #category : #accessing }
@@ -58,20 +63,23 @@ GlorpBankTransaction >> initialize [
 GlorpBankTransaction >> owner [
 	"Private - Answer the value of the receiver's ''owner'' instance variable."
 
-	^owner
+	^ owner
 ]
 
 { #category : #accessing }
-GlorpBankTransaction >> owner: aCustomer [ 
+GlorpBankTransaction >> owner: aCustomer [
+
 	owner := aCustomer
 ]
 
 { #category : #accessing }
 GlorpBankTransaction >> serviceCharge [
-	^serviceCharge
+
+	^ serviceCharge
 ]
 
 { #category : #accessing }
-GlorpBankTransaction >> serviceCharge: aServiceCharge [ 
+GlorpBankTransaction >> serviceCharge: aServiceCharge [
+
 	serviceCharge := aServiceCharge
 ]

@@ -1,3 +1,6 @@
+"
+An e-mail address in the Bank model
+"
 Class {
 	#name : #GlorpEmailAddress,
 	#superclass : #Object,
@@ -11,22 +14,26 @@ Class {
 
 { #category : #accessing }
 GlorpEmailAddress >> host [
-	^host
+
+	^ host
 ]
 
 { #category : #accessing }
 GlorpEmailAddress >> host: anObject [
+
 	host := anObject
 ]
 
 { #category : #accessing }
 GlorpEmailAddress >> id [
+
 	^ id
 ]
 
 { #category : #accessing }
 GlorpEmailAddress >> id: anInteger [
-	 id := anInteger.
+
+	id := anInteger
 ]
 
 { #category : #printing }
@@ -39,10 +46,12 @@ GlorpEmailAddress >> printOn: aStream [
 
 { #category : #accessing }
 GlorpEmailAddress >> user [
-	^user
+
+	^ user
 ]
 
 { #category : #accessing }
 GlorpEmailAddress >> user: anObject [
+
 	user := anObject
 ]

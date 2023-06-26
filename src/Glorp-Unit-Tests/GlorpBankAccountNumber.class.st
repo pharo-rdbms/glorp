@@ -1,3 +1,6 @@
+"
+An account number in the Bank model
+"
 Class {
 	#name : #GlorpBankAccountNumber,
 	#superclass : #Object,
@@ -20,30 +23,36 @@ GlorpBankAccountNumber class >> example12345 [
 
 { #category : #accessing }
 GlorpBankAccountNumber >> accountNumber [
-	^accountNumber
+
+	^ accountNumber
 ]
 
 { #category : #accessing }
 GlorpBankAccountNumber >> accountNumber: anObject [
+
 	accountNumber := anObject
 ]
 
 { #category : #accessing }
 GlorpBankAccountNumber >> bankCode [
-	^bankCode
+
+	^ bankCode
 ]
 
 { #category : #accessing }
 GlorpBankAccountNumber >> bankCode: anObject [
+
 	bankCode := anObject
 ]
 
 { #category : #accessing }
 GlorpBankAccountNumber >> branchNumber [
-	^branchNumber
+
+	^ branchNumber
 ]
 
 { #category : #accessing }
 GlorpBankAccountNumber >> branchNumber: anObject [
+
 	branchNumber := anObject
 ]

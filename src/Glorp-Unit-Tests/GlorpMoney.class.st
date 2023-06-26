@@ -1,3 +1,6 @@
+"
+A money representation in the Bank model
+"
 Class {
 	#name : #GlorpMoney,
 	#superclass : #Object,
@@ -30,20 +33,24 @@ GlorpMoney class >> forAmount: anAmount [
 
 { #category : #accessing }
 GlorpMoney >> amount [
-	^amount
+
+	^ amount
 ]
 
 { #category : #accessing }
 GlorpMoney >> amount: anInteger [
+
 	amount := anInteger
 ]
 
 { #category : #accessing }
 GlorpMoney >> currency [
-	^currency
+
+	^ currency
 ]
 
 { #category : #accessing }
 GlorpMoney >> currency: aSymbol [
+
 	currency := aSymbol
 ]

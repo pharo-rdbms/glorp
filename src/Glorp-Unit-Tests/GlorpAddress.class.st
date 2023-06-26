@@ -1,3 +1,6 @@
+"
+An address in the Bank model
+"
 Class {
 	#name : #GlorpAddress,
 	#superclass : #Object,
@@ -62,7 +65,7 @@ GlorpAddress >> glorpNoticeOfExpiryIn: aSession [
 GlorpAddress >> id [
 	"Private - Answer the value of the receiver's ''id'' instance variable."
 
-	^id
+	^ id
 ]
 
 { #category : #accessing }
@@ -76,7 +79,7 @@ GlorpAddress >> id: anObject [
 GlorpAddress >> number [
 	"Private - Answer the value of the receiver's ''number'' instance variable."
 
-	^number
+	^ number
 ]
 
 { #category : #accessing }
@@ -90,14 +93,16 @@ GlorpAddress >> number: anObject [
 GlorpAddress >> printOn: aStream [
 
 	super printOn: aStream.
-	aStream nextPutAll: '(', id printString, ',', street printString, ',' , number printString, ')'.
+	aStream nextPutAll:
+		'(' , id printString , ',' , street printString , ','
+		, number printString , ')'
 ]
 
 { #category : #accessing }
 GlorpAddress >> street [
 	"Private - Answer the value of the receiver's ''street'' instance variable."
 
-	^street
+	^ street
 ]
 
 { #category : #accessing }

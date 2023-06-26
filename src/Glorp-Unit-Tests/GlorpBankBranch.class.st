@@ -1,3 +1,6 @@
+"
+An bank branch in the Bank model
+"
 Class {
 	#name : #GlorpBankBranch,
 	#superclass : #Object,
@@ -10,21 +13,25 @@ Class {
 
 { #category : #accessing }
 GlorpBankBranch >> accounts [
-	^accounts
+
+	^ accounts
 ]
 
 { #category : #accessing }
 GlorpBankBranch >> accounts: anObject [
+
 	accounts := anObject
 ]
 
 { #category : #accessing }
 GlorpBankBranch >> branchNumber [
-	^branchNumber.
+
+	^ branchNumber
 ]
 
 { #category : #accessing }
 GlorpBankBranch >> branchNumber: aString [
+
 	branchNumber := aString
 ]
 

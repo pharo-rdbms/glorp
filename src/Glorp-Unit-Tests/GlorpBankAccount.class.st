@@ -1,3 +1,6 @@
+"
+An account in the Bank model
+"
 Class {
 	#name : #GlorpBankAccount,
 	#superclass : #Object,
@@ -20,12 +23,15 @@ GlorpBankAccount class >> example1 [
 
 { #category : #comparing }
 GlorpBankAccount >> <= anAccount [
-	^self accountNumber accountNumber <= anAccount accountNumber accountNumber.
+
+	^ self accountNumber accountNumber
+	  <= anAccount accountNumber accountNumber
 ]
 
 { #category : #accessing }
 GlorpBankAccount >> accountHolders [
-	^accountHolders.
+
+	^ accountHolders
 ]
 
 { #category : #accessing }
@@ -34,29 +40,32 @@ GlorpBankAccount >> accountNumber [
 ]
 
 { #category : #accessing }
-GlorpBankAccount >> accountNumber: anAccountNumber [ 
+GlorpBankAccount >> accountNumber: anAccountNumber [
+
 	accountNumber := anAccountNumber
 ]
 
 { #category : #accessing }
 GlorpBankAccount >> basicAddHolder: aCustomer [
 
-	accountHolders add: aCustomer.
+	accountHolders add: aCustomer
 ]
 
 { #category : #accessing }
 GlorpBankAccount >> basicRemoveHolder: aCustomer [
 
-	accountHolders remove: aCustomer.
+	accountHolders remove: aCustomer
 ]
 
 { #category : #accessing }
 GlorpBankAccount >> id [
-	^id
+
+	^ id
 ]
 
 { #category : #accessing }
 GlorpBankAccount >> id: anObject [
+
 	id := anObject
 ]
 
@@ -71,8 +80,8 @@ GlorpBankAccount >> initialize [
 GlorpBankAccount >> printOn: aStream [
 
 	super printOn: aStream.
-	aStream 
+	aStream
 		nextPutAll: '(id=';
 		print: id;
-		nextPut: $).
+		nextPut: $)
 ]
