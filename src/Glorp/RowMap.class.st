@@ -200,7 +200,8 @@ RowMap >> initialize [
 { #category : #'initialize-release' }
 RowMap >> initialize: size [
 	rowDictionary := IdentityDictionary new: size.
-	hasDeletions := false
+	hasDeletions := false.
+	^ self
 ]
 
 { #category : #'private/deletion' }

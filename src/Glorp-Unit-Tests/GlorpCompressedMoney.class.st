@@ -11,9 +11,10 @@ Class {
 { #category : #examples }
 GlorpCompressedMoney class >> currency: aSymbol amount: aNumber [
 
-	^super new initialize
+	^ self new
 		currency: aSymbol;
-		amount: aNumber.
+		amount: aNumber;
+		yourself
 ]
 
 { #category : #examples }
