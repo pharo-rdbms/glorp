@@ -13,20 +13,22 @@ GlorpCacheTest class >> resources [
 	^Array with: GlorpSessionResource
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpCacheTest >> setUp [
+
 	super setUp.
 	system cachePolicy: CachePolicy new.
 	session := GlorpSessionResource current newSession.
 	session system: system.
-	cache := session privateGetCache.
+	cache := session privateGetCache
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpCacheTest >> tearDown [
-	super tearDown.
+
 	session reset.
 	session := nil.
+	super tearDown
 ]
 
 { #category : #tests }

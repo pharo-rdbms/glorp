@@ -7,18 +7,20 @@ Class {
 	#category : #'Glorp-Integration-Tests-Database'
 }
 
-{ #category : #support }
+{ #category : #running }
 GlorpEmbeddedMappingDBTest >> setUp [
+
 	super setUp.
 	session beginTransaction.
 	self writeAgents.
-	session reset.
+	session reset
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpEmbeddedMappingDBTest >> tearDown [
+
 	session rollbackTransaction.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }
@@ -57,7 +59,7 @@ GlorpEmbeddedMappingDBTest >> testReadAgents [
 	self deny: agents first agency yourSelf = agents last agency yourSelf.
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpEmbeddedMappingDBTest >> writeAgents [
 	| agent1 agent2 agent3 |
 	agent1 := GlorpTravelAgent new id: 1; name: 'Agent One'.

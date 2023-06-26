@@ -28,11 +28,12 @@ GlorpTransformedFieldValueWrapperTest >> outer: aTransformingFieldValueWrapper [
 	outer := aTransformingFieldValueWrapper
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpTransformedFieldValueWrapperTest >> setUp [
+
 	super setUp.
 	inner := FieldValueWrapper new.
-	outer := TransformingFieldValueWrapper new innerWrapper: inner; forwardTransformation: [:a | a * 2]; inverseTransformation: [:a | a / 2].
+	outer := TransformingFieldValueWrapper new innerWrapper: inner; forwardTransformation: [:a | a * 2]; inverseTransformation: [:a | a / 2]
 ]
 
 { #category : #tests }

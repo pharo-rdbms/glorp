@@ -4,8 +4,9 @@ Class {
 	#category : #'Glorp-Integration-Tests-Database'
 }
 
-{ #category : #support }
+{ #category : #running }
 GlorpObjectComparisonSubselectTest >> setUp [
+
 	super setUp.
-	session system useJoinsForAnySatisfy: false.
+	session system useJoinsForAnySatisfy: false
 ]

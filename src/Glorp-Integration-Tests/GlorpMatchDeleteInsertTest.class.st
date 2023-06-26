@@ -8,7 +8,7 @@ Class {
 	#category : #'Glorp-Integration-Tests-Database'
 }
 
-{ #category : #running }
+{ #category : #'private - running' }
 GlorpMatchDeleteInsertTest >> depopulate [
 	| workers tasks |
 	session reset.
@@ -20,7 +20,7 @@ GlorpMatchDeleteInsertTest >> depopulate [
 	session commitUnitOfWork.
 ]
 
-{ #category : #running }
+{ #category : #'private - running' }
 GlorpMatchDeleteInsertTest >> populate [
 	| workers |
 	session beginUnitOfWork.
@@ -29,7 +29,7 @@ GlorpMatchDeleteInsertTest >> populate [
 	session commitUnitOfWork.
 ]
 
-{ #category : #running }
+{ #category : #'private - running' }
 GlorpMatchDeleteInsertTest >> repopulate [
 	self depopulate.
 	self populate.
@@ -37,9 +37,10 @@ GlorpMatchDeleteInsertTest >> repopulate [
 
 { #category : #running }
 GlorpMatchDeleteInsertTest >> setUp [
+
 	super setUp.
 	session system: (GlorpDictionaryDescriptorSystem forPlatform: session platform).
-	self repopulate.
+	self repopulate
 ]
 
 { #category : #running }
@@ -49,7 +50,7 @@ GlorpMatchDeleteInsertTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #running }
+{ #category : #tests }
 GlorpMatchDeleteInsertTest >> testLinkBasic [
 	"Just a smoke test to ensure that the general setup is okay."
 
@@ -60,7 +61,7 @@ GlorpMatchDeleteInsertTest >> testLinkBasic [
 	self assert: ((workers at: 3) isSimilarToWorker: (exampleWorkers at: 3)).
 ]
 
-{ #category : #running }
+{ #category : #tests }
 GlorpMatchDeleteInsertTest >> testLinkDelete [
 	"Change link table rows, not either of the two class tables.  This will not throw an exception in RowMap>>collapseMatchingInsertsAndDeletesFor:"
 
@@ -75,7 +76,7 @@ GlorpMatchDeleteInsertTest >> testLinkDelete [
 	session rollbackTransaction.
 ]
 
-{ #category : #running }
+{ #category : #tests }
 GlorpMatchDeleteInsertTest >> testLinkReplace [
 	"Change link table rows, not either of the two class tables.  This will not throw an exception in RowMap>>collapseMatchingInsertsAndDeletesFor:"
 
@@ -95,7 +96,7 @@ GlorpMatchDeleteInsertTest >> testLinkReplace [
 	self assert: (tasks keys includes: 'Relax').
 ]
 
-{ #category : #running }
+{ #category : #tests }
 GlorpMatchDeleteInsertTest >> testObjDeleteInsertLinkInLaterUoV [
 	"We delete and create a Task in the same Unit of Work forcing use of the same primary key, but only link it to the same Worker in a later Unit of Work."
 
@@ -118,7 +119,7 @@ GlorpMatchDeleteInsertTest >> testObjDeleteInsertLinkInLaterUoV [
 	self assert: (worker tasks anySatisfy: [:task | task description = 'Wax floors'])
 ]
 
-{ #category : #running }
+{ #category : #tests }
 GlorpMatchDeleteInsertTest >> testObjDeleteInsertLinkInSameUoW [
 	"We delete and create a Task in the same Unit of Work forcing use of the same primary key, and link it to the same Worker in that same Unit of Work."
 

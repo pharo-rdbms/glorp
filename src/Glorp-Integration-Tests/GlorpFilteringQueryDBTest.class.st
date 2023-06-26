@@ -4,17 +4,19 @@ Class {
 	#category : #'Glorp-Integration-Tests-Database'
 }
 
-{ #category : #support }
+{ #category : #running }
 GlorpFilteringQueryDBTest >> setUp [
+
 	super setUp.
-	session beginTransaction.
+	session beginTransaction
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpFilteringQueryDBTest >> tearDown [
+
 	session rollbackTransaction.
 	session resetPermissions.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }

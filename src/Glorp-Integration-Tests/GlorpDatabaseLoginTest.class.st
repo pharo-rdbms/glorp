@@ -20,7 +20,7 @@ GlorpDatabaseLoginTest >> accessor [
 	^accessor.
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpDatabaseLoginTest >> setUp [
 	super setUp.
 	login := GlorpDatabaseLoginResource defaultLogin copy.

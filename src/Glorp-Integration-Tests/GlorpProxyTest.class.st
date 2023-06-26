@@ -14,7 +14,7 @@ GlorpProxyTest class >> resources [
 	^Array with: GlorpSessionResource.
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpProxyTest >> setUp [
 
 	| stub |
@@ -25,7 +25,7 @@ GlorpProxyTest >> setUp [
 	stub := GlorpQueryStub readOneOf: GlorpAddress where: [:address | address id = 1].
 	stub result: 42.
 	proxy query: stub.
-	proxy parameters: #().
+	proxy parameters: #()
 ]
 
 { #category : #tests }

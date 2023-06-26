@@ -12,17 +12,22 @@ GlorpSessionBasedTest class >> resources [
 	^Array with: GlorpDatabaseLoginResource with: GlorpSessionResource with: GlorpDemoTablePopulatorResource.
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpSessionBasedTest >> setUp [
+
 	super setUp.
 	session := GlorpSessionResource current newSession.
 	system session: session.
-	session system: system.
+	session system: system
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpSessionBasedTest >> tearDown [
-	session isNil ifFalse: [session reset. session resetPermissions].
+
+	session ifNotNil: [
+		session
+			reset;
+			resetPermissions ].
 	session := nil.
-	super tearDown.
+	super tearDown
 ]

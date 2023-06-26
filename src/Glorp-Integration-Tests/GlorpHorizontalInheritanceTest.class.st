@@ -12,19 +12,22 @@ GlorpHorizontalInheritanceTest class >> resources [
 	^Array with: GlorpDatabaseLoginResource with: GlorpDemoTablePopulatorResource with: GlorpSessionResource
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpHorizontalInheritanceTest >> setUp [
+
 	super setUp.
 	session := GlorpSessionResource current newSession.
 	session system: (GlorpInheritanceDescriptorSystem forPlatform: GlorpDatabaseLoginResource defaultLogin database).
-	session beginTransaction.
+	session beginTransaction
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpHorizontalInheritanceTest >> tearDown [
-	session rollbackTransaction.
-	super tearDown.
-	session reset.
+
+	session
+		rollbackTransaction;
+		reset.
+	super tearDown
 ]
 
 { #category : #tests }
@@ -222,7 +225,7 @@ GlorpHorizontalInheritanceTest >> testTagObjectLookup [
 				contains: [:tag | tag key = 'second'])
 ]
 
-{ #category : #support }
+{ #category : #'private - support' }
 GlorpHorizontalInheritanceTest >> writeTestHarness [
 
 	| squash apples fridge bicycle warehouse |
@@ -242,7 +245,7 @@ GlorpHorizontalInheritanceTest >> writeTestHarness [
 	session reset.
 ]
 
-{ #category : #support }
+{ #category : #'private - support' }
 GlorpHorizontalInheritanceTest >> writeTestHarnessForTags [
 
 	| tag1 tag2 tag3 image1 image2 |

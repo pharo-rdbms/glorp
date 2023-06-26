@@ -25,21 +25,23 @@ GlorpExpressionJoiningTest >> resultOfJoiningFieldFor: aTable toExpressionBuiltO
 	^exp asExpressionJoiningSource: base toTarget: table.
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpExpressionJoiningTest >> setUp [
+
 	super setUp.
 	source := BaseExpression new.
 	target := source get: #relation.
-	base := BaseExpression new.
+	base := BaseExpression new
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpExpressionJoiningTest >> tearDown [
 
 	source := nil.
 	target := nil.
 	base := nil.
 	system := nil.
+	super tearDown
 ]
 
 { #category : #tests }

@@ -4,43 +4,50 @@ Class {
 	#category : #'Glorp-Integration-Tests-Database'
 }
 
-{ #category : #support }
+{ #category : #running }
 GlorpTimedExpiryCacheTest >> setUp [
+
 	super setUp.
-	self setUpExpiryWithRealDelay.
+	self setUpExpiryWithRealDelay
 ]
 
-{ #category : #support }
+{ #category : #'private - running' }
 GlorpTimedExpiryCacheTest >> setUpExpiryWithRealDelay [
+
 	(cache session descriptorFor: GlorpCustomer) cachePolicy: (TimedExpiryCachePolicy new timeout: 1).
-	(cache session descriptorFor: GlorpBankTransaction) cachePolicy: (TimedExpiryCachePolicy new timeout: 1).
+	(cache session descriptorFor: GlorpBankTransaction) cachePolicy: (TimedExpiryCachePolicy new timeout: 1)
 ]
 
-{ #category : #support }
+{ #category : #'private - running' }
 GlorpTimedExpiryCacheTest >> setUpExpiryWithZeroDelay [
+
 	(cache session descriptorFor: GlorpCustomer) cachePolicy: (TimedExpiryCachePolicy new timeout: 0).
-	(cache session descriptorFor: GlorpBankTransaction) cachePolicy: (TimedExpiryCachePolicy new timeout: 0).
+	(cache session descriptorFor: GlorpBankTransaction) cachePolicy: (TimedExpiryCachePolicy new timeout: 0)
 ]
 
-{ #category : #support }
+{ #category : #'private - running' }
 GlorpTimedExpiryCacheTest >> setUpForExpiryActionOf: aSymbol [
+
 	(cache session descriptorFor: GlorpCustomer) cachePolicy expiryAction: aSymbol.
-	(cache session descriptorFor: GlorpBankTransaction) cachePolicy expiryAction: aSymbol.
+	(cache session descriptorFor: GlorpBankTransaction) cachePolicy expiryAction: aSymbol
 ]
 
-{ #category : #support }
+{ #category : #'private - running' }
 GlorpTimedExpiryCacheTest >> setUpForNotify [
-	self setUpForExpiryActionOf: #notify.
+
+	self setUpForExpiryActionOf: #notify
 ]
 
-{ #category : #support }
+{ #category : #'private - running' }
 GlorpTimedExpiryCacheTest >> setUpForNotifyAndRemove [
-	self setUpForExpiryActionOf: #notifyAndRemove.
+
+	self setUpForExpiryActionOf: #notifyAndRemove
 ]
 
-{ #category : #support }
+{ #category : #'private - running' }
 GlorpTimedExpiryCacheTest >> setUpForRefresh [
-	self setUpForExpiryActionOf: #refresh.
+
+	self setUpForExpiryActionOf: #refresh
 ]
 
 { #category : #tests }

@@ -4,17 +4,19 @@ Class {
 	#category : #'Glorp-Integration-Tests-Database'
 }
 
-{ #category : #support }
+{ #category : #running }
 GlorpDictionaryMappingTest >> setUp [
+
 	super setUp.
 	session system: (GlorpEncyclopediaDescriptorSystem forPlatform: session platform).
-	session beginTransaction.
+	session beginTransaction
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpDictionaryMappingTest >> tearDown [
+
 	session rollbackTransaction.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }
@@ -91,7 +93,7 @@ GlorpDictionaryMappingTest >> testCollectionValueQueryWithImpliedValueAndObjectE
 	matches do: [:each | self assert: each entries size = 3].
 ]
 
-{ #category : #'tests-simple reference classes' }
+{ #category : #'tests - simple reference classes' }
 GlorpDictionaryMappingTest >> testDeleteSimpleTypeOneToMany [
 	| publishers publisher |
 	self assert: (session read: GlorpPublisher) isEmpty.
@@ -163,7 +165,7 @@ GlorpDictionaryMappingTest >> testReadWithRetrieve [
 			ifFalse: [self assert: (eachArray first entries at: eachArray last key) = eachArray last value]].
 ]
 
-{ #category : #'tests-simple reference dictionary' }
+{ #category : #'tests - simple reference dictionary' }
 GlorpDictionaryMappingTest >> testSimpleTypeDictionary [
 	| publishers |
 	publishers := session system examplePublishers.
@@ -185,7 +187,7 @@ GlorpDictionaryMappingTest >> testSimpleTypeDictionary [
 	self assert: publishers first titlesWithNumberInStockLink keys asSortedCollection = session system examplePublisher1 titles asSortedCollection."
 ]
 
-{ #category : #'tests-simple reference dictionary' }
+{ #category : #'tests - simple reference dictionary' }
 GlorpDictionaryMappingTest >> testSimpleTypeDictionaryComplexQuerying [
 	| publishers |
 	publishers := session system examplePublishers.
@@ -203,7 +205,7 @@ GlorpDictionaryMappingTest >> testSimpleTypeDictionaryComplexQuerying [
 	self assert: (publishers first titlesWithNumberInStock keys includes: 'Mastering ENVY/Developer')."
 ]
 
-{ #category : #'tests-simple reference dictionary' }
+{ #category : #'tests - simple reference dictionary' }
 GlorpDictionaryMappingTest >> testSimpleTypeDictionaryQuerying [
 	| publishers |
 	publishers := session system examplePublishers.
@@ -220,7 +222,7 @@ GlorpDictionaryMappingTest >> testSimpleTypeDictionaryQuerying [
 	self assert: publishers first id = 1."
 ]
 
-{ #category : #'tests-simple reference dictionary' }
+{ #category : #'tests - simple reference dictionary' }
 GlorpDictionaryMappingTest >> testSimpleTypeDictionaryQueryingWithAlsoFetch [
 	| publishers publisherOne publisher2 q |
 	publishers := session system examplePublishers.
@@ -244,7 +246,7 @@ GlorpDictionaryMappingTest >> testSimpleTypeDictionaryQueryingWithAlsoFetch [
 	self assert: (publisher2 titlesWithNumberInStock at: 'A book') = 200.
 ]
 
-{ #category : #'tests-simple reference dictionary' }
+{ #category : #'tests - simple reference dictionary' }
 GlorpDictionaryMappingTest >> testSimpleTypeDictionaryQueryingWithFilteredReads [
 	| publishers publisherOne publisher2 |
 	((session system descriptorFor: GlorpPublisher) mappingForAttributeNamed: #titlesWithNumberInStock) useFilteredRead.
@@ -272,7 +274,7 @@ GlorpDictionaryMappingTest >> testSimpleTypeDictionaryQueryingWithFilteredReads 
 "	self assert: (publisher2 titlesWithNumberInStockLink at: 'A book') = 200."
 ]
 
-{ #category : #'tests-simple reference dictionary' }
+{ #category : #'tests - simple reference dictionary' }
 GlorpDictionaryMappingTest >> testSimpleTypeDictionaryQueryingWithRetrieve [
 	| publishers publisherOne publisher2 q actualPublishers |
 	publishers := session system examplePublishers.
@@ -297,7 +299,7 @@ GlorpDictionaryMappingTest >> testSimpleTypeDictionaryQueryingWithRetrieve [
 	self assert: (publisher2 titlesWithNumberInStock at: 'A book') = 200.
 ]
 
-{ #category : #'tests-simple reference dictionary' }
+{ #category : #'tests - simple reference dictionary' }
 GlorpDictionaryMappingTest >> testSimpleTypeDictionaryRead [
 	| publishers |
 	publishers := session system examplePublishers.
@@ -308,7 +310,7 @@ GlorpDictionaryMappingTest >> testSimpleTypeDictionaryRead [
 	self assert: publishers size = 1.
 ]
 
-{ #category : #'tests-simple reference dictionary' }
+{ #category : #'tests - simple reference dictionary' }
 GlorpDictionaryMappingTest >> testSimpleTypeDictionaryReadWithImpliedValue [
 	| publishers |
 	publishers := session system examplePublishers.
@@ -319,7 +321,7 @@ GlorpDictionaryMappingTest >> testSimpleTypeDictionaryReadWithImpliedValue [
 	self assert: publishers size = 1.
 ]
 
-{ #category : #'tests-simple reference classes' }
+{ #category : #'tests - simple reference classes' }
 GlorpDictionaryMappingTest >> testSimpleTypeOneToMany [
 	| publishers |
 	publishers := session system examplePublishers.
@@ -332,7 +334,7 @@ GlorpDictionaryMappingTest >> testSimpleTypeOneToMany [
 	self assert: publishers first titles asSortedCollection = session system examplePublisher1 titles asSortedCollection.
 ]
 
-{ #category : #'tests-simple reference classes' }
+{ #category : #'tests - simple reference classes' }
 GlorpDictionaryMappingTest >> testSimpleTypeOneToManyComplexQuerying [
 	| publishers |
 	publishers := session system examplePublishers.
@@ -344,7 +346,7 @@ GlorpDictionaryMappingTest >> testSimpleTypeOneToManyComplexQuerying [
 	self assert: (publishers first titles includes: 'Mastering ENVY/Developer').
 ]
 
-{ #category : #'tests-simple reference classes' }
+{ #category : #'tests - simple reference classes' }
 GlorpDictionaryMappingTest >> testSimpleTypeOneToManyQuerying [
 	| publishers |
 	publishers := session system examplePublishers.
@@ -355,7 +357,7 @@ GlorpDictionaryMappingTest >> testSimpleTypeOneToManyQuerying [
 	self assert: (publishers first titles anySatisfy: [:each | each like: 'Master%']).
 ]
 
-{ #category : #'tests-simple reference classes' }
+{ #category : #'tests - simple reference classes' }
 GlorpDictionaryMappingTest >> testSimpleTypeOneToManyQueryingIncludes [
 	| publishers |
 	publishers := session system examplePublishers.
@@ -366,7 +368,7 @@ GlorpDictionaryMappingTest >> testSimpleTypeOneToManyQueryingIncludes [
 	self assert: (publishers first titles includes: 'Mastering ENVY/Developer').
 ]
 
-{ #category : #'tests-simple reference classes' }
+{ #category : #'tests - simple reference classes' }
 GlorpDictionaryMappingTest >> testSimpleTypeOneToManyQueryingWithFilteredReads [
 	| publishers publisherOne publisher2 |
 	((session system descriptorFor: GlorpPublisher) mappingForAttributeNamed: #titles) useFilteredRead.
@@ -433,7 +435,7 @@ GlorpDictionaryMappingTest >> testUpdateNonLinkTable [
 	self assert: (session count: GlorpEncyclopediaBioEntry) = 1.
 ]
 
-{ #category : #'tests-simple reference dictionary' }
+{ #category : #'tests - simple reference dictionary' }
 GlorpDictionaryMappingTest >> testUpdateSimpleTypeDictionaryAdding [
 	| publishers publisher |
 	publishers := session system examplePublishers.
@@ -448,7 +450,7 @@ GlorpDictionaryMappingTest >> testUpdateSimpleTypeDictionaryAdding [
 	self assert: publisher titlesWithNumberInStock size = 4.
 ]
 
-{ #category : #'tests-simple reference dictionary' }
+{ #category : #'tests - simple reference dictionary' }
 GlorpDictionaryMappingTest >> testUpdateSimpleTypeDictionaryDeleting [
 	| publishers publisher |
 	publishers := session system examplePublishers.
@@ -463,7 +465,7 @@ GlorpDictionaryMappingTest >> testUpdateSimpleTypeDictionaryDeleting [
 	self assert: publisher titlesWithNumberInStock size = 2.
 ]
 
-{ #category : #'tests-simple reference dictionary' }
+{ #category : #'tests - simple reference dictionary' }
 GlorpDictionaryMappingTest >> testUpdateSimpleTypeDictionaryLinkModifying [
 "	| publishers publisher |
 	publishers := session system examplePublishers.
@@ -480,7 +482,7 @@ GlorpDictionaryMappingTest >> testUpdateSimpleTypeDictionaryLinkModifying [
 	self assert: (session accessor executeSQLString: 'SELECT * FROM PUB_TITLE_LINK') size = 4."
 ]
 
-{ #category : #'tests-simple reference dictionary' }
+{ #category : #'tests - simple reference dictionary' }
 GlorpDictionaryMappingTest >> testUpdateSimpleTypeDictionaryLinkedAdding [
 "	| publishers publisher |
 	publishers := session system examplePublishers.
@@ -495,7 +497,7 @@ GlorpDictionaryMappingTest >> testUpdateSimpleTypeDictionaryLinkedAdding [
 	self assert: publisher titlesWithNumberInStockLink size = 4."
 ]
 
-{ #category : #'tests-simple reference dictionary' }
+{ #category : #'tests - simple reference dictionary' }
 GlorpDictionaryMappingTest >> testUpdateSimpleTypeDictionaryLinkedDeleting [
 "	| publishers publisher |
 	publishers := session system examplePublishers.
@@ -510,7 +512,7 @@ GlorpDictionaryMappingTest >> testUpdateSimpleTypeDictionaryLinkedDeleting [
 	self assert: publisher titlesWithNumberInStockLink size = 2."
 ]
 
-{ #category : #'tests-simple reference dictionary' }
+{ #category : #'tests - simple reference dictionary' }
 GlorpDictionaryMappingTest >> testUpdateSimpleTypeDictionaryModifying [
 	| publishers publisher |
 	publishers := session system examplePublishers.
@@ -524,7 +526,7 @@ GlorpDictionaryMappingTest >> testUpdateSimpleTypeDictionaryModifying [
 	self assert: (publisher titlesWithNumberInStock at: 'Mastering ENVY/Developer') = 123.
 ]
 
-{ #category : #'tests-simple reference classes' }
+{ #category : #'tests - simple reference classes' }
 GlorpDictionaryMappingTest >> testUpdateSimpleTypeOneToMany [
 	| publishers publisher |
 	self assert: (session read: GlorpPublisher) isEmpty.
@@ -552,7 +554,7 @@ GlorpDictionaryMappingTest >> testWriteAndReadBack [
 	self verifyEncyclopedias: readBackEncyclopedias.
 ]
 
-{ #category : #'tests-key in different tables' }
+{ #category : #'tests - key in different tables' }
 GlorpDictionaryMappingTest >> testWriteAndReadBackKeyInLinkTable [
 
 	| query readBackPublishers publishers withEmps |
@@ -571,7 +573,7 @@ GlorpDictionaryMappingTest >> testWriteAndReadBackKeyInLinkTable [
 	self assert: (withEmps differentBunchOfEmployeesById at: 4) name = 'Contractor 2'.
 ]
 
-{ #category : #'tests-key in different tables' }
+{ #category : #'tests - key in different tables' }
 GlorpDictionaryMappingTest >> testWriteAndReadBackKeyInTargetTable [
 
 	| query readBackPublishers publishers withEmps |

@@ -7,10 +7,11 @@ Class {
 	#category : #'Glorp-Integration-Tests-Database'
 }
 
-{ #category : #support }
+{ #category : #running }
 GlorpPartialWritesTest >> setUp [
+
 	super setUp.
-	session := GlorpSessionResource current newSession.
+	session := GlorpSessionResource current newSession
 ]
 
 { #category : #tests }

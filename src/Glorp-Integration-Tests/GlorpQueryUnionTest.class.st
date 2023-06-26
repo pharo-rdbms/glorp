@@ -17,17 +17,19 @@ GlorpQueryUnionTest >> helpTestCompoundExpressionOnPlatform: platform [
 	^(union sqlWith: Dictionary new) sqlString.
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpQueryUnionTest >> setUp [
+
 	super setUp.
 	session beginTransaction.
-	self writeAddressOrderingRows.
+	self writeAddressOrderingRows
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpQueryUnionTest >> tearDown [
+
 	session rollbackTransaction.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #'tests-functional' }

@@ -8,7 +8,7 @@ Class {
 	#category : #'Glorp-Unit-Tests-Tests'
 }
 
-{ #category : #support }
+{ #category : #'private - accessing' }
 GlorpTableTest >> keywordForConstraintsWhenDropping: aConstraint onPlatform: aDatabasePlatform [
 	"This method returns the term to test against independently of #writeConstraintToDrop:onStream:.  The logic is that ANSI uses 'DROP CONSTRAINT but MySQL uses
 		'DROP PRIMARY KEY' for primary key constraints (and then says don't name the constraint name in the drop statement!)
@@ -21,7 +21,7 @@ GlorpTableTest >> keywordForConstraintsWhenDropping: aConstraint onPlatform: aDa
 	^'KEY'
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpTableTest >> setUp [
 	super setUp.
 	descriptors := system allDescriptors.

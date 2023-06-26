@@ -13,17 +13,19 @@ GlorpWritingTest class >> defaultTimeLimit [
 	^ 1 minute
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpWritingTest >> setUp [
+
 	super setUp.
-	session := GlorpSessionResource current newSession.
+	session := GlorpSessionResource current newSession
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpWritingTest >> tearDown [
-	super tearDown.
+
 	session reset.
 	session := nil.
+	super tearDown
 ]
 
 { #category : #tests }

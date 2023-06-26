@@ -8,10 +8,11 @@ Class {
 	#category : #'Glorp-Unit-Tests-Tests'
 }
 
-{ #category : #support }
+{ #category : #running }
 GlorpPrimaryKeyExpressionWithConstantTest >> setUp [
+
 	super setUp.
-	expression := Join 
+	expression := Join
 		from: 7
 		to: ((system tableNamed: 'CUSTOMER_ACCT_LINK') fieldNamed: 'ACCT_ID').
 
@@ -20,7 +21,7 @@ GlorpPrimaryKeyExpressionWithConstantTest >> setUp [
 		to: ((system tableNamed: 'PERSON') fieldNamed: 'NAME').
 	compoundExpression
 		addSource: 'B'
-		target: ((system tableNamed: 'PERSON') fieldNamed: 'ADDRESS_ID').
+		target: ((system tableNamed: 'PERSON') fieldNamed: 'ADDRESS_ID')
 ]
 
 { #category : #tests }

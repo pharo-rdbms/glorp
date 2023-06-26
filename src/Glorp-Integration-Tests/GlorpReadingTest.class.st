@@ -116,19 +116,21 @@ GlorpReadingTest >> session: anObject [
 	session := anObject
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpReadingTest >> setUp [
+
 	super setUp.
 	session := GlorpSessionResource current newSession.
-	system := session system.
+	system := session system
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpReadingTest >> tearDown [
-	super tearDown.
+
 	session reset.
 	session := nil.
 	system := nil.
+	super tearDown
 ]
 
 { #category : #tests }

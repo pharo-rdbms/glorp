@@ -13,10 +13,11 @@ GlorpSimpleQueryTest class >> resources [
 	^Array with: GlorpSessionResource.
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpSimpleQueryTest >> setUp [
+
 	super setUp.
-	session := GlorpSessionResource current newSession.
+	session := GlorpSessionResource current newSession
 ]
 
 { #category : #tests }
@@ -44,11 +45,12 @@ GlorpSimpleQueryTest >> skipToString [
 	^session platform supportsANSIJoins ifTrue: ['join '] ifFalse: ['where '].
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpSimpleQueryTest >> tearDown [
-	super tearDown.
+
 	session reset.
 	session := nil.
+	super tearDown
 ]
 
 { #category : #tests }

@@ -7,20 +7,22 @@ Class {
 	#category : #'Glorp-Integration-Tests-Database'
 }
 
-{ #category : #support }
+{ #category : #running }
 GlorpDictionaryMappingErrorTest >> setUp [
+
 	super setUp.
 	session system: (GlorpEncyclopediaStockDescriptorSystem forPlatform: session platform).
-	session beginTransaction.
-]
-
-{ #category : #support }
-GlorpDictionaryMappingErrorTest >> tearDown [
-	session rollbackTransaction.
-	super tearDown.
+	session beginTransaction
 ]
 
 { #category : #running }
+GlorpDictionaryMappingErrorTest >> tearDown [
+
+	session rollbackTransaction.
+	super tearDown
+]
+
+{ #category : #tests }
 GlorpDictionaryMappingErrorTest >> testModifyLinkTableForcingKeyRaisesError [
 	"Change link table rows, not either of the two class tables.  This test involves a MultiRowKeyMap as owner of the link table row, and will not throw an exception in RowMap>>collapseMatchingInsertsAndDeletesFor:."
 

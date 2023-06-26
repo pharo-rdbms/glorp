@@ -49,18 +49,21 @@ GlorpUnitOfWorkTest >> exampleTransactionsProxy [
 	^p
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpUnitOfWorkTest >> setUp [
+
 	super setUp.
-	session := GlorpSessionResource current newSession.
+	session := GlorpSessionResource current newSession
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpUnitOfWorkTest >> tearDown [
-	super tearDown.
-	session reset.
-	session resetPermissions.
+
+	session
+		reset;
+		resetPermissions.
 	session := nil.
+	super tearDown
 ]
 
 { #category : #tests }

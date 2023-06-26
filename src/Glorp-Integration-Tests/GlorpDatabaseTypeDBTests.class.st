@@ -20,18 +20,20 @@ GlorpDatabaseTypeDBTests >> platform [
 	^connection platform
 ]
 
-{ #category : #setup }
+{ #category : #running }
 GlorpDatabaseTypeDBTests >> setUp [
+
 	super setUp.
 	session := GlorpSessionResource current newSession.
-	connection := session accessor.
+	connection := session accessor
 ]
 
-{ #category : #setup }
+{ #category : #running }
 GlorpDatabaseTypeDBTests >> tearDown [
-	super tearDown.
+
 	session reset.
 	session := nil.
+	super tearDown
 ]
 
 { #category : #'infrastructure tests' }

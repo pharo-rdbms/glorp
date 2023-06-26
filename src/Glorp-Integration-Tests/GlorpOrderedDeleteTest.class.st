@@ -10,21 +10,23 @@ Class {
 
 { #category : #running }
 GlorpOrderedDeleteTest >> setUp [
+
 	super setUp.
-	session system: (GlorpOrderedLinkDescriptorSystem forPlatform: session platform).
+	session system:
+		(GlorpOrderedLinkDescriptorSystem forPlatform: session platform).
 	session beginTransaction.
-	session inUnitOfWorkDo:
-		[session register: (GlorpTravelFolder new name: 'Test')].
+	session inUnitOfWorkDo: [
+		session register: (GlorpTravelFolder new name: 'Test') ]
 ]
 
 { #category : #running }
 GlorpOrderedDeleteTest >> tearDown [
 
 	session rollbackTransaction.
-	super tearDown.
+	super tearDown
 ]
 
-{ #category : #running }
+{ #category : #tests }
 GlorpOrderedDeleteTest >> testDeleteFromAndAddToOrderedCollection [
 
 	| folderFromDB final |
@@ -43,7 +45,7 @@ GlorpOrderedDeleteTest >> testDeleteFromAndAddToOrderedCollection [
 	self assert: (final collect: #name) asSortedCollection asArray = #('A New File' 'Another New File' 'File1' 'File2' 'File4').
 ]
 
-{ #category : #running }
+{ #category : #tests }
 GlorpOrderedDeleteTest >> testDeleteFromOrderedCollection [
 
 	| folderFromDB final |
@@ -60,7 +62,7 @@ GlorpOrderedDeleteTest >> testDeleteFromOrderedCollection [
 	self assert: (final collect: #name) asSortedCollection asArray = #( 'File1' 'File2' 'File4').
 ]
 
-{ #category : #running }
+{ #category : #tests }
 GlorpOrderedDeleteTest >> testDeleteFromUnorderedCollection [
 	"Create 4 'files' in my main 'folder', save, then delete the third and save. Get the persistent state,
 	verify that the unordered files collection is file1, file2 and file4."
@@ -81,7 +83,7 @@ GlorpOrderedDeleteTest >> testDeleteFromUnorderedCollection [
 	self assert: (final collect: #name) asSortedCollection asArray = #('File1' 'File2' 'File4').
 ]
 
-{ #category : #running }
+{ #category : #tests }
 GlorpOrderedDeleteTest >> testRearrangeOrderedCollection [
 
 	| folder newFolder |
@@ -96,7 +98,7 @@ GlorpOrderedDeleteTest >> testRearrangeOrderedCollection [
 	self assert: newFolder files size = 4.
 ]
 
-{ #category : #running }
+{ #category : #tests }
 GlorpOrderedDeleteTest >> testValidationOfSystemWithOrderFieldInPrimaryKey [
 	"A mapping with a link table and which writes the order field must define primary key fields and must not include the order field as a primary key.  If we remove the primary key fields from the ordered link table, it will make all the fields primary, including the order field, so should raise a validation error."
 

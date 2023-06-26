@@ -24,24 +24,25 @@ GlorpReadQueryTest >> helpTestSingleOrderingBy: aBlock setup: setupBlock [
 	self verifyOrderFor: result byAttribute: realBlock.
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpReadQueryTest >> setUp [
 
 	super setUp.
 	session := GlorpSessionResource current newSession.
 	session system: (GlorpDemoDescriptorSystem forPlatform: GlorpDatabaseLoginResource defaultLogin database).
 	session beginTransaction.
-	self writeAddressDoubleOrderingRows.
-	self writePersonOrderingRows.
+	self
+		writeAddressDoubleOrderingRows;
+		writePersonOrderingRows
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpReadQueryTest >> tearDown [
 
-	super tearDown.
 	session rollbackTransaction.
 	session reset.
 	session := nil.
+	super tearDown
 ]
 
 { #category : #tests }
@@ -371,7 +372,7 @@ GlorpReadQueryTest >> testSymbolsOrderingByRelatedObjectAttribute [
 	self verifyOrderFor: result byAttribute: [:each | each address street].
 ]
 
-{ #category : #support }
+{ #category : #'private - support' }
 GlorpReadQueryTest >> validateDoubleOrderFor: query [ 
 	| result sortedResult |
 	result := session execute: query.
@@ -383,7 +384,7 @@ GlorpReadQueryTest >> validateDoubleOrderFor: query [
 	^self assert: sortedResult asArray = result asArray
 ]
 
-{ #category : #support }
+{ #category : #'private - support' }
 GlorpReadQueryTest >> validateDoubleOrderMixedFor: query [ 
 	| result sortedResult |
 	result := session execute: query.
@@ -395,7 +396,7 @@ GlorpReadQueryTest >> validateDoubleOrderMixedFor: query [
 	^self assert: sortedResult asArray = result asArray
 ]
 
-{ #category : #support }
+{ #category : #'private - support' }
 GlorpReadQueryTest >> verifyOrderFor: result byAttribute: aBlock [
 	1 to: result size - 1
 		do: 
@@ -406,7 +407,7 @@ GlorpReadQueryTest >> verifyOrderFor: result byAttribute: aBlock [
 			self assert: (aBlock value: a) <= (aBlock value: b)]
 ]
 
-{ #category : #support }
+{ #category : #'private - support' }
 GlorpReadQueryTest >> writeAddressDoubleOrderingRows [
 
 	self writeAddressOrderingRows.
@@ -414,7 +415,7 @@ GlorpReadQueryTest >> writeAddressDoubleOrderingRows [
 	session writeRow: session system exampleAddressRowForOrdering5.
 ]
 
-{ #category : #support }
+{ #category : #'private - support' }
 GlorpReadQueryTest >> writeAddressOrderingRows [
 
 	session writeRow: session system exampleAddressRowForOrdering1.
@@ -422,7 +423,7 @@ GlorpReadQueryTest >> writeAddressOrderingRows [
 	session writeRow: session system exampleAddressRowForOrdering3.
 ]
 
-{ #category : #support }
+{ #category : #'private - support' }
 GlorpReadQueryTest >> writePersonOrderingRows [
 
 	session writeRow: session system examplePersonRowForOrdering1.

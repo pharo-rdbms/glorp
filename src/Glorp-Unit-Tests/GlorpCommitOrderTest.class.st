@@ -13,7 +13,7 @@ Class {
 	#category : #'Glorp-Unit-Tests-Tests'
 }
 
-{ #category : #support }
+{ #category : #running }
 GlorpCommitOrderTest >> setUp [
 
 	super setUp.
@@ -23,7 +23,7 @@ GlorpCommitOrderTest >> setUp [
 	t2 := DatabaseTable new name: 'T2'.
 	t2id := (t2 createFieldNamed: 'ID' type: platform int4) bePrimaryKey.
 	t3 := DatabaseTable new name: 'T3'.
-	t3id := (t3 createFieldNamed: 'ID' type: platform int4) bePrimaryKey.
+	t3id := (t3 createFieldNamed: 'ID' type: platform int4) bePrimaryKey
 ]
 
 { #category : #tests }

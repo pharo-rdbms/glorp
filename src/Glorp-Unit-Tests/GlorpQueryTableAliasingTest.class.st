@@ -10,7 +10,7 @@ Class {
 	#category : #'Glorp-Unit-Tests-Tests'
 }
 
-{ #category : #'As yet unclassified' }
+{ #category : #printing }
 GlorpQueryTableAliasingTest >> helpTestPrintingWhereClause: anExpression [
 	| command |
 	query 
@@ -26,8 +26,9 @@ GlorpQueryTableAliasingTest >> helpTestPrintingWhereClause: anExpression [
 	^command sqlString.
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpQueryTableAliasingTest >> setUp [
+
 	super setUp.
 	query := SimpleQuery new.
 	expression := BaseExpression new.
@@ -37,7 +38,7 @@ GlorpQueryTableAliasingTest >> setUp [
 	expression aliasTable: (system tableNamed: 'GR_CUSTOMER') to: 't1'.
 	session := GlorpSession new.
 	session system: system.
-	query session: system session.
+	query session: system session
 ]
 
 { #category : #tests }

@@ -4,17 +4,17 @@ Class {
 	#category : #'Glorp-Integration-Tests-Database'
 }
 
-{ #category : #support }
+{ #category : #running }
 GlorpObjectMappedToFunctionTest >> setUp [
 	| accountRow3 |
 	super setUp.
 	session beginTransaction.
 	system writeCustomer1Rows.
 	accountRow3 := system exampleAccountRow3.
-	session writeRow: accountRow3.
+	session writeRow: accountRow3
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpObjectMappedToFunctionTest >> tearDown [
 	session rollbackTransaction.
 	super tearDown.
@@ -56,7 +56,7 @@ GlorpObjectMappedToFunctionTest >> testReadQueryingAttributes [
 	self assert: branches asSet size = 2.
 ]
 
-{ #category : #support }
+{ #category : #tests }
 GlorpObjectMappedToFunctionTest >> testRelationships [
 	| branch accounts |
 	branch := session readOneOf: GlorpBankBranch where: [:each | each branchNumber = 2].

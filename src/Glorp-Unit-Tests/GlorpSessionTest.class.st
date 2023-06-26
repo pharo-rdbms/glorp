@@ -50,8 +50,9 @@ GlorpSessionTest >> helpTestUpdateWithoutExpiredExistingEntry: aCachePolicy [
 	self assert: (session expiredInstanceOf: GlorpCustomer key: 3) == customer2.
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpSessionTest >> setUp [
+
 	super setUp.
 	session := GlorpSession new.
 	session system: system

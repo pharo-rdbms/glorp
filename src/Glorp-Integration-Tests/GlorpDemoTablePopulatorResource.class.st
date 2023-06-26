@@ -36,7 +36,7 @@ GlorpDemoTablePopulatorResource class >> resources [
 	^Array with: GlorpDatabaseLoginResource.
 ]
 
-{ #category : #setup }
+{ #category : #'private - running' }
 GlorpDemoTablePopulatorResource >> populateStuffTable [
  
 	login accessor executeSQLStringNoResult: 'INSERT INTO STUFF VALUES (12,''abc'')'.
@@ -46,21 +46,22 @@ GlorpDemoTablePopulatorResource >> populateStuffTable [
 	login accessor executeSQLStringNoResult: 'INSERT INTO STUFF VALUES (113141, ''Smalltalk'')'.
 ]
 
-{ #category : #setup }
+{ #category : #running }
 GlorpDemoTablePopulatorResource >> setUp [
-	
+
 	super setUp.
 	login := GlorpDatabaseLoginResource current.
-	self class needsSetup ifFalse: [^self].
-	login accessor doDDLOperation:
-			[GlorpTestDescriptorSystem allSubclasses
-				do: [:eachSystemClass | 
-					self setUpSystem: (eachSystemClass forPlatform: login platform) setUpDefaults].
-			self populateStuffTable].
+	self class needsSetup ifFalse: [ ^ self ].
+	login accessor doDDLOperation: [
+		GlorpTestDescriptorSystem allSubclasses do: [ :eachSystemClass |
+			self setUpSystem:
+				(eachSystemClass forPlatform: login platform) setUpDefaults ].
+		self populateStuffTable ]
 ]
 
-{ #category : #setup }
-GlorpDemoTablePopulatorResource >> setUpSystem: system [ 
+{ #category : #'private - running' }
+GlorpDemoTablePopulatorResource >> setUpSystem: system [
+
 	| errorBlock |
 	login accessor dropTables: ((TableSorter for: system allTables) sort reverse).
 	errorBlock := [:ex | Transcript show: ex description; cr. ex pass].
@@ -68,14 +69,14 @@ GlorpDemoTablePopulatorResource >> setUpSystem: system [
 		login accessor dropSequences: system allSequences.
 		system allSequences do: [:each |
 			login accessor createSequence: each ifError: errorBlock]].
-	system allTables do: [:each | 
+	system allTables do: [:each |
 			login accessor createTable: each
 				ifError: errorBlock].
 	system allTables do: [:each |
-			login accessor createTableIndexes: each ifError: errorBlock]. 
+			login accessor createTableIndexes: each ifError: errorBlock].
 	"SQLite3 doesn't support adding/dropping constraints."
 	system platform supportsConstraints ifTrue: [
-		system allTables do: [:each | 
+		system allTables do: [:each |
 				login accessor createTableFKConstraints: each ifError: errorBlock]].
 
 	self class needsSetup: false

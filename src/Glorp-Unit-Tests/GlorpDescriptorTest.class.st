@@ -4,10 +4,10 @@ Class {
 	#category : #'Glorp-Unit-Tests-Tests'
 }
 
-{ #category : #support }
+{ #category : #'private - accessing' }
 GlorpDescriptorTest >> errorSignal [
 
-	^Dialect error.
+	^ Dialect error
 ]
 
 { #category : #tests }

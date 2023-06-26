@@ -7,11 +7,12 @@ Class {
 	#category : #'Glorp-Unit-Tests-Tests'
 }
 
-{ #category : #support }
+{ #category : #running }
 GlorpTracingTest >> setUp [
 
+	super setUp.
 	tracing := Tracing new.
-	tracing setup.
+	tracing setup
 ]
 
 { #category : #tests }

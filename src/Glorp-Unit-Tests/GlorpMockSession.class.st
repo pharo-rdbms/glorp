@@ -16,7 +16,7 @@ GlorpMockSession >> accessor [
 GlorpMockSession >> initialize [
 
 	super initialize.
-	rows := OrderedCollection new.
+	rows := OrderedCollection new
 ]
 
 { #category : #accessing }

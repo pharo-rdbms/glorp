@@ -146,7 +146,7 @@ GlorpExpressionTest >> testGetFieldFromSecondaryTable [
 	self assert: expression field table equals: (system tableNamed: 'FREQUENT_FLYER')
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #tests }
 GlorpExpressionTest >> testIsNullPrint [
 
 	| expression stream |
@@ -217,7 +217,7 @@ GlorpExpressionTest >> testMappingExpressionIdentity4 [
 	self denyIdentityOf: [:a | a get: #someAttribute] and: [:a | a someOtherAttribute].
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #tests }
 GlorpExpressionTest >> testNotNullPrint [
 
 	| expression stream |

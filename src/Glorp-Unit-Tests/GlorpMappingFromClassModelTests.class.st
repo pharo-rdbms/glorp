@@ -10,11 +10,13 @@ Class {
 
 { #category : #running }
 GlorpMappingFromClassModelTests >> setUp [
+
+	super setUp.
 	platform := PostgreSQLPlatform new.
 	system := DynamicDescriptorSystem forPlatform: platform
 ]
 
-{ #category : #Tests }
+{ #category : #tests }
 GlorpMappingFromClassModelTests >> someCode [
 	| model descriptor mapping table |
 	table := DatabaseTable named: 'TYPETESTS'.
@@ -40,7 +42,7 @@ GlorpMappingFromClassModelTests >> someCode [
 	^system
 ]
 
-{ #category : #Tests }
+{ #category : #tests }
 GlorpMappingFromClassModelTests >> testAllAttributes [
 	| bankTransTable customerTable ownerId btOwnerId customerModel customerDescriptor attributes |
 	bankTransTable := system addEmptyTableNamed: 'BANK_TRANS'.
@@ -68,7 +70,7 @@ GlorpMappingFromClassModelTests >> testAllAttributes [
 	self assert: attributes size equals: 2.
 ]
 
-{ #category : #Tests }
+{ #category : #tests }
 GlorpMappingFromClassModelTests >> testAllAttributesSkipDefined [
 
 	| bankTransTable customerTable ownerId btOwnerId customerModel customerDescriptor ownerId2 |
@@ -94,7 +96,7 @@ GlorpMappingFromClassModelTests >> testAllAttributesSkipDefined [
 		assert: (customerDescriptor mappingForAttributeNamed: #id) field equals: ownerId2
 ]
 
-{ #category : #Tests }
+{ #category : #tests }
 GlorpMappingFromClassModelTests >> testDirectMapping [
 
 	| customerTable ownerId descriptor mapping customerModel |
@@ -110,7 +112,7 @@ GlorpMappingFromClassModelTests >> testDirectMapping [
 	self assert: mapping field equals: ownerId
 ]
 
-{ #category : #Tests }
+{ #category : #tests }
 GlorpMappingFromClassModelTests >> testDirectMappingNameFieldNameComputation [
 
 	| customerTable ownerId descriptor mapping customerModel |
@@ -127,7 +129,7 @@ GlorpMappingFromClassModelTests >> testDirectMappingNameFieldNameComputation [
 	self assert: mapping field equals: ownerId
 ]
 
-{ #category : #Tests }
+{ #category : #tests }
 GlorpMappingFromClassModelTests >> testOneToOneRelation [
 
 	| bankTransTable customerTable ownerId btOwnerId bankTransModel descriptor mapping |
@@ -149,7 +151,7 @@ GlorpMappingFromClassModelTests >> testOneToOneRelation [
 	self assert: mapping class equals: OneToOneMapping
 ]
 
-{ #category : #Tests }
+{ #category : #tests }
 GlorpMappingFromClassModelTests >> testToManyRelation [
 
 	| bankTransTable customerTable ownerId btOwnerId mapping customerModel customerDescriptor |

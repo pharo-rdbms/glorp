@@ -12,18 +12,20 @@ GlorpOptimisticLockingTest >> changeABookFrom: books [
 			books first copiesInStock: books first copiesInStock - 1].
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpOptimisticLockingTest >> setUp [
+
 	super setUp.
 	session system: GlorpLockingDescriptorSystem new.
 	session beginTransaction.
-	session transact: [session register: session system example1].
+	session transact: [ session register: session system example1 ]
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpOptimisticLockingTest >> tearDown [
+
 	session rollbackTransaction.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }

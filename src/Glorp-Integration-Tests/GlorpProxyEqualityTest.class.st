@@ -16,10 +16,10 @@ GlorpProxyEqualityTest class >> resources [
 	^Array with: GlorpSessionResource
 ]
 
-{ #category : #'initialize-release' }
-GlorpProxyEqualityTest >> setUp [ 
+{ #category : #running }
+GlorpProxyEqualityTest >> setUp [
 
-	super setUp. 
+	super setUp.
 	session := GlorpSessionResource current newSession.
 	proxy := Proxy new.
 	proxy session: session.
@@ -32,11 +32,12 @@ GlorpProxyEqualityTest >> setUp [
 	stub2 := GlorpQueryStub readOneOf: GlorpAddress where: [:address | address id = 1].
 	stub2 result: 'abc'.
 	proxy2 query: stub2.
-	proxy2 parameters: #().
+	proxy2 parameters: #()
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #running }
 GlorpProxyEqualityTest >> setUp2 [
+
 	proxy query result: 'def'
 ]
 

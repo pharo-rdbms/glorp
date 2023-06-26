@@ -18,19 +18,21 @@ GlorpReadingDifferentCollectionsThroughMappingsTest >> descriptorClass [
 	^GlorpCollectionTypesDescriptorSystem.
 ]
 
-{ #category : #setup }
+{ #category : #running }
 GlorpReadingDifferentCollectionsThroughMappingsTest >> setUp [
+
 	super setUp.
 	session := GlorpSessionResource current newSession.
 	system := self descriptorClass forPlatform: session platform.
 	session system: system.
-	session beginTransaction.
+	session beginTransaction
 ]
 
-{ #category : #setup }
+{ #category : #running }
 GlorpReadingDifferentCollectionsThroughMappingsTest >> tearDown [
-	super tearDown.
+
 	session rollbackTransaction.
+	super tearDown
 ]
 
 { #category : #tests }

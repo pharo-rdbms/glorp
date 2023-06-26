@@ -22,18 +22,20 @@ GlorpVirtualCollectionBasicTest >> realObjectsFrom: aVirtualCollection [
 	^all.
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpVirtualCollectionBasicTest >> setUp [
+
 	super setUp.
 	session beginTransaction.
 	self writePersonRows.
-	vc := session virtualCollectionOf: GlorpPerson.
+	vc := session virtualCollectionOf: GlorpPerson
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpVirtualCollectionBasicTest >> tearDown [
+
 	session rollbackTransaction.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }

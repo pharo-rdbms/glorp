@@ -17,7 +17,7 @@ Class {
 	#category : #'Glorp-Unit-Tests-Tests'
 }
 
-{ #category : #support }
+{ #category : #running }
 GlorpRowMapUnificationTest >> setUp [
 
 	super setUp.
@@ -31,7 +31,7 @@ GlorpRowMapUnificationTest >> setUp [
 	rowMap := RowMap new.
 	o1 := 'one'.
 	o2 := 'two'.
-	o3 := 'three'.
+	o3 := 'three'
 ]
 
 { #category : #tests }

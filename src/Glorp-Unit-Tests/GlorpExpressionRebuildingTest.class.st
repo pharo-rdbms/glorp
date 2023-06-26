@@ -9,10 +9,11 @@ Class {
 	#category : #'Glorp-Unit-Tests-Tests'
 }
 
-{ #category : #support }
+{ #category : #running }
 GlorpExpressionRebuildingTest >> setUp [
+
 	super setUp.
-	newBase := BaseExpression new.
+	newBase := BaseExpression new
 ]
 
 { #category : #tests }

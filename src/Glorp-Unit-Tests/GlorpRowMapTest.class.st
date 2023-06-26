@@ -12,8 +12,9 @@ Class {
 	#category : #'Glorp-Unit-Tests-Tests'
 }
 
-{ #category : #support }
+{ #category : #running }
 GlorpRowMapTest >> setUp [
+
 	super setUp.
 	a1 := IdentityHashPrintingObject new.
 	b1 := IdentityHashPrintingObject new.
@@ -23,7 +24,7 @@ GlorpRowMapTest >> setUp [
 	table1 addField: (DatabaseField named: 'ONE_ID' type: platform integer) bePrimaryKey.
 	table1 addField: (DatabaseField named: 'OTHER_ID' type: platform integer).
 	table1 addField: (DatabaseField named: 'KEY' type: platform integer) bePrimaryKey.
-	row2 := 'row2'.
+	row2 := 'row2'
 ]
 
 { #category : #tests }

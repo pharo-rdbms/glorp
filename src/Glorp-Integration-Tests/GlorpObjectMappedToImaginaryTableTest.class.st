@@ -76,8 +76,9 @@ GlorpObjectMappedToImaginaryTableTest >> queryForComplexSubselectRead: anInteger
 	^q1.
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpObjectMappedToImaginaryTableTest >> setUp [
+
 	super setUp.
 	system := GlorpVideoDescriptorSystem forPlatform: session platform.
 	session system: system.
@@ -85,13 +86,14 @@ GlorpObjectMappedToImaginaryTableTest >> setUp [
 	example := system exampleStore1.
 	example2 := system exampleStore2.
 	session inUnitOfWorkDo: [session register: example. session register: example2.].
-	session reset.
+	session reset
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpObjectMappedToImaginaryTableTest >> tearDown [
+
 	session rollbackTransaction.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }

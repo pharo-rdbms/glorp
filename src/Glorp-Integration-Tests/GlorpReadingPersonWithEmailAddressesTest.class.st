@@ -19,8 +19,9 @@ GlorpReadingPersonWithEmailAddressesTest class >> resources [
 	^Array with: GlorpSessionResource.
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpReadingPersonWithEmailAddressesTest >> setUp [
+
 	super setUp.
 	session := GlorpSessionResource current newSession.
 	session beginTransaction.
@@ -33,16 +34,18 @@ GlorpReadingPersonWithEmailAddressesTest >> setUp [
 	id1 := emailAddress1Row at: (emailAddress1Row table fieldNamed: 'ID').
 	id2 := emailAddress2Row at: (emailAddress2Row table fieldNamed: 'ID').
 	session writeRow: emailAddress1Row.
-	session writeRow: emailAddress2Row.
+	session writeRow: emailAddress2Row
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpReadingPersonWithEmailAddressesTest >> tearDown [
+
 	oldReuseState isNil ifFalse:
 		[session reusePreparedStatements: oldReuseState].
 	session rollbackTransaction.
 	session reset.
 	session := nil.
+	super tearDown
 ]
 
 { #category : #tests }

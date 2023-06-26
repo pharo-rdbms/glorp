@@ -4,43 +4,49 @@ Class {
 	#category : #'Glorp-Integration-Tests-Database'
 }
 
-{ #category : #tests }
+{ #category : #running }
 GlorpTimedStrongCacheTest >> setUp [
 	super setUp.
 	self setUpExpiryWithRealDelay.
 ]
 
-{ #category : #tests }
+{ #category : #'private - running' }
 GlorpTimedStrongCacheTest >> setUpExpiryWithRealDelay [
+
 	(cache session descriptorFor: GlorpCustomer) cachePolicy: (TimedStrongCachePolicy new timeout: 1).
-	(cache session descriptorFor: GlorpBankTransaction) cachePolicy: (TimedStrongCachePolicy new timeout: 1).
+	(cache session descriptorFor: GlorpBankTransaction) cachePolicy: (TimedStrongCachePolicy new timeout: 1)
 ]
 
-{ #category : #tests }
+{ #category : #'private - running' }
 GlorpTimedStrongCacheTest >> setUpExpiryWithZeroDelay [
+
 	(cache session descriptorFor: GlorpCustomer) cachePolicy: (TimedStrongCachePolicy new timeout: 0).
-	(cache session descriptorFor: GlorpBankTransaction) cachePolicy: (TimedStrongCachePolicy new timeout: 0).
+	(cache session descriptorFor: GlorpBankTransaction) cachePolicy: (TimedStrongCachePolicy new timeout: 0)
 ]
 
-{ #category : #tests }
+{ #category : #'private - running' }
 GlorpTimedStrongCacheTest >> setUpForExpiryActionOf: aSymbol [
+
 	(cache session descriptorFor: GlorpCustomer) cachePolicy expiryAction: aSymbol.
-	(cache session descriptorFor: GlorpBankTransaction) cachePolicy expiryAction: aSymbol.
+	(cache session descriptorFor: GlorpBankTransaction) cachePolicy expiryAction: aSymbol
 ]
 
-{ #category : #support }
+{ #category : #'private - running' }
 GlorpTimedStrongCacheTest >> setUpForNotify [
-	self setUpForExpiryActionOf: #notify.
+
+	self setUpForExpiryActionOf: #notify
 ]
 
-{ #category : #tests }
+{ #category : #'private - running' }
 GlorpTimedStrongCacheTest >> setUpForNotifyAndRemove [
-	self setUpForExpiryActionOf: #notifyAndRemove.
+
+	self setUpForExpiryActionOf: #notifyAndRemove
 ]
 
-{ #category : #tests }
+{ #category : #'private - running' }
 GlorpTimedStrongCacheTest >> setUpForRefresh [
-	self setUpForExpiryActionOf: #refresh.
+
+	self setUpForExpiryActionOf: #refresh
 ]
 
 { #category : #tests }

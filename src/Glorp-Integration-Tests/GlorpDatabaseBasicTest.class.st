@@ -22,11 +22,11 @@ GlorpDatabaseBasicTest >> databaseLoginResource [
 	^GlorpDatabaseLoginResource current.
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpDatabaseBasicTest >> setUp [
 
 	super setUp.
-	system := GlorpDemoDescriptorSystem forPlatform: GlorpDatabaseLoginResource defaultLogin database.
+	system := GlorpDemoDescriptorSystem forPlatform: GlorpDatabaseLoginResource defaultLogin database
 ]
 
 { #category : #tests }

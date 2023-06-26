@@ -4,17 +4,20 @@ Class {
 	#category : #'Glorp-Integration-Tests-Database'
 }
 
-{ #category : #support }
+{ #category : #running }
 GlorpCursoredCollectionDBTest >> setUp [
+
+	super setUp.
 	session := GlorpSessionResource current newSession.
 	session beginTransaction.
-	self writePersonRows.
+	self writePersonRows
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpCursoredCollectionDBTest >> tearDown [
+
 	session rollbackTransaction.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }

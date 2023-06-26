@@ -70,10 +70,11 @@ GlorpOneToManyDBTest >> setUpSomeExtraPeople [
 		initializeWith: [self writePersonWithEmailAddresses].
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpOneToManyDBTest >> tearDown [
+
 	((session system descriptorFor: GlorpPerson) mappingForAttributeNamed: #emailAddresses) isExclusive: false.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #'tests-read' }

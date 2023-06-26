@@ -14,17 +14,19 @@ GlorpTimedProxyReaperTest >> README [
 	Rerun failed tests individually. If a test consistently fails, then it likely indicates a bug."
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpTimedProxyReaperTest >> setUp [
+
+	super setUp.
 	reaper := TimedProxyReaper new.
-	reaper delay: 0.5.
+	reaper delay: 0.5
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpTimedProxyReaperTest >> tearDown [
 
 	reaper release.
-	reaper := nil.
+	reaper := nil
 ]
 
 { #category : #tests }

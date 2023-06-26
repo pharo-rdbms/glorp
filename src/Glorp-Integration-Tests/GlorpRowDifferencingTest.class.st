@@ -13,7 +13,7 @@ Class {
 	#category : #'Glorp-Integration-Tests-Database'
 }
 
-{ #category : #support }
+{ #category : #'private - support' }
 GlorpRowDifferencingTest >> addRowsFor: object to: rowMap [ 
 	| descriptor |
 	descriptor := system descriptorFor: object class.
@@ -28,7 +28,7 @@ GlorpRowDifferencingTest >> computeDifference [
 	differenceMap := currentObjectRowMap differenceFrom: mementoObjectRowMap.
 ]
 
-{ #category : #support }
+{ #category : #'private - support' }
 GlorpRowDifferencingTest >> correspond: person1 to: person2 [ 
 	| correspondanceMap |
 	correspondanceMap := IdentityDictionary new.
@@ -40,7 +40,7 @@ GlorpRowDifferencingTest >> correspond: person1 to: person2 [
 	^correspondanceMap
 ]
 
-{ #category : #support }
+{ #category : #'private - support' }
 GlorpRowDifferencingTest >> generateMementoRowMapFor: person withCorrespondenceMap: aDictionary [
 	| rowMap |
 	rowMap := RowMapForMementos withCorrespondenceMap: aDictionary.
@@ -49,7 +49,7 @@ GlorpRowDifferencingTest >> generateMementoRowMapFor: person withCorrespondenceM
 	^rowMap
 ]
 
-{ #category : #support }
+{ #category : #'private - support' }
 GlorpRowDifferencingTest >> generateRowMapFor: person [ 
 	| rowMap |
 	rowMap := RowMap new.
@@ -58,12 +58,13 @@ GlorpRowDifferencingTest >> generateRowMapFor: person [
 	^rowMap
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpRowDifferencingTest >> setUp [
+
 	super setUp.
 	session := GlorpSessionResource current newSession.
 	system := session system.
-	session beginUnitOfWork.
+	session beginUnitOfWork
 ]
 
 { #category : #tests }

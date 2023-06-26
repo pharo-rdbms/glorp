@@ -21,9 +21,11 @@ GlorpDatabaseBasedTest >> assert: aBrackettedString equalsIgnoringOuterBrackets:
 			ifFalse: ['(', anotherString, ')'])
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpDatabaseBasedTest >> setUp [
+
+	super setUp.
 	system := GlorpDemoDescriptorSystem forPlatform: GlorpDatabaseLoginResource defaultLogin database.
 	system session: GlorpMockSession new.
-	system session system: system.
+	system session system: system
 ]

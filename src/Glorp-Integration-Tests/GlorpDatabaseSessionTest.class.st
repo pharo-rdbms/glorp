@@ -13,18 +13,19 @@ GlorpDatabaseSessionTest class >> resources [
 	^Array with: GlorpSessionResource.
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpDatabaseSessionTest >> setUp [
 
 	super setUp.
-	session := GlorpSessionResource current newSession.
+	session := GlorpSessionResource current newSession
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpDatabaseSessionTest >> tearDown [
-	super tearDown.
+
 	session reset.
 	session := nil.
+	super tearDown
 ]
 
 { #category : #tests }

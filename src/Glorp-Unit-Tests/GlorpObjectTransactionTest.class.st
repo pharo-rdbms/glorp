@@ -8,9 +8,10 @@ Class {
 	#category : #'Glorp-Unit-Tests-Tests'
 }
 
-{ #category : #support }
+{ #category : #running }
 GlorpObjectTransactionTest >> setUp [
 
+	super setUp.
 	transaction := ObjectTransaction new
 ]
 

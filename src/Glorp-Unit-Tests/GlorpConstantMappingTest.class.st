@@ -10,8 +10,9 @@ Class {
 	#category : #'Glorp-Unit-Tests-Tests'
 }
 
-{ #category : #support }
+{ #category : #running }
 GlorpConstantMappingTest >> setUp [
+
 	| descriptor |
 	super setUp.
 	mappingToClass := ConstantMapping new

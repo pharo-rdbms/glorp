@@ -24,10 +24,11 @@ GlorpInsertUpdateTest >> rowFor: anObject [
 	^rows first.
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpInsertUpdateTest >> setUp [
+
 	super setUp.
-	session := GlorpSessionResource current newSession.
+	session := GlorpSessionResource current newSession
 ]
 
 { #category : #tests }

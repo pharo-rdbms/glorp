@@ -16,8 +16,9 @@ Class {
 	#category : #'Glorp-Integration-Tests-Database'
 }
 
-{ #category : #support }
+{ #category : #running }
 GlorpConditionalMappingTest >> setUp [
+
 	super setUp.
 	descriptor := system descriptorFor: GlorpPassenger.
 	mapping := descriptor newMapping: ConditionalMapping.
@@ -25,11 +26,12 @@ GlorpConditionalMappingTest >> setUp [
 	mapping if: #testIDLessThan5: then: (mapping1 := DirectMapping from: #blah to: (descriptor primaryTable fieldNamed: 'ID')).
 	mapping if: #testIDMoreThan5: then: (mapping2 := DirectMapping from: #bletch to: (descriptor primaryTable fieldNamed: 'NAME')).
 	mapping otherwise: (mapping3 := DirectMapping from: #bazoomer to: (descriptor primaryTable fieldNamed: 'ID')).
-	mapping conditionalMethod: #id.
+	mapping conditionalMethod: #id
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpConditionalMappingTest >> setUpNew [
+
 	"Set up using the newer protocol"
 	newMapping := descriptor newMapping: ConditionalMapping.
 	newMapping
@@ -38,7 +40,7 @@ GlorpConditionalMappingTest >> setUpNew [
 		if: [:value | value = 1]
 		useMapping: (mapping1 := DirectMapping from: #blah to: (descriptor primaryTable fieldNamed: 'ID')).
 	newMapping if: #testIDMoreThan5: then: (mapping2 := DirectMapping from: #bletch to: (descriptor primaryTable fieldNamed: 'NAME')).
-	newMapping otherwise: (mapping3 := DirectMapping from: #bazoomer to: (descriptor primaryTable fieldNamed: 'ID')).
+	newMapping otherwise: (mapping3 := DirectMapping from: #bazoomer to: (descriptor primaryTable fieldNamed: 'ID'))
 ]
 
 { #category : #tests }

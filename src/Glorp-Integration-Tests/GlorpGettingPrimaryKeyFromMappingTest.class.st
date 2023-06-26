@@ -17,18 +17,20 @@ GlorpGettingPrimaryKeyFromMappingTest >> createData [
 	session modify: doc in: [doc attachments add: att].
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpGettingPrimaryKeyFromMappingTest >> setUp [
+
 	super setUp.
 	system := GlorpDocumentDescriptorSystem forPlatform: system platform.
 	session system: system.
-	session beginTransaction.
+	session beginTransaction
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpGettingPrimaryKeyFromMappingTest >> tearDown [
+
 	session rollbackTransaction.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }

@@ -13,7 +13,7 @@ GlorpSessionResource class >> resources [
 	^Array with: GlorpDatabaseLoginResource with: GlorpDemoTablePopulatorResource.
 ]
 
-{ #category : #setup }
+{ #category : #'private - running' }
 GlorpSessionResource >> glorpTestsSystem [
 	"We want to prep the GlorpDemoTablePopulatorResource but subclasses using different systems may not;  put it here where it will be overridden."
 
@@ -34,22 +34,24 @@ GlorpSessionResource >> session [
 	^session.
 ]
 
-{ #category : #setup }
+{ #category : #'private - running' }
 GlorpSessionResource >> setAccessor [
 	
 	session accessor: GlorpDatabaseLoginResource current accessor.
 ]
 
-{ #category : #setup }
+{ #category : #running }
 GlorpSessionResource >> setUp [
+
 	super setUp.
-	session := self glorpTestsSystem
-		sessionForLogin: GlorpDatabaseLoginResource current login.
-	self setAccessor.
+	session := self glorpTestsSystem sessionForLogin:
+		           GlorpDatabaseLoginResource current login.
+	self setAccessor
 ]
 
-{ #category : #setup }
+{ #category : #running }
 GlorpSessionResource >> tearDown [
+
 	session logout.
-	super tearDown.
+	super tearDown
 ]

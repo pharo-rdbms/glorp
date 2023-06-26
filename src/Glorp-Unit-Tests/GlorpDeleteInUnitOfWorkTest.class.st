@@ -7,7 +7,7 @@ Class {
 	#category : #'Glorp-Unit-Tests-Tests'
 }
 
-{ #category : #support }
+{ #category : #running }
 GlorpDeleteInUnitOfWorkTest >> setUp [
 	| session |
 	session := GlorpMockSession new.
@@ -16,20 +16,23 @@ GlorpDeleteInUnitOfWorkTest >> setUp [
 	session system: (GlorpDemoDescriptorSystem forPlatform: GlorpDatabaseLoginResource defaultLogin database)
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #'private - accessing' }
 GlorpDeleteInUnitOfWorkTest >> system [
-	^unitOfWork session system.
+
+	^ unitOfWork session system
 ]
 
-{ #category : #'As yet unclassified' }
-GlorpDeleteInUnitOfWorkTest >> tableNamed: aString [ 
-	^self system tableNamed: aString.
+{ #category : #'private - accessing' }
+GlorpDeleteInUnitOfWorkTest >> tableNamed: aString [
+
+	^ self system tableNamed: aString
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpDeleteInUnitOfWorkTest >> tearDown [
 
 	unitOfWork := nil.
+	super tearDown
 ]
 
 { #category : #tests }

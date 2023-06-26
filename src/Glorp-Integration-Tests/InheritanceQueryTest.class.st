@@ -34,19 +34,20 @@ InheritanceQueryTest >> queryForSuccessor [
 
 { #category : #running }
 InheritanceQueryTest >> setUp [
+
 	super setUp.
 	system := TESTDescriptorSystem forPlatform: session platform.
-	session system: system.
+	session system: system
 ]
 
-{ #category : #running }
+{ #category : #tests }
 InheritanceQueryTest >> testInnerQueries [
 	| query |
 	query := self queryForCustomerStation.
 	session execute: query.
 ]
 
-{ #category : #running }
+{ #category : #tests }
 InheritanceQueryTest >> testLocalInnerQueries [
 	"The same as testInnerQueries, but with all the queries defined within the block (should run the same)."
 
@@ -67,7 +68,7 @@ InheritanceQueryTest >> testLocalInnerQueries [
 	session execute: query.
 ]
 
-{ #category : #running }
+{ #category : #tests }
 InheritanceQueryTest >> testSubSelectRebuild [
 	| query |
 	query := Query read: Station where: 

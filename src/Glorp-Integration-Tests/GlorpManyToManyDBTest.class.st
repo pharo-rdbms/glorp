@@ -74,7 +74,7 @@ GlorpManyToManyDBTest >> readCustomer: aCustomerId [
 	^results first.
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #'private - accessing' }
 GlorpManyToManyDBTest >> session: aDatabaseSession [
 	session := aDatabaseSession.
 ]

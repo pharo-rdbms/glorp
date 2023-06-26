@@ -7,7 +7,7 @@ Class {
 	#category : #'Glorp-Integration-Tests-Database'
 }
 
-{ #category : #support }
+{ #category : #running }
 GlorpMultipleGroupingTest >> setUp [
 	"We beginTransaction to be already in transaction on entering #transact:, so #transact will not commit if the transaction succeeds;  instead, #tearDown will roll it back, clean for the next test run."
 
@@ -16,13 +16,14 @@ GlorpMultipleGroupingTest >> setUp [
 	session beginTransaction.
 	session transact:
 		[session system example2 do:
-			[:each | session register: each]].
+			[:each | session register: each]]
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpMultipleGroupingTest >> tearDown [
+
 	session rollbackTransaction.
-	super tearDown.
+	super tearDown
 ]
 
 { #category : #tests }

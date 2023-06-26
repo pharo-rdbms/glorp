@@ -4,30 +4,34 @@ Class {
 	#category : #'Glorp-Integration-Tests-Database'
 }
 
-{ #category : #setup }
+{ #category : #running }
 GlorpCompositeKeyTest >> setUp [
+
 	super setUp.
-	system := (GlorpCompositeKeyDescriptorSystem forPlatform: session platform).
-	session system: system.
-	session beginTransaction.
-	session transact: [session register: system example1].
-	session reset.
+	system := GlorpCompositeKeyDescriptorSystem forPlatform: session platform.
+
+	session
+		system: system;
+		beginTransaction;
+		transact: [ session register: system example1 ];
+		reset
 ]
 
-{ #category : #setup }
+{ #category : #running }
 GlorpCompositeKeyTest >> tearDown [
+
 	session rollbackTransaction.
 	session resetPermissions.
-	super tearDown.
+	super tearDown
 ]
 
-{ #category : #'tests- basic reading' }
+{ #category : #'tests - basic reading' }
 GlorpCompositeKeyTest >> testAlsoFetch [
 	| users |
 	users := session read: GlorpUser.
 ]
 
-{ #category : #'tests- basic reading' }
+{ #category : #'tests - basic reading' }
 GlorpCompositeKeyTest >> testBasicReadFolder [
 	| folders |
 	folders := (session read: GlorpFolder) asSortedCollection: [:a :b | a name <= b name].
@@ -36,7 +40,7 @@ GlorpCompositeKeyTest >> testBasicReadFolder [
 	self assert: folders last name = 'Two'.
 ]
 
-{ #category : #'tests- basic reading' }
+{ #category : #'tests - basic reading' }
 GlorpCompositeKeyTest >> testBasicReadMessage [
 	| messages |
 	messages := (session read: GlorpMessage) asSortedCollection: [:a :b | a subject <= b subject].
@@ -46,7 +50,7 @@ GlorpCompositeKeyTest >> testBasicReadMessage [
 	self assert: messages last subject = 'goes in folder 2'.
 ]
 
-{ #category : #'tests- basic reading' }
+{ #category : #'tests - basic reading' }
 GlorpCompositeKeyTest >> testBasicReadUser [
 	| users |
 	users := (session read: GlorpUser) asSortedCollection: [:a :b | a id <= b id].
@@ -55,7 +59,7 @@ GlorpCompositeKeyTest >> testBasicReadUser [
 	self assert: users last name = 'User Two'.
 ]
 
-{ #category : #'tests- basic reading' }
+{ #category : #'tests - basic reading' }
 GlorpCompositeKeyTest >> testFaulting [
 	| users user1 sortedFolders user2 |
 	users := session read: GlorpUser.
@@ -67,7 +71,7 @@ GlorpCompositeKeyTest >> testFaulting [
 	self assert: user2 folders first messages first subject = 'goes in folder 2'.
 ]
 
-{ #category : #'tests- basic reading' }
+{ #category : #'tests - basic reading' }
 GlorpCompositeKeyTest >> testFolderIdentity [
 	| folders |
 	folders := session read: GlorpFolder.
@@ -80,7 +84,7 @@ GlorpCompositeKeyTest >> testFolderIdentity [
 		self assert: otherIndividualFolder == individualFolder].
 ]
 
-{ #category : #'tests- basic reading' }
+{ #category : #'tests - basic reading' }
 GlorpCompositeKeyTest >> testMessageCacheHit [
 
 	| messages |
@@ -102,7 +106,7 @@ GlorpCompositeKeyTest >> testMessageCacheHit [
 		self assert: otherIndividualMessage identicalTo: individualMessage ]
 ]
 
-{ #category : #'tests- basic reading' }
+{ #category : #'tests - basic reading' }
 GlorpCompositeKeyTest >> testMessageIdentity [
 	| messages |
 	messages := session read: GlorpMessage.
@@ -115,7 +119,7 @@ GlorpCompositeKeyTest >> testMessageIdentity [
 		self assert: otherIndividualMessage == individualMessage].
 ]
 
-{ #category : #'tests- basic reading' }
+{ #category : #'tests - basic reading' }
 GlorpCompositeKeyTest >> testReadWithCacheHitFromExpression [
 	| message |
 	session reset.
@@ -125,7 +129,7 @@ GlorpCompositeKeyTest >> testReadWithCacheHitFromExpression [
 	session readOneOf: GlorpFolder where: [:each | each user id = 1 & (each name = 'One')].
 ]
 
-{ #category : #'tests- basic reading' }
+{ #category : #'tests - basic reading' }
 GlorpCompositeKeyTest >> testReadWithCacheHitFromJoin [
 	| message |
 	session reset.
@@ -135,7 +139,7 @@ GlorpCompositeKeyTest >> testReadWithCacheHitFromJoin [
 	self assert: message folder name = 'One'.
 ]
 
-{ #category : #'tests- basic reading' }
+{ #category : #'tests - basic reading' }
 GlorpCompositeKeyTest >> testReadWithCacheHitFromParameterizedExpression [
 	| message query |
 	session reset.
@@ -146,7 +150,7 @@ GlorpCompositeKeyTest >> testReadWithCacheHitFromParameterizedExpression [
 	query executeWithParameters: #(1 'One') in: session.
 ]
 
-{ #category : #'tests- basic reading' }
+{ #category : #'tests - basic reading' }
 GlorpCompositeKeyTest >> testReadWithJoins [
 	| users |
 	users := session read: GlorpUser where: [:each | each folders anySatisfyJoin: [:eachFolder |
@@ -155,7 +159,7 @@ GlorpCompositeKeyTest >> testReadWithJoins [
 	self assert: users first id = 1.
 ]
 
-{ #category : #'tests- basic reading' }
+{ #category : #'tests - basic reading' }
 GlorpCompositeKeyTest >> testReadWithSubselect [
 	| users |
 	users := session read: GlorpUser where: [:each | each folders anySatisfyExists: [:eachFolder |
@@ -164,7 +168,7 @@ GlorpCompositeKeyTest >> testReadWithSubselect [
 	self assert: users first id = 1.
 ]
 
-{ #category : #'tests- basic reading' }
+{ #category : #'tests - basic reading' }
 GlorpCompositeKeyTest >> testReadWithSubselectAndINClause [
 	| users |
 	self should: [
@@ -176,7 +180,7 @@ GlorpCompositeKeyTest >> testReadWithSubselectAndINClause [
 		raise: GlorpInvalidExpressionError.
 ]
 
-{ #category : #'tests- basic reading' }
+{ #category : #'tests - basic reading' }
 GlorpCompositeKeyTest >> testUserIdentity [
 	| users |
 	users := session read: GlorpUser.
@@ -196,7 +200,7 @@ GlorpCompositeKeyTest >> testUserIdentity [
 			self assert: otherIndividualUser == individualUser].
 ]
 
-{ #category : #'tests- basic reading' }
+{ #category : #'tests - basic reading' }
 GlorpCompositeKeyTest >> testUserIdentityViaMessage [
 	| users |
 	users := session read: GlorpUser.
@@ -212,7 +216,7 @@ GlorpCompositeKeyTest >> testUserIdentityViaMessage [
 							self assert: eachMessage user yourSelf == each]]].
 ]
 
-{ #category : #'tests- basic reading' }
+{ #category : #'tests - basic reading' }
 GlorpCompositeKeyTest >> testUserIdentityViaMessageInUnitOfWork [
 	session beginUnitOfWork.
 	[self testUserIdentityViaMessage] ensure: [session rollbackUnitOfWork].

@@ -7,11 +7,12 @@ Class {
 	#category : #'Glorp-Integration-Tests-Database'
 }
 
-{ #category : #Running }
+{ #category : #running }
 GlorpVariableTypeTest >> setUp [
+
 	super setUp.
 	system := GlorpVariableTypeTestSystem forPlatform: session system platform.
-	session system: system.
+	session system: system
 ]
 
 { #category : #testing }

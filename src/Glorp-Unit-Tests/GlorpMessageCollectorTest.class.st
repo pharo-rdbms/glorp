@@ -16,8 +16,9 @@ GlorpMessageCollectorTest >> messageCollectorDNUObjectStudio [
 	self assert: caught
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpMessageCollectorTest >> setUp [
+
 	super setUp.
 	collector := MessageArchiver new
 ]

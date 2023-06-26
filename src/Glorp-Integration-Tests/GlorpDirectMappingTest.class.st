@@ -7,14 +7,15 @@ Class {
 	#category : #'Glorp-Integration-Tests-Database'
 }
 
-{ #category : #support }
+{ #category : #running }
 GlorpDirectMappingTest >> setUp [
+
 	| descriptor |
 	super setUp.
 	mapping := DirectMapping from: #id to: ((system tableNamed: 'GR_CUSTOMER') fieldNamed: 'ID').
 	descriptor := Descriptor new.
 	descriptor classModel: (GlorpClassModel for: GlorpCustomer).
-	descriptor addMapping: mapping.
+	descriptor addMapping: mapping
 ]
 
 { #category : #tests }

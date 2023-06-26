@@ -16,19 +16,23 @@ GlorpQueryCopyingTest class >> resources [
 	^Array with: GlorpSessionResource.
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpQueryCopyingTest >> setUp [
+
 	super setUp.
 	query := Query read: GlorpCustomer.
 	query whereClause: [:each | each accounts anySatisfy: [:foo | foo id = 12]].
 	session := GlorpSessionResource current newSession.
-	query session: session.
+	query session: session
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #accessing }
 GlorpQueryCopyingTest >> tableAliasesPresentFor: aQuery [
-	aQuery whereClause detect: [:each | each hasTableAliases] ifNone: [^false].
-	^true.
+
+	aQuery whereClause
+		detect: [ :each | each hasTableAliases ]
+		ifNone: [ ^ false ].
+	^ true
 ]
 
 { #category : #tests }

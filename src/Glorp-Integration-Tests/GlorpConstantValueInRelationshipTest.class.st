@@ -13,13 +13,13 @@ GlorpConstantValueInRelationshipTest class >> resources [
 	^Array with: GlorpDatabaseLoginResource with: GlorpDemoTablePopulatorResource.
 ]
 
-{ #category : #support }
+{ #category : #accessing }
 GlorpConstantValueInRelationshipTest >> idsFor: aCollection [
 
-	^(aCollection collect: [:each | each id]) asSortedCollection asArray.
+	^ (aCollection collect: [:each | each id]) asSortedCollection asArray
 ]
 
-{ #category : #support }
+{ #category : #accessing }
 GlorpConstantValueInRelationshipTest >> sampleWorker [
 
 	| worker job3 |
@@ -34,11 +34,13 @@ GlorpConstantValueInRelationshipTest >> sampleWorker [
 	^worker.
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpConstantValueInRelationshipTest >> setUp [
+
+	super setUp.
 	system := GlorpWorkerDescriptorSystem forPlatform: GlorpDatabaseLoginResource defaultLogin database.
 	session := GlorpSessionResource current newSession.
-	session system: system.
+	session system: system
 ]
 
 { #category : #tests }
@@ -86,7 +88,7 @@ GlorpConstantValueInRelationshipTest >> testWrite [
 	] ensure: [session rollbackTransaction].
 ]
 
-{ #category : #support }
+{ #category : #accessing }
 GlorpConstantValueInRelationshipTest >> writeTestData [
 
 	session writeRow: system exampleWorkerRow.

@@ -152,18 +152,23 @@ GlorpDatabaseLoginResource >> platform [
 	^login database
 ]
 
-{ #category : #'initialize/release' }
+{ #category : #running }
 GlorpDatabaseLoginResource >> setUp [
-	Transcript show: self class name asString, ' setUp'; cr.
+
 	super setUp.
+	Transcript show: self class name asString, ' setUp'; cr.
 	self login: self class defaultLogin.
 	accessor := DatabaseAccessor forLogin: login.
-	accessor login.
+	accessor login
 ]
 
-{ #category : #'initialize/release' }
+{ #category : #running }
 GlorpDatabaseLoginResource >> tearDown [
 
-	Transcript show: self class name asString, ' tearDown'; cr.
-	accessor notNil ifTrue: [[accessor logout] on: Dialect error do: [:ex | ]].
+	Transcript show: self class name asString , ' tearDown'; cr.
+	accessor ifNotNil: [
+		[ accessor logout ]
+			on: Dialect error
+			do: [ :ex |  ] ].
+	super tearDown
 ]

@@ -42,7 +42,7 @@ GlorpOneToOneMappingTests >> inTransactionDo: aBlock [
 	session reset
 ]
 
-{ #category : #initialization }
+{ #category : #running }
 GlorpOneToOneMappingTests >> setUp [
 
 	super setUp.
@@ -59,16 +59,16 @@ GlorpOneToOneMappingTests >> setUp [
 	lastPoolSessionIndex := -1
 ]
 
-{ #category : #initialization }
+{ #category : #running }
 GlorpOneToOneMappingTests >> tearDown [
-
-	super tearDown.
 
 	sessionsPool
 		do: #reset;
 		do: #logout.
 
-	sessionsPool := nil
+	sessionsPool := nil.
+
+	super tearDown
 ]
 
 { #category : #'test - single session' }

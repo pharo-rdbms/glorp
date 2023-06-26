@@ -9,6 +9,7 @@ Class {
 
 { #category : #running }
 GlorpTypeComparisonTest >> setUp [
+
 	super setUp.
 	platform := DatabasePlatform new
 ]

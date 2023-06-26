@@ -14,7 +14,7 @@ Class {
 	#category : #'Glorp-Unit-Tests-Tests'
 }
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> camelToUnderscoreData [
   ^{
     'Product'               -> 'product'.
@@ -29,7 +29,7 @@ GlorpInflectorTest >> camelToUnderscoreData [
   
 ]
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> camelToUnderscoreWithoutReverse [ 
 	^{
     'HTMLTidy'              -> 'html_tidy'.
@@ -41,7 +41,7 @@ GlorpInflectorTest >> camelToUnderscoreWithoutReverse [
 
 ]
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> camelWithModuleToUnderscoreWithSlash [ 
 	^{
     'Admin::Product' -> 'admin/product'.
@@ -52,7 +52,7 @@ GlorpInflectorTest >> camelWithModuleToUnderscoreWithSlash [
   
 ]
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> classNameToForeignKeyWithUnderscore [ 
 	^{
     'Person' -> 'person_id'.
@@ -62,7 +62,7 @@ GlorpInflectorTest >> classNameToForeignKeyWithUnderscore [
   
 ]
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> classNameToForeignKeyWithoutUnderscore [ 
 	^{
     'Person' -> 'personid'.
@@ -72,7 +72,7 @@ GlorpInflectorTest >> classNameToForeignKeyWithoutUnderscore [
 
 ]
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> classNameToTableName [ 
 	^{
     'PrimarySpokesman' -> 'primary_spokesmen'.
@@ -82,7 +82,7 @@ GlorpInflectorTest >> classNameToTableName [
  
 ]
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> irregularities [ 
 	^{
     'person' -> 'people'.
@@ -97,7 +97,7 @@ GlorpInflectorTest >> irregularities [
 
 ]
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> mixtureToTitleCase [ 
 	^{
     'active_record'         -> 'Active Record'.
@@ -121,7 +121,7 @@ GlorpInflectorTest >> mixtureToTitleCase [
 
 ]
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> mixtureToTitleCaseWithKeepIdSuffix [ 
 	^{
     'this_is_a_string_ending_with_id' -> 'This Is A String Ending With Id'.
@@ -132,7 +132,7 @@ GlorpInflectorTest >> mixtureToTitleCaseWithKeepIdSuffix [
  
 ]
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> ordinalNumbers [ 
 	^{
     '-1' -> '-1st'.
@@ -201,13 +201,13 @@ GlorpInflectorTest >> ordinalNumbers [
 ]
 
 { #category : #running }
-GlorpInflectorTest >> setUp [ 
+GlorpInflectorTest >> setUp [
+
 	super setUp.
-	inflector := ActiveRecordInflector new.
-	
+	inflector := ActiveRecordInflector new
 ]
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> singularToPluralData [
 
   ^{
@@ -329,7 +329,7 @@ GlorpInflectorTest >> singularToPluralData [
 
 ]
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> stringToParameterizePreserveCaseWithNoSeparator [ 
 	^{
     'Donald E. Knuth'                     -> 'DonaldEKnuth'.
@@ -345,7 +345,7 @@ GlorpInflectorTest >> stringToParameterizePreserveCaseWithNoSeparator [
 
 ]
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> stringToParameterizePreserveCaseWithUnderscore [ 
 	^{
     'Donald E. Knuth'                     -> 'Donald_E_Knuth'.
@@ -361,7 +361,7 @@ GlorpInflectorTest >> stringToParameterizePreserveCaseWithUnderscore [
 
 ]
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> stringToParameterizeWithNoSeparator [ 
 	^{
     'Donald E. Knuth'                     -> 'donaldeknuth'.
@@ -376,7 +376,7 @@ GlorpInflectorTest >> stringToParameterizeWithNoSeparator [
 
 ]
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> stringToParameterizeWithUnderscore [ 
 	^{
     'Donald E. Knuth'                     -> 'donald_e_knuth'.
@@ -393,7 +393,7 @@ GlorpInflectorTest >> stringToParameterizeWithUnderscore [
  
 ]
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> stringToParameterized [ 
 	^{
     'Donald E. Knuth'                     -> 'donald-e-knuth'.
@@ -407,7 +407,7 @@ GlorpInflectorTest >> stringToParameterized [
   }
 ]
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> stringToParameterizedAndNormalized [ 
 	^{
     'Malmö'                               -> 'malmo'.
@@ -420,7 +420,7 @@ GlorpInflectorTest >> stringToParameterizedAndNormalized [
 
 ]
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> stringToParameterizedPreserveCase [ 
 	^{
     'Donald E. Knuth'                     -> 'Donald-E-Knuth'.
@@ -435,7 +435,7 @@ GlorpInflectorTest >> stringToParameterizedPreserveCase [
 
 ]
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> symbolToLowerCamelData [
 	^{
     #product -> 'product'.
@@ -458,7 +458,7 @@ GlorpInflectorTest >> testCamelToUnderscore [
 		
 ]
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> testCamelToUnderscoreWithoutReverse [ 
 	
 	self camelToUnderscoreWithoutReverse do: [ :ea |
@@ -468,7 +468,7 @@ GlorpInflectorTest >> testCamelToUnderscoreWithoutReverse [
 		]
 ]
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> testClassNameToTableName [ 
 	inflector pluralizeTableNames: true.
 	self classNameToTableName do: [ :ea |
@@ -479,7 +479,7 @@ GlorpInflectorTest >> testClassNameToTableName [
  
 ]
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> testOrdinalNumbers [ 
 
 	self ordinalNumbers do: [ :ea |
@@ -512,7 +512,7 @@ GlorpInflectorTest >> testSingularToPlural [
 		
 ]
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> testSymbolToLowerCamelData [
 	self symbolToLowerCamelData do: [ :ea |
 		self 
@@ -522,7 +522,7 @@ GlorpInflectorTest >> testSymbolToLowerCamelData [
  
 ]
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> testTableNameToClassName [
 	inflector pluralizeTableNames: true.
 	self classNameToTableName do: [ :ea |
@@ -533,7 +533,7 @@ GlorpInflectorTest >> testTableNameToClassName [
  
 ]
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> underscoreToHuman [ 
 	^{
     'employee_salary' -> 'Employee salary'.
@@ -545,7 +545,7 @@ GlorpInflectorTest >> underscoreToHuman [
 
 ]
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> underscoreToHumanWithKeepIdSuffix [ 
 	^{
     'this_is_a_string_ending_with_id' -> 'This is a string ending with id'.
@@ -558,7 +558,7 @@ GlorpInflectorTest >> underscoreToHumanWithKeepIdSuffix [
 
 ]
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> underscoreToHumanWithoutCapitalize [ 
 	^{
     'employee_salary' -> 'employee salary'.
@@ -568,7 +568,7 @@ GlorpInflectorTest >> underscoreToHumanWithoutCapitalize [
 
 ]
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> underscoreToLowerCamelData [ 
 ^{
     'product'                -> 'product'.
@@ -580,7 +580,7 @@ GlorpInflectorTest >> underscoreToLowerCamelData [
 
 ]
 
-{ #category : #'tests-data' }
+{ #category : #'tests - data' }
 GlorpInflectorTest >> underscoresToDashes [ 
 	^{
     'street'                -> 'street'.

@@ -78,7 +78,7 @@ GlorpThingWithLotsOfDifferentCollections >> id: anObject [
 	id := anObject
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GlorpThingWithLotsOfDifferentCollections >> initialize [
 	array := #().
 	orderedCollection := OrderedCollection new.

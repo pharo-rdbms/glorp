@@ -88,10 +88,11 @@ GlorpMappingTest >> rowFor: anObject [
 	^rowMap rowForTable: descriptor table withKey: anObject.
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpMappingTest >> setUp [
+
 	super setUp.
-	rowMap := RowMap new.
+	rowMap := RowMap new
 ]
 
 { #category : #tests }

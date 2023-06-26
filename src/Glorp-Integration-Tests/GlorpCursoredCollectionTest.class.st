@@ -67,8 +67,9 @@ GlorpCursoredCollectionTest >> mockStream2 [
 	^ReadStream on: rows.
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpCursoredCollectionTest >> setUp [
+
 	| query |
 	super setUp.
 	session := GlorpSessionResource current newSession.
@@ -76,7 +77,7 @@ GlorpCursoredCollectionTest >> setUp [
 	query := Query read: GlorpPerson.
 	query session: session.
 	query prepare.
-	stream := GlorpCursoredStream on: self mockStream for: (query sqlWith: nil) accessor: nil.
+	stream := GlorpCursoredStream on: self mockStream for: (query sqlWith: nil) accessor: nil
 ]
 
 { #category : #tests }

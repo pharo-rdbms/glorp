@@ -30,7 +30,7 @@ GlorpDatabaseTypeIndividualDBTests >> compareFloatInModel: read with: original [
 	^(read test - original) abs <= 0.00001.
 ]
 
-{ #category : #setUp }
+{ #category : #'private - accessing' }
 GlorpDatabaseTypeIndividualDBTests >> createTypeTestTable [
 	| system |
 	connection doDDLOperation: [
@@ -45,17 +45,17 @@ GlorpDatabaseTypeIndividualDBTests >> createTypeTestTable [
 		connection
 			createTable: table
 			ifError:
-				[:ex | 
+				[:ex |
 				Transcript show: 'CANNOT CREATE TABLE'.
              		self signalFailure: ex messageText.
 				ex return: nil].
 	].
 	system := self systemFor: table.
 	session system: system.
-	^table.
+	^ table
 ]
 
-{ #category : #setUp }
+{ #category : #'private - accessing' }
 GlorpDatabaseTypeIndividualDBTests >> defaultDatabaseType [
 	self subclassResponsibility.
 ]
@@ -207,16 +207,17 @@ GlorpDatabaseTypeIndividualDBTests >> readBackModelWithValue: anObject [
 		where: [:each | each test = anObject].
 ]
 
-{ #category : #setUp }
+{ #category : #running }
 GlorpDatabaseTypeIndividualDBTests >> setUp [
+
 	super setUp.
 	session := GlorpSessionResource current newSession.
 	connection := session accessor.
 	type := self defaultDatabaseType.
-	table := self createTypeTestTable.
+	table := self createTypeTestTable
 ]
 
-{ #category : #setUp }
+{ #category : #'private - accessing' }
 GlorpDatabaseTypeIndividualDBTests >> systemFor: aTable [
 	| system descriptor mapping model |
 	system := DynamicDescriptorSystem new.
@@ -243,18 +244,20 @@ GlorpDatabaseTypeIndividualDBTests >> systemFor: aTable [
 	^system.
 ]
 
-{ #category : #setUp }
+{ #category : #'private - accessing' }
 GlorpDatabaseTypeIndividualDBTests >> tableName [
-	^'TYPETESTS', self defaultDatabaseType selector.
+
+	^ 'TYPETESTS' , self defaultDatabaseType selector
 ]
 
-{ #category : #setUp }
+{ #category : #running }
 GlorpDatabaseTypeIndividualDBTests >> tearDown [
-	super tearDown.
+
 	session doDDLOperation: [
 		connection
 			dropTableNamed: self tableName
 			ifAbsent: [:ex | ex return: nil]].
 	session reset.
 	session := nil.
+	super tearDown
 ]

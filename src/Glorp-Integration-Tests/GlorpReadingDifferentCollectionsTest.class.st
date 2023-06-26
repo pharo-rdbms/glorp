@@ -26,10 +26,9 @@ GlorpReadingDifferentCollectionsTest >> check: aClass [
 	self assert: allResult size = 2.
 ]
 
-{ #category : #setup }
+{ #category : #running }
 GlorpReadingDifferentCollectionsTest >> setUp [
-	
-	| |
+
 	super setUp.
 	session := GlorpSessionResource current newSession.
 	system := session system.
@@ -37,13 +36,14 @@ GlorpReadingDifferentCollectionsTest >> setUp [
 	self writeAccountRows.
 	singleQuery := Query read: GlorpBankAccount
 				where: [:passenger | passenger id = 6].
-	allQuery := Query read: GlorpBankAccount.
+	allQuery := Query read: GlorpBankAccount
 ]
 
-{ #category : #setup }
+{ #category : #running }
 GlorpReadingDifferentCollectionsTest >> tearDown [
 
 	session rollbackTransaction.
+	super tearDown
 ]
 
 { #category : #tests }

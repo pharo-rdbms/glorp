@@ -7,9 +7,10 @@ Class {
 	#category : #'Glorp-Unit-Tests-Tests'
 }
 
-{ #category : #support }
+{ #category : #running }
 GlorpExpressionBasicPropertiesTest >> setUp [
 
+	super setUp.
 	base := BaseExpression new descriptor: (
 		(GlorpDemoDescriptorSystem forPlatform: GlorpDatabaseLoginResource defaultLogin database)
 			descriptorFor: GlorpPerson)

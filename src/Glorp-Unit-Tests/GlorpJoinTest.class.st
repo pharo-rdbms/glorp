@@ -8,10 +8,11 @@ Class {
 	#category : #'Glorp-Unit-Tests-Tests'
 }
 
-{ #category : #support }
+{ #category : #running }
 GlorpJoinTest >> setUp [
+
 	super setUp.
-	expression := Join 
+	expression := Join
 		from: ((system tableNamed: 'BANK_ACCT') fieldNamed: 'ID')
 		to: ((system tableNamed: 'CUSTOMER_ACCT_LINK') fieldNamed: 'ACCT_ID').
 
@@ -20,7 +21,7 @@ GlorpJoinTest >> setUp [
 		to: ((system tableNamed: 'PERSON') fieldNamed: 'NAME').
 	compoundExpression
 		addSource: ((system tableNamed: 'BANK_ACCT') fieldNamed: 'BANK_CODE')
-		target: ((system tableNamed: 'PERSON') fieldNamed: 'ADDRESS_ID').
+		target: ((system tableNamed: 'PERSON') fieldNamed: 'ADDRESS_ID')
 ]
 
 { #category : #tests }

@@ -24,18 +24,20 @@ GlorpMappingDBTest >> inTransactionDo: aBlock [
 	aBlock value] ensure: [session rollbackTransaction].
 ]
 
-{ #category : #Running }
+{ #category : #running }
 GlorpMappingDBTest >> setUp [
+
 	super setUp.
 	session := GlorpSessionResource current newSession.
-	system := session system.
+	system := session system
 ]
 
-{ #category : #support }
+{ #category : #running }
 GlorpMappingDBTest >> tearDown [
-	super tearDown.
+
 	session reset.
 	session resetPermissions.
 	session := nil.
 	system := nil.
+	super tearDown
 ]
