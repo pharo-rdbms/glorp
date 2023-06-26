@@ -132,5 +132,5 @@ CachePolicy >> takeExpiryActionForKey: key withValue: anObject in: aCache [
 { #category : #expiry }
 CachePolicy >> willRemoveItems [
 
-	^ expiryAction == #notifyAndRemove or: [ expiryAction == #remove ]
+	^ #(notifyAndRemove remove) includes: expiryAction
 ]
