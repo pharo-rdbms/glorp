@@ -9,7 +9,9 @@ Class {
 
 { #category : #running }
 GlorpDeleteInUnitOfWorkTest >> setUp [
+
 	| session |
+	super setUp.
 	session := GlorpMockSession new.
 	session beginUnitOfWork.
 	unitOfWork := session privateGetCurrentUnitOfWork.
@@ -40,29 +42,34 @@ GlorpDeleteInUnitOfWorkTest >> testCommit [
 
 	unitOfWork delete: GlorpAddress example1.
 	unitOfWork commit.
-	self assert: (unitOfWork numberOfRows) = 1.
+	self assert: unitOfWork numberOfRows equals: 1
 ]
 
 { #category : #tests }
 GlorpDeleteInUnitOfWorkTest >> testDeleteRegistration [
+
 	| obj |
 	obj := Object new.
 	unitOfWork delete: obj.
 	self assert: (unitOfWork willDelete: obj).
-	self deny: (unitOfWork willDelete: 3).
+	self deny: (unitOfWork willDelete: 3)
 ]
 
 { #category : #tests }
 GlorpDeleteInUnitOfWorkTest >> testDeletesComeAfterUpdates [
+
 	unitOfWork delete: GlorpAddress example1.
 	unitOfWork register: GlorpCustomer example1.
 	unitOfWork commit.
-	self assert: unitOfWork session rows last table == (self tableNamed: 'GR_ADDRESS').
+	self
+		assert: unitOfWork session rows last table
+		identicalTo: (self tableNamed: 'GR_ADDRESS')
 ]
 
 { #category : #tests }
 GlorpDeleteInUnitOfWorkTest >> testDeletesInReverseOrder [
 	"Not that good a test, because it could be luck with only two tables. Should test this at a lower level"
+
 	| cust trans |
 	cust := GlorpCustomer example2.
 	trans := cust transactions first.
@@ -71,15 +78,19 @@ GlorpDeleteInUnitOfWorkTest >> testDeletesInReverseOrder [
 	unitOfWork delete: cust.
 	unitOfWork delete: trans.
 	unitOfWork commit.
-	self assert: unitOfWork session rows last owner == cust.
-	self assert: (unitOfWork session rows reverse at: 2) owner == trans.
+	self assert: unitOfWork session rows last owner identicalTo: cust.
+	self
+		assert: (unitOfWork session rows reverse at: 2) owner
+		identicalTo: trans
 ]
 
 { #category : #tests }
 GlorpDeleteInUnitOfWorkTest >> testGeneratingDeleteRows [
+
 	unitOfWork delete: GlorpAddress example1.
 	unitOfWork createRows.
-	self assert: unitOfWork privateGetRowMap numberOfEntries = 1.
-	unitOfWork rowsForTable: (self tableNamed: 'GR_ADDRESS')
-		do: [:each | self assert: each forDeletion]
+	self assert: unitOfWork privateGetRowMap numberOfEntries equals: 1.
+	unitOfWork
+		rowsForTable: (self tableNamed: 'GR_ADDRESS')
+		do: [ :each | self assert: each forDeletion ]
 ]

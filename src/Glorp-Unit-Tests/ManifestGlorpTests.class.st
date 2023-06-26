@@ -15,6 +15,13 @@ ManifestGlorpTests class >> ruleEqualNilRuleV1FalsePositive [
 ]
 
 { #category : #'code-critics' }
+ManifestGlorpTests class >> ruleLiteralArrayContainsSuspiciousTrueFalseOrNilRuleV1FalsePositive [
+
+	<ignoreForCoverage>
+	^ #(#(#(#RGMetaclassDefinition #(#'ManifestGlorpTests class' #ManifestGlorpTests)) #'2023-06-26T17:49:36.133076+02:00') )
+]
+
+{ #category : #'code-critics' }
 ManifestGlorpTests class >> ruleSentNotImplementedRuleV1FalsePositive [
 
 	<ignoreForCoverage>
@@ -26,4 +33,11 @@ ManifestGlorpTests class >> ruleUncommonMessageSendRuleV1FalsePositive [
 
 	<ignoreForCoverage>
 	^ #(#(#(#RGMethodDefinition #(#GlorpExpressionTest #testAndOperation2 #false)) #'2023-06-26T17:13:37.574583+02:00') #(#(#RGMethodDefinition #(#GlorpExpressionTest #testOrOperation2 #false)) #'2023-06-26T17:18:49.992423+02:00') )
+]
+
+{ #category : #'code-critics' }
+ManifestGlorpTests class >> ruleUtilityMethodsRuleV1FalsePositive [
+
+	<ignoreForCoverage>
+	^ #(#(#(#RGClassDefinition #(#GlorpDatabasePlatformTest)) #'2023-06-26T17:48:39.700269+02:00') #(#(#RGMethodDefinition #(#GlorpBreadthFirstTopologicalSortTest #dataForGroupNamed: #false)) #'2023-06-26T17:48:57.821673+02:00') )
 ]

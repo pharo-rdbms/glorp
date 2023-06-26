@@ -45,7 +45,7 @@ GlorpCommandTest >> testSplittingInserts1 [
 	subCommands := command subCommands.
 	self assert: subCommands size equals: 1.
 	self assert: subCommands first allRows size equals: 1.
-	self assert: subCommands first allRows first == rows first
+	self assert: subCommands first allRows first identicalTo: rows first
 ]
 
 { #category : #tests }
@@ -57,11 +57,12 @@ GlorpCommandTest >> testSplittingInserts1000 [
 	subCommands := command subCommands.
 	self assert: subCommands size equals: 1.
 	self assert: subCommands first allRows size equals: 1000.
-	self assert: subCommands first allRows first == rows first
+	self assert: subCommands first allRows first identicalTo: rows first
 ]
 
 { #category : #tests }
 GlorpCommandTest >> testSplittingInserts1001 [
+
 	| rows command subCommands |
 	rows := (Array new: 1001) atAllPut: DatabaseRow new.
 	rows at: rows size put: DatabaseRow new.
@@ -69,9 +70,9 @@ GlorpCommandTest >> testSplittingInserts1001 [
 	subCommands := command subCommands.
 	self assert: subCommands size equals: 2.
 	self assert: subCommands first allRows size equals: 1000.
-	self assert: subCommands first allRows first == rows first.
+	self assert: subCommands first allRows first identicalTo: rows first.
 	self assert: subCommands last allRows size equals: 1.
-	self assert:subCommands last allRows first == rows last.
+	self assert: subCommands last allRows first identicalTo: rows last
 ]
 
 { #category : #tests }
@@ -83,11 +84,11 @@ GlorpCommandTest >> testSplittingInserts1003 [
 	command := InsertCommand forRows: rows useBinding: false session: nil.
 	subCommands := command subCommands.
 	self assert: subCommands size equals: 2.
-	self assert: subCommands first allRows size = 1000.
-	self assert: subCommands first allRows first == rows first.
+	self assert: subCommands first allRows size equals: 1000.
+	self assert: subCommands first allRows first identicalTo: rows first.
 	self assert: subCommands last allRows size equals: 3.
-	self assert:subCommands last allRows last == rows last.
-	self assert: subCommands last allRows first == rows first
+	self assert: subCommands last allRows last identicalTo: rows last.
+	self assert: subCommands last allRows first identicalTo: rows first
 ]
 
 { #category : #tests }
@@ -99,6 +100,6 @@ GlorpCommandTest >> testSplittingInserts2 [
 	subCommands := command subCommands.
 	self assert: subCommands size equals: 1.
 	self assert: subCommands first allRows size equals: 2.
-	self assert: subCommands first allRows first == rows first.
-	self assert: subCommands first allRows last == rows last.
+	self assert: subCommands first allRows first identicalTo: rows first.
+	self assert: subCommands first allRows last identicalTo: rows last
 ]

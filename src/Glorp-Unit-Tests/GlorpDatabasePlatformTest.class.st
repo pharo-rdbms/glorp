@@ -4,7 +4,7 @@ Class {
 	#category : #'Glorp-Unit-Tests-Tests'
 }
 
-{ #category : #tests }
+{ #category : #utilities }
 GlorpDatabasePlatformTest >> addToString: aString [
 	"Append a couple of special characters. The result will utf-8 encode to be 3 characters longer than its number of characters"
 	^aString, (String with: (Character value: 16r2022) "bullet point" with: (Character value: 16r0131) "Turkish i with no dot")
@@ -16,7 +16,7 @@ double-byte entries.  The VA could be implemented as
 "
 ]
 
-{ #category : #tests }
+{ #category : #utilities }
 GlorpDatabasePlatformTest >> helpTestPrintTimestamp: aTimestampString [
 
 	| aStream ts timestamp |
@@ -24,17 +24,21 @@ GlorpDatabasePlatformTest >> helpTestPrintTimestamp: aTimestampString [
 	aStream := WriteStream on: String new.
 	DatabasePlatform new printDate: ts isoFormatOn: aStream.
 	aStream nextPut: Character space.
-	DatabasePlatform new printTime: ts isoFormatOn: aStream milliseconds: Dialect supportsMillisecondsInTimes .
+	DatabasePlatform new
+		printTime: ts
+		isoFormatOn: aStream
+		milliseconds: Dialect supportsMillisecondsInTimes.
 	timestamp := aStream contents.
-	self assert: timestamp = aTimestampString.
+	self assert: timestamp equals: aTimestampString
 ]
 
-{ #category : #tests }
+{ #category : #utilities }
 GlorpDatabasePlatformTest >> string20 [
+
 	| platform |
 	platform := PostgresPlatform new.
 	platform characterEncoding: #'utf-8'.
-	^platform varchar: 20.
+	^ platform varchar: 20
 ]
 
 { #category : #tests }
@@ -59,7 +63,7 @@ GlorpDatabasePlatformTest >> testPrintTimestamp [
 	| strings |
 	strings := #( '2005-01-01 21:29:28.337'  '2005-01-01 01:02:00.037'  '2005-01-01 21:29:28.002'  '2005-01-01 21:29:28.001').
 	strings do: [:each |
-		self helpTestPrintTimestamp: each].
+		self helpTestPrintTimestamp: each]
 ]
 
 { #category : #tests }
@@ -159,6 +163,7 @@ GlorpDatabasePlatformTest >> testTrimString1 [
 { #category : #tests }
 GlorpDatabasePlatformTest >> testTrimString2 [
 	"Some special characters"
+
 	| type plat string |
 
 	type := self string20.

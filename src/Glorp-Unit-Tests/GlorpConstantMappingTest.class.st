@@ -49,6 +49,7 @@ GlorpConstantMappingTest >> testGetValue [
 
 { #category : #tests }
 GlorpConstantMappingTest >> testSessionValue [
+
 	mappingToClass constantValueIsSession.
-	self assert: (mappingToClass constantValueIn: 38)== 38.
+	self assert: (mappingToClass constantValueIn: 38) identicalTo: 38
 ]
