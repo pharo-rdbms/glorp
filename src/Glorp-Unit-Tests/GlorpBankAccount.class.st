@@ -10,7 +10,7 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 GlorpBankAccount class >> example1 [
 
 	^self new 

@@ -8,9 +8,13 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GlorpMediaType class >> text [
-	^self new name: 'text'; mimeType: 'text/plain'
+
+	^ self new
+		  name: 'text';
+		  mimeType: 'text/plain';
+		  yourself
 ]
 
 { #category : #accessing }

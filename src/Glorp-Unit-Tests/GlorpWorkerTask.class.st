@@ -8,7 +8,7 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 GlorpWorkerTask class >> exampleTaskKeys [
 	| keys |
 	keys := OrderedCollection new.
@@ -20,7 +20,7 @@ GlorpWorkerTask class >> exampleTaskKeys [
 	^keys
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 GlorpWorkerTask class >> exampleTasks [
 	| tasks |
 	tasks := OrderedCollection new.

@@ -4,7 +4,7 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GlorpSurcharge class >> glorpSetupDescriptor: aDescriptor forSystem: aSystem [
 	| table |
 	table := aSystem tableNamed: 'TAX'.
@@ -12,5 +12,5 @@ GlorpSurcharge class >> glorpSetupDescriptor: aDescriptor forSystem: aSystem [
 	(aSystem typeResolverFor: GlorpTax)
 		register: aDescriptor
 		keyedBy: 'S'
-		field: (table fieldNamed: 'TYPE').
+		field: (table fieldNamed: 'TYPE')
 ]

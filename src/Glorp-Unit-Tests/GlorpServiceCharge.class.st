@@ -8,12 +8,12 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GlorpServiceCharge class >> default [
 
-	^self new
-		amount: (GlorpMoney forAmount: 3);
-		description: 'additional overcharge'.
+	^ self new
+		  amount: (GlorpMoney forAmount: 3);
+		  description: 'additional overcharge'
 ]
 
 { #category : #accessing }

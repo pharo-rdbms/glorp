@@ -4,7 +4,7 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing - queries' }
 TESTDescriptorSystem class >> queryForCustomerStation [
 	| query |
 	query := Query read: CustomerStation
@@ -13,7 +13,7 @@ TESTDescriptorSystem class >> queryForCustomerStation [
 	^query
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing - queries' }
 TESTDescriptorSystem class >> queryForFeederStation [
 	| query |
 	query := Query read: FeederStation where: [:feederStation | feederStation id in: #(1 2 3 4)].
@@ -21,54 +21,12 @@ TESTDescriptorSystem class >> queryForFeederStation [
 	^query
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing - queries' }
 TESTDescriptorSystem class >> queryForSuccessor [
 	| query |
 	query := Query read: Successor where: [:successor | successor successorFeeder in: self queryForFeederStation].
 	query retrieve: [:successor | successor id].
 	^query
-]
-
-{ #category : #'as yet unclassified' }
-TESTDescriptorSystem class >> testInnerQueries [
-	"self testInnerQueries"
-
-	| session system query result |
-	session := GlorpSession new.
-	system := self new.
-	system platform: OraclePlatform new.
-	session system: system.
-	system session: session.
-	query := self queryForCustomerStation.
-	result := session execute: query.
-	^result
-]
-
-{ #category : #'as yet unclassified' }
-TESTDescriptorSystem class >> testLocalInnerQueries [
-	"self testLocalInnerQueries"
-
-	| session system query result |
-	session := GlorpSession new.
-	system := self new.
-	system platform: OraclePlatform new.
-	session system: system.
-	system session: session.
-	query := Query read: CustomerStation where: 
-		[:customerStation |
-		customerStation successor anySatisfy: 
-			[:successor || query2 |
-			query2 := Query read: Successor where: 
-				[:successor1 || feederQuery |
-				feederQuery := Query read: FeederStation where:
-					[:feederStation | feederStation id in: #(1 2 3 4)].
-				feederQuery retrieve: [:feederStation | feederStation id].
-				successor1 successorFeeder in: feederQuery].
-			query2 retrieve: [:successor1 | successor1 id].
-			successor in: query2]].
-	query retrieve: [:customerStation | customerStation id].
-	result := session execute: query.
-	^result
 ]
 
 { #category : #classes }

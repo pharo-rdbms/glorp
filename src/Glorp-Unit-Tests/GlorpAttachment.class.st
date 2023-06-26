@@ -9,16 +9,18 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'as yet unclassified' }
-GlorpAttachment class >> glorpSetupClassModel: model forSystem: system [ 
+{ #category : #setup }
+GlorpAttachment class >> glorpSetupClassModel: model forSystem: system [
+
 	model
 		newAttributeNamed: #index;
 		newAttributeNamed: #mimeType;
 		newAttributeNamed: #attachmentBytes type: GlorpAttachmentBytes
 ]
 
-{ #category : #'as yet unclassified' }
-GlorpAttachment class >> glorpSetupDescriptor: aDesc forSystem: system [ 
+{ #category : #setup }
+GlorpAttachment class >> glorpSetupDescriptor: aDesc forSystem: system [
+
 	| t |
 	t := system tableNamed: 'attachment'.
 	aDesc table: t.

@@ -48,5 +48,5 @@ GlorpSQLPrintingTest >> testGroupWriting [
 	self assertGroupWritingOnPlatform: platform.
 	platform := SQLServerPlatform new.
 	platform useBinding: true.
-	self assertGroupWritingOnPlatform: platform.
+	self assertGroupWritingOnPlatform: platform
 ]

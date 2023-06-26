@@ -9,7 +9,7 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 GlorpReservation class >> example1 [
 
 	^self new
@@ -17,12 +17,12 @@ GlorpReservation class >> example1 [
 		passenger: GlorpPassenger example1.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 GlorpReservation class >> example2 [
 
 	^self new
 		id: 7;
-		passenger: GlorpPassenger example2.
+		passenger: GlorpPassenger example2
 ]
 
 { #category : #accessing }

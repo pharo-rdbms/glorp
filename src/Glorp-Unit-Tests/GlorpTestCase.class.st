@@ -4,7 +4,7 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 GlorpTestCase class >> isAbstract [
 	^self sunitName = #GlorpTestCase
 ]

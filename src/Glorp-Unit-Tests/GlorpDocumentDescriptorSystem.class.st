@@ -7,7 +7,7 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #utilities }
 GlorpDocumentDescriptorSystem class >> doTest [
 	"   AADescriptor doTest    "
 
@@ -34,7 +34,7 @@ GlorpDocumentDescriptorSystem class >> doTest [
 	glorpSession accessor logout
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utilities }
 GlorpDocumentDescriptorSystem class >> readDocumentAndAttachmentsFrom: glorpSession [ 
 	| doc |
 	doc := glorpSession readOneOf: GlorpDocument.
