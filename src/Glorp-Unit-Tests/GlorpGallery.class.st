@@ -1,3 +1,6 @@
+"
+A gallery from the Gallery model
+"
 Class {
 	#name : #GlorpGallery,
 	#superclass : #Object,
@@ -6,26 +9,30 @@ Class {
 		'name',
 		'images'
 	],
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Gallery'
 }
 
 { #category : #accessing }
 GlorpGallery >> id [
-	^id
+
+	^ id
 ]
 
 { #category : #accessing }
 GlorpGallery >> id: anObject [
+
 	id := anObject
 ]
 
 { #category : #accessing }
 GlorpGallery >> images [
-	^images
+
+	^ images
 ]
 
 { #category : #accessing }
 GlorpGallery >> images: anObject [
+
 	images := anObject
 ]
 
@@ -38,10 +45,12 @@ GlorpGallery >> initialize [
 
 { #category : #accessing }
 GlorpGallery >> name [
-	^name
+
+	^ name
 ]
 
 { #category : #accessing }
 GlorpGallery >> name: anObject [
+
 	name := anObject
 ]

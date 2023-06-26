@@ -4,37 +4,45 @@ This is a system for testing variable relationships. That is, where we have a re
 Class {
 	#name : #GlorpVariableTypeTestSystem,
 	#superclass : #GlorpTestDescriptorSystem,
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Gallery'
 }
 
 { #category : #classes }
 GlorpVariableTypeTestSystem >> classModelForGlorpGallery: aClassModel [
-	aClassModel newAttributeNamed: #id.
-	aClassModel newAttributeNamed: #name.
-	aClassModel newAttributeNamed: #images collectionOf: GlorpImageFile.
+
+	aClassModel
+		newAttributeNamed: #id;
+		newAttributeNamed: #name;
+		newAttributeNamed: #images collectionOf: GlorpImageFile.
+
 	"Not a real attribute, but used in our conditional mapping."
-	aClassModel newAttributeNamed: #imagesLink collectionOf: GlorpImageLink.
+	aClassModel newAttributeNamed: #imagesLink collectionOf: GlorpImageLink
 ]
 
 { #category : #classes }
 GlorpVariableTypeTestSystem >> classModelForGlorpImageFile: aClassModel [
-	aClassModel newAttributeNamed: #id.
-	aClassModel newAttributeNamed: #title.
-	aClassModel newAttributeNamed: #bits type: ByteArray.
-	(aClassModel newAttributeNamed: #thumbnailBits type: ByteArray) useDirectAccess: false.
+
+	aClassModel
+		newAttributeNamed: #id;
+		newAttributeNamed: #title;
+		newAttributeNamed: #bits type: ByteArray.
+
+	(aClassModel newAttributeNamed: #thumbnailBits type: ByteArray) useDirectAccess: false
 ]
 
 { #category : #classes }
 GlorpVariableTypeTestSystem >> classModelForGlorpImageLink: aClassModel [
-	aClassModel newAttributeNamed: #id.
-	aClassModel newAttributeNamed: #title.
-	aClassModel newAttributeNamed: #thumbnailBits type: ByteArray.
-	aClassModel newAttributeNamed: #fullImage type: GlorpImageFile.
+
+	aClassModel
+		newAttributeNamed: #id;
+		newAttributeNamed: #title;
+		newAttributeNamed: #thumbnailBits type: ByteArray;
+		newAttributeNamed: #fullImage type: GlorpImageFile
 ]
 
 { #category : #classes }
 GlorpVariableTypeTestSystem >> descriptorForGlorpGallery: aDescriptor [
-	
+
 	| table linkTable imagesConditional |
 	table := self tableNamed: 'GALLERY'.
 	linkTable := self tableNamed: 'GALLERY_LINK'.
@@ -68,53 +76,59 @@ GlorpVariableTypeTestSystem >> descriptorForGlorpGallery: aDescriptor [
 								from: (table fieldNamed: 'ID')
 								to: (linkTable fieldNamed: 'GALLERY_ID')
 								from: 'F'
-								to: (linkTable fieldNamed: 'LARGE'))).
+								to: (linkTable fieldNamed: 'LARGE')))
 ]
 
 { #category : #classes }
 GlorpVariableTypeTestSystem >> descriptorForGlorpImageFile: aDescriptor [
-	
-	aDescriptor table: 'GLORP_IMAGE_FILE'.
-	aDescriptor directMappingFor: #id.
-	aDescriptor directMappingFor: #title.
-	aDescriptor directMappingFor: #bits.
-	aDescriptor directMapping from: #thumbnailBits to: 'THUMBNAIL_BITS'.
+
+	aDescriptor
+		table: 'GLORP_IMAGE_FILE';
+		directMappingFor: #id;
+		directMappingFor: #title;
+		directMappingFor: #bits.
+	aDescriptor	directMapping from: #thumbnailBits to: 'THUMBNAIL_BITS'
 ]
 
 { #category : #classes }
 GlorpVariableTypeTestSystem >> descriptorForGlorpImageLink: aDescriptor [
-	
+
 	aDescriptor table: 'GLORP_IMAGE_FILE'.
 	aDescriptor directMappingFor: #id.
 	aDescriptor directMappingFor: #title.
 	aDescriptor directMapping from: #thumbnailBits to: 'THUMBNAIL_BITS'.
 	"This is really joining to our own table to get the full version of ourselves"
-	aDescriptor oneToOneMapping 
+	aDescriptor oneToOneMapping
 		attributeName: #fullImage;
-		join: (Join from: (aDescriptor table fieldNamed: 'ID') to: (aDescriptor table fieldNamed: 'ID')).
+		join: (Join from: (aDescriptor table fieldNamed: 'ID') to: (aDescriptor table fieldNamed: 'ID'))
 ]
 
 { #category : #classes }
 GlorpVariableTypeTestSystem >> tableForGALLERY: aTable [
-	aTable createFieldNamed: 'ID' type: platform serial.
-	aTable createFieldNamed: 'NAME' type: platform text.
+
+	aTable
+		createFieldNamed: 'ID' type: platform serial;
+		createFieldNamed: 'NAME' type: platform text
 ]
 
 { #category : #classes }
 GlorpVariableTypeTestSystem >> tableForGALLERY_LINK: aTable [
+
 	| galleryId imageId |
 	galleryId := aTable createFieldNamed: 'GALLERY_ID' type: platform integer.
 	aTable addForeignKeyFrom: galleryId to: ((self tableNamed: 'GALLERY') fieldNamed: 'ID').
 	imageId := aTable createFieldNamed: 'IMAGE_ID' type: platform integer.
 	aTable addForeignKeyFrom: imageId to: ((self tableNamed: 'GLORP_IMAGE_FILE') fieldNamed: 'ID').
 	"Avoid booleans here because they aren't portable"
-	aTable createFieldNamed: 'LARGE' type: (platform char: 1).
+	aTable createFieldNamed: 'LARGE' type: (platform char: 1)
 ]
 
 { #category : #classes }
 GlorpVariableTypeTestSystem >> tableForGLORP_IMAGE_FILE: aTable [
-	aTable createFieldNamed: 'ID' type: platform serial.
-	aTable createFieldNamed: 'TITLE' type: platform text.
-	aTable createFieldNamed: 'BITS' type: platform blob.
-	aTable createFieldNamed: 'THUMBNAIL_BITS' type: platform blob.
+
+	aTable
+		createFieldNamed: 'ID' type: platform serial;
+		createFieldNamed: 'TITLE' type: platform text;
+		createFieldNamed: 'BITS' type: platform blob;
+		createFieldNamed: 'THUMBNAIL_BITS' type: platform blob
 ]

@@ -48,9 +48,9 @@ GlorpReadingTest >> checkExpiryTime [
 
 { #category : #support }
 GlorpReadingTest >> checkExpiryTime: aBlock [
-	""
+
 	| rowToWrite address modifiedRow expiryTime newExpiryTime |
-	
+
 	[session beginTransaction.
 	rowToWrite := session system exampleAddressRow.
 	session writeRow: rowToWrite.
@@ -64,26 +64,28 @@ GlorpReadingTest >> checkExpiryTime: aBlock [
 	address := session readOneOf: GlorpAddress
 				where: [:each | each id = 123].
 	newExpiryTime := ((session cacheFor: address) basicAt: 123 ifAbsent: [#(nil)]) at: 1.
-	aBlock value: expiryTime value: newExpiryTime value: address] 
-			ensure: [session rollbackTransaction].
+	aBlock value: expiryTime value: newExpiryTime value: address]
+			ensure: [session rollbackTransaction]
 ]
 
 { #category : #support }
 GlorpReadingTest >> checkRefreshDoing: aBlock [
 	"Check that we refresh correctly doing the action specified by aBlock"
+
 	| rowToWrite address modifiedRow |
-	
-	[session beginTransaction.
+	[
+	session beginTransaction.
 	rowToWrite := session system exampleAddressRow.
 	session writeRow: rowToWrite.
-	address := session readOneOf: GlorpAddress
-				where: [:each | each id = 123].
+	address := session
+		           readOneOf: GlorpAddress
+		           where: [ :each | each id = 123 ].
 	modifiedRow := session system exampleModifiedAddressRow.
 	modifiedRow owner: address. "Otherwise it thinks it's an insert"
 	session writeRow: modifiedRow.
 	aBlock value: address.
-	self assert: address street = 'Something Else'.] 
-			ensure: [session rollbackTransaction].
+	self assert: address street equals: 'Something Else' ] ensure: [
+		session rollbackTransaction ]
 ]
 
 { #category : #support }
@@ -108,11 +110,13 @@ GlorpReadingTest >> helperForTestReadEmbeddedOneToOne [
 
 { #category : #accessing }
 GlorpReadingTest >> session [
-	^session.
+
+	^ session
 ]
 
 { #category : #accessing }
 GlorpReadingTest >> session: anObject [
+
 	session := anObject
 ]
 
@@ -771,26 +775,29 @@ GlorpReadingTest >> testReadAccountsWithVirtualCollectionAndAlsoFetch [
 ]
 
 { #category : #tests }
-GlorpReadingTest >> testReadAdHoc [ 
+GlorpReadingTest >> testReadAdHoc [
+
 	| queryTime table row time idField times |
-	
 	[
 	session beginTransaction.
-	
+
 	table := session system tableNamed: 'TRANSFORMED_TIME'.
 	row := DatabaseRow newForTable: table.
-	idField := (table fieldNamed: 'ID').
+	idField := table fieldNamed: 'ID'.
 	row at: idField put: 3.
 	time := Time now.
 	row at: (table fieldNamed: 'TIMEFIELD') put: time asSeconds.
 
 	session writeRow: row.
-	queryTime := GlorpTransformedTime  new id: 3; time: time.
-	times := session read: GlorpTransformedTime where: [:each | each time = time].
-	self assert: times size = 1.
-	self assert: times first time asSeconds = time asSeconds.
-	] 
-			ensure: [session rollbackTransaction]
+	queryTime := GlorpTransformedTime new
+		             id: 3;
+		             time: time.
+	times := session
+		         read: GlorpTransformedTime
+		         where: [ :each | each time = time ].
+	self assert: times size equals: 1.
+	self assert: times first time asSeconds equals: time asSeconds ]
+		ensure: [ session rollbackTransaction ]
 ]
 
 { #category : #tests }
@@ -1788,6 +1795,7 @@ GlorpReadingTest >> testSum [
 
 { #category : #support }
 GlorpReadingTest >> write2CustomerRowsWith3Transactions [
+
 	| table row aGlorpDemoDescriptorSystem |
 	session system writeCustomerWithDualAccountOwners.
 	aGlorpDemoDescriptorSystem := session system.
@@ -1818,16 +1826,18 @@ GlorpReadingTest >> write2CustomerRowsWith3Transactions [
 	row atFieldNamed: 'SRVC_AMT_CURR' put: 'EUR'.
 	row atFieldNamed: 'SRVC_AMT_AMT' put: 2.
 	row atFieldNamed: 'OWNER_ID' put: 28.
-	session writeRow: row.
+	session writeRow: row
 ]
 
 { #category : #support }
 GlorpReadingTest >> writeCustomer1Rows [
-	^system writeCustomer1Rows.
+
+	^ system writeCustomer1Rows
 ]
 
 { #category : #support }
 GlorpReadingTest >> writeCustomer1RowsWith2Transactions [
+
 	| table row aGlorpDemoDescriptorSystem |
 	self writeCustomer1RowsWithTransactions.
 	aGlorpDemoDescriptorSystem := session system.
@@ -1840,11 +1850,12 @@ GlorpReadingTest >> writeCustomer1RowsWith2Transactions [
 	row atFieldNamed: 'SRVC_AMT_CURR' put: 'CHF'.
 	row atFieldNamed: 'SRVC_AMT_AMT' put: 2.
 	row atFieldNamed: 'OWNER_ID' put: 27.
-	session writeRow: row.
+	session writeRow: row
 ]
 
 { #category : #support }
 GlorpReadingTest >> writeCustomer1RowsWithTransactions [
+
 	| table row aGlorpDemoDescriptorSystem |
 	self writeCustomer1Rows.
 	aGlorpDemoDescriptorSystem := session system.
@@ -1857,15 +1868,17 @@ GlorpReadingTest >> writeCustomer1RowsWithTransactions [
 	row atFieldNamed: 'SRVC_AMT_CURR' put: 'USD'.
 	row atFieldNamed: 'SRVC_AMT_AMT' put: 2.
 	row atFieldNamed: 'OWNER_ID' put: 27.
-	session writeRow: row.
+	session writeRow: row
 ]
 
 { #category : #support }
 GlorpReadingTest >> writeReservationData [
-	session beginUnitOfWork.
-	session register: GlorpItinerary example1.
-	session register: GlorpItinerary example2.
-	session commitUnitOfWork.
-	session writeRow: session system examplePassengerRow.
-	session initializeCache
+
+	session
+		beginUnitOfWork;
+		register: GlorpItinerary example1;
+		register: GlorpItinerary example2;
+		commitUnitOfWork;
+		writeRow: session system examplePassengerRow;
+		initializeCache
 ]

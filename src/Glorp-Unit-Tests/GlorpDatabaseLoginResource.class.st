@@ -1,3 +1,6 @@
+"
+SUnit resource for the database login
+"
 Class {
 	#name : #GlorpDatabaseLoginResource,
 	#superclass : #TestResource,

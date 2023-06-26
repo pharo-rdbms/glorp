@@ -1,3 +1,6 @@
+"
+A mock database accessor for tests
+"
 Class {
 	#name : #GlorpMockAccessor,
 	#superclass : #DatabaseAccessor,

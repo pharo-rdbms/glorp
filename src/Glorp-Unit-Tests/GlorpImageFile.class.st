@@ -1,3 +1,6 @@
+"
+An image from the Gallery model
+"
 Class {
 	#name : #GlorpImageFile,
 	#superclass : #Object,
@@ -7,7 +10,7 @@ Class {
 		'bits',
 		'thumbnailBits'
 	],
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Gallery'
 }
 
 { #category : #examples }
@@ -26,46 +29,55 @@ GlorpImageFile class >> example2 [
 
 { #category : #accessing }
 GlorpImageFile >> bits [
-	^bits
+
+	^ bits
 ]
 
 { #category : #accessing }
 GlorpImageFile >> bits: anObject [
+
 	bits := anObject
 ]
 
 { #category : #accessing }
 GlorpImageFile >> id [
-	^id
+
+	^ id
 ]
 
 { #category : #accessing }
 GlorpImageFile >> id: anObject [
+
 	id := anObject
 ]
 
 { #category : #testing }
 GlorpImageFile >> isLarge [
-	^bits size > 10.
+
+	^ bits size > 10
 ]
 
 { #category : #testing }
 GlorpImageFile >> thumbnailBits [
-	thumbnailBits isNil ifTrue: [thumbnailBits := bits copyFrom: 1 to: 5].
-	^thumbnailBits.
+
+	thumbnailBits ifNil: [ thumbnailBits := bits copyFrom: 1 to: 5 ].
+	^ thumbnailBits
 ]
 
 { #category : #accessing }
 GlorpImageFile >> thumbnailBits: aByteArray [
+
 	thumbnailBits := aByteArray
 ]
 
 { #category : #accessing }
 GlorpImageFile >> title [
-	^title
+
+	^ title
 ]
 
 { #category : #accessing }
 GlorpImageFile >> title: anObject [
+
 	title := anObject
 ]

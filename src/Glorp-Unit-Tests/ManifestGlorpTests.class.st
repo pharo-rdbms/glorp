@@ -15,6 +15,13 @@ ManifestGlorpTests class >> ruleEqualNilRuleV1FalsePositive [
 ]
 
 { #category : #'code-critics' }
+ManifestGlorpTests class >> ruleEqualsTrueRuleV1FalsePositive [
+
+	<ignoreForCoverage>
+	^ #(#(#(#RGMethodDefinition #(#GlorpVariableTypeTestSystem #descriptorForGlorpGallery: #false)) #'2023-06-26T21:10:00.336374+02:00') )
+]
+
+{ #category : #'code-critics' }
 ManifestGlorpTests class >> ruleLiteralArrayContainsSuspiciousTrueFalseOrNilRuleV1FalsePositive [
 
 	<ignoreForCoverage>

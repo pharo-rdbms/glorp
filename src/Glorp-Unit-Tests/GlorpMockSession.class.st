@@ -1,3 +1,6 @@
+"
+A mock glorp session for tests
+"
 Class {
 	#name : #GlorpMockSession,
 	#superclass : #GlorpSession,
