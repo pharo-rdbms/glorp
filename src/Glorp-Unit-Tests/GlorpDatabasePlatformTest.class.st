@@ -74,7 +74,7 @@ GlorpDatabasePlatformTest >> testReadTimestamp [
 
 	ts := DatabasePlatform new readTimestamp: '2003-03-13 15:29:28.337-05' for: nil.
 	self assert: ts asSeconds + ts offset asSeconds equals: 3225022168.
-	self assert: ([ts asMilliseconds + ts offset asMilliSeconds equals: 3225022168337]
+	self assert: ([ts asMilliseconds + ts offset asMilliSeconds = 3225022168337]
 		on: MessageNotUnderstood
 		do: [ :mnu | mnu return: mnu message selector = #asMilliseconds ])
 ]
@@ -90,7 +90,7 @@ GlorpDatabasePlatformTest >> testReadTimestampNoMS [
 	self assert: ts hours equals: 15.
 	self assert: ts minutes equals: 29.
 	self assert: ts seconds truncated equals: 28.
-	self assert: ([ ts milliseconds equals: 0 ]
+	self assert: ([ ts milliseconds = 0 ]
 		on: MessageNotUnderstood
 		do: [ :mnu | mnu return: mnu message selector = #milliseconds ])
 ]
