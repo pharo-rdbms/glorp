@@ -33,18 +33,6 @@ ASBonus >> id: anObject [
 	id := anObject
 ]
 
-{ #category : #'initialize-release' }
-ASBonus >> initialize [
-	"Initialize a newly created instance. This method must answer the receiver."
-
-	super initialize.
-	" *** Edit the following to properly initialize instance variables ***"
-	name := nil.
-	credits := nil.
-	" *** And replace this comment with additional initialization code *** "
-	^self
-]
-
 { #category : #accessing }
 ASBonus >> name [
 

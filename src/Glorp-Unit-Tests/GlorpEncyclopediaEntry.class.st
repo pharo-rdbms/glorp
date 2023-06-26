@@ -36,8 +36,10 @@ GlorpEncyclopediaEntry >> id: aSmallInteger [
 	id := aSmallInteger.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GlorpEncyclopediaEntry >> initialize [
+
+	super initialize.
 	mediaType := GlorpMediaType text
 ]
 

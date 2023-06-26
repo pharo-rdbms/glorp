@@ -20,19 +20,19 @@ GlorpVideoCustomer >> <= aVideoCustomer [
 		and: [self dateOfBirth <= aVideoCustomer dateOfBirth]]
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #accessing }
 GlorpVideoCustomer >> addInStorePurchase: aPurchase [
 	inStorePurchases add: aPurchase.
 	aPurchase customer: self.
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #accessing }
 GlorpVideoCustomer >> addOnlinePurchase: aPurchase [
 	onlinePurchases add: aPurchase.
 	aPurchase customer: self.
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #accessing }
 GlorpVideoCustomer >> addRental: aRental [
 	inStoreRentals add: aRental.
 	aRental customer: self.
@@ -61,12 +61,12 @@ GlorpVideoCustomer >> creditStatus: aCreditStatus [
 	creditStatus isNil ifFalse: [creditStatus customer: self].
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #accessing }
 GlorpVideoCustomer >> dateOfBirth [
 	^dateOfBirth.
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #accessing }
 GlorpVideoCustomer >> dateOfBirth: aDate [
 	dateOfBirth := aDate.
 ]
@@ -86,19 +86,21 @@ GlorpVideoCustomer >> inStoreRentals [
 	^inStoreRentals.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GlorpVideoCustomer >> initialize [
+
+	super initialize.
 	onlinePurchases := OrderedCollection new.
 	inStorePurchases :=OrderedCollection new.
-	inStoreRentals := OrderedCollection new.
+	inStoreRentals := OrderedCollection new
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #accessing }
 GlorpVideoCustomer >> name [
 	^name.
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #accessing }
 GlorpVideoCustomer >> name: aString [
 	name := aString.
 ]
@@ -121,7 +123,7 @@ GlorpVideoCustomer >> printOn: aStream [
 	aStream nextPut: $).
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #accessing }
 GlorpVideoCustomer >> purchases [
 	^inStorePurchases, onlinePurchases.
 ]

@@ -4,7 +4,8 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GlorpEmployee class >> glorpTypeResolver [
-	^FilteredTypeResolver forRootClass: GlorpEmployee
+
+	^ FilteredTypeResolver forRootClass: GlorpEmployee
 ]

@@ -47,10 +47,12 @@ GlorpVideoStore >> id: anInteger [
 	id := anInteger.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GlorpVideoStore >> initialize [
+
+	super initialize.
 	customers := OrderedCollection new.
-	purchases := OrderedCollection new.
+	purchases := OrderedCollection new
 ]
 
 { #category : #'As yet unclassified' }

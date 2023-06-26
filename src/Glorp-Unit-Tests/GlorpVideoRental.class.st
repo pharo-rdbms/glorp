@@ -28,12 +28,12 @@ GlorpVideoRental >> assertEqual: aRental [
 	self assert: dueDate = aRental dueDate.
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #accessing }
 GlorpVideoRental >> customer [
 	^customer.
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #accessing }
 GlorpVideoRental >> customer: aCustomer [
 	customer := aCustomer.
 ]
@@ -89,9 +89,10 @@ GlorpVideoRental >> printOn: aStream [
 	aStream nextPut: $).
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #accessing }
 GlorpVideoRental >> store: aGlorpVideoStore [
-	store := aGlorpVideoStore.
+
+	store := aGlorpVideoStore
 ]
 
 { #category : #accessing }

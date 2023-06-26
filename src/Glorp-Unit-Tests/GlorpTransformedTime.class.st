@@ -27,9 +27,11 @@ GlorpTransformedTime >> id: anObject [
 	id := anObject
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 GlorpTransformedTime >> initialize [
-	time := Time now.
+
+	super initialize.
+	time := Time now
 ]
 
 { #category : #accessing }

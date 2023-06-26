@@ -29,11 +29,11 @@ GlorpUser >> id: anInteger [
 	id := anInteger
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GlorpUser >> initialize [
 
-	id := nil.
-	folders := OrderedCollection new.
+	super initialize.
+	folders := OrderedCollection new
 ]
 
 { #category : #accessing }

@@ -35,12 +35,12 @@ GlorpMessage >> folderName [
 	^self folder name.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GlorpMessage >> initialize [
-	folder := nil.
-	user := nil.
+
+	super initialize.
 	subject := ''.
-	contents := ''.
+	contents := ''
 ]
 
 { #category : #accessing }

@@ -31,12 +31,13 @@ GlorpWorker >> id: anObject [
 	id := anObject
 ]
 
-{ #category : #'initialize/release' }
+{ #category : #initialization }
 GlorpWorker >> initialize [
 
+	super initialize.
 	pendingJobs := OrderedCollection new.
 	finishedJobs := OrderedCollection new.
-	priorityJobs := OrderedCollection new.
+	priorityJobs := OrderedCollection new
 ]
 
 { #category : #accessing }

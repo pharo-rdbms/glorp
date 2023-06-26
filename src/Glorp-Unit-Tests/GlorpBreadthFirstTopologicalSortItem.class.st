@@ -20,9 +20,11 @@ GlorpBreadthFirstTopologicalSortItem >> id: anObject [
 	id := anObject
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GlorpBreadthFirstTopologicalSortItem >> initialize [
-	relatedItems := OrderedCollection new.
+
+	super initialize.
+	relatedItems := OrderedCollection new
 ]
 
 { #category : #accessing }

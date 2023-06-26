@@ -28,9 +28,11 @@ GlorpTreeNode >> id: anInteger [
 	id := anInteger.
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #initialization }
 GlorpTreeNode >> initialize [
-	children := OrderedCollection new.
+
+	super initialize.
+	children := OrderedCollection new
 ]
 
 { #category : #printing }

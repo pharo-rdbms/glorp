@@ -10,7 +10,7 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GlorpTax class >> glorpCommonSetupDescriptor: aDescriptor forSystem: aSystem [
 	| table |
 	table := aSystem tableNamed: 'TAX'.
@@ -29,7 +29,7 @@ GlorpTax class >> glorpCommonSetupDescriptor: aDescriptor forSystem: aSystem [
 				join: (Join from: (table fieldNamed: 'TAX_ID') to: (table fieldNamed: 'ID'))).
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GlorpTax class >> glorpSetupDescriptor: aDescriptor forSystem: aSystem [
 	| table |
 	table := aSystem tableNamed: 'TAX'.
@@ -45,9 +45,10 @@ GlorpTax class >> glorpSetupDescriptor: aDescriptor forSystem: aSystem [
 		abstract: true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GlorpTax class >> glorpTypeResolver [
-	^FilteredTypeResolver forRootClass: GlorpTax.
+
+	^ FilteredTypeResolver forRootClass: GlorpTax
 ]
 
 { #category : #'add/remove' }

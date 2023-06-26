@@ -7,9 +7,9 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 GlorpTaskedWorker class >> example1 [
-	"GlorpTaskedWorker example1"
+	<sampleInstance>
 
 	| workers tasks keys names |
 	tasks := GlorpWorkerTask exampleTasks.
@@ -38,9 +38,11 @@ GlorpTaskedWorker >> addTask: aTask key: aString [
 	tasks at: aString put: aTask
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GlorpTaskedWorker >> initialize [
-	tasks := Dictionary new.
+
+	super initialize.
+	tasks := Dictionary new
 ]
 
 { #category : #accessing }

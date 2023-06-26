@@ -60,10 +60,11 @@ GlorpBankAccount >> id: anObject [
 	id := anObject
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 GlorpBankAccount >> initialize [
 
-	accountHolders := OrderedCollection new.
+	super initialize.
+	accountHolders := OrderedCollection new
 ]
 
 { #category : #printing }

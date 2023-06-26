@@ -35,7 +35,3 @@ GlorpServiceCharge >> description [
 GlorpServiceCharge >> description: anObject [
 	description := anObject
 ]
-
-{ #category : #initialize }
-GlorpServiceCharge >> initialize [
-]

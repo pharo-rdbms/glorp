@@ -21,9 +21,10 @@ ASOrder >> customer: anObject [
 	customer := anObject
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 ASOrder >> initialize [
-	orderNo := nil.
+
+	super initialize.
 	lineItems := OrderedCollection new.
 ]
 

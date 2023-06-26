@@ -54,11 +54,12 @@ GlorpEncyclopedia >> id: anInteger [
 	id := anInteger
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 GlorpEncyclopedia >> initialize [
 
+	super initialize.
 	entries := Dictionary new.
-	biographicalEntries := Dictionary new.
+	biographicalEntries := Dictionary new
 ]
 
 { #category : #accessing }

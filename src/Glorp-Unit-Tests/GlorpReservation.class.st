@@ -35,9 +35,11 @@ GlorpReservation >> id: anInteger [
 	id := anInteger
 ]
 
-{ #category : #'initialize/release' }
+{ #category : #initialization }
 GlorpReservation >> initialize [
-	passengers := OrderedCollection new.
+
+	super initialize.
+	passengers := OrderedCollection new
 ]
 
 { #category : #accessing }

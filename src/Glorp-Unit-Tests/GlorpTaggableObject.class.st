@@ -7,17 +7,19 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 GlorpTaggableObject >> initialize [
-	tags := OrderedCollection new.
+
+	super initialize.
+	tags := OrderedCollection new
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GlorpTaggableObject >> tags [
 	^ tags
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GlorpTaggableObject >> tags: someTags [
 	tags := someTags
 ]

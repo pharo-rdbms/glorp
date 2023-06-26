@@ -10,25 +10,25 @@ GlorpInheritanceDescriptorSystem >> allTableNames [
 	^#('EMPLOYEE' 'OFFICE' 'PERISHABLE_ITEM' 'NONPERISHABLE_ITEM' 'UNASSEMBLED_ITEM' 'WORKING_STIFF' 'POULTRY' 'TAX' 'WAREHOUSE' 'WAREHOUSE_ITEM_LINK'  'GLORP_IMAGE' 'GLORP_TAG' 'GLORP_TAGS').
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #descriptors }
 GlorpInheritanceDescriptorSystem >> classModelForGlorpImage: aClassModel [ 
 	aClassModel newAttributeNamed: #id.
 	aClassModel newAttributeNamed: #location.
 	aClassModel newAttributeNamed: #tags collectionOf: GlorpTag.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #descriptors }
 GlorpInheritanceDescriptorSystem >> classModelForGlorpTag: aClassModel [ 
 	aClassModel newAttributeNamed: #id.
 	aClassModel newAttributeNamed: #key.
 	aClassModel newAttributeNamed: #label
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #descriptors }
 GlorpInheritanceDescriptorSystem >> classModelForGlorpTaggableObject: aClassModel [
 ]
 
-{ #category : #'descriptors/employees' }
+{ #category : #'descriptors - employees' }
 GlorpInheritanceDescriptorSystem >> classModelForGlorpWarehouse: aClassModel [
 	aClassModel newAttributeNamed: #id.
 	aClassModel newAttributeNamed: #address.
@@ -60,7 +60,7 @@ GlorpInheritanceDescriptorSystem >> constructAllClasses [
 		yourself
 ]
 
-{ #category : #'descriptors/employees' }
+{ #category : #'descriptors - employees' }
 GlorpInheritanceDescriptorSystem >> descriptorForGlorpEmployee: aDescriptor [
 	| table |
 	table := self tableNamed: 'EMPLOYEE'.
@@ -71,7 +71,7 @@ GlorpInheritanceDescriptorSystem >> descriptorForGlorpEmployee: aDescriptor [
 	^aDescriptor
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #descriptors }
 GlorpInheritanceDescriptorSystem >> descriptorForGlorpImage: aDescriptor [ 
 	| table |
 	table := self tableNamed: 'GLORP_IMAGE'.
@@ -93,14 +93,14 @@ GlorpInheritanceDescriptorSystem >> descriptorForGlorpImage: aDescriptor [
 		register: aDescriptor
 ]
 
-{ #category : #'descriptors/employees' }
+{ #category : #'descriptors - employees' }
 GlorpInheritanceDescriptorSystem >> descriptorForGlorpInventoryItem: aDescriptor [
 
 	(self typeResolverFor: GlorpInventoryItem) register: aDescriptor abstract: true.
 	^aDescriptor
 ]
 
-{ #category : #'descriptors/employees' }
+{ #category : #'descriptors - employees' }
 GlorpInheritanceDescriptorSystem >> descriptorForGlorpLineWorker: aDescriptor [
 	| table |
 	table := self tableNamed: 'EMPLOYEE'.
@@ -112,7 +112,7 @@ GlorpInheritanceDescriptorSystem >> descriptorForGlorpLineWorker: aDescriptor [
 	^aDescriptor
 ]
 
-{ #category : #'descriptors/employees' }
+{ #category : #'descriptors - employees' }
 GlorpInheritanceDescriptorSystem >> descriptorForGlorpManager: aDescriptor [
 	| table |
 	table := self tableNamed: 'EMPLOYEE'.
@@ -124,7 +124,7 @@ GlorpInheritanceDescriptorSystem >> descriptorForGlorpManager: aDescriptor [
 	^aDescriptor
 ]
 
-{ #category : #'descriptors/employees' }
+{ #category : #'descriptors - employees' }
 GlorpInheritanceDescriptorSystem >> descriptorForGlorpNonperishableItem: aDescriptor [
 
 	| table |
@@ -137,7 +137,7 @@ GlorpInheritanceDescriptorSystem >> descriptorForGlorpNonperishableItem: aDescri
 	^aDescriptor
 ]
 
-{ #category : #'descriptors/employees' }
+{ #category : #'descriptors - employees' }
 GlorpInheritanceDescriptorSystem >> descriptorForGlorpOffice: aDescriptor [
 	| table |
 	table := self tableNamed: 'OFFICE'.
@@ -158,7 +158,7 @@ GlorpInheritanceDescriptorSystem >> descriptorForGlorpOffice: aDescriptor [
 	^aDescriptor
 ]
 
-{ #category : #'descriptors/employees' }
+{ #category : #'descriptors - employees' }
 GlorpInheritanceDescriptorSystem >> descriptorForGlorpPerishableItem: aDescriptor [
 
 	| table |
@@ -171,7 +171,7 @@ GlorpInheritanceDescriptorSystem >> descriptorForGlorpPerishableItem: aDescripto
 	^aDescriptor
 ]
 
-{ #category : #'descriptors/employees' }
+{ #category : #'descriptors - employees' }
 GlorpInheritanceDescriptorSystem >> descriptorForGlorpPoultry: aDescriptor [
 	"Poultry does not participate in the InventoryItem heirarchy (ie it will not be retrieved when asking for an InventoryItem)"
 	| table |
@@ -184,7 +184,7 @@ GlorpInheritanceDescriptorSystem >> descriptorForGlorpPoultry: aDescriptor [
 	^aDescriptor
 ]
 
-{ #category : #'descriptors/employees' }
+{ #category : #'descriptors - employees' }
 GlorpInheritanceDescriptorSystem >> descriptorForGlorpRegionalManager: aDescriptor [
 	| table |
 	table := self tableNamed: 'EMPLOYEE'.
@@ -197,7 +197,7 @@ GlorpInheritanceDescriptorSystem >> descriptorForGlorpRegionalManager: aDescript
 	^aDescriptor
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #descriptors }
 GlorpInheritanceDescriptorSystem >> descriptorForGlorpTag: aDescriptor [ 
 	| table |
 	table := self tableNamed: 'GLORP_TAG'.
@@ -213,14 +213,14 @@ GlorpInheritanceDescriptorSystem >> descriptorForGlorpTag: aDescriptor [
 		to: (table fieldNamed: 'label').
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #descriptors }
 GlorpInheritanceDescriptorSystem >> descriptorForGlorpTaggableObject: aDescriptor [ 
 	(self typeResolverFor: GlorpTaggableObject)
 		register: aDescriptor
 		abstract: true
 ]
 
-{ #category : #'descriptors/employees' }
+{ #category : #'descriptors - employees' }
 GlorpInheritanceDescriptorSystem >> descriptorForGlorpUnassembledItem: aDescriptor [
 
 	| table |
@@ -234,7 +234,7 @@ GlorpInheritanceDescriptorSystem >> descriptorForGlorpUnassembledItem: aDescript
 	^aDescriptor
 ]
 
-{ #category : #'descriptors/employees' }
+{ #category : #'descriptors - employees' }
 GlorpInheritanceDescriptorSystem >> descriptorForGlorpWarehouse: aDescriptor [
 	| table linkTable |
 	table := self tableNamed: 'WAREHOUSE'.
@@ -259,7 +259,7 @@ GlorpInheritanceDescriptorSystem >> descriptorForGlorpWarehouse: aDescriptor [
 	^aDescriptor.
 ]
 
-{ #category : #'descriptors/employees' }
+{ #category : #'descriptors - employees' }
 GlorpInheritanceDescriptorSystem >> descriptorForGlorpWorkingStiff: aDescriptor [
 	"Working stiff does not participate in the Employee type mapping scheme (it uses its own table)"
 	| table |
@@ -270,7 +270,7 @@ GlorpInheritanceDescriptorSystem >> descriptorForGlorpWorkingStiff: aDescriptor 
 	^aDescriptor
 ]
 
-{ #category : #'descriptors/employees' }
+{ #category : #'descriptors - employees' }
 GlorpInheritanceDescriptorSystem >> polymorphicJoinToItemFromField: aField [
 	"Return a polymorphic join to the GlorpInventoryItem subclasses from the given field."
 	| polymorphicJoin |
@@ -302,7 +302,7 @@ GlorpInheritanceDescriptorSystem >> tableForEMPLOYEE: aTable [
 	aTable createFieldNamed: 'PRODUCTION_LINE' type: (platform varChar: 20).
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #descriptors }
 GlorpInheritanceDescriptorSystem >> tableForGLORP_IMAGE: aTable [ 
 	(aTable createFieldNamed: 'id' type: platform sequence) bePrimaryKey.
 	aTable
@@ -310,7 +310,7 @@ GlorpInheritanceDescriptorSystem >> tableForGLORP_IMAGE: aTable [
 		type: (platform varChar: 250).
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #descriptors }
 GlorpInheritanceDescriptorSystem >> tableForGLORP_TAG: aTable [ 
 	(aTable createFieldNamed: 'id' type: platform sequence) bePrimaryKey.
 	aTable
@@ -321,7 +321,7 @@ GlorpInheritanceDescriptorSystem >> tableForGLORP_TAG: aTable [
 		type: (platform varChar: 200).
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #descriptors }
 GlorpInheritanceDescriptorSystem >> tableForGLORP_TAGS: aTable [ 
 	| tagKey tagObjKey |
 	tagKey := aTable createFieldNamed: 'tag_id' type: platform int4.
@@ -336,7 +336,7 @@ GlorpInheritanceDescriptorSystem >> tableForGLORP_TAGS: aTable [
 				fieldNamed: 'id')
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #descriptors }
 GlorpInheritanceDescriptorSystem >> tableForIMAGETAGS: aTable [ 
 	| tagKey tagObjKey |
 	tagKey := aTable createFieldNamed: 'tag_id' type: platform int4.
@@ -436,7 +436,7 @@ GlorpInheritanceDescriptorSystem >> typeResolverForGlorpInventoryItem [
 	^HorizontalTypeResolver forRootClass: GlorpInventoryItem.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #descriptors }
 GlorpInheritanceDescriptorSystem >> typeResolverForGlorpTaggableObject [
    ^(HorizontalTypeResolver forRootClass: GlorpTaggableObject).
 ]

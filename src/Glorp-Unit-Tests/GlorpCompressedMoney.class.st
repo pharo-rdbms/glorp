@@ -59,10 +59,11 @@ GlorpCompressedMoney >> id: anObject [
 	id := anObject
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 GlorpCompressedMoney >> initialize [
 
-	array := Array new: 2.
+	super initialize.
+	array := Array new: 2
 ]
 
 { #category : #printing }

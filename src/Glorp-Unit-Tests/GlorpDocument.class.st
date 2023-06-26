@@ -51,8 +51,10 @@ GlorpDocument >> id: anObject [
 	id := anObject
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GlorpDocument >> initialize [
+
+	super initialize.
 	attachments := OrderedCollection new.
-	whatever := 3.
+	whatever := 3
 ]

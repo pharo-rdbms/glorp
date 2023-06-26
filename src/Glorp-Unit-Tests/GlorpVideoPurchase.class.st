@@ -29,12 +29,12 @@ GlorpVideoPurchase >> assertEqual: aPurchase [
 	self assert: inStore = aPurchase inStore.
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #accessing }
 GlorpVideoPurchase >> customer [
 	^customer
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #accessing }
 GlorpVideoPurchase >> customer: aCustomer [
 	customer := aCustomer.
 ]
@@ -57,10 +57,6 @@ GlorpVideoPurchase >> inStore [
 { #category : #accessing }
 GlorpVideoPurchase >> inStore: anObject [
 	inStore := anObject
-]
-
-{ #category : #'initialize-release' }
-GlorpVideoPurchase >> initialize [
 ]
 
 { #category : #accessing }
@@ -96,7 +92,7 @@ GlorpVideoPurchase >> title: aString [
 	title := aString
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #accessing }
 GlorpVideoPurchase >> videoStore [
 	^store.
 ]

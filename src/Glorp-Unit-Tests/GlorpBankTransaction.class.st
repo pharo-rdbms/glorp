@@ -46,11 +46,12 @@ GlorpBankTransaction >> id: anObject [
 	id := anObject
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 GlorpBankTransaction >> initialize [
 
+	super initialize.
 	amount := GlorpMoney forAmount: 0.
-	serviceCharge := GlorpServiceCharge default.
+	serviceCharge := GlorpServiceCharge default
 ]
 
 { #category : #accessing }

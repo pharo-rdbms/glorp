@@ -7,10 +7,11 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #initialize }
+{ #category : #initialization }
 GlorpExampleSystem >> initialize [
 
-	objects := Dictionary new.
+	super initialize.
+	objects := Dictionary new
 ]
 
 { #category : #misc }

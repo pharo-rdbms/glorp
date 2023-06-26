@@ -9,10 +9,6 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'initialize-release' }
-GlorpEncyclopediaBioEntry >> initialize [
-]
-
 { #category : #accessing }
 GlorpEncyclopediaBioEntry >> text [
 	^text

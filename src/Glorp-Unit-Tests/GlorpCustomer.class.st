@@ -127,15 +127,16 @@ GlorpCustomer >> id: anObject [
 	id := anObject
 ]
 
-{ #category : #'initialize/release' }
+{ #category : #initialization }
 GlorpCustomer >> initialize [
 
+	super initialize.
 	transactions := OrderedCollection new.
 	accounts := OrderedCollection new.
 	seenExpiry := false.
 	seenPostFetch := false.
 	seenPreWrite:= false.
-	seenPostWrite := false.
+	seenPostWrite := false
 ]
 
 { #category : #accessing }

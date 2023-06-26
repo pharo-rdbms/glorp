@@ -29,9 +29,11 @@ GlorpBookstoreCustomer >> booksOnOrder: someBooks [
 	booksOnOrder := someBooks.
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GlorpBookstoreCustomer >> initialize [
-	booksOnOrder := OrderedCollection new.
+
+	super initialize.
+	booksOnOrder := OrderedCollection new
 ]
 
 { #category : #accessing }

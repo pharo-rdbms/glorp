@@ -4,7 +4,7 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GlorpBasicTax class >> glorpSetupDescriptor: aDescriptor forSystem: aSystem [
 	| table |
 	table := aSystem tableNamed: 'TAX'.

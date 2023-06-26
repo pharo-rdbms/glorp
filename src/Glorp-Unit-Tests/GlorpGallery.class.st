@@ -29,9 +29,11 @@ GlorpGallery >> images: anObject [
 	images := anObject
 ]
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GlorpGallery >> initialize [
-	images := OrderedCollection new.
+
+	super initialize.
+	images := OrderedCollection new
 ]
 
 { #category : #accessing }

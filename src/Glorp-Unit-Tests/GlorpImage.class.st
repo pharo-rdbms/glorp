@@ -8,17 +8,17 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 GlorpImage class >> fromStream: aStream [
 	^ self new image: aStream
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GlorpImage >> location [
 	^ location
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 GlorpImage >> location: aLocation [
 	location := aLocation
 ]

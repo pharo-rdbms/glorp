@@ -31,42 +31,42 @@ GlorpVideoCreditStatus >> assertEqual: aCreditStatus [
 	self assert: comments = aCreditStatus comments.
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #accessing }
 GlorpVideoCreditStatus >> balanceOwing [
 	^balanceOwing.
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #accessing }
 GlorpVideoCreditStatus >> balanceOwing: aNumber [
 	balanceOwing := aNumber.
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #accessing }
 GlorpVideoCreditStatus >> comments [
 	^comments.
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #accessing }
 GlorpVideoCreditStatus >> comments: aString [
 	comments := aString.
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #accessing }
 GlorpVideoCreditStatus >> customer [
 	^customer.
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #accessing }
 GlorpVideoCreditStatus >> customer: aCustomer [
 	customer := aCustomer.
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #accessing }
 GlorpVideoCreditStatus >> dateOwing [
 	^dateOwing.
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : #accessing }
 GlorpVideoCreditStatus >> dateOwing: aDate [
 	dateOwing := aDate.
 ]

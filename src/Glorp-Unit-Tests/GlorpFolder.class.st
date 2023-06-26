@@ -9,10 +9,11 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'initialize-release' }
+{ #category : #initialization }
 GlorpFolder >> initialize [
-	user := nil.
-	messages := OrderedCollection new.
+
+	super initialize.
+	messages := OrderedCollection new
 ]
 
 { #category : #accessing }
