@@ -13,6 +13,12 @@ Class {
 	#category : #'Glorp-Database'
 }
 
+{ #category : #testing }
+VersionGenerator class >> isAbstract [
+
+	^ self == VersionGenerator
+]
+
 { #category : #sequencing }
 VersionGenerator >> nextValueFor: aField in: aRow [
 
