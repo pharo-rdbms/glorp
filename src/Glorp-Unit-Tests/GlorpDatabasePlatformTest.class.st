@@ -44,13 +44,13 @@ GlorpDatabasePlatformTest >> testNumericCoercion [
 	type := GlorpNumericType new scale: 5; precision: 2.
 	platform := DatabasePlatform new.
 	num := Dialect coerceToDoublePrecisionFloat: (123456 / 100).
-	self assert: (platform convertToNumber: num for: type) = num.
+	self assert: (platform convertToNumber: num for: type) equals: num.
 	num := Dialect coerceToDoublePrecisionFloat: (123450 / 100).
-	self assert: (platform convertToNumber: num for: type) = num.
+	self assert: (platform convertToNumber: num for: type) equals: num.
 	num := Dialect coerceToDoublePrecisionFloat: (123450 / 1000).
-	self assert: (platform convertToNumber: num for: type) = num.
+	self assert: (platform convertToNumber: num for: type) equals: num.
 	num := Dialect coerceToDoublePrecisionFloat: (123456 / 1000).
-	self deny: (platform convertToNumber: num for: type) = num.
+	self deny: (platform convertToNumber: num for: type) equals: num
 ]
 
 { #category : #tests }
@@ -67,14 +67,14 @@ GlorpDatabasePlatformTest >> testReadTimestamp [
 
 	| ts |
 	ts := DatabasePlatform new readTimestamp: '2003-03-03 15:29:28.337-05' for: nil.
-	self assert: ts asSeconds + ts offset asSeconds = 3224158168.
+	self assert: ts asSeconds + ts offset asSeconds equals: 3224158168.
 	self assert: ([ts asMilliseconds + ts offset asMilliSeconds = 3224158168337 ]
 		on: MessageNotUnderstood
 		do: [ :mnu | mnu return: mnu message selector = #asMilliseconds ]).
 
 	ts := DatabasePlatform new readTimestamp: '2003-03-13 15:29:28.337-05' for: nil.
-	self assert: ts asSeconds + ts offset asSeconds = 3225022168.
-	self assert: ([ts asMilliseconds + ts offset asMilliSeconds = 3225022168337]
+	self assert: ts asSeconds + ts offset asSeconds equals: 3225022168.
+	self assert: ([ts asMilliseconds + ts offset asMilliSeconds equals: 3225022168337]
 		on: MessageNotUnderstood
 		do: [ :mnu | mnu return: mnu message selector = #asMilliseconds ])
 ]
@@ -84,13 +84,13 @@ GlorpDatabasePlatformTest >> testReadTimestampNoMS [
 
 	| ts |
 	ts := DatabasePlatform new readTimestamp: '2003-03-03 15:29:28-05' for: nil.
-	self assert: ts year = 2003.
-	self assert: ts monthIndex = 3.
-	self assert: ts dayOfMonth = 3.
-	self assert: ts hours = 15.
-	self assert: ts minutes = 29.
-	self assert: ts seconds truncated = 28.
-	self assert: ([ ts milliseconds = 0 ]
+	self assert: ts year equals: 2003.
+	self assert: ts monthIndex equals: 3.
+	self assert: ts dayOfMonth equals: 3.
+	self assert: ts hours equals: 15.
+	self assert: ts minutes equals: 29.
+	self assert: ts seconds truncated equals: 28.
+	self assert: ([ ts milliseconds equals: 0 ]
 		on: MessageNotUnderstood
 		do: [ :mnu | mnu return: mnu message selector = #milliseconds ])
 ]
@@ -100,12 +100,12 @@ GlorpDatabasePlatformTest >> testReadTimestampNoMSNoTZ [
 
 	| ts |
 	ts := DatabasePlatform new readTimestamp: '2003-03-03 15:29:28' for: nil.
-	self assert: ts year = 2003.
-	self assert: ts monthIndex = 3.
-	self assert: ts dayOfMonth = 3.
-	self assert: ts hours = 15.
-	self assert: ts minutes = 29.
-	self assert: ts seconds truncated = 28.
+	self assert: ts year equals: 2003.
+	self assert: ts monthIndex equals: 3.
+	self assert: ts dayOfMonth equals: 3.
+	self assert: ts hours equals: 15.
+	self assert: ts minutes equals: 29.
+	self assert: ts seconds truncated equals: 28.
 	self assert: ([ ts milliseconds = 0 ]
 		on: MessageNotUnderstood
 		do: [ :mnu | mnu return: mnu message selector = #milliseconds ])
@@ -116,13 +116,13 @@ GlorpDatabasePlatformTest >> testReadTimestampNoTZ [
 
 	| ts |
 	ts := DatabasePlatform new readTimestamp: '1975-08-13 21:29:28.337' for: nil.
-	self assert: ts year = 1975.
-	self assert: ts monthIndex = 8.
-	self assert: ts dayOfMonth = 13.
-	self assert: ts hours = 21.
-	self assert: ts minutes = 29.
-	self assert: ts seconds truncated = 28.
-	self assert: ([ ts milliseconds =  337]
+	self assert: ts year equals: 1975.
+	self assert: ts monthIndex equals: 8.
+	self assert: ts dayOfMonth equals: 13.
+	self assert: ts hours equals: 21.
+	self assert: ts minutes equals: 29.
+	self assert: ts seconds truncated equals: 28.
+	self assert: ([ ts milliseconds = 337]
 		on: MessageNotUnderstood
 		do: [ :mnu | mnu return: mnu message selector = #milliseconds ])
 ]
@@ -132,12 +132,12 @@ GlorpDatabasePlatformTest >> testReadTimestampOverflowDays [
 
 	| ts |
 	ts := DatabasePlatform new readTimestamp: '1975-08-13 21:29:28.337-05' for: nil.
-	self assert: ts year = 1975.
-	self assert: ts monthIndex = 8.
-	self assert: ts dayOfMonth = 13.
-	self assert: ts hours = 21.
-	self assert: ts minutes = 29.
-	self assert: ts seconds truncated = 28.
+	self assert: ts year equals: 1975.
+	self assert: ts monthIndex equals: 8.
+	self assert: ts dayOfMonth equals: 13.
+	self assert: ts hours equals: 21.
+	self assert: ts minutes equals: 29.
+	self assert: ts seconds truncated equals: 28.
 	self assert: ([ ts milliseconds = 337 ]
 		on: MessageNotUnderstood
 		do: [ :mnu | mnu return: mnu message selector = #milliseconds ])
@@ -145,14 +145,15 @@ GlorpDatabasePlatformTest >> testReadTimestampOverflowDays [
 
 { #category : #tests }
 GlorpDatabasePlatformTest >> testTrimString1 [
-	"Normal ascii"
+	"Normal ASCII"
+
 	| type plat |
 	type := self string20.
 	plat := type platform.
-	self assert: (plat trimString: 'abcdefghi' for: type) = 'abcdefghi'.
-	self assert: (plat trimString: 'abcdefghijklmnopqrst' for: type) = 'abcdefghijklmnopqrst'.
-	self assert: (plat trimString: 'abcdefghijklmnopqrstu' for: type) = 'abcdefghijklmnopqrst'.
-	self assert: (plat trimString: 'abcdefghijklmnopqrstuvwxy' for: type) = 'abcdefghijklmnopqrst'.
+	self assert: (plat trimString: 'abcdefghi' for: type) equals: 'abcdefghi'.
+	self assert: (plat trimString: 'abcdefghijklmnopqrst' for: type) equals: 'abcdefghijklmnopqrst'.
+	self assert: (plat trimString: 'abcdefghijklmnopqrstu' for: type) equals: 'abcdefghijklmnopqrst'.
+	self assert: (plat trimString: 'abcdefghijklmnopqrstuvwxy' for: type) equals: 'abcdefghijklmnopqrst'
 ]
 
 { #category : #tests }
@@ -164,13 +165,13 @@ GlorpDatabasePlatformTest >> testTrimString2 [
 	plat := type platform.
 
 	string := self addToString: 'abcdefghi'.
-	self assert: (plat trimString: string for: type) = string.
+	self assert: (plat trimString: string for: type) equals: string.
 	string := self addToString: 'abcdefghijklmno'.
-	self assert: (plat trimString: string for: type) = string.
+	self assert: (plat trimString: string for: type) equals: string.
 	string := self addToString: 'abcdefghijklmnop'.
-	self assert: (plat trimString: string for: type) = (string copyFrom: 1 to: string size -1).
+	self assert: (plat trimString: string for: type) equals: (string copyFrom: 1 to: string size -1).
 	string := self addToString: 'abcdefghijklmnopq'.
-	self assert: (plat trimString: string for: type) = (string copyFrom: 1 to: string size -1).
+	self assert: (plat trimString: string for: type) equals: (string copyFrom: 1 to: string size -1).
 	string := (String new: 100000) atAllPut: $a.
-	self assert: (plat trimString: string for: type) = 'aaaaaaaaaaaaaaaaaaaa'
+	self assert: (plat trimString: string for: type) equals: 'aaaaaaaaaaaaaaaaaaaa'
 ]

@@ -31,11 +31,12 @@ GlorpTableTest >> setUp [
 
 { #category : #tests }
 GlorpTableTest >> testBasicSequencing [
+
 	| row |
 	row := DatabaseRow newForTable: (system tableNamed: 'STUFF').
 	row preWriteAssignSequencesUsing: nil.
 	row postWriteAssignSequencesUsing: nil.
-	self assert: (row at: ((system tableNamed: 'STUFF') fieldNamed: 'ID')) = 1.
+	self assert: (row at: ((system tableNamed: 'STUFF') fieldNamed: 'ID')) equals: 1
 ]
 
 { #category : #tests }
@@ -46,7 +47,7 @@ GlorpTableTest >> testCircularFieldRefs [
 	field := table1 createFieldNamed: 'FOO' type: dbPlatform int4.
 	table2 := DatabaseTable named: 'BLETCH'.
 	table1 addForeignKeyFrom: field to: (table2 createFieldNamed: 'FLIRP' type: dbPlatform int4).
-	self assert: (table2 fieldNamed: 'FLIRP') = table1 foreignKeyConstraints first targetFields first.
+	self assert: (table2 fieldNamed: 'FLIRP') equals: table1 foreignKeyConstraints first targetFields first
 ]
 
 { #category : #tests }
@@ -74,12 +75,12 @@ GlorpTableTest >> testConstraintCreation [
 GlorpTableTest >> testConstraintNonCreation [
 
 	| constraint |
-	constraint := ForeignKeyConstraint 
+	constraint := ForeignKeyConstraint
 		sourceField: ((system tableNamed: 'BANK_ACCT') fieldNamed: 'BANK_CODE')
 		targetField: ((system tableNamed: 'PERSON') fieldNamed: 'ID').
 	constraint shouldCreateInDatabase: false.
-	self assert: constraint creationString = ''.
-	self assert: constraint dropString = ''.
+	self assert: constraint creationString equals: ''.
+	self assert: constraint dropString equals: ''
 ]
 
 { #category : #tests }
@@ -89,7 +90,7 @@ GlorpTableTest >> testFieldTable [
 	field := DatabaseField named: 'FOO' type: dbPlatform int4.
 	table := DatabaseTable named: 'BAR'.
 	table addField: field.
-	self assert: (table fieldNamed: 'FOO') = field.
+	self assert: (table fieldNamed: 'FOO') equals: field
 ]
 
 { #category : #tests }
@@ -105,8 +106,8 @@ GlorpTableTest >> testForeignKeyFieldAPI [
 	table2 createFieldNamed: 'Street' type: dbPlatform varChar.
 
 	constraint := table1 addForeignKeyFrom: fieldCustAddr toTable: table2.
-	self assert: (table2 fieldNamed: 'ID') = table1 foreignKeyConstraints first targetFields first.
-	self assert: constraint name =  'Customer_A_TO_Address_ID_REF1'.
+	self assert: (table2 fieldNamed: 'ID') equals: table1 foreignKeyConstraints first targetFields first.
+	self assert: constraint name equals: 'Customer_A_TO_Address_ID_REF1'.
 
 	table1 := DatabaseTable named: 'Customer'.
 	(table1 createFieldNamed: 'ID' type: dbPlatform int4) bePrimaryKey.
@@ -116,7 +117,7 @@ GlorpTableTest >> testForeignKeyFieldAPI [
 	table2 createFieldNamed: 'Street' type: dbPlatform varChar.
 
 	table1 addForeignKeyFrom: fieldCustAddr to: fieldAddrId.
-	self assert: (table2 fieldNamed: 'ID') = table1 foreignKeyConstraints first targetFields first.
+	self assert: (table2 fieldNamed: 'ID') equals: table1 foreignKeyConstraints first targetFields first
 ]
 
 { #category : #tests }
@@ -125,8 +126,8 @@ GlorpTableTest >> testPrimaryKeyFields [
 	| pkFields table |
 	table := system tableNamed: 'BANK_TRANS'.
 	pkFields := table primaryKeyFields.
-	self assert: pkFields size = 1.
-	self assert: (pkFields at: 1) == (table fieldNamed: 'ID').
+	self assert: pkFields size equals: 1.
+	self assert: (pkFields at: 1) == (table fieldNamed: 'ID')
 ]
 
 { #category : #tests }
@@ -137,7 +138,7 @@ GlorpTableTest >> testPrimaryKeyFields2 [
 	field := (DatabaseField named: 'FRED' type: (dbPlatform varChar: 10))
 		bePrimaryKey.
 	table addField: field.
-	self assert: table primaryKeyFields size = 1.
+	self assert: table primaryKeyFields size equals: 1.
 	self assert: (table primaryKeyFields at: 1) == field.
 ]
 
@@ -147,7 +148,7 @@ GlorpTableTest >> testPrimaryKeyFieldsNoPK [
 	| pkFields table |
 	table := system tableNamed: 'CUSTOMER_ACCT_LINK'.
 	pkFields := table primaryKeyFields.
-	self assert: pkFields size = 0.
+	self assert: pkFields size equals: 0.
 ]
 
 { #category : #tests }
@@ -158,15 +159,15 @@ GlorpTableTest >> testPrintingWithParent [
 	t1 := t copy.
 	t1 parent: t.
 	t1 name: 'foo'.
-	self assert: t1 sqlTableName = 'GR_CUSTOMER foo'.
+	self assert: t1 sqlTableName equals: 'GR_CUSTOMER foo'.
 ]
 
 { #category : #tests }
 GlorpTableTest >> testPrintingWithoutParent [
 
-	| t t1 |
+	| t |
 	t := system tableNamed: 'GR_CUSTOMER'.
-	self assert: t sqlTableName = 'GR_CUSTOMER'.
+	self assert: t sqlTableName equals: 'GR_CUSTOMER'
 ]
 
 { #category : #tests }
@@ -174,11 +175,12 @@ GlorpTableTest >> testRowCreation [
 
 	| row |
 	row := system examplePersonRow1.
-	self assert: (row at: (row table fieldNamed: 'ID')) = 3.
+	self assert: (row at: (row table fieldNamed: 'ID')) equals: 3
 ]
 
 { #category : #tests }
 GlorpTableTest >> testTwoSequences [
+
 	| row1 row2 table idField |
 	table := system tableNamed: 'STUFF'.
 	row1 := DatabaseRow newForTable: table.
@@ -188,6 +190,6 @@ GlorpTableTest >> testTwoSequences [
 	row2 preWriteAssignSequencesUsing: nil.
 	row2 postWriteAssignSequencesUsing: nil.
 	idField := table fieldNamed: 'ID'.
-	self assert: (row1 at: idField) = 1.
-	self assert: (row2 at: idField) = 2.
+	self assert: (row1 at: idField) equals: 1.
+	self assert: (row2 at: idField) equals: 2
 ]

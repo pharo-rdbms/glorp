@@ -26,23 +26,24 @@ GlorpConstantMappingTest >> setUp [
 
 { #category : #tests }
 GlorpConstantMappingTest >> testConstantInClass [
+
 	slot := nil.
 	mappingToClass mapObject: self inElementBuilder: nil.
-	self assert: slot = 34.
+	self assert: slot equals: 34
 ]
 
 { #category : #tests }
 GlorpConstantMappingTest >> testConstantInClassDoesNotWriteToRow [
-
 	"Would raise an exception if it tried to write into nil"
-	mappingToClass mapFromObject: self intoRowsIn: nil.
+
+	mappingToClass mapFromObject: self intoRowsIn: nil
 ]
 
 { #category : #tests }
 GlorpConstantMappingTest >> testGetValue [
 
 	slot := nil.
-	self assert: (mappingToClass getValueFrom: self) = 34.
+	self assert: (mappingToClass getValueFrom: self) equals: 34
 ]
 
 { #category : #tests }

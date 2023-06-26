@@ -12,7 +12,7 @@ Class {
 	#category : #'Glorp-Unit-Tests-Tests'
 }
 
-{ #category : #tests }
+{ #category : #utilities }
 GlorpAdHocMappingTest >> moneyNegatingMappingTo: amountField in: aDescriptor [ 
 	mapping := aDescriptor newMapping: AdHocMapping.
 	mapping
@@ -25,6 +25,7 @@ GlorpAdHocMappingTest >> moneyNegatingMappingTo: amountField in: aDescriptor [
 
 { #category : #tests }
 GlorpAdHocMappingTest >> testNegateMappingRead [
+
 	| amountField inputRow builder |
 	descriptor := system descriptorFor: GlorpMoney.
 	table := system tableNamed: 'MONEY_IMAGINARY_TABLE'.
@@ -36,11 +37,12 @@ GlorpAdHocMappingTest >> testNegateMappingRead [
 	builder := ElementBuilder new.
 	builder row: inputRow.
 	mapping mapObject: money inElementBuilder: builder.
-	self assert: money amount = -1.
+	self assert: money amount equals: -1.
 ]
 
 { #category : #tests }
 GlorpAdHocMappingTest >> testNegateMappingWrite [
+
 	| amountField outputRow |
 	descriptor := system descriptorFor: GlorpMoney.
 	table := system tableNamed: 'MONEY_IMAGINARY_TABLE'.
@@ -52,11 +54,12 @@ GlorpAdHocMappingTest >> testNegateMappingWrite [
 	rowMap := RowMap new.
 	mapping mapFromObject: money intoRowsIn: rowMap.
 	outputRow := rowMap rowForTable: table withKey: money.
-	self assert: (outputRow at: (table fieldNamed: 'AMOUNT')) = -3
+	self assert: (outputRow at: (table fieldNamed: 'AMOUNT')) equals: -3
 ]
 
 { #category : #tests }
 GlorpAdHocMappingTest >> testSplitMappingRead [
+
 	| inputRow builder |
 	money := GlorpCompressedMoney basicNew.
 	mapping := (system descriptorFor: GlorpCompressedMoney)
@@ -65,12 +68,13 @@ GlorpAdHocMappingTest >> testSplitMappingRead [
 	builder := ElementBuilder new.
 	builder row: inputRow.
 	mapping mapObject: money inElementBuilder: builder.
-	self assert: money amount = 1.
-	self assert: money currency = 'US'.
+	self assert: money amount equals: 1.
+	self assert: money currency equals: 'US'.
 ]
 
 { #category : #tests }
 GlorpAdHocMappingTest >> testSplitMappingWrite [
+
 	| outputRow |
 	money := GlorpCompressedMoney currency: 'DM' amount: 99.
 	mapping := (system descriptorFor: GlorpCompressedMoney) 
@@ -79,6 +83,6 @@ GlorpAdHocMappingTest >> testSplitMappingWrite [
 	mapping mapFromObject: money intoRowsIn: rowMap.
 	table := mapping descriptor primaryTable.
 	outputRow := rowMap rowForTable: table withKey: money.
-	self assert: (outputRow at: (table fieldNamed: 'AMOUNT')) = 99.
-	self assert: (outputRow at: (table fieldNamed: 'CURRENCY_NAME')) = 'DM'
+	self assert: (outputRow at: (table fieldNamed: 'AMOUNT')) equals: 99.
+	self assert: (outputRow at: (table fieldNamed: 'CURRENCY_NAME')) equals: 'DM'
 ]

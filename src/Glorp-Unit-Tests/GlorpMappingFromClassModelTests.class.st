@@ -65,11 +65,12 @@ GlorpMappingFromClassModelTests >> testAllAttributes [
 	system validate.
 	attributes := OrderedCollection new.
 	customerDescriptor classModel attributesDo: [:each | attributes add: each].
-	self assert: attributes size = 2.
+	self assert: attributes size equals: 2.
 ]
 
 { #category : #Tests }
 GlorpMappingFromClassModelTests >> testAllAttributesSkipDefined [
+
 	| bankTransTable customerTable ownerId btOwnerId customerModel customerDescriptor ownerId2 |
 	bankTransTable := system addEmptyTableNamed: 'BANK_TRANS'.
 	customerTable := system addEmptyTableNamed: 'GR_CUSTOMER'.
@@ -88,13 +89,14 @@ GlorpMappingFromClassModelTests >> testAllAttributesSkipDefined [
 	customerDescriptor table: customerTable.
 	(customerDescriptor newMapping: DirectMapping) from: #id to: ownerId2.
 	system createMappingsFromClassModelIn: customerDescriptor.
-	self assert: customerDescriptor mappings size = 2.
-	self 
-		assert: (customerDescriptor mappingForAttributeNamed: #id) field = ownerId2
+	self assert: customerDescriptor mappings size equals: 2.
+	self
+		assert: (customerDescriptor mappingForAttributeNamed: #id) field equals: ownerId2
 ]
 
 { #category : #Tests }
 GlorpMappingFromClassModelTests >> testDirectMapping [
+
 	| customerTable ownerId descriptor mapping customerModel |
 	customerTable := system addEmptyTableNamed: 'GR_CUSTOMER'.
 	ownerId := customerTable createFieldNamed: 'ID' type: platform int4.
@@ -104,12 +106,13 @@ GlorpMappingFromClassModelTests >> testDirectMapping [
 	descriptor table: customerTable.
 	system createMappingIn: descriptor fromClassModelForAttributeNamed: #id.
 	mapping := descriptor mappingForAttributeNamed: #id.
-	self assert: mapping class = DirectMapping.
-	self assert: mapping field = ownerId
+	self assert: mapping class equals: DirectMapping.
+	self assert: mapping field equals: ownerId
 ]
 
 { #category : #Tests }
 GlorpMappingFromClassModelTests >> testDirectMappingNameFieldNameComputation [
+
 	| customerTable ownerId descriptor mapping customerModel |
 	customerTable := system addEmptyTableNamed: 'GR_CUSTOMER'.
 	ownerId := customerTable createFieldNamed: 'OWNER_ID' type: platform int4.
@@ -120,12 +123,13 @@ GlorpMappingFromClassModelTests >> testDirectMappingNameFieldNameComputation [
 	system attributeNameToFieldNameBlock: [:symbol | 'OWNER_ID'].
 	system createMappingIn: descriptor fromClassModelForAttributeNamed: #id.
 	mapping := descriptor mappingForAttributeNamed: #id.
-	self assert: mapping class = DirectMapping.
-	self assert: mapping field = ownerId
+	self assert: mapping class equals: DirectMapping.
+	self assert: mapping field equals: ownerId
 ]
 
 { #category : #Tests }
 GlorpMappingFromClassModelTests >> testOneToOneRelation [
+
 	| bankTransTable customerTable ownerId btOwnerId bankTransModel descriptor mapping |
 	bankTransTable := system addEmptyTableNamed: 'BANK_TRANS'.
 	customerTable := system addEmptyTableNamed: 'GR_CUSTOMER'.
@@ -142,11 +146,12 @@ GlorpMappingFromClassModelTests >> testOneToOneRelation [
 	descriptor table: bankTransTable.
 	system createMappingIn: descriptor fromClassModelForAttributeNamed: #owner.
 	mapping := descriptor mappingForAttributeNamed: #owner.
-	self assert: mapping class = OneToOneMapping
+	self assert: mapping class equals: OneToOneMapping
 ]
 
 { #category : #Tests }
 GlorpMappingFromClassModelTests >> testToManyRelation [
+
 	| bankTransTable customerTable ownerId btOwnerId mapping customerModel customerDescriptor |
 	bankTransTable := system addEmptyTableNamed: 'BANK_TRANS'.
 	customerTable := system addEmptyTableNamed: 'GR_CUSTOMER'.
@@ -164,6 +169,6 @@ GlorpMappingFromClassModelTests >> testToManyRelation [
 	system createMappingIn: customerDescriptor
 		fromClassModelForAttributeNamed: #transactions.
 	mapping := customerDescriptor mappingForAttributeNamed: #transactions.
-	self assert: mapping class = ToManyMapping.
-	self assert: mapping referenceClass = GlorpBankTransaction
+	self assert: mapping class equals: ToManyMapping.
+	self assert: mapping referenceClass equals: GlorpBankTransaction
 ]

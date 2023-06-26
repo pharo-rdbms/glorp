@@ -44,6 +44,7 @@ GlorpExpressionTableAliasingTest >> testTable [
 
 { #category : #tests }
 GlorpExpressionTableAliasingTest >> testTableSameAsBase [
+
 	| base custTable |
 	base := BaseExpression new.
 	base descriptor: (system descriptorFor: GlorpCustomer).
@@ -53,5 +54,5 @@ GlorpExpressionTableAliasingTest >> testTableSameAsBase [
 	exp assignTableAliasesStartingAt: 1 prefix: ''.
 	base assignTableAliasesStartingAt: 42 prefix: nil.
 	self deny: exp hasTableAliases.
-	self assert: (exp aliasedTableFor: custTable) name = 't42'.
+	self assert: (exp aliasedTableFor: custTable) name equals: 't42'
 ]

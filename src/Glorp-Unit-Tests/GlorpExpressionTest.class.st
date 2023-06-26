@@ -22,22 +22,24 @@ GlorpExpressionTest >> denyIdentityOf: aBlock and: anotherBlock [
 
 { #category : #tests }
 GlorpExpressionTest >> testAndOperation [
+
 	| expression fred base |
 	fred := 'Fred'.
 	base := BaseExpression new.
 	expression := [:a | (a firstName = fred) & (a firstName ~= fred)] asGlorpExpressionOn: base.
 	self assert: expression class == RelationExpression.
-	self assert: expression relation = #AND.
+	self assert: expression relation equals: #AND
 ]
 
 { #category : #tests }
 GlorpExpressionTest >> testAndOperation2 [
+
 	| expression fred base |
 	fred := 'Fred'.
 	base := BaseExpression new.
 	expression := [:a | (a firstName = fred) AND: (a firstName ~= fred)] asGlorpExpressionOn: base.
 	self assert: expression class == RelationExpression.
-	self assert: expression relation = #AND.
+	self assert: expression relation equals: #AND
 ]
 
 { #category : #tests }
@@ -83,12 +85,13 @@ GlorpExpressionTest >> testAnySatisfyPrintJoin [
 
 { #category : #tests }
 GlorpExpressionTest >> testBetweenAnd [
+
 	| expression base |
 	base := BaseExpression new.
 	expression := [:a | a between: 3 and: 4] asGlorpExpressionOn: base.
 	self assert: expression class == InfixFunction.
-	self assert: expression name = 'BETWEEN AND'.
-	self assert: (expression arguments collect: [:each | each value]) = (Array with: 3 with: 4).
+	self assert: expression name equals: 'BETWEEN AND'.
+	self assert: (expression arguments collect: [:each | each value]) equals: (Array with: 3 with: 4)
 ]
 
 { #category : #tests }
@@ -115,11 +118,12 @@ GlorpExpressionTest >> testFindingMapping [
 
 { #category : #tests }
 GlorpExpressionTest >> testGetField [
+
 	| expression |
 	expression := [:cust | cust getField: 'ID'] asGlorpExpressionForDescriptor: (system descriptorFor: GlorpCustomer).
-	self assert: expression sqlString = 'GR_CUSTOMER.ID'.
-	self assert: expression class = FieldExpression.
-	self assert: expression field table = (system tableNamed: 'GR_CUSTOMER').
+	self assert: expression sqlString equals: 'GR_CUSTOMER.ID'.
+	self assert: expression class equals: FieldExpression.
+	self assert: expression field table equals: (system tableNamed: 'GR_CUSTOMER')
 ]
 
 { #category : #tests }
@@ -133,12 +137,13 @@ GlorpExpressionTest >> testGetFieldAmbiguous [
 
 { #category : #tests }
 GlorpExpressionTest >> testGetFieldFromSecondaryTable [
+
 	| expression |
 	expression := [:pass | pass getField: 'POINTS']
 		asGlorpExpressionForDescriptor: (system descriptorFor: GlorpPassenger).
-	self assert: expression sqlString = 'FREQUENT_FLYER.POINTS'.
-	self assert: expression class = FieldExpression.
-	self assert: expression field table = (system tableNamed: 'FREQUENT_FLYER').
+	self assert: expression sqlString equals: 'FREQUENT_FLYER.POINTS'.
+	self assert: expression class equals: FieldExpression.
+	self assert: expression field table equals: (system tableNamed: 'FREQUENT_FLYER')
 ]
 
 { #category : #'As yet unclassified' }
@@ -154,29 +159,30 @@ GlorpExpressionTest >> testIsNullPrint [
 
 { #category : #tests }
 GlorpExpressionTest >> testJoinOperation [
+
 	| userExpression base expression addressTable personTable query field1 field2 join |
 	addressTable := system tableNamed: 'GR_ADDRESS'.
 	personTable := system tableNamed: 'PERSON'.
 	base := BaseExpression new.
 	base descriptor: (system descriptorFor: GlorpPerson).
-	userExpression := [:aPerson | aPerson address number = 12] 
+	userExpression := [:aPerson | aPerson address number = 12]
 				asGlorpExpressionOn: base.
 	query := SimpleQuery readOneOf: GlorpPerson where: userExpression.
 	query session: (GlorpSession new system: system).
-	self assert: (userExpression additionalExpressionsIn: query) size = 1.
+	self assert: (userExpression additionalExpressionsIn: query) size equals: 1.
 	query prepare.
 	expression := query whereClause.
-	self assert: query joins size = 1.
+	self assert: query joins size equals: 1.
 	join := query joins first.
 	self
 		assert: expression == userExpression;
 		assert: expression relation == #=.
 	field1 := join leftChild field.
 	self assert: field1 table parent == personTable.
-	self assert: field1 name = 'ADDRESS_ID'.
+	self assert: field1 name equals: 'ADDRESS_ID'.
 	field2 := join rightChild field.
 	self assert: field2 table parent == addressTable.
-	self assert: field2 name = 'ID'.
+	self assert: field2 name equals:'ID'
 ]
 
 { #category : #tests }
@@ -224,12 +230,13 @@ GlorpExpressionTest >> testNotNullPrint [
 
 { #category : #tests }
 GlorpExpressionTest >> testOrOperation [
+
 	| expression fred base |
 	fred := 'Fred'.
 	base := BaseExpression new.
 	expression := [:a | (a firstName = fred) | (a firstName ~= fred)] asGlorpExpressionOn: base.
 	self assert: expression class == RelationExpression.
-	self assert: expression relation = #OR.
+	self assert: expression relation equals: #OR
 ]
 
 { #category : #tests }
@@ -239,7 +246,7 @@ GlorpExpressionTest >> testOrOperation2 [
 	base := BaseExpression new.
 	expression := [:a | (a firstName = fred) OR: (a firstName ~= fred)] asGlorpExpressionOn: base.
 	self assert: expression class == RelationExpression.
-	self assert: expression relation = #OR.
+	self assert: expression relation equals: #OR.
 ]
 
 { #category : #tests }

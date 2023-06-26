@@ -106,6 +106,7 @@ GlorpBreadthFirstTopologicalSortTest >> testBasicSort2 [
 
 { #category : #tests }
 GlorpBreadthFirstTopologicalSortTest >> testBasicSortCompleteGraph [
+
 	| one two three |
 	one := GlorpBreadthFirstTopologicalSortItem new id: 1.
 	two := GlorpBreadthFirstTopologicalSortItem new id: 2.
@@ -117,7 +118,7 @@ GlorpBreadthFirstTopologicalSortTest >> testBasicSortCompleteGraph [
 	two relateTo: three.
 	two relateTo: one.
 	self sort: (Array with: one with: two with: three).
-	self assert: sorted size = 3.
+	self assert: sorted size equals: 3
 ]
 
 { #category : #tests }

@@ -55,21 +55,21 @@ GlorpQueryTableAliasingTest >> testBuildingObject [
 	elementBuilder buildObjectFrom: #(12 'Name').
 	customer := elementBuilder instance.
 	self assert: customer class == GlorpCustomer.
-	self assert: customer id = 12.
-	self assert: customer name = 'Name'.
+	self assert: customer id equals: 12.
+	self assert: customer name equals: 'Name'
 ]
 
 { #category : #tests }
 GlorpQueryTableAliasingTest >> testElementBuilderFields [
-	elementBuilder fieldsForSelectStatement 
-		do: [:each | self assert: each table name = 't1']
+	elementBuilder fieldsForSelectStatement
+		do: [:each | self assert: each table name equals: 't1']
 ]
 
 { #category : #tests }
 GlorpQueryTableAliasingTest >> testExpressionTableAlias [
 	| fields |
 	fields := expression translateFields: expression descriptor mappedFields.
-	fields do: [:each | self assert: each table name = 't1']
+	fields do: [:each | self assert: each table name equals: 't1']
 ]
 
 { #category : #tests }
@@ -84,7 +84,7 @@ GlorpQueryTableAliasingTest >> testQueryPrintingFields [
 	query computeFields.
 	stream := String new writeStream.
 	query printSelectFieldsOn: stream.
-	self assert: stream contents = 't1.ID, t1.NAME'
+	self assert: stream contents equals: 't1.ID, t1.NAME'
 ]
 
 { #category : #tests }
@@ -97,7 +97,7 @@ GlorpQueryTableAliasingTest >> testQueryPrintingSimpleWhereClause [
 { #category : #tests }
 GlorpQueryTableAliasingTest >> testQueryPrintingTables [
 	| stream string |
-	query 
+	query
 		initResultClass: GlorpCustomer
 		whereClause: expression
 		singleObject: true.
@@ -106,5 +106,5 @@ GlorpQueryTableAliasingTest >> testQueryPrintingTables [
 	stream := String new writeStream.
 	query printTablesOn: stream.
 	string := stream contents.
-	self assert: string withUnixLineEndings = '<n> FROM GR_CUSTOMER t1' expandMacros withUnixLineEndings.
+	self assert: string withUnixLineEndings equals: '<n> FROM GR_CUSTOMER t1' expandMacros withUnixLineEndings
 ]

@@ -12,7 +12,7 @@ GlorpMockSession >> accessor [
 	^GlorpMockAccessor new.
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 GlorpMockSession >> initialize [
 
 	super initialize.

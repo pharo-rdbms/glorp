@@ -105,7 +105,7 @@ GlorpMappingTest >> testManyToMany [
 	linkTable := system tableNamed: 'CUSTOMER_ACCT_LINK'.
 
 	self write: customer.
-	customer accounts do: [:each | 
+	customer accounts do: [:each |
 		self write: each].
 
 	self assert: (rowMap includesRowForTable: customerTable withKey: customer).
@@ -114,15 +114,15 @@ GlorpMappingTest >> testManyToMany [
 		self assert: (rowMap includesRowForTable: linkTable withKey: (RowMapKey new key1: customer; key2: each))].
 
 	customer accounts do: [:each | | rowMapKey |
-		self assert: ((self rowFor: each) at: (accountTable fieldNamed: 'ID')) = each id.
+		self assert: ((self rowFor: each) at: (accountTable fieldNamed: 'ID')) equals: each id.
 		rowMapKey := RowMapKey new key1: customer; key2: each.
 		linkRow := rowMap rowForTable: linkTable withKey: rowMapKey.
-		self assert: (linkRow at: (linkTable fieldNamed: 'ACCT_ID')) = each id.
-		self assert: (linkRow at: (linkTable fieldNamed: 'CUSTOMER_ID')) = customer id.
+		self assert: (linkRow at: (linkTable fieldNamed: 'ACCT_ID')) equals: each id.
+		self assert: (linkRow at: (linkTable fieldNamed: 'CUSTOMER_ID')) equals: customer id.
 		].
-	self assert: ((self rowFor: customer) at: (customerTable fieldNamed: 'ID')) = customer id.
-	self assert: ((rowMap numberOfEntriesForTable: linkTable) = 2).
-	self assert: ((rowMap numberOfEntriesForTable: customerTable) = 1).
+	self assert: ((self rowFor: customer) at: (customerTable fieldNamed: 'ID')) equals: customer id.
+	self assert: (rowMap numberOfEntriesForTable: linkTable) equals: 2.
+	self assert: (rowMap numberOfEntriesForTable: customerTable) equals: 1
 ]
 
 { #category : #tests }
@@ -144,7 +144,7 @@ GlorpMappingTest >> testMissingDescriptor [
 
 { #category : #tests }
 GlorpMappingTest >> testMultipleTableCreation [
-	
+
 	| descriptor table passenger table2 row1 row2 |
 	descriptor := system descriptorFor: GlorpPassenger.
 	passenger := GlorpPassenger example1.
@@ -155,20 +155,17 @@ GlorpMappingTest >> testMultipleTableCreation [
 	self assert: (rowMap includesRowForTable: table withKey: passenger).
 	self assert: (rowMap includesRowForTable: table2 withKey: passenger).
 	row1 := rowMap rowForTable: table withKey: passenger.
-	self assert: (row1 at: (table fieldNamed: 'ID'))
-			= passenger id.
-	self assert: (row1 at: (table fieldNamed: 'NAME'))
-			= passenger name.
+	self assert: (row1 at: (table fieldNamed: 'ID')) equals: passenger id.
+	self assert: (row1 at: (table fieldNamed: 'NAME')) equals: passenger name.
 	row2 := rowMap rowForTable: table2 withKey: passenger.
-	self assert: (row2 at: (table2 fieldNamed: 'ID'))
-			= passenger id.
-	self assert: (row2 at: (table2 fieldNamed: 'POINTS')) = passenger frequentFlyerPoints.
-	self assert: rowMap numberOfEntries = 3
+	self assert: (row2 at: (table2 fieldNamed: 'ID')) equals: passenger id.
+	self assert: (row2 at: (table2 fieldNamed: 'POINTS')) equals: passenger frequentFlyerPoints.
+	self assert: rowMap numberOfEntries equals: 3
 ]
 
 { #category : #tests }
 GlorpMappingTest >> testMultipleTableCreationWithOneMissing [
-	
+
 	| descriptor table passenger table2 row1 |
 	descriptor := system descriptorFor: GlorpPassenger.
 	passenger := GlorpPassenger example1.
@@ -181,11 +178,9 @@ GlorpMappingTest >> testMultipleTableCreationWithOneMissing [
 	self assert: (rowMap includesRowForTable: table withKey: passenger).
 	self deny: (rowMap includesRowForTable: table2 withKey: passenger).
 	row1 := rowMap rowForTable: table withKey: passenger.
-	self assert: (row1 at: (table fieldNamed: 'ID'))
-			= passenger id.
-	self assert: (row1 at: (table fieldNamed: 'NAME'))
-			= passenger name.
-	self assert: rowMap numberOfEntries = 1.
+	self assert: (row1 at: (table fieldNamed: 'ID')) equals: passenger id.
+	self assert: (row1 at: (table fieldNamed: 'NAME')) equals: passenger name.
+	self assert: rowMap numberOfEntries equals: 1
 ]
 
 { #category : #tests }
@@ -200,7 +195,7 @@ GlorpMappingTest >> testNestedMergedOneToOneReversingWriteOrder [
 
 { #category : #tests }
 GlorpMappingTest >> testNilOneToOne [
-	
+
 	| person  personTable addressTable |
 	person := GlorpPerson example1.
 	person address: nil.
@@ -212,7 +207,7 @@ GlorpMappingTest >> testNilOneToOne [
 	self assert: (rowMap includesRowForTable: personTable withKey: person).
 	self deny: (rowMap includesRowForTable: addressTable withKey: person address).
 
-	self assert: rowMap numberOfEntries = 1.
+	self assert: rowMap numberOfEntries equals: 1
 ]
 
 { #category : #tests }
@@ -232,13 +227,13 @@ GlorpMappingTest >> testOneToMany [
 		self assert: (rowMap includesRowForTable: transactionTable withKey: each)].
 
 	customer transactions do: [:each |
-		self assert: ((self rowFor: each) at: (transactionTable fieldNamed: 'OWNER_ID')) = customer id].
-	self assert: ((self rowFor: customer) at: (customerTable fieldNamed: 'ID')) = customer id.
+		self assert: ((self rowFor: each) at: (transactionTable fieldNamed: 'OWNER_ID')) equals: customer id].
+	self assert: ((self rowFor: customer) at: (customerTable fieldNamed: 'ID')) equals: customer id
 ]
 
 { #category : #tests }
 GlorpMappingTest >> testOneToOne [
-	
+
 	| person  personTable addressTable |
 	person := GlorpPerson example1.
 	self write: person.
@@ -249,9 +244,9 @@ GlorpMappingTest >> testOneToOne [
 	self assert: (rowMap includesRowForTable: personTable withKey: person).
 	self assert: (rowMap includesRowForTable: addressTable withKey: person address).
 
-	self assert: ((self rowFor: person address) at: (addressTable fieldNamed: 'ID')) = person address id.
-	self assert: ((self rowFor: person) at: (personTable fieldNamed: 'ADDRESS_ID')) = person address id.
-	self assert: rowMap numberOfEntries = 2.
+	self assert: ((self rowFor: person address) at: (addressTable fieldNamed: 'ID')) equals: person address id.
+	self assert: ((self rowFor: person) at: (personTable fieldNamed: 'ADDRESS_ID')) equals: person address id.
+	self assert: rowMap numberOfEntries equals: 2
 ]
 
 { #category : #tests }
@@ -276,7 +271,7 @@ GlorpMappingTest >> testOneToOneWithProxy [
 	self deny: (rowMap includesRowForTable: addressTable withKey: person address).
 
 	self deny: ((self rowFor: person) hasValueFor: (personTable fieldNamed: 'ADDRESS_ID')).
-	self assert: rowMap numberOfEntries = 1.
+	self assert: rowMap numberOfEntries equals: 1.
 ]
 
 { #category : #tests }
@@ -290,9 +285,9 @@ GlorpMappingTest >> testRowCreation [
 	descriptor createRowsFor: person in: rowMap.
 	self assert: (rowMap includesRowForTable: table withKey: person).
 	row := rowMap rowForTable: table withKey: person.
-	self assert: (row at: (table fieldNamed: 'ID')) = person id.
-	self assert: (row at: (table fieldNamed: 'NAME')) = person name.
-	self assert: rowMap numberOfEntries = 2.
+	self assert: (row at: (table fieldNamed: 'ID')) equals: person id.
+	self assert: (row at: (table fieldNamed: 'NAME')) equals: person name.
+	self assert: rowMap numberOfEntries equals: 2
 ]
 
 { #category : #support }

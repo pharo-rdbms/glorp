@@ -21,16 +21,17 @@ GlorpSQLPrintingTest >> assertGroupWritingOnPlatform: platform [
 
 { #category : #tests }
 GlorpSQLPrintingTest >> testDatePrinting [
+
 	| date stream |
 	date := Dialect newDateWithYears: 1997 months: 11 days: 14.
 	stream := WriteStream on: String new.
 	date glorpPrintSQLOn: stream.
-	self assert: stream contents = '''1997-11-14'''.
+	self assert: stream contents equals: '''1997-11-14'''.
 
 	date := Dialect newDateWithYears: 2002 months: 5 days: 2.
 	stream := WriteStream on: String new.
 	date glorpPrintSQLOn: stream.
-	self assert: stream contents = '''2002-05-02'''.
+	self assert: stream contents equals: '''2002-05-02'''
 ]
 
 { #category : #tests }

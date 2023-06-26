@@ -66,35 +66,37 @@ GlorpJoinTest >> testAsExpressionSingle [
 
 { #category : #tests }
 GlorpJoinTest >> testCompoundSQLPrinting [
+
 	| stream params|
 	stream := WriteStream on: (String new: 100).
 	params := Dictionary new.
 	params at: ((system tableNamed: 'BANK_ACCT') fieldNamed: 'ID') put: 1.
 	params at: ((system tableNamed: 'BANK_ACCT') fieldNamed: 'BANK_CODE') put: 3.
 	compoundExpression printSQLOn: stream withParameters: params.
-	self assert: stream contents = 'PERSON.NAME = 1 AND PERSON.ADDRESS_ID = 3'.
+	self assert: stream contents equals: 'PERSON.NAME = 1 AND PERSON.ADDRESS_ID = 3'
 ]
 
 { #category : #tests }
 GlorpJoinTest >> testCreation [
 
-	self assert: expression allSourceFields size = 1.
+	self assert: expression allSourceFields size equals: 1.
 	self assert: expression allSourceFields first == ((system tableNamed: 'BANK_ACCT') fieldNamed: 'ID').
 ]
 
 { #category : #tests }
 GlorpJoinTest >> testParameterCount [
 
-	self assert: expression numberOfParameters = 1.
-	self assert: compoundExpression numberOfParameters = 2.
+	self assert: expression numberOfParameters equals: 1.
+	self assert: compoundExpression numberOfParameters equals: 2
 ]
 
 { #category : #tests }
 GlorpJoinTest >> testSQLPrinting [
+
 	| stream params |
 	stream := WriteStream on: (String new: 100).
 	params := Dictionary new.
 	params at: ((system tableNamed: 'BANK_ACCT') fieldNamed: 'ID') put: 'abc'.
 	expression printSQLOn: stream withParameters: params.
-	self assert: stream contents = 'CUSTOMER_ACCT_LINK.ACCT_ID = ''abc'''
+	self assert: stream contents equals: 'CUSTOMER_ACCT_LINK.ACCT_ID = ''abc'''
 ]

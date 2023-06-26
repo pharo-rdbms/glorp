@@ -77,10 +77,11 @@ GlorpSessionTest >> testDuplicateDetection [
 
 { #category : #tests }
 GlorpSessionTest >> testExecuteQuery [
+
 	| q result |
 	q := GlorpQueryStub new result: 3.
 	result := session execute: q.
-	self assert: result = 3
+	self assert: result equals: 3
 ]
 
 { #category : #tests }
@@ -126,15 +127,16 @@ GlorpSessionTest >> testHasObjectOfClassExpired2 [
 
 { #category : #tests }
 GlorpSessionTest >> testSQLDeleteStringFor [
+
 	| row table string |
 	table := session system tableNamed: 'GR_ADDRESS'.
 	row := DatabaseRow newForTable: table.
 	row at: (table fieldNamed: 'ID') put: 12.
 	row at: (table fieldNamed: 'STREET') put: 'some street'.
 	string := (DeleteCommand forRow: row useBinding: true session: session) sqlString.
-	self assert: string = 'DELETE FROM GR_ADDRESS WHERE ID = ?'.
+	self assert: string equals: 'DELETE FROM GR_ADDRESS WHERE ID = ?'.
 	string := (DeleteCommand forRow: row useBinding: false session: session) sqlString.
-	self assert: string = 'DELETE FROM GR_ADDRESS WHERE ID = 12'.
+	self assert: string equals: 'DELETE FROM GR_ADDRESS WHERE ID = 12'
 ]
 
 { #category : #tests }

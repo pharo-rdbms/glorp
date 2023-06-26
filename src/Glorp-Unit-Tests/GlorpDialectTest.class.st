@@ -9,9 +9,10 @@ Class {
 
 { #category : #tests }
 GlorpDialectTest >> testBlockArgumentCount [
-	self assert: (Dialect argumentCountFor: [3]) = 0.
-	self assert: (Dialect argumentCountFor: [:a | 3]) = 1.
-	self assert: (Dialect argumentCountFor: [:a :b | a <= b]) = 2.
+
+	self assert: (Dialect argumentCountFor: [3]) equals: 0.
+	self assert: (Dialect argumentCountFor: [:a | 3]) equals: 1.
+	self assert: (Dialect argumentCountFor: [:a :b | a <= b]) equals: 2
 ]
 
 { #category : #tests }
@@ -32,6 +33,7 @@ GlorpDialectTest >> testClassImportLookup [
 
 { #category : #tests }
 GlorpDialectTest >> testTimeSetMillisecond [
+
 	| time oldMs oldSec oldMin newMs |
 	Dialect supportsMillisecondsInTimes ifFalse: [^self].
 	time := Time now.
@@ -40,12 +42,12 @@ GlorpDialectTest >> testTimeSetMillisecond [
 	oldMin := time minutes.
 	newMs := oldMs > 989 ifTrue: [3] ifFalse: [oldMs + 10].
 	time millisecond: newMs.
-	self assert: time milliseconds = newMs.
-	self assert: time seconds truncated = oldSec.
-	self assert: time minutes = oldMin.
+	self assert: time milliseconds equals: newMs.
+	self assert: time seconds truncated equals: oldSec.
+	self assert: time minutes equals: oldMin
 ]
 
 { #category : #tests }
 GlorpDialectTest >> testTokensBasedOn [
-	self assert: (Dialect tokensBasedOn: '.' in: 'abc.def.ghi') asArray = #('abc' 'def' 'ghi').
+	self assert: (Dialect tokensBasedOn: '.' in: 'abc.def.ghi') asArray equals: #('abc' 'def' 'ghi')
 ]

@@ -43,6 +43,7 @@ GlorpAttributeModelTest >> testGetSetAssociation [
 
 { #category : #tests }
 GlorpAttributeModelTest >> testGetSetObject [
+
 	| attributeModel obj classModel |
 	obj := (GlorpObjectWithNoAccessors new)
 								extremelyPrivateValue: 'Glorp';
@@ -52,9 +53,9 @@ GlorpAttributeModelTest >> testGetSetObject [
 	attributeModel := classModel newAttributeNamed: #alue.
 
 	attributeModel useDirectAccess: true.
-	self assert: 'Glorp' = (attributeModel getValueFrom: obj).
+	self assert: 'Glorp' equals: (attributeModel getValueFrom: obj).
 	attributeModel setValueIn: obj to: 'GLORP'.
-	self assert: 'GLORP' = (attributeModel getValueFrom: obj).
+	self assert: 'GLORP' equals: (attributeModel getValueFrom: obj).
 
 	attributeModel useDirectAccess: false.
 	self should: [attributeModel getValueFrom: obj] raise: Dialect error.

@@ -25,15 +25,17 @@ GlorpDescriptorTest >> testAllClassesAndNames [
 
 { #category : #tests }
 GlorpDescriptorTest >> testAllMappingsForField [
+
 	| descriptor mappings |
 	descriptor := system descriptorFor: GlorpCustomer.
-	mappings := descriptor 
+	mappings := descriptor
 				allMappingsForField: ((system tableNamed: 'GR_CUSTOMER') fieldNamed: 'ID').
-	self assert: mappings first attributeName = #id
+	self assert: mappings first attributeName equals: #id
 ]
 
 { #category : #tests }
 GlorpDescriptorTest >> testBuildBankTransactionAndDependentsFromRow [
+
 	| transactionDescriptor object row moneyDescriptor money1 table translations session builder |
 	session := GlorpMockSession new.
 	session system: system.
@@ -43,7 +45,7 @@ GlorpDescriptorTest >> testBuildBankTransactionAndDependentsFromRow [
 	builder := ObjectBuilder new.
 	builder row: row.
 	transactionDescriptor populateObject: object inBuilder: builder.
-	self assert: object id = 99.
+	self assert: object id equals: 99.
 	moneyDescriptor := system descriptorFor: GlorpMoney.
 	money1 := GlorpMoney new.
 	table := system tableNamed: 'MONEY_IMAGINARY_TABLE'.
@@ -60,6 +62,7 @@ GlorpDescriptorTest >> testBuildBankTransactionAndDependentsFromRow [
 
 { #category : #tests }
 GlorpDescriptorTest >> testBuildPersonFromRow [
+
 	| descriptor object address session builder |
 	session := GlorpMockSession new.
 	session system: system.
@@ -71,10 +74,10 @@ GlorpDescriptorTest >> testBuildPersonFromRow [
 	builder := ObjectBuilder new.
 	builder row: #(456 'Ralph' 127).
 	descriptor populateObject: object inBuilder: builder.
-	self assert: object class = GlorpPerson.
-	self assert: object id = 456.
+	self assert: object class equals: GlorpPerson.
+	self assert: object id equals: 456.
 	self assert: object name = 'Ralph'.
-	self assert: object address getValue == address.
+	self assert: object address getValue == address
 ]
 
 { #category : #tests }
@@ -90,7 +93,7 @@ GlorpDescriptorTest >> testMappedFields [
 
 	| descriptor |
 	descriptor := system descriptorFor: GlorpBankTransaction.
-	self assert: (descriptor mappedFields) = (descriptor table fields).
+	self assert: (descriptor mappedFields) equals: (descriptor table fields).
 ]
 
 { #category : #tests }
@@ -99,7 +102,7 @@ GlorpDescriptorTest >> testMappingForField [
 	descriptor := system descriptorFor: GlorpCustomer.
 	mapping := descriptor 
 				directMappingForField: ((system tableNamed: 'GR_CUSTOMER') fieldNamed: 'ID').
-	self assert: mapping attributeName = #id
+	self assert: mapping attributeName equals: #id
 ]
 
 { #category : #tests }
@@ -112,8 +115,8 @@ GlorpDescriptorTest >> testPrimaryKeyExpressionFor [
 		primaryKeyExpressionFor: trans
 		basedOn: BaseExpression new
 		relation: #=.
-	self assert: exp relation = #=.
-	self assert: exp rightChild value = 42.
+	self assert: exp relation equals: #=.
+	self assert: exp rightChild value equals: 42.
 ]
 
 { #category : #tests }

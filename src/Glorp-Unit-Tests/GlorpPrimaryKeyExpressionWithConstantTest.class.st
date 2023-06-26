@@ -25,7 +25,7 @@ GlorpPrimaryKeyExpressionWithConstantTest >> setUp [
 
 { #category : #tests }
 GlorpPrimaryKeyExpressionWithConstantTest >> testAsExpressionCompound [
-	
+
 	| e personTable |
 	personTable := system tableNamed: 'PERSON'.
 
@@ -35,12 +35,12 @@ GlorpPrimaryKeyExpressionWithConstantTest >> testAsExpressionCompound [
 	self assert: (e rightChild leftChild isKindOf: FieldExpression).
 	self assert: e rightChild leftChild field == (personTable fieldNamed: 'ADDRESS_ID').
 	self assert: (e rightChild rightChild isKindOf: ConstantExpression).
-	self assert: e rightChild rightChild value = 'B'.
+	self assert: e rightChild rightChild value equals: 'B'
 ]
 
 { #category : #tests }
 GlorpPrimaryKeyExpressionWithConstantTest >> testAsExpressionSingle [
-	
+
 	| e field param |
 	e := expression asGeneralGlorpExpression.
 	self assert: (e isKindOf: RelationExpression).
@@ -50,31 +50,33 @@ GlorpPrimaryKeyExpressionWithConstantTest >> testAsExpressionSingle [
 	self assert: field field == ((system tableNamed: 'CUSTOMER_ACCT_LINK') fieldNamed: 'ACCT_ID').
 	param := e rightChild.
 	self assert: (param isKindOf: ConstantExpression).
-	self assert: param value = 7.
+	self assert: param value equals: 7
 ]
 
 { #category : #tests }
 GlorpPrimaryKeyExpressionWithConstantTest >> testCompoundSQLPrinting [
+
 	| stream params|
 	stream := WriteStream on: (String new: 100).
 	params := Dictionary new.
 	params at: ((system tableNamed: 'BANK_ACCT') fieldNamed: 'ID') put: 1.
 	compoundExpression printSQLOn: stream withParameters: params.
-	self assert: stream contents = 'PERSON.NAME = 1 AND PERSON.ADDRESS_ID = ''B'''.
+	self assert: stream contents equals: 'PERSON.NAME = 1 AND PERSON.ADDRESS_ID = ''B'''
 ]
 
 { #category : #tests }
 GlorpPrimaryKeyExpressionWithConstantTest >> testParameterCount [
 
-	self assert: expression numberOfParameters = 1.
-	self assert: compoundExpression numberOfParameters = 2.
+	self assert: expression numberOfParameters equals: 1.
+	self assert: compoundExpression numberOfParameters equals: 2.
 ]
 
 { #category : #tests }
 GlorpPrimaryKeyExpressionWithConstantTest >> testSQLPrinting [
+
 	| stream params |
 	stream := WriteStream on: (String new: 100).
 	params := Dictionary new.
 	expression printSQLOn: stream withParameters: params.
-	self assert: stream contents = 'CUSTOMER_ACCT_LINK.ACCT_ID = 7'
+	self assert: stream contents equals: 'CUSTOMER_ACCT_LINK.ACCT_ID = 7'
 ]

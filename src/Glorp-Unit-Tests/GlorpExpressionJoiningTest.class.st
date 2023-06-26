@@ -97,7 +97,7 @@ GlorpExpressionJoiningTest >> testMapping [
 	exp := base get: #foo.
 	result := self join: exp. 
 	self assert: result base == source.
-	self assert: result name = #foo.
+	self assert: result name equals: #foo.
 ]
 
 { #category : #tests }
@@ -147,7 +147,7 @@ GlorpExpressionJoiningTest >> testSelfJoinWithPrimaryKeyExpression [
 	result := self join: pkExpression.
 	self assert: result leftChild basicField == field.
 	self assert: result rightChild basicField == field.
-	self assert: result rightChild base name = #relation.
+	self assert: result rightChild base name equals: #relation.
 ]
 
 { #category : #tests }

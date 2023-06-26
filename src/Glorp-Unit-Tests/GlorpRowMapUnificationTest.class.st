@@ -36,6 +36,7 @@ GlorpRowMapUnificationTest >> setUp [
 
 { #category : #tests }
 GlorpRowMapUnificationTest >> testDoubleRowUnificationDifferentRows [
+
 	rowMap
 		unifyField: f1
 		key: o1
@@ -47,13 +48,14 @@ GlorpRowMapUnificationTest >> testDoubleRowUnificationDifferentRows [
 		withField: f2
 		key: o2.
 	(rowMap rowForTable: t1 withKey: o1) at: f1 put: 42.
-	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) = 42.
-	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) = 42.
-	self assert: ((rowMap rowForTable: t3 withKey: o3) at: f3) = 42.
+	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) equals: 42.
+	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) equals: 42.
+	self assert: ((rowMap rowForTable: t3 withKey: o3) at: f3) equals: 42
 ]
 
 { #category : #tests }
 GlorpRowMapUnificationTest >> testDoubleRowUnificationDifferentRows2 [
+
 	rowMap
 		unifyField: f1
 		key: o1
@@ -65,13 +67,14 @@ GlorpRowMapUnificationTest >> testDoubleRowUnificationDifferentRows2 [
 		withField: f3
 		key: o3.
 	(rowMap rowForTable: t1 withKey: o1) at: f1 put: 42.
-	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) = 42.
-	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) = 42.
-	self assert: ((rowMap rowForTable: t3 withKey: o3) at: f3) = 42.
+	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) equals: 42.
+	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) equals: 42.
+	self assert: ((rowMap rowForTable: t3 withKey: o3) at: f3) equals: 42
 ]
 
 { #category : #tests }
 GlorpRowMapUnificationTest >> testDoubleRowUnificationDifferentRows3 [
+
 	rowMap
 		unifyField: f1
 		key: o1
@@ -83,9 +86,9 @@ GlorpRowMapUnificationTest >> testDoubleRowUnificationDifferentRows3 [
 		withField: f3
 		key: o3.
 	(rowMap rowForTable: t3 withKey: o3) at: f3 put: 42.
-	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) = 42.
-	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) = 42.
-	self assert: ((rowMap rowForTable: t3 withKey: o3) at: f3) = 42.
+	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) equals: 42.
+	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) equals: 42.
+	self assert: ((rowMap rowForTable: t3 withKey: o3) at: f3) equals: 42
 ]
 
 { #category : #tests }
@@ -110,14 +113,15 @@ GlorpRowMapUnificationTest >> testDoubleRowUnificationDifferentRows4 [
 		withField: f3
 		key: o3.
 	(rowMap rowForTable: t1 withKey: o1) at: f1 put: 42.
-	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) = 42.
-	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) = 42.
-	self assert: ((rowMap rowForTable: t3 withKey: o3) at: f3) = 42.
-	self assert: ((rowMap rowForTable: t4 withKey: o4) at: f4) = 42.
+	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) equals: 42.
+	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) equals: 42.
+	self assert: ((rowMap rowForTable: t3 withKey: o3) at: f3) equals: 42.
+	self assert: ((rowMap rowForTable: t4 withKey: o4) at: f4) equals: 42
 ]
 
 { #category : #tests }
 GlorpRowMapUnificationTest >> testDoubleRowUnificationSameRow [
+
 	rowMap
 		unifyField: f1
 		key: o1
@@ -129,12 +133,13 @@ GlorpRowMapUnificationTest >> testDoubleRowUnificationSameRow [
 		withField: f2
 		key: o2.
 	(rowMap rowForTable: t1 withKey: o1) at: f1 put: 42.
-	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) = 42.
-	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) = 42.
+	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) equals: 42.
+	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) equals: 42
 ]
 
 { #category : #tests }
 GlorpRowMapUnificationTest >> testDoubleRowUnificationSameRow2 [
+
 	rowMap
 		unifyField: f1
 		key: o1
@@ -146,8 +151,8 @@ GlorpRowMapUnificationTest >> testDoubleRowUnificationSameRow2 [
 		withField: f1
 		key: o1.
 	(rowMap rowForTable: t1 withKey: o1) at: f1 put: 42.
-	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) = 42.
-	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) = 42.
+	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) equals: 42.
+	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) equals: 42
 ]
 
 { #category : #tests }
@@ -159,17 +164,18 @@ GlorpRowMapUnificationTest >> testIteration [
 	r3 := rowMap findOrAddRowForTable: t2 withKey: o2.
 	rows := IdentitySet new.
 	count := 0.
-	rowMap rowsDo: [:each | 
+	rowMap rowsDo: [:each |
 		count := count + 1.
 		rows add: each].
-	self assert: count = 3.
+	self assert: count equals: 3.
 	self assert: (rows includes: r1).
 	self assert: (rows includes: r3).
-	self assert: (rows includes: r2).
+	self assert: (rows includes: r2)
 ]
 
 { #category : #'tests-relatedrows' }
 GlorpRowMapUnificationTest >> testRelatedRowInternal [
+
 	| cf1 r1 r2 r3 |
 	cf1 := t1 createFieldNamed: 'cf1' type: (platform varChar: 10).
 	t1 addForeignKeyFrom: cf1 to: f1.
@@ -190,8 +196,8 @@ GlorpRowMapUnificationTest >> testRelatedRowInternal [
 	r3 := rowMap rowForTable: t1 withKey: o3.
 	r3 at: f1 put: o3.
 	self assert: (r1 relatedRowsIn: rowMap) isEmpty.
-	self assert: (r2 relatedRowsIn: rowMap) asArray = (Array with: r1).
-	self assert: (r3 relatedRowsIn: rowMap) asArray = (Array with: r1).
+	self assert: (r2 relatedRowsIn: rowMap) asArray equals: (Array with: r1).
+	self assert: (r3 relatedRowsIn: rowMap) asArray equals: (Array with: r1)
 ]
 
 { #category : #tests }
@@ -207,9 +213,9 @@ GlorpRowMapUnificationTest >> testStoreThenUnify [
 		key: o1
 		withField: f2
 		key: o2.
-	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) = 12.
-	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) = 12.
-	self assert: ((rowMap rowForTable: t3 withKey: o3) at: f3) = 12.
+	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) equals: 12.
+	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) equals: 12.
+	self assert: ((rowMap rowForTable: t3 withKey: o3) at: f3) equals: 12
 ]
 
 { #category : #tests }
@@ -234,6 +240,7 @@ GlorpRowMapUnificationTest >> testStoreWithRowMapKey [
 
 { #category : #'tests-transformation' }
 GlorpRowMapUnificationTest >> testUnifyExtraOnSourceSideWithTransformationBeforeStoreForward [
+
 	rowMap
 		unifyField: f1
 		key: o1
@@ -247,9 +254,9 @@ GlorpRowMapUnificationTest >> testUnifyExtraOnSourceSideWithTransformationBefore
 		withField: f3
 		key: o3.
 	(rowMap findOrAddRowForTable: t1 withKey: o1) at: f1 put: 12.
-	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) = 12.
-	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) = 24.
-	self assert: ((rowMap rowForTable: t3 withKey: o3) at: f3) = 12.
+	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) equals: 12.
+	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) equals: 24.
+	self assert: ((rowMap rowForTable: t3 withKey: o3) at: f3) equals: 12
 ]
 
 { #category : #'tests-transformation' }
@@ -267,9 +274,9 @@ GlorpRowMapUnificationTest >> testUnifyExtraOnSourceSideWithTransformationBefore
 		withField: f3
 		key: o3.
 	(rowMap findOrAddRowForTable: t2 withKey: o2) at: f2 put: 24.
-	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) = 12.
-	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) = 24.
-	self assert: ((rowMap rowForTable: t3 withKey: o3) at: f3) = 12.
+	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) equals: 12.
+	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) equals: 24.
+	self assert: ((rowMap rowForTable: t3 withKey: o3) at: f3) equals: 12
 ]
 
 { #category : #'tests-transformation' }
@@ -287,9 +294,9 @@ GlorpRowMapUnificationTest >> testUnifyExtraOnTargetSideWithTransformationBefore
 		withField: f3
 		key: o3.
 	(rowMap findOrAddRowForTable: t1 withKey: o1) at: f1 put: 12.
-	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) = 12.
-	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) = 24.
-	self assert: ((rowMap rowForTable: t3 withKey: o3) at: f3) = 24.
+	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) equals: 12.
+	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) equals: 24.
+	self assert: ((rowMap rowForTable: t3 withKey: o3) at: f3) equals: 24
 ]
 
 { #category : #'tests-transformation' }
@@ -307,13 +314,14 @@ GlorpRowMapUnificationTest >> testUnifyExtraOnTargetSideWithTransformationBefore
 		withField: f3
 		key: o3.
 	(rowMap findOrAddRowForTable: t2 withKey: o2) at: f2 put: 24.
-	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) = 12.
-	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) = 24.
-	self assert: ((rowMap rowForTable: t3 withKey: o3) at: f3) = 24.
+	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) equals: 12.
+	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) equals: 24.
+	self assert: ((rowMap rowForTable: t3 withKey: o3) at: f3) equals: 24
 ]
 
 { #category : #'tests-transformation' }
 GlorpRowMapUnificationTest >> testUnifyWithTransformationAfterStoreForward [
+
 	(rowMap findOrAddRowForTable: t1 withKey: o1) at: f1 put: 12.
 	rowMap
 		unifyField: f1
@@ -322,8 +330,8 @@ GlorpRowMapUnificationTest >> testUnifyWithTransformationAfterStoreForward [
 		key: o2
 		transformationForward: [:value | value * 2]
 		inverse: [:value | value / 2].
-	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) = 12.
-	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) = 24.
+	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) equals: 12.
+	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) equals: 24
 ]
 
 { #category : #'tests-transformation' }
@@ -338,12 +346,13 @@ GlorpRowMapUnificationTest >> testUnifyWithTransformationAfterStoreInverse [
 		key: o2
 		transformationForward: [:value | value * 2]
 		inverse: [:value | value / 2].	"Note: vs. the 6 and 12 you might otherwise expect"
-	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) = 12.
-	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) = 24.
+	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) equals: 12.
+	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) equals: 24
 ]
 
 { #category : #'tests-transformation' }
 GlorpRowMapUnificationTest >> testUnifyWithTransformationBeforeStoreForward [
+
 	rowMap
 		unifyField: f1
 		key: o1
@@ -352,12 +361,13 @@ GlorpRowMapUnificationTest >> testUnifyWithTransformationBeforeStoreForward [
 		transformationForward: [:value | value * 2]
 		inverse: [:value | value / 2].
 	(rowMap findOrAddRowForTable: t1 withKey: o1) at: f1 put: 12.
-	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) = 12.
-	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) = 24.
+	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) equals: 12.
+	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) equals: 24
 ]
 
 { #category : #'tests-transformation' }
 GlorpRowMapUnificationTest >> testUnifyWithTransformationBeforeStoreInverse [
+
 	rowMap
 		unifyField: f1
 		key: o1
@@ -366,6 +376,6 @@ GlorpRowMapUnificationTest >> testUnifyWithTransformationBeforeStoreInverse [
 		transformationForward: [:value | value * 2]
 		inverse: [:value | value / 2].
 	rowMap at: f2 key: o2 put: 12.
-	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) = 6.
-	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) = 12.
+	self assert: ((rowMap rowForTable: t1 withKey: o1) at: f1) equals: 6.
+	self assert: ((rowMap rowForTable: t2 withKey: o2) at: f2) equals: 12
 ]

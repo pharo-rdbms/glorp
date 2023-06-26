@@ -22,7 +22,7 @@ GlorpExpressionIterationTest >> testDoCollection [
 	l := BaseExpression new.
 	r := BaseExpression new.
 	exp leftChild: l; rightChild: r.
-	self assert: ((exp collect: [:each | each]) = (OrderedCollection with: r with: exp)).
+	self assert: ((exp collect: [:each | each]) equals: (OrderedCollection with: r with: exp))
 ]
 
 { #category : #tests }
@@ -36,7 +36,7 @@ GlorpExpressionIterationTest >> testDoField [
 	| exp |
 	exp := FieldExpression new.
 	exp field: nil base: BaseExpression new.
-	self assert: ((exp collect: [:each | each]) = (OrderedCollection with: exp base with: exp)).
+	self assert: ((exp collect: [:each | each]) equals: (OrderedCollection with: exp base with: exp))
 ]
 
 { #category : #tests }
@@ -45,7 +45,7 @@ GlorpExpressionIterationTest >> testDoMapping [
 	| exp |
 	exp := MappingExpression new.
 	exp named: 'foo' basedOn: BaseExpression new.
-	self assert: ((exp collect: [:each | each]) = (OrderedCollection with: exp base with: exp)).
+	self assert: ((exp collect: [:each | each]) equals: (OrderedCollection with: exp base with: exp))
 ]
 
 { #category : #tests }
@@ -54,7 +54,7 @@ GlorpExpressionIterationTest >> testDoParameter [
 	| exp |
 	exp := ParameterExpression new.
 	exp field: nil base: BaseExpression new.
-	self assert: ((exp collect: [:each | each]) = (OrderedCollection with: exp base with: exp)).
+	self assert: ((exp collect: [:each | each]) equals: (OrderedCollection with: exp base with: exp))
 ]
 
 { #category : #tests }
@@ -65,7 +65,7 @@ GlorpExpressionIterationTest >> testDoRelation [
 	l := BaseExpression new.
 	r := BaseExpression new.
 	exp leftChild: l; rightChild: r.
-	self assert: ((exp collect: [:each | each]) = (OrderedCollection with: l with: r with: exp)).
+	self assert: ((exp collect: [:each | each]) equals: (OrderedCollection with: l with: r with: exp))
 ]
 
 { #category : #tests }
@@ -74,7 +74,7 @@ GlorpExpressionIterationTest >> testDoTable [
 	| exp |
 	exp := TableExpression new.
 	exp table: nil base: BaseExpression new.
-	self assert: ((exp collect: [:each | each]) = (OrderedCollection with: exp base with: exp)).
+	self assert: ((exp collect: [:each | each]) equals: (OrderedCollection with: exp base with: exp))
 ]
 
 { #category : #tests }
@@ -87,6 +87,6 @@ GlorpExpressionIterationTest >> testDoWithCommonBase [
 	l named: nil basedOn: base.
 	r := MappingExpression new.
 	r named: nil basedOn: base.
-	exp leftChild: l; rightChild: r.	
-	self assert: ((exp collect: [:each | each]) = (OrderedCollection with: base with: l with: r with: exp)).
+	exp leftChild: l; rightChild: r.
+	self assert: ((exp collect: [:each | each]) equals: (OrderedCollection with: base with: l with: r with: exp))
 ]
