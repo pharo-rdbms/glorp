@@ -22,6 +22,12 @@ DatabaseTableConstraint class >> forTable: aDatabaseTable [
 		  yourself
 ]
 
+{ #category : #testing }
+DatabaseTableConstraint class >> isAbstract [
+
+	^ self == DatabaseTableConstraint
+]
+
 { #category : #printing }
 DatabaseTableConstraint >> creationString [
 
