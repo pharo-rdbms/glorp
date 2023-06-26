@@ -24,7 +24,7 @@ UniqueConstraint class >> forTable: aTable fields: aCollectionOfFields [
 { #category : #printing }
 UniqueConstraint >> creationStringFor: aPlatform [
 
-	^aPlatform createUniqueConstraintAddStatement: self
+	^ aPlatform createUniqueConstraintAddStatement: self
 ]
 
 { #category : #'instance creation' }
@@ -48,22 +48,22 @@ UniqueConstraint >> generateName [
 	stream := WriteStream on: (String new: 100).
 	self printForConstraintNames: self fields on: stream maxLength: tableLength.
 	stream nextPutAll: (roomToBeVerbose ifTrue: ['_UNIQ'] ifFalse: ['U']).
-	^stream contents.
+	^stream contents
 ]
 
 { #category : #testing }
 UniqueConstraint >> isUniqueConstraint [
 
-	^true
+	^ true
 ]
 
 { #category : #testing }
 UniqueConstraint >> matchesUniqueConstraint: aConstraint [
-	
+
 	name asUppercase = aConstraint name asUppercase ifFalse: [^false].
 	self fields size ~= aConstraint fields size ifTrue: [^false].
 	self fields with: aConstraint fields do: [:each :other | (each matchesField: other) ifFalse: [^false]].
-	^true
+	^ true
 ]
 
 { #category : #printing }

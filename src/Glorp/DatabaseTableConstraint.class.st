@@ -28,10 +28,10 @@ DatabaseTableConstraint class >> isAbstract [
 	^ self == DatabaseTableConstraint
 ]
 
-{ #category : #printing }
+{ #category : #accessing }
 DatabaseTableConstraint >> creationString [
 
-	^(self creationStringFor: self table platform) first.
+	^ (self creationStringFor: self table platform) first
 ]
 
 { #category : #printing }
@@ -43,7 +43,7 @@ DatabaseTableConstraint >> creationStringFor: aPlatform [
 { #category : #printing }
 DatabaseTableConstraint >> dropString [
 
-	^self dropStringFor:  self table platform
+	^ self dropStringFor:  self table platform
 ]
 
 { #category : #printing }
@@ -54,15 +54,17 @@ DatabaseTableConstraint >> dropStringFor: aPlatform [
 
 { #category : #accessing }
 DatabaseTableConstraint >> fields [
-	^fields
+
+	^ fields
 ]
 
 { #category : #accessing }
 DatabaseTableConstraint >> fields: anObject [
+
 	fields := anObject
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 DatabaseTableConstraint >> forTable: aTable [
 
 	table := aTable
@@ -71,7 +73,7 @@ DatabaseTableConstraint >> forTable: aTable [
 { #category : #accessing }
 DatabaseTableConstraint >> generateName [
 
-	^self subclassResponsibility
+	^ self subclassResponsibility
 ]
 
 { #category : #initialization }
@@ -101,7 +103,7 @@ DatabaseTableConstraint >> isUniqueConstraint [
 { #category : #accessing }
 DatabaseTableConstraint >> name [
 
-	name isNil ifTrue: [ name := self generateName ].
+	name ifNil: [ name := self generateName ].
 	^ name
 ]
 
