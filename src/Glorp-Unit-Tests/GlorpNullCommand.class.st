@@ -17,10 +17,12 @@ GlorpNullCommand class >> useBinding: aBoolean session: aSession [
 
 { #category : #accessing }
 GlorpNullCommand >> sqlString [
-	^stream contents.
+
+	^ stream contents
 ]
 
 { #category : #testing }
 GlorpNullCommand >> succeeded [
-	^true.
+
+	^ true
 ]

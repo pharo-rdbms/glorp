@@ -27,11 +27,11 @@ GlorpQueryStub >> executeWithParameters: parameterArray in: aSession [
 	^result.
 ]
 
-{ #category : #initialize }
+{ #category : #initialization }
 GlorpQueryStub >> initialize [
 
 	super initialize.
-	readsOneObject := true.
+	readsOneObject := true
 ]
 
 { #category : #accessing }

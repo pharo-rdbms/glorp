@@ -13,12 +13,12 @@ GlorpDatabaseBasedTest class >> isAbstract [
 	^ self = GlorpDatabaseBasedTest
 ]
 
-{ #category : #support }
+{ #category : #asserting }
 GlorpDatabaseBasedTest >> assert: aBrackettedString equalsIgnoringOuterBrackets: anotherString [
-	self assert: aBrackettedString =
-		(anotherString first = $(
-			ifTrue: [anotherString]
-			ifFalse: ['(', anotherString, ')'])
+
+	self assert: aBrackettedString equals: (anotherString first = $(
+			 ifTrue: [ anotherString ]
+			 ifFalse: [ '(' , anotherString , ')' ])
 ]
 
 { #category : #running }

@@ -126,17 +126,20 @@ GlorpDatabaseLoginResource class >> defaultSQLiteLocalLogin [
 
 { #category : #accessing }
 GlorpDatabaseLoginResource >> accessor [
-	^accessor
+
+	^ accessor
 ]
 
 { #category : #accessing }
 GlorpDatabaseLoginResource >> accessor: anObject [
+
 	accessor := anObject
 ]
 
 { #category : #accessing }
 GlorpDatabaseLoginResource >> login [
-	^login
+
+	^ login
 ]
 
 { #category : #accessing }
@@ -144,12 +147,13 @@ GlorpDatabaseLoginResource >> login: anObject [
 	"We don't attempt to be secure on logins being used for tests. Make sure we don't surprise someone by modifying the original instance."
 
 	login := anObject copy.
-	login secure: false.
+	login secure: false
 ]
 
 { #category : #accessing }
 GlorpDatabaseLoginResource >> platform [
-	^login database
+
+	^ login database
 ]
 
 { #category : #running }

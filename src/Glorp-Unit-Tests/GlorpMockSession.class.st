@@ -9,7 +9,8 @@ Class {
 
 { #category : #accessing }
 GlorpMockSession >> accessor [
-	^GlorpMockAccessor new.
+
+	^ GlorpMockAccessor new
 ]
 
 { #category : #initialization }
@@ -22,25 +23,28 @@ GlorpMockSession >> initialize [
 { #category : #accessing }
 GlorpMockSession >> rows [
 
-	^rows.
+	^ rows
 ]
 
 { #category : #testing }
 GlorpMockSession >> useBinding [
-	^true.
+
+	^ true
 ]
 
 { #category : #'read/write' }
 GlorpMockSession >> writeHomogeneousRows: aCollection [
-	aCollection do: [:each | self writeRow: each].
-	^true.
+
+	aCollection do: [ :each | self writeRow: each ].
+	^ true
 ]
 
 { #category : #'read/write' }
 GlorpMockSession >> writeRow: aRow [
-	aRow shouldBeWritten ifFalse: [^true].
+
+	aRow shouldBeWritten ifFalse: [ ^ true ].
 	aRow preWriteAssignSequencesUsing: self.
 	rows add: aRow.
 	aRow postWriteAssignSequencesUsing: self accessor.
-	^true.
+	^ true
 ]
