@@ -1,3 +1,6 @@
+"
+An publisher in the Encyclopedia mode
+"
 Class {
 	#name : #GlorpPublisher,
 	#superclass : #Object,
@@ -15,71 +18,87 @@ Class {
 
 { #category : #accessing }
 GlorpPublisher >> differentBunchOfEmployeesById [
-	^differentBunchOfEmployeesById
+
+	^ differentBunchOfEmployeesById
 ]
 
 { #category : #accessing }
 GlorpPublisher >> differentBunchOfEmployeesById: aDictionary [
+
 	differentBunchOfEmployeesById := aDictionary
 ]
 
 { #category : #accessing }
 GlorpPublisher >> employees [
-	^employees.
+
+	^ employees
 ]
 
 { #category : #accessing }
 GlorpPublisher >> employees: aDictionary [
-	employees := aDictionary.
+
+	employees := aDictionary
 ]
 
 { #category : #accessing }
 GlorpPublisher >> id [
-	^id
+
+	^ id
 ]
 
 { #category : #accessing }
 GlorpPublisher >> id: anObject [
+
 	id := anObject
 ]
 
 { #category : #accessing }
 GlorpPublisher >> name [
-	^name
+
+	^ name
 ]
 
 { #category : #accessing }
 GlorpPublisher >> name: anObject [
+
 	name := anObject
 ]
 
 { #category : #accessing }
 GlorpPublisher >> titles [
-	^titles
+
+	^ titles
 ]
 
 { #category : #accessing }
 GlorpPublisher >> titles: aCollectionOfStrings [
+
 	titles := aCollectionOfStrings
 ]
 
 { #category : #accessing }
 GlorpPublisher >> titlesWithNumberInStock [
-	^titlesWithNumberInStock
+
+	^ titlesWithNumberInStock
 ]
 
 { #category : #accessing }
 GlorpPublisher >> titlesWithNumberInStock: aDictionary [
+
 	titlesWithNumberInStock := aDictionary.
-	self titlesWithNumberInStockLink: (Dictionary new addAll: (aDictionary associations collect: [:each | each copy]); yourself).
+	self titlesWithNumberInStockLink: (Dictionary new
+			 addAll: (aDictionary associations collect: [ :each | each copy ]);
+			 yourself)
 ]
 
 { #category : #accessing }
 GlorpPublisher >> titlesWithNumberInStockLink [
-	^titlesWithNumberInStockLink
+
+	^ titlesWithNumberInStockLink
 ]
 
 { #category : #accessing }
 GlorpPublisher >> titlesWithNumberInStockLink: aDictionary [
+
 	titlesWithNumberInStockLink := aDictionary
 ]

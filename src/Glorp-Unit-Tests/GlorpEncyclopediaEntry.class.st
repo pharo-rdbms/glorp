@@ -1,3 +1,6 @@
+"
+An encyclopedia entry in the Encyclopedia mode
+"
 Class {
 	#name : #GlorpEncyclopediaEntry,
 	#superclass : #Object,
@@ -28,12 +31,14 @@ GlorpEncyclopediaEntry class >> example2 [
 
 { #category : #accessing }
 GlorpEncyclopediaEntry >> id [
-	^id
+
+	^ id
 ]
 
 { #category : #accessing }
-GlorpEncyclopediaEntry >> id: aSmallInteger [ 
-	id := aSmallInteger.
+GlorpEncyclopediaEntry >> id: aSmallInteger [
+
+	id := aSmallInteger
 ]
 
 { #category : #initialization }
@@ -45,38 +50,45 @@ GlorpEncyclopediaEntry >> initialize [
 
 { #category : #accessing }
 GlorpEncyclopediaEntry >> mediaType [
-	^mediaType
+
+	^ mediaType
 ]
 
 { #category : #accessing }
 GlorpEncyclopediaEntry >> mediaType: anObject [
+
 	mediaType := anObject
 ]
 
 { #category : #printing }
 GlorpEncyclopediaEntry >> printOn: aStream [
+
 	super printOn: aStream.
 	aStream nextPut: $(.
-	title isNil ifFalse: [aStream nextPutAll: title].
-	aStream nextPut: $).
+	title ifNotNil: [ aStream nextPutAll: title ].
+	aStream nextPut: $)
 ]
 
 { #category : #accessing }
 GlorpEncyclopediaEntry >> text [
-	^text
+
+	^ text
 ]
 
 { #category : #accessing }
-GlorpEncyclopediaEntry >> text: aString [ 
-	text := aString.
+GlorpEncyclopediaEntry >> text: aString [
+
+	text := aString
 ]
 
 { #category : #accessing }
 GlorpEncyclopediaEntry >> title [
-	^title
+
+	^ title
 ]
 
 { #category : #accessing }
-GlorpEncyclopediaEntry >> title: aString [ 
+GlorpEncyclopediaEntry >> title: aString [
+
 	title := aString
 ]

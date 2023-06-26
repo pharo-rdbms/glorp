@@ -1,3 +1,6 @@
+"
+An encyclopedia in the Encyclopedia model
+"
 Class {
 	#name : #GlorpEncyclopedia,
 	#superclass : #Object,
@@ -21,36 +24,43 @@ GlorpEncyclopedia class >> example1 [
 
 { #category : #accessing }
 GlorpEncyclopedia >> articleAt: aString put: anEntry [
-	entries at: aString put: anEntry.
+
+	entries at: aString put: anEntry
 ]
 
 { #category : #accessing }
 GlorpEncyclopedia >> biographicalEntries [
-	^biographicalEntries
+
+	^ biographicalEntries
 ]
 
 { #category : #accessing }
 GlorpEncyclopedia >> biographicalEntries: aDictionary [
+
 	biographicalEntries := aDictionary
 ]
 
 { #category : #accessing }
 GlorpEncyclopedia >> entries [
-	^entries.
+
+	^ entries
 ]
 
 { #category : #accessing }
 GlorpEncyclopedia >> entries: aDictionary [
+
 	entries := aDictionary
 ]
 
 { #category : #accessing }
 GlorpEncyclopedia >> id [
-	^id
+
+	^ id
 ]
 
 { #category : #accessing }
 GlorpEncyclopedia >> id: anInteger [
+
 	id := anInteger
 ]
 
@@ -64,18 +74,21 @@ GlorpEncyclopedia >> initialize [
 
 { #category : #accessing }
 GlorpEncyclopedia >> name [
-	^name
+
+	^ name
 ]
 
 { #category : #accessing }
 GlorpEncyclopedia >> name: aString [
+
 	name := aString
 ]
 
-{ #category : #accessing }
+{ #category : #printing }
 GlorpEncyclopedia >> printOn: aStream [
+
 	super printOn: aStream.
 	aStream nextPut: $(.
-	name isNil ifFalse: [aStream nextPutAll: name].
-	aStream nextPut: $).
+	name ifNotNil: [ aStream nextPutAll: name ].
+	aStream nextPut: $)
 ]

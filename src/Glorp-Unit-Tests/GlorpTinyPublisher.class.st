@@ -1,3 +1,6 @@
+"
+A tiny publisher in the Encyclopedia mode
+"
 Class {
 	#name : #GlorpTinyPublisher,
 	#superclass : #Object,
@@ -13,7 +16,7 @@ Class {
 { #category : #accessing }
 GlorpTinyPublisher >> id [
 
-	^id
+	^ id
 ]
 
 { #category : #accessing }
@@ -25,7 +28,7 @@ GlorpTinyPublisher >> id: anObject [
 { #category : #accessing }
 GlorpTinyPublisher >> name [
 
-	^name
+	^ name
 ]
 
 { #category : #accessing }
@@ -37,7 +40,7 @@ GlorpTinyPublisher >> name: anObject [
 { #category : #accessing }
 GlorpTinyPublisher >> titles [
 
-	^titles
+	^ titles
 ]
 
 { #category : #accessing }
@@ -49,7 +52,7 @@ GlorpTinyPublisher >> titles: anObject [
 { #category : #accessing }
 GlorpTinyPublisher >> titlesWithNumberInStock [
 
-	^titlesWithNumberInStock
+	^ titlesWithNumberInStock
 ]
 
 { #category : #accessing }

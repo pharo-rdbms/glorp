@@ -1,3 +1,6 @@
+"
+A media type in the Encyclopedia mode
+"
 Class {
 	#name : #GlorpMediaType,
 	#superclass : #Object,
@@ -19,20 +22,24 @@ GlorpMediaType class >> text [
 
 { #category : #accessing }
 GlorpMediaType >> mimeType [
-	^mimeType
+
+	^ mimeType
 ]
 
 { #category : #accessing }
 GlorpMediaType >> mimeType: anObject [
+
 	mimeType := anObject
 ]
 
 { #category : #accessing }
-GlorpMediaType >> name [ 
-	^name
+GlorpMediaType >> name [
+
+	^ name
 ]
 
 { #category : #accessing }
 GlorpMediaType >> name: anObject [
+
 	name := anObject
 ]

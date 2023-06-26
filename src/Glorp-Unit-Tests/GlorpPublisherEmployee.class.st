@@ -1,3 +1,6 @@
+"
+A publisher employee in the Encyclopedia mode
+"
 Class {
 	#name : #GlorpPublisherEmployee,
 	#superclass : #Object,
@@ -11,30 +14,36 @@ Class {
 
 { #category : #accessing }
 GlorpPublisherEmployee >> id [
-	^id
+
+	^ id
 ]
 
 { #category : #accessing }
 GlorpPublisherEmployee >> id: anObject [
+
 	id := anObject
 ]
 
 { #category : #accessing }
 GlorpPublisherEmployee >> jobTitle [
-	^jobTitle
+
+	^ jobTitle
 ]
 
 { #category : #accessing }
 GlorpPublisherEmployee >> jobTitle: aString [
+
 	jobTitle := aString
 ]
 
 { #category : #accessing }
 GlorpPublisherEmployee >> name [
-	^name
+
+	^ name
 ]
 
 { #category : #accessing }
 GlorpPublisherEmployee >> name: anObject [
+
 	name := anObject
 ]

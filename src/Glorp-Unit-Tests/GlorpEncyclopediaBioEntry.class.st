@@ -1,3 +1,6 @@
+"
+An encyclopedia bio entry in the Encyclopedia model
+"
 Class {
 	#name : #GlorpEncyclopediaBioEntry,
 	#superclass : #Object,
@@ -11,20 +14,24 @@ Class {
 
 { #category : #accessing }
 GlorpEncyclopediaBioEntry >> text [
-	^text
+
+	^ text
 ]
 
 { #category : #accessing }
 GlorpEncyclopediaBioEntry >> text: anObject [
+
 	text := anObject
 ]
 
 { #category : #accessing }
 GlorpEncyclopediaBioEntry >> title [
-	^title
+
+	^ title
 ]
 
 { #category : #accessing }
 GlorpEncyclopediaBioEntry >> title: anObject [
+
 	title := anObject
 ]
