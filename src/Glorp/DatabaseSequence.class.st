@@ -50,10 +50,6 @@ DatabaseSequence >> hasReservedNumbers [
 	^ reservedNumbers notNil and: [ reservedNumbers isEmpty not ]
 ]
 
-{ #category : #initialization }
-DatabaseSequence >> initialize [
-]
-
 { #category : #testing }
 DatabaseSequence >> isIdentityColumn [
 
