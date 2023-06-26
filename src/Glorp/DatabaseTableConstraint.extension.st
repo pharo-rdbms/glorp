@@ -7,8 +7,3 @@ DatabaseTableConstraint class >> forTable: aDatabaseTable [
 		  forTable: aDatabaseTable;
 		  yourself
 ]
-
-{ #category : #'*Glorp' }
-DatabaseTableConstraint class >> new [
-	^super new initialize.
-]

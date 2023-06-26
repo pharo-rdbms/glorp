@@ -31,12 +31,6 @@ Class {
 	#category : #'Glorp-UnitOfWork'
 }
 
-{ #category : #'instance creation' }
-UnitOfWork class >> new [
-
-	^super new initialize
-]
-
 { #category : #'begin/commit/abort' }
 UnitOfWork >> abort [
 	self reinitialize.

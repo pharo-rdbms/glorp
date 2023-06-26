@@ -9,7 +9,7 @@ DatabaseField class >> named: aString [
 { #category : #'*Glorp' }
 DatabaseField class >> named: aString type: dbType [
 
-	^super new initialize
+	^ super new initialize
 		name: aString;
 		type: dbType
 ]

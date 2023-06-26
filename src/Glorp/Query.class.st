@@ -64,12 +64,6 @@ Query class >> isAbstract [
 	^ self == Query
 ]
 
-{ #category : #'instance creation' }
-Query class >> new [
-
-	^super new initialize
-]
-
 { #category : #'*Glorp' }
 Query class >> read: aClass [
 	^self read: aClass where: nil

@@ -26,11 +26,6 @@ GlorpClassModel class >> for: aClass [
 	^self new describedClass: aClass.
 ]
 
-{ #category : #'instance creation' }
-GlorpClassModel class >> new [
-	^super new initialize.
-]
-
 { #category : #accessing }
 GlorpClassModel >> addAttribute: anAttributeDescription [
 	attributes add: anAttributeDescription.

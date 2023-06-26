@@ -64,12 +64,6 @@ DatabaseAccessor class >> loggingEnabled: aBoolean [
 	LoggingEnabled := aBoolean
 ]
 
-{ #category : #'instance creation' }
-DatabaseAccessor class >> new [
-
-	^super new initialize.
-]
-
 { #category : #executing }
 DatabaseAccessor >> addConstraint: aConstraint [
 

@@ -11,12 +11,6 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'as yet unclassified' }
-GlorpWorker class >> new [
-
-	^super new initialize.
-]
-
 { #category : #accessing }
 GlorpWorker >> finishedJobs [
 	^finishedJobs

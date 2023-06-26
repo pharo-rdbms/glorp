@@ -7,12 +7,6 @@ Class {
 	#category : #'Glorp-Unit-Tests-Database'
 }
 
-{ #category : #'instance creation' }
-GlorpMockSession class >> new [
-
-	^super new initialize.
-]
-
 { #category : #accessing }
 GlorpMockSession >> accessor [
 	^GlorpMockAccessor new.

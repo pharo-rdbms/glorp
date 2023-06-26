@@ -9,11 +9,6 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'as yet unclassified' }
-GlorpBookstoreCustomer class >> new [
-	^super new initialize.
-]
-
 { #category : #accessing }
 GlorpBookstoreCustomer >> accountNumber [
 	^accountNumber

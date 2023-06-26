@@ -16,14 +16,8 @@ Class {
 		'hasValue',
 		'containedBy'
 	],
-	#category : 'Glorp-UnitOfWork'
+	#category : #'Glorp-UnitOfWork'
 }
-
-{ #category : #public }
-FieldValueWrapper class >> new [
-
-	^super new initialize
-]
 
 { #category : #accessing }
 FieldValueWrapper >> allInnerWrappers [

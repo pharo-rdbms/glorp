@@ -9,11 +9,6 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'as yet unclassified' }
-GlorpGallery class >> new [
-	^super new initialize.
-]
-
 { #category : #accessing }
 GlorpGallery >> id [
 	^id

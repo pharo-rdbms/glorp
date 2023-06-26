@@ -31,12 +31,6 @@ Class {
 	#category : #'Glorp-Core'
 }
 
-{ #category : #'instance creation' }
-Login class >> new [
-
-	^ super new initialize
-]
-
 { #category : #comparing }
 Login >> = aLogin [
 

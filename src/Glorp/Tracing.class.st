@@ -29,12 +29,6 @@ Tracing class >> for: aQuery [
 	^self new base: aQuery whereClause ultimateBaseExpression
 ]
 
-{ #category : #'instance creation' }
-Tracing class >> new [
-
-	^super new initialize
-]
-
 { #category : #accessing }
 Tracing >> addExpression: anExpression [
 	self addExpression: anExpression andDo: [:ignore |]

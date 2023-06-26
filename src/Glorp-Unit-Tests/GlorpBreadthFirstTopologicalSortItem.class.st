@@ -10,13 +10,6 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'as yet unclassified' }
-GlorpBreadthFirstTopologicalSortItem class >> new [
-	"Answer a newly created and initialized instance."
-
-	^super new initialize
-]
-
 { #category : #accessing }
 GlorpBreadthFirstTopologicalSortItem >> id [
 	^id

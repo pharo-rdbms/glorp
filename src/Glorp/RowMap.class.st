@@ -27,15 +27,9 @@ RowMap class >> forRows: aCollection [
 ]
 
 { #category : #'instance creation' }
-RowMap class >> new [
-
-	^super new initialize
-]
-
-{ #category : #'instance creation' }
 RowMap class >> new: size [
 
-	^super new initialize: size
+	^ self new initialize: size
 ]
 
 { #category : #lookup }
@@ -206,7 +200,8 @@ RowMap >> initialize [
 { #category : #'initialize-release' }
 RowMap >> initialize: size [
 	rowDictionary := IdentityDictionary new: size.
-	hasDeletions := false
+	hasDeletions := false.
+	^ self
 ]
 
 { #category : #'private/deletion' }

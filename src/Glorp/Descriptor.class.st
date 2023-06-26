@@ -34,12 +34,6 @@ Class {
 	#category : #'Glorp-Mappings'
 }
 
-{ #category : #'instance creation' }
-Descriptor class >> new [
-
-	^ super new initialize
-]
-
 { #category : #accessing }
 Descriptor >> addMapping: aMapping [
 

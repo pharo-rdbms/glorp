@@ -78,12 +78,6 @@ ElementBuilder class >> isAbstract [
 	^ self == ElementBuilder
 ]
 
-{ #category : #'instance creation' }
-ElementBuilder class >> new [
-
-	^super new initialize
-]
-
 { #category : #'building objects' }
 ElementBuilder >> buildObjectFrom: anArray [ 
 	self subclassResponsibility

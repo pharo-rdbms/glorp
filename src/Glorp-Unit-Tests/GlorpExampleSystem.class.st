@@ -7,12 +7,6 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'as yet unclassified' }
-GlorpExampleSystem class >> new [
-
-	^super new initialize
-]
-
 { #category : #initialize }
 GlorpExampleSystem >> initialize [
 

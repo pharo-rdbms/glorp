@@ -21,12 +21,6 @@ Class {
 }
 
 { #category : #'instance creation' }
-Cache class >> new [
-
-	^ super new initialize
-]
-
-{ #category : #'instance creation' }
 Cache class >> newFor: aClass in: aCacheManager [
 
 	| newCache descriptor |

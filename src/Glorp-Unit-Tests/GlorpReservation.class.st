@@ -25,11 +25,6 @@ GlorpReservation class >> example2 [
 		passenger: GlorpPassenger example2.
 ]
 
-{ #category : #'as yet unclassified' }
-GlorpReservation class >> new [
-	^super new initialize.
-]
-
 { #category : #accessing }
 GlorpReservation >> id [
 	^id

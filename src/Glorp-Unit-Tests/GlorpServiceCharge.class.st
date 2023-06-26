@@ -16,12 +16,6 @@ GlorpServiceCharge class >> default [
 		description: 'additional overcharge'.
 ]
 
-{ #category : #'as yet unclassified' }
-GlorpServiceCharge class >> new [
-
-	^super new initialize.
-]
-
 { #category : #accessing }
 GlorpServiceCharge >> amount [
 	^amount

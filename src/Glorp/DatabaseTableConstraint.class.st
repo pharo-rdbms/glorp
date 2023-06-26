@@ -22,11 +22,6 @@ DatabaseTableConstraint class >> forTable: aDatabaseTable [
 		  yourself
 ]
 
-{ #category : #'*Glorp' }
-DatabaseTableConstraint class >> new [
-	^super new initialize.
-]
-
 { #category : #printing }
 DatabaseTableConstraint >> creationString [
 

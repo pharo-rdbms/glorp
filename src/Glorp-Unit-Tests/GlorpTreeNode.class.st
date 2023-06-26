@@ -8,11 +8,6 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'as yet unclassified' }
-GlorpTreeNode class >> new [
-	^super new initialize.
-]
-
 { #category : #'As yet unclassified' }
 GlorpTreeNode >> children [
 	^children.

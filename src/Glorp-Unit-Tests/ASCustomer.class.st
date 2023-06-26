@@ -10,11 +10,6 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'as yet unclassified' }
-ASCustomer class >> new [
-	^super new initialize
-]
-
 { #category : #accessing }
 ASCustomer >> customer [
 

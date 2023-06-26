@@ -18,12 +18,6 @@ GlorpBankAccount class >> example1 [
 		accountNumber: GlorpBankAccountNumber example12345.
 ]
 
-{ #category : #'as yet unclassified' }
-GlorpBankAccount class >> new [
-
-	^super new initialize.
-]
-
 { #category : #comparing }
 GlorpBankAccount >> <= anAccount [
 	^self accountNumber accountNumber <= anAccount accountNumber accountNumber.

@@ -11,9 +11,10 @@ Class {
 { #category : #examples }
 GlorpCompressedMoney class >> currency: aSymbol amount: aNumber [
 
-	^super new initialize
+	^ self new
 		currency: aSymbol;
-		amount: aNumber.
+		amount: aNumber;
+		yourself
 ]
 
 { #category : #examples }
@@ -26,11 +27,6 @@ GlorpCompressedMoney class >> defaultCurrency [
 GlorpCompressedMoney class >> forAmount: aNumber [
 
 	^self currency: self defaultCurrency amount: aNumber.
-]
-
-{ #category : #'as yet unclassified' }
-GlorpCompressedMoney class >> new [
-	^super new initialize.
 ]
 
 { #category : #accessing }

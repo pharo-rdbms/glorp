@@ -11,13 +11,6 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'as yet unclassified' }
-GlorpVideoStore class >> new [
-	"Answer a newly created and initialized instance."
-
-	^super new initialize
-]
-
 { #category : #testing }
 GlorpVideoStore >> assertEqual: aStore [
 	self assert: id = aStore id.

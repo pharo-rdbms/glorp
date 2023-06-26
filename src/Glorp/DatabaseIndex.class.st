@@ -31,11 +31,6 @@ DatabaseIndex class >> forFields: aCollection [
 		yourself
 ]
 
-{ #category : #'*Glorp' }
-DatabaseIndex class >> new [
-	^super new initialize.
-]
-
 { #category : #initialization }
 DatabaseIndex >> addField: aField [
 

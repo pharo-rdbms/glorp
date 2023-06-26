@@ -13,9 +13,3 @@ TimedProxyReaper class >> delay: seconds maximumWork: milliseconds [
 		  delay: seconds;
 		  maximumWork: milliseconds
 ]
-
-{ #category : #'*Glorp' }
-TimedProxyReaper class >> new [
-
-	^ super new initialize
-]

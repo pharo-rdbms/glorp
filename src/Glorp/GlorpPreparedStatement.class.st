@@ -19,13 +19,6 @@ Class {
 	#category : #'Glorp-Database'
 }
 
-{ #category : #'*Glorp' }
-GlorpPreparedStatement class >> new [
-	"Answer a newly created and initialized instance."
-
-	^ super new initialize
-]
-
 { #category : #accessing }
 GlorpPreparedStatement >> busy [
 

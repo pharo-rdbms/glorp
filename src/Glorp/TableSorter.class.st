@@ -29,12 +29,6 @@ TableSorter class >> for: tables [
 	^sorter
 ]
 
-{ #category : #'instance creation' }
-TableSorter class >> new [
-
-	^super new initialize
-]
-
 { #category : #accessing }
 TableSorter >> addTable: aTable [ 
 	tables add: aTable

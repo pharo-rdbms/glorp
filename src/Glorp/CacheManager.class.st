@@ -24,12 +24,6 @@ CacheManager class >> forSession: aSession [
 	^ self new session: aSession
 ]
 
-{ #category : #'instance creation' }
-CacheManager class >> new [
-
-	^ super new initialize
-]
-
 { #category : #adding }
 CacheManager >> at: aKey insert: anObject [
 
