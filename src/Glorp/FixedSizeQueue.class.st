@@ -57,9 +57,14 @@ FixedSizeQueue >> maximumSize: anInteger [
 FixedSizeQueue >> printOn: aStream [
 
 	super printOn: aStream.
+	
 	aStream nextPutAll: '('.
-	aStream nextPutAll: items size printString.
+	
+	items size printOn: aStream base: 10.
+	
 	aStream nextPut: $/.
-	aStream nextPutAll: maximumSize printString.
+	
+	maximumSize printOn: aStream base: 10.
+
 	aStream nextPutAll: ')'
 ]
