@@ -15,6 +15,13 @@ Class {
 	#category : #'Glorp-Core'
 }
 
+{ #category : #testing }
+FixedSizeQueue class >> isDeprecated [
+	"Class is unreferenced, we will soon remove it without replacement"
+
+	^ true
+]
+
 { #category : #'instance creation' }
 FixedSizeQueue class >> maximumSize: anInteger [
 
@@ -58,8 +65,8 @@ FixedSizeQueue >> printOn: aStream [
 
 	super printOn: aStream.
 	aStream nextPutAll: '('.
-	aStream nextPutAll: items size printString.
+	items size printOn: aStream.
 	aStream nextPut: $/.
-	aStream nextPutAll: maximumSize printString.
+	maximumSize printOn: aStream.
 	aStream nextPutAll: ')'
 ]
