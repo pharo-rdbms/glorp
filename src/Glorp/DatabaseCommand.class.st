@@ -101,6 +101,7 @@ DatabaseCommand >> hasMultipleRows [
 { #category : #initialization }
 DatabaseCommand >> initialize [
 
+	super initialize.
 	useBinding := true.
 	stream := WriteStream on: (String new: 100)
 ]

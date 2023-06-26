@@ -119,7 +119,8 @@ ForeignKeyConstraint >> generateName [
 
 { #category : #initialization }
 ForeignKeyConstraint >> initialize [
-
+	
+	super initialize.
 	self sourceFields: (OrderedCollection new: 2).
 	targetFields := OrderedCollection new: 2
 ]

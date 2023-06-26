@@ -46,7 +46,7 @@ GlorpPreparedStatement >> glorpNoticeOfExpiryIn: aSession [
 
 { #category : #initialization }
 GlorpPreparedStatement >> initialize [
-
+	super initialize.
 	busy := false
 ]
 
