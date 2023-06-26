@@ -82,6 +82,7 @@ DatabaseIndex >> indexesField: aField [
 { #category : #initialization }
 DatabaseIndex >> initialize [
 
+	super initialize.
 	fields := OrderedCollection new: 2
 ]
 

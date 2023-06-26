@@ -138,6 +138,8 @@ CacheManager >> hasObjectExpiredOfClass: aClass withKey: key [
 { #category : #initialization }
 CacheManager >> initialize [
 
+	super initialize.
+
 	subCaches := IdentityDictionary new: 100
 ]
 

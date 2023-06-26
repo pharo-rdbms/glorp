@@ -41,6 +41,7 @@ DatabaseConverter >> convert: anObject toDatabaseRepresentationAs: aDatabaseType
 { #category : #initialization }
 DatabaseConverter >> initialize [
 
+	super initialize.
 	name := #unnamed
 ]
 

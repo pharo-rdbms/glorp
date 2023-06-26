@@ -521,6 +521,8 @@ GlorpSession >> inUnitOfWorkDo: aBlock [
 { #category : #initialization }
 GlorpSession >> initialize [
 
+	super initialize.
+
 	self initializeCache
 ]
 
