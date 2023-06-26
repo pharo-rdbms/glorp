@@ -1,3 +1,6 @@
+"
+An item in the AnySatisfy model
+"
 Class {
 	#name : #ASItem,
 	#superclass : #Object,
@@ -6,13 +9,13 @@ Class {
 		'name',
 		'bonuses'
 	],
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - AnySatisfy'
 }
 
 { #category : #accessing }
 ASItem >> bonuses [
 
-	^bonuses
+	^ bonuses
 ]
 
 { #category : #accessing }
@@ -24,7 +27,7 @@ ASItem >> bonuses: anObject [
 { #category : #accessing }
 ASItem >> id [
 
-	^id
+	^ id
 ]
 
 { #category : #accessing }
@@ -43,7 +46,7 @@ ASItem >> initialize [
 { #category : #accessing }
 ASItem >> name [
 
-	^name
+	^ name
 ]
 
 { #category : #accessing }

@@ -1,3 +1,6 @@
+"
+An order in the AnySatisfy model
+"
 Class {
 	#name : #ASOrder,
 	#superclass : #Object,
@@ -6,13 +9,13 @@ Class {
 		'lineItems',
 		'customer'
 	],
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - AnySatisfy'
 }
 
 { #category : #accessing }
 ASOrder >> customer [
 
-	^customer
+	^ customer
 ]
 
 { #category : #accessing }
@@ -25,13 +28,13 @@ ASOrder >> customer: anObject [
 ASOrder >> initialize [
 
 	super initialize.
-	lineItems := OrderedCollection new.
+	lineItems := OrderedCollection new
 ]
 
 { #category : #accessing }
 ASOrder >> lineItems [
 
-	^lineItems
+	^ lineItems
 ]
 
 { #category : #accessing }
@@ -43,7 +46,7 @@ ASOrder >> lineItems: anObject [
 { #category : #accessing }
 ASOrder >> orderNo [
 
-	^orderNo
+	^ orderNo
 ]
 
 { #category : #accessing }

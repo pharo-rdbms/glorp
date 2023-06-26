@@ -1,3 +1,6 @@
+"
+An order in the AnySatisfy model
+"
 Class {
 	#name : #ASOrderLineItem,
 	#superclass : #Object,
@@ -8,13 +11,13 @@ Class {
 		'price',
 		'order'
 	],
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - AnySatisfy'
 }
 
 { #category : #accessing }
 ASOrderLineItem >> item [
 
-	^item
+	^ item
 ]
 
 { #category : #accessing }
@@ -26,7 +29,7 @@ ASOrderLineItem >> item: anObject [
 { #category : #accessing }
 ASOrderLineItem >> order [
 
-	^order
+	^ order
 ]
 
 { #category : #accessing }
@@ -38,7 +41,7 @@ ASOrderLineItem >> order: anObject [
 { #category : #accessing }
 ASOrderLineItem >> posNo [
 
-	^posNo
+	^ posNo
 ]
 
 { #category : #accessing }
@@ -50,7 +53,7 @@ ASOrderLineItem >> posNo: anObject [
 { #category : #accessing }
 ASOrderLineItem >> price [
 
-	^price
+	^ price
 ]
 
 { #category : #accessing }
@@ -62,7 +65,7 @@ ASOrderLineItem >> price: anObject [
 { #category : #accessing }
 ASOrderLineItem >> quantity [
 
-	^quantity
+	^ quantity
 ]
 
 { #category : #accessing }

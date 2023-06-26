@@ -1,3 +1,6 @@
+"
+A bonus in the AnySatisfy model
+"
 Class {
 	#name : #ASBonus,
 	#superclass : #Object,
@@ -6,13 +9,13 @@ Class {
 		'name',
 		'credits'
 	],
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - AnySatisfy'
 }
 
 { #category : #accessing }
 ASBonus >> credits [
 
-	^credits
+	^ credits
 ]
 
 { #category : #accessing }
@@ -24,7 +27,7 @@ ASBonus >> credits: anObject [
 { #category : #accessing }
 ASBonus >> id [
 
-	^id
+	^ id
 ]
 
 { #category : #accessing }
@@ -36,7 +39,7 @@ ASBonus >> id: anObject [
 { #category : #accessing }
 ASBonus >> name [
 
-	^name
+	^ name
 ]
 
 { #category : #accessing }

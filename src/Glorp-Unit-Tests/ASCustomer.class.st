@@ -1,3 +1,6 @@
+"
+A customer in the AnySatisfy model
+"
 Class {
 	#name : #ASCustomer,
 	#superclass : #Object,
@@ -7,13 +10,13 @@ Class {
 		'orders',
 		'customer'
 	],
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - AnySatisfy'
 }
 
 { #category : #accessing }
 ASCustomer >> customer [
 
-	^customer
+	^ customer
 ]
 
 { #category : #accessing }
@@ -25,7 +28,7 @@ ASCustomer >> customer: anObject [
 { #category : #accessing }
 ASCustomer >> id [
 
-	^id
+	^ id
 ]
 
 { #category : #accessing }
@@ -44,7 +47,7 @@ ASCustomer >> initialize [
 { #category : #accessing }
 ASCustomer >> name [
 
-	^name
+	^ name
 ]
 
 { #category : #accessing }
@@ -56,7 +59,7 @@ ASCustomer >> name: anObject [
 { #category : #accessing }
 ASCustomer >> orders [
 
-	^orders
+	^ orders
 ]
 
 { #category : #accessing }
