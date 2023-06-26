@@ -1,3 +1,6 @@
+"
+A glorp descriptor system for the trade model
+"
 Class {
 	#name : #GlorpTradeDescriptorSystem,
 	#superclass : #GlorpTestDescriptorSystem,
@@ -13,23 +16,25 @@ GlorpTradeDescriptorSystem >> allTableNames [
 { #category : #accessing }
 GlorpTradeDescriptorSystem >> classModelForGlorpAccount: aClassModel [
 
-	aClassModel newAttributeNamed: #id type: Integer.
-	aClassModel newAttributeNamed: #name type: String
+	aClassModel
+		newAttributeNamed: #id type: Integer;
+		newAttributeNamed: #name type: String
 ]
 
 { #category : #accessing }
 GlorpTradeDescriptorSystem >> classModelForGlorpTrade: aClassModel [
 
-	aClassModel newAttributeNamed: #id type: Integer.
-	aClassModel newAttributeNamed: #account type: GlorpAccount
+	aClassModel
+		newAttributeNamed: #id type: Integer;
+	 	newAttributeNamed: #account type: GlorpAccount
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 GlorpTradeDescriptorSystem >> constructAllClasses [
 
 	^(super constructAllClasses)
 		add: GlorpAccount;
-		add: GlorpTrade; 
+		add: GlorpTrade;
 		yourself
 ]
 

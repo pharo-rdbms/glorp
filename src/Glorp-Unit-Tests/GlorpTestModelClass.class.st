@@ -6,3 +6,9 @@ Class {
 	#superclass : #TestAsserter,
 	#category : #'Glorp-Unit-Tests-Models - Trade'
 }
+
+{ #category : #testing }
+GlorpTestModelClass class >> isAbstract [
+
+	^ self == GlorpTestModelClass
+]

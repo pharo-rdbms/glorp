@@ -1,3 +1,6 @@
+"
+An account in the Trade model
+"
 Class {
 	#name : #GlorpAccount,
 	#superclass : #GlorpTestModelClass,
