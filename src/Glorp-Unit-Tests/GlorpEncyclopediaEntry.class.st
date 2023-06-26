@@ -7,7 +7,7 @@ Class {
 		'title',
 		'mediaType'
 	],
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Encyclopedia'
 }
 
 { #category : #examples }

@@ -5,7 +5,7 @@ Class {
 		'accounts',
 		'branchNumber'
 	],
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Bank'
 }
 
 { #category : #accessing }

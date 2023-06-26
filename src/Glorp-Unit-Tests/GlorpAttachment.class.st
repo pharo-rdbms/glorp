@@ -6,7 +6,7 @@ Class {
 		'mimeType',
 		'attachmentBytes'
 	],
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Document'
 }
 
 { #category : #setup }

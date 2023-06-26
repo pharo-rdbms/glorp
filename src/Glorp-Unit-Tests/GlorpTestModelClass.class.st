@@ -4,5 +4,5 @@ An abstract superclass providing convenience methods for domain objects to facil
 Class {
 	#name : #GlorpTestModelClass,
 	#superclass : #TestAsserter,
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Trade'
 }

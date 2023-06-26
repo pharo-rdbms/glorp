@@ -1,7 +1,7 @@
 Class {
 	#name : #GlorpEncyclopediaStockDescriptorSystem,
 	#superclass : #GlorpTestDescriptorSystem,
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Encyclopedia'
 }
 
 { #category : #other }

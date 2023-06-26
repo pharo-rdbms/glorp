@@ -14,7 +14,7 @@ Class {
 		'name',
 		'agents'
 	],
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - TravelAgency'
 }
 
 { #category : #comparing }

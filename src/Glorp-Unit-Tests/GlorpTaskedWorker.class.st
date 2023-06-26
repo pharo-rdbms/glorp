@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'tasks'
 	],
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Worker'
 }
 
 { #category : #examples }

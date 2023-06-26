@@ -9,7 +9,7 @@ Class {
 		'title',
 		'author'
 	],
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Bookstore'
 }
 
 { #category : #examples }

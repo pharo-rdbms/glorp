@@ -4,5 +4,5 @@ GlorpTransientEmployee is used to test that not all subclasses need to be persis
 Class {
 	#name : #GlorpTransientEmployee,
 	#superclass : #GlorpEmployee,
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Worker'
 }

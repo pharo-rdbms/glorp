@@ -9,7 +9,7 @@ Class {
 		'customer',
 		'store'
 	],
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Video'
 }
 
 { #category : #comparing }

@@ -6,7 +6,7 @@ Class {
 		'accountNumber',
 		'booksOnOrder'
 	],
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Bookstore'
 }
 
 { #category : #accessing }

@@ -6,7 +6,7 @@ Class {
 		'street',
 		'number'
 	],
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Bank'
 }
 
 { #category : #examples }

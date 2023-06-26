@@ -7,7 +7,7 @@ Class {
 		'entries',
 		'biographicalEntries'
 	],
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Encyclopedia'
 }
 
 { #category : #examples }

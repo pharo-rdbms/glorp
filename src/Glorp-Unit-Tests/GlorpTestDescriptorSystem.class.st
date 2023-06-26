@@ -6,3 +6,9 @@ Class {
 	#superclass : #DescriptorSystem,
 	#category : #'Glorp-Unit-Tests-Models'
 }
+
+{ #category : #testing }
+GlorpTestDescriptorSystem class >> isAbstract [
+
+	^ self == GlorpTestDescriptorSystem
+]

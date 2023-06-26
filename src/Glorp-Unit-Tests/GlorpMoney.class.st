@@ -5,7 +5,7 @@ Class {
 		'currency',
 		'amount'
 	],
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Bank'
 }
 
 { #category : #'instance creation' }

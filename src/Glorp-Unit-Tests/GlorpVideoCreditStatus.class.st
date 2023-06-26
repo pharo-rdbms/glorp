@@ -18,7 +18,7 @@ Class {
 		'dateOwing',
 		'comments'
 	],
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Video'
 }
 
 { #category : #testing }

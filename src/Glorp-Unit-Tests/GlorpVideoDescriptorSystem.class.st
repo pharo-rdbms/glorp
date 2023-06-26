@@ -4,7 +4,7 @@ This descriptor system represents a video rental/sales store which sells both on
 Class {
 	#name : #GlorpVideoDescriptorSystem,
 	#superclass : #GlorpTestDescriptorSystem,
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Video'
 }
 
 { #category : #accessing }

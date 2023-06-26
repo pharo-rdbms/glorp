@@ -5,7 +5,7 @@ Class {
 		'id',
 		'name'
 	],
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Trade'
 }
 
 { #category : #'instance creation' }

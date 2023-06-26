@@ -1,7 +1,7 @@
 Class {
 	#name : #GlorpEmployee,
 	#superclass : #GlorpWorkingStiff,
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Worker'
 }
 
 { #category : #accessing }

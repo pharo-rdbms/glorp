@@ -4,7 +4,7 @@ This is a set of test descriptors for dealing with different variations of dicti
 Class {
 	#name : #GlorpEncyclopediaDescriptorSystem,
 	#superclass : #GlorpTestDescriptorSystem,
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Encyclopedia'
 }
 
 { #category : #other }

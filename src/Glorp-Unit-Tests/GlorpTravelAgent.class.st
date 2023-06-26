@@ -16,7 +16,7 @@ Class {
 		'name',
 		'agency'
 	],
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - TravelAgency'
 }
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'productionLine'
 	],
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Worker'
 }
 
 { #category : #comparing }

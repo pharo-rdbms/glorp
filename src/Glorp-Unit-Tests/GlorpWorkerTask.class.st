@@ -5,7 +5,7 @@ Class {
 		'id',
 		'description'
 	],
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Worker'
 }
 
 { #category : #examples }

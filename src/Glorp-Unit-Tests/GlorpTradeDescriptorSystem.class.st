@@ -1,7 +1,7 @@
 Class {
 	#name : #GlorpTradeDescriptorSystem,
 	#superclass : #GlorpTestDescriptorSystem,
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Trade'
 }
 
 { #category : #accessing }

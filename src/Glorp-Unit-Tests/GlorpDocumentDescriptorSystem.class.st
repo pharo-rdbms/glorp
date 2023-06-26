@@ -4,7 +4,7 @@ This is a test descriptor system for documents with attachments that have their 
 Class {
 	#name : #GlorpDocumentDescriptorSystem,
 	#superclass : #GlorpTestDescriptorSystem,
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Document'
 }
 
 { #category : #utilities }

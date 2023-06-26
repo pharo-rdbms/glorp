@@ -1,3 +1,6 @@
+"
+An airline meal in the Airline model
+"
 Class {
 	#name : #GlorpAirlineMeal,
 	#superclass : #Object,
@@ -6,5 +9,5 @@ Class {
 		'description',
 		'ingredients'
 	],
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Airline'
 }
