@@ -47,6 +47,12 @@ RowBasedCommand class >> forRows: aCollectionOfDatabaseRows useBinding: aBoolean
 		  yourself
 ]
 
+{ #category : #testing }
+RowBasedCommand class >> isAbstract [
+
+	^ self == RowBasedCommand
+]
+
 { #category : #accessing }
 RowBasedCommand >> allRows [
 

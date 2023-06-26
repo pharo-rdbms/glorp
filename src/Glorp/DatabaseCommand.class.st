@@ -32,6 +32,12 @@ Class {
 	#category : #'Glorp-Database'
 }
 
+{ #category : #testing }
+DatabaseCommand class >> isAbstract [
+
+	^ self == DatabaseCommand
+]
+
 { #category : #accessing }
 DatabaseCommand >> arrayBoundFields [
 
