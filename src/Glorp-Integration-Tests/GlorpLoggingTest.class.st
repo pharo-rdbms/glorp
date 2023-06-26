@@ -14,46 +14,44 @@ GlorpLoggingTest class >> isAbstract [
 	^ self name = #GlorpLoggingTest
 ]
 
-{ #category : #running }
+{ #category : #asserting }
 GlorpLoggingTest >> assertExpectedInsertStatements [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : #asserting }
 GlorpLoggingTest >> assertExpectedLoginStatements [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : #asserting }
 GlorpLoggingTest >> assertExpectedSelectAllStatements [
 
 	self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : #asserting }
 GlorpLoggingTest >> assertExpectedSelectWithLikeStatements [
 
 	self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : #accessing }
 GlorpLoggingTest >> coveredPlatformType [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'logger - api' }
 GlorpLoggingTest >> cr [
-	
-	" do nothing "
+	"Do nothing"
 ]
 
 { #category : #'logger - api' }
 GlorpLoggingTest >> flush [
-	
-	" do nothing "
+	"Do nothing"
 ]
 
 { #category : #'logger - api' }
@@ -65,8 +63,7 @@ GlorpLoggingTest >> nextPutAll: aString [
 { #category : #running }
 GlorpLoggingTest >> runCase [
 
-	(GlorpDatabaseLoginResource defaultLogin database isKindOf:
-		 self coveredPlatformType)
+	(GlorpDatabaseLoginResource defaultLogin database isKindOf: self coveredPlatformType)
 		ifTrue: [ super runCase ]
 		ifFalse: [ self skip ]
 ]
@@ -88,40 +85,43 @@ GlorpLoggingTest >> setUp [
 GlorpLoggingTest >> tearDown [
 
 	session accessor logging: false.
-	session rollbackTransaction.
-	session reset.
+	session
+		rollbackTransaction;
+		reset.
 	session := nil.
 	super tearDown
 ]
 
-{ #category : #running }
+{ #category : #tests }
 GlorpLoggingTest >> testInsert [
 
-	session loginIfError: [ self fail ].
-	session beginTransaction.
-	session writeRow: session system exampleAddressRowForOrdering1.
+	session
+		loginIfError: [ self fail ];
+		beginTransaction;
+		writeRow: session system exampleAddressRowForOrdering1.
 
 	self assertExpectedInsertStatements
 ]
 
-{ #category : #running }
+{ #category : #tests }
 GlorpLoggingTest >> testLogin [
 
 	session loginIfError: [ self fail ].
-	
+
 	self assertExpectedLoginStatements
 ]
 
-{ #category : #running }
+{ #category : #tests }
 GlorpLoggingTest >> testSelectAll [
 
-	session loginIfError: [ self fail ].
-	session read: GlorpBankTransaction.
-	
+	session
+		loginIfError: [ self fail ];
+		read: GlorpBankTransaction.
+
 	self assertExpectedSelectAllStatements
 ]
 
-{ #category : #running }
+{ #category : #tests }
 GlorpLoggingTest >> testSelectWithLike [
 
 	| query |

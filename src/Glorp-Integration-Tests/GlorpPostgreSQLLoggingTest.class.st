@@ -4,7 +4,7 @@ Class {
 	#category : #'Glorp-Integration-Tests-Database'
 }
 
-{ #category : #running }
+{ #category : #asserting }
 GlorpPostgreSQLLoggingTest >> assertExpectedInsertStatements [
 
 	self assert: loggedStatements size equals: 5.
@@ -17,7 +17,7 @@ GlorpPostgreSQLLoggingTest >> assertExpectedInsertStatements [
 		'INSERT INTO GR_ADDRESS (ID,STREET,HOUSE_NUM)  VALUES (1,''Alpha'',''300'')'
 ]
 
-{ #category : #running }
+{ #category : #asserting }
 GlorpPostgreSQLLoggingTest >> assertExpectedLoginStatements [
 
 	self assert: loggedStatements size equals: 2.
@@ -25,7 +25,7 @@ GlorpPostgreSQLLoggingTest >> assertExpectedLoginStatements [
 	self assert: (loggedStatements at: 2) equals: 'Login finished'
 ]
 
-{ #category : #running }
+{ #category : #asserting }
 GlorpPostgreSQLLoggingTest >> assertExpectedSelectAllStatements [
 
 	self assert: loggedStatements size equals: 3.
@@ -38,7 +38,7 @@ GlorpPostgreSQLLoggingTest >> assertExpectedSelectAllStatements [
  FROM BANK_TRANS t1'
 ]
 
-{ #category : #running }
+{ #category : #asserting }
 GlorpPostgreSQLLoggingTest >> assertExpectedSelectWithLikeStatements [
 
 	self assert: loggedStatements size equals: 3.
@@ -51,7 +51,7 @@ GlorpPostgreSQLLoggingTest >> assertExpectedSelectWithLikeStatements [
  WHERE (t1.STREET LIKE ''Be%'')'
 ]
 
-{ #category : #running }
+{ #category : #accessing }
 GlorpPostgreSQLLoggingTest >> coveredPlatformType [
 
 	^ PostgreSQLPlatform

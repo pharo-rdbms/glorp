@@ -4,7 +4,7 @@ Class {
 	#category : #'Glorp-Integration-Tests-Database'
 }
 
-{ #category : #running }
+{ #category : #asserting }
 GlorpSQLiteLoggingTest >> assertExpectedInsertStatements [
 
 	self assert: loggedStatements size equals: 4.
@@ -17,7 +17,7 @@ GlorpSQLiteLoggingTest >> assertExpectedInsertStatements [
 		'INSERT INTO GR_ADDRESS (ID,STREET,HOUSE_NUM)  VALUES (?,?,?)  #(1 ''Alpha'' ''300'')'
 ]
 
-{ #category : #running }
+{ #category : #asserting }
 GlorpSQLiteLoggingTest >> assertExpectedLoginStatements [
 
 	self assert: loggedStatements size equals: 2.
@@ -25,7 +25,7 @@ GlorpSQLiteLoggingTest >> assertExpectedLoginStatements [
 	self assert: (loggedStatements at: 2) equals: 'Login finished'
 ]
 
-{ #category : #running }
+{ #category : #asserting }
 GlorpSQLiteLoggingTest >> assertExpectedSelectAllStatements [
 
 	self assert: loggedStatements size equals: 3.
@@ -38,7 +38,7 @@ GlorpSQLiteLoggingTest >> assertExpectedSelectAllStatements [
  FROM BANK_TRANS t1  an OrderedCollection()'
 ]
 
-{ #category : #running }
+{ #category : #asserting }
 GlorpSQLiteLoggingTest >> assertExpectedSelectWithLikeStatements [
 
 	self assert: loggedStatements size equals: 3.
@@ -51,8 +51,8 @@ GlorpSQLiteLoggingTest >> assertExpectedSelectWithLikeStatements [
  WHERE (t1.STREET LIKE ?)  an OrderedCollection(''Be%'')'
 ]
 
-{ #category : #running }
+{ #category : #accessing }
 GlorpSQLiteLoggingTest >> coveredPlatformType [
 
-	^ SQLite3Platform 
+	^ SQLite3Platform
 ]
