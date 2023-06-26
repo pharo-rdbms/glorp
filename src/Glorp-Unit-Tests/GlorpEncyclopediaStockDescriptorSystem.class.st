@@ -1,7 +1,10 @@
+"
+Glorp descriptor system for Encyclopedia stock model
+"
 Class {
 	#name : #GlorpEncyclopediaStockDescriptorSystem,
 	#superclass : #GlorpTestDescriptorSystem,
-	#category : #'Glorp-Unit-Tests-Models - Encyclopedia'
+	#category : #'Glorp-Unit-Tests-Models - Encyclopedia Stock'
 }
 
 { #category : #accessing }
