@@ -10,7 +10,7 @@ Class {
 		'employees',
 		'differentBunchOfEmployeesById'
 	],
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Encyclopedia'
 }
 
 { #category : #accessing }

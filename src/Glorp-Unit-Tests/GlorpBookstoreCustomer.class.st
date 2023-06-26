@@ -1,3 +1,6 @@
+"
+An book store customer in the Bookstore model
+"
 Class {
 	#name : #GlorpBookstoreCustomer,
 	#superclass : #Object,
@@ -11,22 +14,26 @@ Class {
 
 { #category : #accessing }
 GlorpBookstoreCustomer >> accountNumber [
-	^accountNumber
+
+	^ accountNumber
 ]
 
 { #category : #accessing }
 GlorpBookstoreCustomer >> accountNumber: anObject [
+
 	accountNumber := anObject
 ]
 
 { #category : #accessing }
 GlorpBookstoreCustomer >> booksOnOrder [
-	^booksOnOrder
+
+	^ booksOnOrder
 ]
 
 { #category : #accessing }
 GlorpBookstoreCustomer >> booksOnOrder: someBooks [
-	booksOnOrder := someBooks.
+
+	booksOnOrder := someBooks
 ]
 
 { #category : #initialization }
@@ -38,10 +45,12 @@ GlorpBookstoreCustomer >> initialize [
 
 { #category : #accessing }
 GlorpBookstoreCustomer >> name [
-	^name
+
+	^ name
 ]
 
 { #category : #accessing }
 GlorpBookstoreCustomer >> name: anObject [
+
 	name := anObject
 ]

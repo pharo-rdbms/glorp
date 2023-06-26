@@ -7,7 +7,7 @@ Class {
 		'titles',
 		'titlesWithNumberInStock'
 	],
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Encyclopedia'
 }
 
 { #category : #accessing }
