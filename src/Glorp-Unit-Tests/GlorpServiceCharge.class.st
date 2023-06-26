@@ -1,3 +1,6 @@
+"
+A service charge in the Bank model
+"
 Class {
 	#name : #GlorpServiceCharge,
 	#superclass : #Object,
@@ -5,7 +8,7 @@ Class {
 		'description',
 		'amount'
 	],
-	#category : #'Glorp-Unit-Tests-Models'
+	#category : #'Glorp-Unit-Tests-Models - Bank'
 }
 
 { #category : #accessing }
@@ -18,20 +21,24 @@ GlorpServiceCharge class >> default [
 
 { #category : #accessing }
 GlorpServiceCharge >> amount [
-	^amount
+
+	^ amount
 ]
 
 { #category : #accessing }
 GlorpServiceCharge >> amount: anObject [
+
 	amount := anObject
 ]
 
 { #category : #accessing }
 GlorpServiceCharge >> description [
-	^description
+
+	^ description
 ]
 
 { #category : #accessing }
 GlorpServiceCharge >> description: anObject [
+
 	description := anObject
 ]
