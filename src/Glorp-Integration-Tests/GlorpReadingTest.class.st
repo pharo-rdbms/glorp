@@ -25,25 +25,31 @@ GlorpReadingTest class >> resources [
 
 { #category : #support }
 GlorpReadingTest >> checkExpiryTime [
-	""
+
 	| rowToWrite address modifiedRow expiryTime newExpiryTime |
-	
-	[session beginTransaction.
+	[
+	session beginTransaction.
 	rowToWrite := session system exampleAddressRow.
 	session writeRow: rowToWrite.
-	address := session readOneOf: GlorpAddress
-				where: [:each | each id = 123].
-	expiryTime := ((session cacheFor: address) basicAt: 123 ifAbsent: [#(nil)]) at: 1.
+	address := session
+		           readOneOf: GlorpAddress
+		           where: [ :each | each id = 123 ].
+	expiryTime := ((session cacheFor: address)
+		               basicAt: 123
+		               ifAbsent: [ #( nil ) ]) at: 1.
 	modifiedRow := session system exampleModifiedAddressRow.
 	modifiedRow owner: address. "Otherwise it thinks it's an insert"
 	session writeRow: modifiedRow.
 	(Delay forSeconds: 1) wait.
-	address := session readOneOf: GlorpAddress
-				where: [:each | each id = 123].
-	newExpiryTime := ((session cacheFor: address) basicAt: 123 ifAbsent: [#(nil)]) at: 1.
+	address := session
+		           readOneOf: GlorpAddress
+		           where: [ :each | each id = 123 ].
+	newExpiryTime := ((session cacheFor: address)
+		                  basicAt: 123
+		                  ifAbsent: [ #( nil ) ]) at: 1.
 	self assert: newExpiryTime > expiryTime.
-	self assert: address street = 'Paseo Montril'] 
-			ensure: [session rollbackTransaction].
+	self assert: address street equals: 'Paseo Montril' ] ensure: [
+		session rollbackTransaction ]
 ]
 
 { #category : #support }
@@ -90,22 +96,25 @@ GlorpReadingTest >> checkRefreshDoing: aBlock [
 
 { #category : #support }
 GlorpReadingTest >> helperForTestReadEmbeddedOneToOne [
+
 	| transRow query result |
-	
-	[session beginTransaction.
+	[
+	session beginTransaction.
 	transRow := session system exampleBankTransactionRow.
 	session writeRow: transRow.
-	query := Query readOneOf: GlorpBankTransaction
-				where: [:each | each id = each id].
-	result := query executeIn: session] 
-			ensure: [session rollbackTransaction].
+	query := Query
+		         readOneOf: GlorpBankTransaction
+		         where: [ :each | each id = each id ].
+	result := query executeIn: session ] ensure: [
+		session rollbackTransaction ].
 	self assert: result serviceCharge notNil.
-	self assert: result serviceCharge description = 'additional overcharge'.
-	self assert: result amount currency = #CDN.
+	self assert:
+		result serviceCharge description = 'additional overcharge'.
+	self assert: result amount currency equals: #CDN.
 	self assert: result amount amount = 7.
-	self assert: result serviceCharge amount currency = #USD.
-	self assert: result serviceCharge amount amount = 2.
-	^result.
+	self assert: result serviceCharge amount currency equals: #USD.
+	self assert: result serviceCharge amount amount equals: 2.
+	^ result
 ]
 
 { #category : #accessing }
@@ -139,20 +148,23 @@ GlorpReadingTest >> tearDown [
 
 { #category : #tests }
 GlorpReadingTest >> testCompoundAND [
+
 	| object query results rowToWrite |
-	
-	[session beginTransaction.
+	[
+	session beginTransaction.
 	rowToWrite := session system exampleAddressRow.
 	session writeRow: rowToWrite.
-	query := Query read: GlorpAddress
-				where: [:address | address id < 124 AND: (address id  > 122) AND: (address id ~= nil)].
-	results := query executeIn: session] 
-			ensure: [session rollbackTransaction].
-	self assert: results size = 1.
+	query := Query read: GlorpAddress where: [ :address |
+		         address id < 124
+			         AND: address id > 122
+			         AND: address id ~= nil ].
+	results := query executeIn: session ] ensure: [
+		session rollbackTransaction ].
+	self assert: results size equals: 1.
 	object := results first.
-	self assert: object class = GlorpAddress.
-	self assert: object id = 123.
-	self assert: object street = 'Paseo Montril'.
+	self assert: object class equals: GlorpAddress.
+	self assert: object id equals: 123.
+	self assert: object street equals: 'Paseo Montril'.
 	self assert: object number = '10185'
 ]
 
