@@ -16,27 +16,31 @@ Class {
 
 { #category : #testing }
 GlorpVideoStore >> assertEqual: aStore [
-	self assert: id = aStore id.
-	self assert: name = aStore name.
+
+	self assert: id equals: aStore id.
+	self assert: name equals: aStore name.
 
 	customers assertEqual: aStore customers.
-	purchases assertEqual: aStore purchases.
+	purchases assertEqual: aStore purchases
 ]
 
 { #category : #private }
 GlorpVideoStore >> computeCollections [
+
 	customers do: [:each | each store: self].
 	purchases := customers inject: #() into: [:sum :each | sum, each purchases].
-	purchases do: [:each | each store: self].
+	purchases do: [:each | each store: self]
 ]
 
 { #category : #accessing }
 GlorpVideoStore >> customers [
-	^customers
+
+	^ customers
 ]
 
 { #category : #accessing }
 GlorpVideoStore >> customers: anObject [
+
 	customers := anObject
 ]
 
@@ -60,20 +64,24 @@ GlorpVideoStore >> initialize [
 
 { #category : #'As yet unclassified' }
 GlorpVideoStore >> name [
-	^name.
+
+	^ name
 ]
 
 { #category : #'As yet unclassified' }
 GlorpVideoStore >> name: aString [
-	name := aString.
+
+	name := aString
 ]
 
 { #category : #accessing }
 GlorpVideoStore >> purchases [
-	^purchases
+
+	^ purchases
 ]
 
 { #category : #accessing }
 GlorpVideoStore >> purchases: aCollection [
+
 	purchases := aCollection
 ]

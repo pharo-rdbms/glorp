@@ -29,6 +29,13 @@ ManifestGlorpTests class >> ruleSentNotImplementedRuleV1FalsePositive [
 ]
 
 { #category : #'code-critics' }
+ManifestGlorpTests class >> ruleStringConcatenationRuleV1FalsePositive [
+
+	<ignoreForCoverage>
+	^ #(#(#(#RGMethodDefinition #(#GlorpVideoStore #computeCollections #false)) #'2023-06-26T19:30:25.8836+02:00') )
+]
+
+{ #category : #'code-critics' }
 ManifestGlorpTests class >> ruleUncommonMessageSendRuleV1FalsePositive [
 
 	<ignoreForCoverage>

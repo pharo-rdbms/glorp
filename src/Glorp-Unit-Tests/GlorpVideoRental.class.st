@@ -23,73 +23,71 @@ GlorpVideoRental >> <= aVideoRental [
 { #category : #testing }
 GlorpVideoRental >> assertEqual: aRental [
 
-	self assert: customer name = aRental customer name.
-	self assert: customer dateOfBirth = aRental customer dateOfBirth.
-	self assert: id = aRental id.
-	self assert: title = aRental title.
-	self assert: price = aRental price.
-	self assert: dueDate = aRental dueDate.
+	self assert: customer name equals: aRental customer name.
+	self
+		assert: customer dateOfBirth
+		equals: aRental customer dateOfBirth.
+	self assert: id equals: aRental id.
+	self assert: title equals: aRental title.
+	self assert: price equals: aRental price.
+	self assert: dueDate equals: aRental dueDate
 ]
 
 { #category : #accessing }
 GlorpVideoRental >> customer [
-	^customer.
+
+	^ customer
 ]
 
 { #category : #accessing }
 GlorpVideoRental >> customer: aCustomer [
-	customer := aCustomer.
+
+	customer := aCustomer
 ]
 
 { #category : #accessing }
 GlorpVideoRental >> dueDate [
-	^dueDate
+
+	^ dueDate
 ]
 
 { #category : #accessing }
 GlorpVideoRental >> dueDate: anObject [
+
 	dueDate := anObject
 ]
 
 { #category : #accessing }
 GlorpVideoRental >> id [
-	^id
+
+	^ id
 ]
 
 { #category : #accessing }
 GlorpVideoRental >> id: anObject [
+
 	id := anObject
-]
-
-{ #category : #'initialize-release' }
-GlorpVideoRental >> initialize [
-	"Initialize a newly created instance. This method must answer the receiver."
-
-	" *** Edit the following to properly initialize instance variables ***"
-	id := nil.
-	title := nil.
-	dueDate := nil.
-	price := nil.
-	" *** And replace this comment with additional initialization code *** "
-	^self
 ]
 
 { #category : #accessing }
 GlorpVideoRental >> price [
-	^price
+
+	^ price
 ]
 
 { #category : #accessing }
 GlorpVideoRental >> price: anObject [
+
 	price := anObject
 ]
 
 { #category : #printing }
 GlorpVideoRental >> printOn: aStream [
+
 	super printOn: aStream.
 	aStream nextPut: $(.
 	aStream nextPutAll: self title.
-	aStream nextPut: $).
+	aStream nextPut: $)
 ]
 
 { #category : #accessing }
@@ -100,10 +98,12 @@ GlorpVideoRental >> store: aGlorpVideoStore [
 
 { #category : #accessing }
 GlorpVideoRental >> title [
-	^title
+
+	^ title
 ]
 
 { #category : #accessing }
 GlorpVideoRental >> title: anObject [
+
 	title := anObject
 ]
