@@ -10,13 +10,6 @@ Class {
 	#category : #'Glorp-UnitOfWork'
 }
 
-{ #category : #'*Glorp' }
-MultipleRowMapKey class >> new [
-	"Answer a newly created and initialized instance."
-
-	^super new initialize
-]
-
 { #category : #'instance creation' }
 MultipleRowMapKey class >> with: key1 with: key2 with: key3 [
 	(key1 isNil or: [key2 isNil or: [key3 isNil]]) ifTrue: [self error: 'Nil key in row map, probably indicates an invalid object structure'].

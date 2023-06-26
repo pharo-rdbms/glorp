@@ -40,7 +40,7 @@ DatabaseField class >> named: aString [
 { #category : #'*Glorp' }
 DatabaseField class >> named: aString type: dbType [
 
-	^super new initialize
+	^self new
 		name: aString;
 		type: dbType
 ]

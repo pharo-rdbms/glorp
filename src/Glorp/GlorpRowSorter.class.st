@@ -25,11 +25,6 @@ Class {
 	#category : #'Glorp-UnitOfWork'
 }
 
-{ #category : #'*Glorp' }
-GlorpRowSorter class >> new [
-	^super new initialize.
-]
-
 { #category : #sorting }
 GlorpRowSorter >> childrenOf: anItem [
 	^childCache at: anItem ifAbsentPut: [

@@ -9,11 +9,6 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'as yet unclassified' }
-GlorpEncyclopediaBioEntry class >> new [
-	^super new initialize.
-]
-
 { #category : #'initialize-release' }
 GlorpEncyclopediaBioEntry >> initialize [
 ]

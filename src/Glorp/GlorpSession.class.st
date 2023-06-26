@@ -41,12 +41,6 @@ GlorpSession class >> forSystem: aSystem [
 	^ self new system: aSystem
 ]
 
-{ #category : #'instance creation' }
-GlorpSession class >> new [
-
-	^super new initialize.
-]
-
 { #category : #accessing }
 GlorpSession >> accessor [
 

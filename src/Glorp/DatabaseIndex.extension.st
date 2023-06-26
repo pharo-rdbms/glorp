@@ -13,8 +13,3 @@ DatabaseIndex class >> forFields: aCollection [
 		addFields: aCollection;
 		yourself
 ]
-
-{ #category : #'*Glorp' }
-DatabaseIndex class >> new [
-	^super new initialize.
-]

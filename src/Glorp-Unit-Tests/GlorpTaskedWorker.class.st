@@ -25,13 +25,6 @@ GlorpTaskedWorker class >> example1 [
 	^workers
 ]
 
-{ #category : #'as yet unclassified' }
-GlorpTaskedWorker class >> new [
-	"Answer a newly created and initialized instance."
-
-	^super new initialize
-]
-
 { #category : #comparing }
 GlorpTaskedWorker >> = aWorker [
 	super = aWorker ifFalse: [^false].

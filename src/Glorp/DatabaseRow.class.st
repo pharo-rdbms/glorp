@@ -49,12 +49,6 @@ DatabaseRow class >> missingFieldIndicator [
 ]
 
 { #category : #'*Glorp' }
-DatabaseRow class >> new [
-
-	^super new initialize.
-]
-
-{ #category : #'*Glorp' }
 DatabaseRow class >> newForTable: aTable [
 
 	^self new table: aTable.

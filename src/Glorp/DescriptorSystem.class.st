@@ -92,12 +92,6 @@ DescriptorSystem class >> includeAllClassesWithDescriptorMethods [
 	^ false
 ]
 
-{ #category : #'instance creation' }
-DescriptorSystem class >> new [
-
-	^ super new initialize
-]
-
 { #category : #utilities }
 DescriptorSystem class >> recreateTablesFor: aLogin [
 	"Drop and recreate the tables for this descriptor system in the given database."

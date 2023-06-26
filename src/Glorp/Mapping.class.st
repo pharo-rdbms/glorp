@@ -37,12 +37,6 @@ Class {
 	#category : #'Glorp-Mappings'
 }
 
-{ #category : #'instance creation' }
-Mapping class >> new [
-
-	^super new initialize.
-]
-
 { #category : #'printing SQL' }
 Mapping >> allRelationsFor: rootExpression do: aBlock andBetweenDo: anotherBlock [
 	"Normal mappings just operate on a single expression"

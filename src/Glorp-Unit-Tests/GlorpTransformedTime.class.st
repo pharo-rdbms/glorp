@@ -17,11 +17,6 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'as yet unclassified' }
-GlorpTransformedTime class >> new [
-	^super new initialize.
-]
-
 { #category : #accessing }
 GlorpTransformedTime >> id [
 	^id

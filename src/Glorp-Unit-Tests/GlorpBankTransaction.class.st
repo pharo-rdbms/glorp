@@ -22,12 +22,6 @@ GlorpBankTransaction class >> example2 [
 	^self new
 ]
 
-{ #category : #'as yet unclassified' }
-GlorpBankTransaction class >> new [
-
-	^super new initialize.
-]
-
 { #category : #accessing }
 GlorpBankTransaction >> amount [
 	^amount

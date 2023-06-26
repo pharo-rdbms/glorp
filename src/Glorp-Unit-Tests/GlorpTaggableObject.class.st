@@ -8,11 +8,6 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-GlorpTaggableObject class >> new [
-	^super new initialize.
-]
-
-{ #category : #'as yet unclassified' }
 GlorpTaggableObject >> initialize [
 	tags := OrderedCollection new.
 ]

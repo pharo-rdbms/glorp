@@ -32,11 +32,6 @@ Class {
 	#category : #'Glorp-Database'
 }
 
-{ #category : #'*Glorp' }
-DatabaseCommand class >> new [
-	^super new initialize.
-]
-
 { #category : #accessing }
 DatabaseCommand >> arrayBoundFields [
 

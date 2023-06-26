@@ -57,12 +57,6 @@ GlorpCustomer class >> exampleD3 [
 		name: 'Pebbles Flintstone'
 ]
 
-{ #category : #'as yet unclassified' }
-GlorpCustomer class >> new [
-
-	^super new initialize.
-]
-
 { #category : #accessing }
 GlorpCustomer >> accounts [
 

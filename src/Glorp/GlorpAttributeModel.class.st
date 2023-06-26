@@ -80,12 +80,6 @@ GlorpAttributeModel class >> named: aSymbol type: aClass [
 		  type: aClass
 ]
 
-{ #category : #'instance creation' }
-GlorpAttributeModel class >> new [
-
-	^ super new initialize
-]
-
 { #category : #knitting }
 GlorpAttributeModel >> add: anObject to: aCollection in: ourObject [
 	"If this is an array we can't just add to it, we must concatenate and re-set the value"

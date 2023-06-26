@@ -20,12 +20,6 @@ Class {
 	#category : #'Glorp-Database'
 }
 
-{ #category : #'*Glorp' }
-DatabaseConverter class >> new [
-
-	^super new initialize.
-]
-
 { #category : #converting }
 DatabaseConverter >> convert: anObject fromDatabaseRepresentationAs: aDatabaseType [
 

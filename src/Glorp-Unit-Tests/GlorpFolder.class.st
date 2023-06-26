@@ -9,13 +9,6 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'as yet unclassified' }
-GlorpFolder class >> new [
-	"Answer a newly created and initialized instance."
-
-	^super new initialize
-]
-
 { #category : #'initialize-release' }
 GlorpFolder >> initialize [
 	user := nil.

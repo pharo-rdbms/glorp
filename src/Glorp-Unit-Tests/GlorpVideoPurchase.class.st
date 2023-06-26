@@ -12,13 +12,6 @@ Class {
 	#category : #'Glorp-Unit-Tests-Models'
 }
 
-{ #category : #'as yet unclassified' }
-GlorpVideoPurchase class >> new [
-	"Answer a newly created and initialized instance."
-
-	^super new initialize
-]
-
 { #category : #comparing }
 GlorpVideoPurchase >> <= aVideoPurchase [
 	^self title <= aVideoPurchase title.

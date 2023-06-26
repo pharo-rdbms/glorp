@@ -19,12 +19,6 @@ GlorpEncyclopedia class >> example1 [
 	^result.
 ]
 
-{ #category : #'as yet unclassified' }
-GlorpEncyclopedia class >> new [
-
-	^super new initialize.
-]
-
 { #category : #accessing }
 GlorpEncyclopedia >> articleAt: aString put: anEntry [
 	entries at: aString put: anEntry.

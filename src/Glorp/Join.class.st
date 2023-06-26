@@ -89,12 +89,6 @@ Join class >> fromAll: sourceFields toAll: targetFields [
 		sourceFields: sourceFields targetFields: targetFields
 ]
 
-{ #category : #'instance creation' }
-Join class >> new [
-
-	^super new initialize
-]
-
 { #category : #converting }
 Join >> , aJoin [
 	| newJoin |

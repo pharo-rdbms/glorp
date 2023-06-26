@@ -22,11 +22,6 @@ Class {
 	#category : #'Glorp-UnitOfWork'
 }
 
-{ #category : #'*Glorp' }
-ObjectTransaction class >> new [
-	^super new initialize
-]
-
 { #category : #'begin/commit/abort' }
 ObjectTransaction >> abort [
 	undoMap keysAndValuesDo: [:original :copy | self restoreStateOf: original toThatOf: copy]

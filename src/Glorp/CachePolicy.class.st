@@ -25,12 +25,6 @@ CachePolicy class >> default [
 	^ self new
 ]
 
-{ #category : #'*Glorp' }
-CachePolicy class >> new [
-
-	^ super new initialize
-]
-
 { #category : #'wrap/unwrap' }
 CachePolicy >> cacheEntryFor: anObject [
 

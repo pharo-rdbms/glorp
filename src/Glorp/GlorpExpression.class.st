@@ -26,12 +26,6 @@ Class {
 	#category : #'Glorp-Expressions'
 }
 
-{ #category : #'instance creation' }
-GlorpExpression class >> new [
-
-	^super new initialize
-]
-
 { #category : #api }
 GlorpExpression >> , anExpression [
 

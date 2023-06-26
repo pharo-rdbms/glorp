@@ -28,11 +28,6 @@ GlorpCompressedMoney class >> forAmount: aNumber [
 	^self currency: self defaultCurrency amount: aNumber.
 ]
 
-{ #category : #'as yet unclassified' }
-GlorpCompressedMoney class >> new [
-	^super new initialize.
-]
-
 { #category : #accessing }
 GlorpCompressedMoney >> amount [
 	^array at: 2

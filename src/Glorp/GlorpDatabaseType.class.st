@@ -36,11 +36,6 @@ GlorpDatabaseType class >> isAbstract [
 ]
 
 { #category : #'as yet unclassified' }
-GlorpDatabaseType class >> new [
-	^super new initialize.
-]
-
-{ #category : #'as yet unclassified' }
 GlorpDatabaseType class >> padToThreeDigits: anInteger [
 
 	| string |

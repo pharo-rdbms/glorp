@@ -10,12 +10,6 @@ Class {
 	#category : #'Glorp-Integration-Tests-Models'
 }
 
-{ #category : #'instance creation' }
-GlorpTravelFolder class >> new [
-
-	^super new initialize
-]
-
 { #category : #accessing }
 GlorpTravelFolder >> files [
 
