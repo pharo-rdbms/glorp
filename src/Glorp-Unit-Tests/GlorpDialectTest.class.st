@@ -17,18 +17,20 @@ GlorpDialectTest >> testBlockArgumentCount [
 
 { #category : #tests }
 GlorpDialectTest >> testClassImportLookup [
+
 	self
 		assert: (Dialect
-					lookupClassNamed: 'AccessCast'
-					inContextOf: GlorpDescriptorSystemWithNamespaces
-					ifAbsent: [nil]) == AccessCast
+				 lookupClassNamed: 'AccessCast'
+				 inContextOf: GlorpDescriptorSystemWithNamespaces
+				 ifAbsent: [ nil ]) == AccessCast
 		description: 'We cannot find a class visible in the environment of this class, not imported'.
+
 	self
 		assert: (Dialect
-					lookupClassNamed: 'GlorpTestClassInNamespace'
-					inContextOf: GlorpDescriptorSystemWithNamespaces
-					ifAbsent: [nil]) == GlorpTestClassInNamespace
-		description: 'We cannot find a class imported by the class but not visible in its environment'.
+				 lookupClassNamed: 'GlorpTestClassInNamespace'
+				 inContextOf: GlorpDescriptorSystemWithNamespaces
+				 ifAbsent: [ nil ]) == GlorpTestClassInNamespace
+		description: 'We cannot find a class imported by the class but not visible in its environment'
 ]
 
 { #category : #tests }
@@ -49,5 +51,6 @@ GlorpDialectTest >> testTimeSetMillisecond [
 
 { #category : #tests }
 GlorpDialectTest >> testTokensBasedOn [
+
 	self assert: (Dialect tokensBasedOn: '.' in: 'abc.def.ghi') asArray equals: #('abc' 'def' 'ghi')
 ]

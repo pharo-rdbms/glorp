@@ -6,6 +6,7 @@ Class {
 
 { #category : #testing }
 GlorpDescriptorValidationTest >> testJoinDirection [
+
 	| descriptor table1 table2 mapping system descriptor2 |
 	system := DynamicDescriptorSystem new.
 	descriptor := system addEmptyDescriptorFor: GlorpCustomer.
@@ -26,11 +27,12 @@ GlorpDescriptorValidationTest >> testJoinDirection [
 	mapping attributeName: #bar.
 	mapping referenceClass: GlorpVideoStore.
 	mapping join: (Join from: (table2 fieldNamed: 'two') to: (table1 fieldNamed: 'one')).
-	self should: [mapping validate] raise: Dialect error.
+	self should: [mapping validate] raise: Dialect error
 ]
 
 { #category : #testing }
 GlorpDescriptorValidationTest >> testValidateDirectInstvarAccessExisting [
+
 	| descriptor table mapping system field |
 	system := DynamicDescriptorSystem new.
 	descriptor := system addEmptyDescriptorFor: GlorpCustomer.
@@ -44,6 +46,7 @@ GlorpDescriptorValidationTest >> testValidateDirectInstvarAccessExisting [
 
 { #category : #testing }
 GlorpDescriptorValidationTest >> testValidateDirectInstvarAccessNonExisting [
+
 	| descriptor table mapping system field |
 	system := DynamicDescriptorSystem new.
 	descriptor := system addEmptyDescriptorFor: GlorpCustomer.
@@ -57,6 +60,7 @@ GlorpDescriptorValidationTest >> testValidateDirectInstvarAccessNonExisting [
 
 { #category : #testing }
 GlorpDescriptorValidationTest >> testValidateSelectorAccessExisting [
+
 	| descriptor table mapping system field |
 	system := DynamicDescriptorSystem new.
 	descriptor := system addEmptyDescriptorFor: GlorpCustomer.
@@ -71,6 +75,7 @@ GlorpDescriptorValidationTest >> testValidateSelectorAccessExisting [
 
 { #category : #testing }
 GlorpDescriptorValidationTest >> testValidateSelectorAccessNonExisting [
+
 	| descriptor table mapping system field |
 	system := DynamicDescriptorSystem new.
 	descriptor := system addEmptyDescriptorFor: GlorpCustomer.

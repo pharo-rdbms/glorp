@@ -4,14 +4,18 @@ Class {
 	#category : #'Glorp-Unit-Tests-Tests'
 }
 
-{ #category : #tests }
-GlorpExpressionIterationTest >> helpTestSingleNodeDo: exp [ 
-	self assert: (exp collect: [:each | each]) = (OrderedCollection with: exp)
+{ #category : #utilities }
+GlorpExpressionIterationTest >> helpTestSingleNodeDo: exp [
+
+	self
+		assert: (exp collect: [ :each | each ])
+		equals: (OrderedCollection with: exp)
 ]
 
 { #category : #tests }
 GlorpExpressionIterationTest >> testDoBase [
-	self helpTestSingleNodeDo:BaseExpression new
+
+	self helpTestSingleNodeDo: BaseExpression new
 ]
 
 { #category : #tests }
@@ -27,6 +31,7 @@ GlorpExpressionIterationTest >> testDoCollection [
 
 { #category : #tests }
 GlorpExpressionIterationTest >> testDoConstant [
+
 	self helpTestSingleNodeDo: ConstantExpression new
 ]
 
