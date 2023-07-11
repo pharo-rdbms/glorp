@@ -38,5 +38,7 @@ GlorpBankBranch >> branchNumber: aString [
 { #category : #printing }
 GlorpBankBranch >> printOn: aStream [
 	super printOn: aStream.
-	aStream nextPutAll: '(', self branchNumber printString, ')'.
+	aStream nextPut: $(.
+	self branchNumber printOn: aStream.
+	aStream nextPut: $)
 ]
