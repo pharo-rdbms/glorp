@@ -40,7 +40,7 @@ GlorpEmailAddress >> id: anInteger [
 GlorpEmailAddress >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
-	aStream nextPutAll: id printString.
+	self id printOn: aStream.
 	aStream nextPut: $).
 ]
 
