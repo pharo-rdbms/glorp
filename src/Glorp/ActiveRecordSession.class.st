@@ -10,25 +10,28 @@ Class {
 }
 
 { #category : #'api/transactions' }
-ActiveRecordSession >> commitUnitOfWork [ 
+ActiveRecordSession >> commitUnitOfWork [
+
 	self convertDeletedObjectsToSoftDeletes.
-	^super commitUnitOfWork
+	^ super commitUnitOfWork
 ]
 
 { #category : #'api/transactions' }
-ActiveRecordSession >> commitUnitOfWorkAndContinue [ 
+ActiveRecordSession >> commitUnitOfWorkAndContinue [
+
 	self convertDeletedObjectsToSoftDeletes.
-	^super commitUnitOfWorkAndContinue
+	^ super commitUnitOfWorkAndContinue
 ]
 
 { #category : #'api/transactions' }
 ActiveRecordSession >> convertDeletedObjectsToSoftDeletes [
-	currentUnitOfWork ifNotNil: [ 
+
+	currentUnitOfWork ifNotNil: [
 		| softies now |
 		now := DateAndTime current.
-		softies := currentUnitOfWork deletedObjects select: [ :ea | ea respondsTo: #deletedAt: ].
-		softies do: [ :ea | 
-			self undelete: ea. 
-			ea deletedAt: now ]
-		 ]
+		softies := currentUnitOfWork deletedObjects select: [ :ea |
+			           ea respondsTo: #deletedAt: ].
+		softies do: [ :ea |
+			self undelete: ea.
+			ea deletedAt: now ] ]
 ]

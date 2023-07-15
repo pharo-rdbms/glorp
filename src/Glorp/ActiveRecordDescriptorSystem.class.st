@@ -14,25 +14,25 @@ Class {
 }
 
 { #category : #'instance creation' }
-ActiveRecordDescriptorSystem class >> sessionForAccessor: aDatabaseAccesor [.
-	"Create a session associated with the given accesseor, and using us as a descriptor system. 
+ActiveRecordDescriptorSystem class >> sessionForAccessor: aDatabaseAccesor [
+	"Create a session associated with the given accesseor, and using us as a descriptor system.
 	This is the easiest way to get a full blown session going."
-	
+
 	^(ActiveRecordSession forSystem: (self forPlatform: aDatabaseAccesor platform))
 		accessor: aDatabaseAccesor;
 		yourself
-
 ]
 
 { #category : #'instance creation' }
 ActiveRecordDescriptorSystem class >> sessionForLogin: aGlorpLogin [
 	"Create a session associated with the given login, and using us as a descriptor system. This is the easiest way to get a full blown session going."
+
 	| system session |
 	system := self forPlatform: aGlorpLogin database.
 	session := ActiveRecordSession new.
 	session accessor: (DatabaseAccessor forLogin: aGlorpLogin).
 	session system: system.
-	^session
+	^ session
 ]
 
 { #category : #adding }
