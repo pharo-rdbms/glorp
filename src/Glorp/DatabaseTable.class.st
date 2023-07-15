@@ -460,7 +460,7 @@ DatabaseTable >> hasIndexNamed: aString [
 { #category : #testing }
 DatabaseTable >> hasPrimaryKeyConstraints [
 
-	^ self primaryKeyFields isEmpty not
+	^ self primaryKeyFields isNotEmpty
 ]
 
 { #category : #testing }
