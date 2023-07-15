@@ -21,7 +21,7 @@ Class {
 { #category : #accessing }
 CannotAutomaticallyDetermineJoin >> constraints [
 
-	constraints isNil ifTrue: [ constraints := #(  ) ].
+	constraints ifNil: [ constraints := #(  ) ].
 	^ constraints
 ]
 

@@ -1987,9 +1987,13 @@ DatabasePlatform >> startColumnQuote [
 
 { #category : #'conversion - strings' }
 DatabasePlatform >> stringToByteArray: aString for: aType [
+
 	| string |
 	string := self unpadString: aString for: aType.
-	^string isNil ifTrue: [nil] ifFalse: [Dialect convert: string toByteArrayWithEncoding: self characterEncoding].
+	^ string ifNil: [ nil ] ifNotNil: [
+		  Dialect
+			  convert: string
+			  toByteArrayWithEncoding: self characterEncoding ]
 ]
 
 { #category : #'conversion - strings' }

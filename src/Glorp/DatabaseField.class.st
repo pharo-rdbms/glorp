@@ -97,7 +97,7 @@ DatabaseField >> beIndexed [
 DatabaseField >> beLockKey [
 
 	isLockKey := true.
-	self table isNil ifFalse: [ self table addAsLockKeyField: self ]
+	self table ifNotNil: [ self table addAsLockKeyField: self ]
 ]
 
 { #category : #configuring }
@@ -111,7 +111,7 @@ DatabaseField >> bePrimaryKey [
 
 	isPrimaryKey := true.
 	isNullable := false.
-	self table isNil ifFalse: [ self table addAsPrimaryKeyField: self ]
+	self table ifNotNil: [ self table addAsPrimaryKeyField: self ]
 ]
 
 { #category : #converting }
@@ -178,7 +178,7 @@ DatabaseField >> isIndexed [
 { #category : #testing }
 DatabaseField >> isLockKey [
 
-	isLockKey isNil ifTrue: [ isLockKey := false ].
+	isLockKey ifNil: [ isLockKey := false ].
 	^ isLockKey
 ]
 
@@ -226,14 +226,14 @@ DatabaseField >> isTheSameAs: aDatabaseField [
 
 { #category : #comparing }
 DatabaseField >> isTheSameTypeAs: aDatabaseField [
+
 	| myType aType |
-	self isPrimaryKey
-		ifTrue:
-		   [myType := self type.
-		   aType := aDatabaseField type.
-		   ^(myType = aType
-				or: [(myType isSerial or: [aType isSerial ])
-					and: [myType impliedSmalltalkType = aType impliedSmalltalkType ]]) ].
+	self isPrimaryKey ifTrue: [
+		myType := self type.
+		aType := aDatabaseField type.
+		^ myType = aType or: [
+			  (myType isSerial or: [ aType isSerial ]) and: [
+				  myType impliedSmalltalkType = aType impliedSmalltalkType ] ] ].
 
 	^ self type = aDatabaseField type
 ]
@@ -241,7 +241,7 @@ DatabaseField >> isTheSameTypeAs: aDatabaseField [
 { #category : #testing }
 DatabaseField >> isUnique [
 
-	isUnique isNil ifTrue: [ isUnique := false ].
+	isUnique ifNil: [ isUnique := false ].
 	^ isUnique
 ]
 
@@ -324,7 +324,7 @@ DatabaseField >> printOn: aStream [
 	aStream nextPutAll: 'Field'.
 	aStream
 		nextPutAll: '(';
-		nextPutAll: (table isNil ifTrue: [''] ifFalse: [table name]);
+		nextPutAll: (table ifNil: [ '' ] ifNotNil: [ table name ]);
 		nextPutAll: '.';
 		nextPutAll: name;
 		nextPutAll: ')'
@@ -357,9 +357,9 @@ DatabaseField >> printUnqualifiedSQLOn: aStream withParameters: anArray [
 { #category : #querying }
 DatabaseField >> qualifiedName [
 
-	^ table isNil
-		  ifTrue: [ self name ]
-		  ifFalse: [ self table qualifiedName , '.' , self name ]
+	^ table
+		  ifNil: [ self name ]
+		  ifNotNil: [ self table qualifiedName , '.' , self name ]
 ]
 
 { #category : #querying }
@@ -367,9 +367,9 @@ DatabaseField >> quotedQualifiedName [
 
 	| basicName |
 	basicName := self platform nameForColumn: self name.
-	^ table isNil
-		  ifTrue: [ basicName ]
-		  ifFalse: [ self table qualifiedName , '.' , basicName ]
+	^ table
+		  ifNil: [ basicName ]
+		  ifNotNil: [ self table qualifiedName , '.' , basicName ]
 ]
 
 { #category : #accessing }

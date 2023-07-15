@@ -123,9 +123,9 @@ DatabaseAccessor >> allowCommand: aCommand during: aBlock [
 { #category : #permissions }
 DatabaseAccessor >> alsoDenyCommand: aCommand [
 
-	self deniedCommands isNil
-		ifTrue: [ self denyCommand: aCommand ]
-		ifFalse: [
+	self deniedCommands
+		ifNil: [ self denyCommand: aCommand ]
+		ifNotNil: [
 		self deniedCommands: self deniedCommands , (Array with: aCommand) ]
 ]
 
@@ -290,7 +290,7 @@ DatabaseAccessor >> beginTransaction [
 { #category : #permissions }
 DatabaseAccessor >> checkPermissionFor: command [
 
-	deniedCommands isNil ifTrue: [ ^ self ].
+	deniedCommands ifNil: [ ^ self ].
 	(deniedCommands includes: command class) ifTrue: [
 		(GlorpIllegalCommand new command: command) signal ]
 ]
@@ -426,13 +426,15 @@ DatabaseAccessor >> cursorFor: aStream [
 
 { #category : #cursors }
 DatabaseAccessor >> cursorFor: answerStream command: aCommand [
-   aCommand needsRowCount ifTrue: [
+
+	aCommand needsRowCount ifTrue: [
 		aCommand rowCount: (self platform supportsRowCount
-									ifTrue: [answerStream rowCount]
-									ifFalse: [1])].
-	^aCommand isNil
-		ifTrue: [self cursorFor: answerStream]
-		ifFalse: [GlorpCursoredStream on: answerStream for: aCommand accessor: self].
+				 ifTrue: [ answerStream rowCount ]
+				 ifFalse: [ 1 ]) ].
+	^ aCommand
+		  ifNil: [ self cursorFor: answerStream ]
+		  ifNotNil: [
+		  GlorpCursoredStream on: answerStream for: aCommand accessor: self ]
 ]
 
 { #category : #accessing }
@@ -955,8 +957,9 @@ DatabaseAccessor >> logger: aTextCollector [
 
 { #category : #logging }
 DatabaseAccessor >> logging [
-	logging isNil ifTrue: [^self class loggingEnabled].
-	^logging.
+
+	logging ifNil: [ ^ self class loggingEnabled ].
+	^ logging
 ]
 
 { #category : #logging }
@@ -1027,14 +1030,16 @@ DatabaseAccessor >> permitNothingDuring: aBlock [
 
 { #category : #permissions }
 DatabaseAccessor >> permitsInserts [
-	deniedCommands isNil ifTrue: [^true].
-	^(deniedCommands includes: InsertCommand) not.
+
+	deniedCommands ifNil: [ ^ true ].
+	^ (deniedCommands includes: InsertCommand) not
 ]
 
 { #category : #permissions }
 DatabaseAccessor >> permitsUpdates [
-	deniedCommands isNil ifTrue: [^true].
-	^(deniedCommands includes: UpdateCommand) not.
+
+	deniedCommands ifNil: [ ^ true ].
+	^ (deniedCommands includes: UpdateCommand) not
 ]
 
 { #category : #accessing }
@@ -1067,9 +1072,12 @@ DatabaseAccessor >> renameField: aDatabaseField to: nameString ifError: errorBlo
 DatabaseAccessor >> renameTable: aDatabaseTable to: newTableName inPlatform: aDatabasePlatform ifError: errorBlock [
 
 	| sqlStatement |
-	sqlStatement := aDatabasePlatform sqlStatementToRenameTable: aDatabaseTable to: newTableName.
+	sqlStatement := aDatabasePlatform
+		                sqlStatementToRenameTable: aDatabaseTable
+		                to: newTableName.
 	self
-		executeInDDLOperation: [ self executeSQLStringNoResult: sqlStatement ]
+		executeInDDLOperation: [
+		self executeSQLStringNoResult: sqlStatement ]
 		ifError: errorBlock
 ]
 

@@ -109,7 +109,7 @@ CacheManager >> hasExpired: anObject [
 	| key cache |
 	key := (session descriptorFor: anObject) primaryKeyFor: anObject.
 	cache := self cacheFor: anObject.
-	cache isNil ifTrue: [ ^ false ]. "We have an uninstantiated proxy."
+	cache ifNil: [ ^ false ].
 	^ cache hasExpired: key
 ]
 
@@ -163,11 +163,15 @@ CacheManager >> lookupClass: aClass key: aKey ifAbsentPut: failBlock [
 ]
 
 { #category : #initialization }
-CacheManager >> makeCacheFor: aClass [ 
+CacheManager >> makeCacheFor: aClass [
 
 	| rootClass cache |
-	rootClass := session isNil ifTrue: [aClass] ifFalse: [session lookupRootClassFor: aClass].
-	cache := subCaches at: rootClass ifAbsentPut: [ Cache newFor: rootClass in: self ].
+	rootClass := session
+		             ifNil: [ aClass ]
+		             ifNotNil: [ session lookupRootClassFor: aClass ].
+	cache := subCaches
+		         at: rootClass
+		         ifAbsentPut: [ Cache newFor: rootClass in: self ].
 	subCaches at: aClass put: cache.
 	^ cache
 ]

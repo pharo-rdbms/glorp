@@ -158,7 +158,7 @@ DatabaseCommand >> parameterTypeSignature [
 { #category : #'As yet unclassified' }
 DatabaseCommand >> platform [
 
-	self session isNil ifTrue: [ ^ nil ].
+	self session ifNil: [ ^ nil ].
 	^ self session platform
 ]
 
@@ -226,8 +226,8 @@ DatabaseCommand >> space [
 { #category : #accessing }
 DatabaseCommand >> sqlString [
 
-	sqlString isNil ifTrue: [
-		stream isNil ifTrue: [ stream := WriteStream on: (String new: 100) ].
+	sqlString ifNil: [
+		stream ifNil: [ stream := WriteStream on: (String new: 100) ].
 		self printSQL.
 		sqlString := stream contents.
 		stream := nil ].
@@ -243,7 +243,7 @@ DatabaseCommand >> succeeded [
 { #category : #accessing }
 DatabaseCommand >> system [
 
-	self session isNil ifTrue: [ ^ nil ].
+	self session ifNil: [ ^ nil ].
 	^ self session system
 ]
 

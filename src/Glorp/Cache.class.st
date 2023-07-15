@@ -47,15 +47,19 @@ Cache >> at: key ifAbsent: aBlock [
 ]
 
 { #category : #lookup }
-Cache >> at: key ifAbsentPut: aBlock [ 
+Cache >> at: key ifAbsentPut: aBlock [
+
 	| item |
-	item := self at: key ifAbsent: [nil].
-	^item isNil 
-		ifTrue: [ | newItem|
-			newItem := policy cacheEntryFor: aBlock value.
-			self markEntryAsCurrent: newItem.
-			items at: key put: newItem]
-		ifFalse: [self markEntryAsCurrent: item. item].
+	item := self at: key ifAbsent: [ nil ].
+	^ item
+		  ifNil: [
+			  | newItem |
+			  newItem := policy cacheEntryFor: aBlock value.
+			  self markEntryAsCurrent: newItem.
+			  items at: key put: newItem ]
+		  ifNotNil: [
+			  self markEntryAsCurrent: item.
+			  item ]
 ]
 
 { #category : #private }
@@ -193,7 +197,7 @@ Cache >> markAsCurrentAtKey: key [
 Cache >> markEntryAsCurrent: anItem [
 	"The policy has told us to mark an item as current. This is only really useful for weak policies, which tell us to keep an additional pointer to the object in a (presumably) fixed-size collection"
 
-	extraReferences isNil ifFalse: [ extraReferences add: anItem ]
+	extraReferences ifNotNil: [ extraReferences add: anItem ]
 ]
 
 { #category : #finalization }

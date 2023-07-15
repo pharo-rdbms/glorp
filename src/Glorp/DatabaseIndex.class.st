@@ -93,7 +93,7 @@ DatabaseIndex >> isTheSameAs: aDatabaseIndex [
 { #category : #accessing }
 DatabaseIndex >> name [
 
-	name isNil ifTrue: [ name := self generateName ].
+	name ifNil: [ name := self generateName ].
 	^ name
 ]
 
