@@ -533,22 +533,6 @@ GlorpExpression >> inject: anObject into: aBlock [
 	^ sum
 ]
 
-{ #category : #inspecting }
-GlorpExpression >> inspectorHierarchies [
-
-	| hierarchy |
-	hierarchy := ((Smalltalk at: #Tools ifAbsent: [ ^ #(  ) ])
-		              at: #Trippy
-		              ifAbsent: [ ^ #(  ) ])
-		             at: #Hierarchy
-		             ifAbsent: [ ^ #(  ) ].
-	^ Array with: (hierarchy
-			   id: #expression
-			   label: 'Expression Tree'
-			   parentBlock: [ :each | nil ]
-			   childrenBlock: [ :each | each inspectorChildren ])
-]
-
 { #category : #converting }
 GlorpExpression >> inverseJoin [
 	"We assume that only the parts that are actually joins ought to invert"
