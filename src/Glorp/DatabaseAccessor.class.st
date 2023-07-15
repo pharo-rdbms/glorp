@@ -332,12 +332,6 @@ DatabaseAccessor >> connectionClassForLogin: aLogin [
 	^ self subclassResponsibility
 ]
 
-{ #category : #copying }
-DatabaseAccessor >> copy [
-
-	^ self shallowCopy postCopy
-]
-
 { #category : #executing }
 DatabaseAccessor >> copyDataFromField: fromField toField: toField ifError: errorBlock [
 
