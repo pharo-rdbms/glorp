@@ -168,6 +168,7 @@ ForeignKeyConstraint >> isTheSameAs: aForeignKeyConstraint [
 
 { #category : #testing }
 ForeignKeyConstraint >> matchesForeignKeyConstraint: aConstraint [
+
 	name asUppercase = aConstraint name asUppercase ifFalse: [^false].
 	self sourceFields size ~= aConstraint sourceFields size ifTrue: [^false].
 	self sourceFields with: aConstraint sourceFields do: [:field1 :field2 |
