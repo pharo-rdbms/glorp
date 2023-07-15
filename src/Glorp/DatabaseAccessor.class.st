@@ -240,7 +240,7 @@ DatabaseAccessor >> alterFieldSetNotNull: aField [
 { #category : #executing }
 DatabaseAccessor >> alterFieldSetNotNull: aField ifError: aBlock [
 
-	^self doDDLOperation: [
+	^ self doDDLOperation: [
 		self
 			execute: [self executeSQLStringNoResult:
 						(self platform createAlterColumnStatementSetNotNull: aField)]
@@ -350,22 +350,24 @@ DatabaseAccessor >> copyDataFromTable: fromTable toTable: anotherTable ifError: 
 
 { #category : #obsolete }
 DatabaseAccessor >> createConstraint: aConstraint [
-	^self addConstraint: aConstraint
+
+	^ self addConstraint: aConstraint
 ]
 
 { #category : #executing }
 DatabaseAccessor >> createIndex: aGlorpDatabaseIndex forTable: aGlorpDatabaseTable ifError: aBlock [
-	self 
+
+	self
 		execute:
 			[self executeSQLStringNoResult:
-				(self platform 
+				(self platform
 					createTableIndexStatementStringFor: aGlorpDatabaseTable
 					index: aGlorpDatabaseIndex)]
-		ifError: aBlock.
+		ifError: aBlock
 ]
 
 { #category : #executing }
-DatabaseAccessor >> createSequence: aDatabaseSequence ifError: aBlock [ 
+DatabaseAccessor >> createSequence: aDatabaseSequence ifError: aBlock [
 
 	self
 		executeInDDLOperation: [ self executeSQLStringNoResult: aDatabaseSequence creationString]
@@ -373,46 +375,53 @@ DatabaseAccessor >> createSequence: aDatabaseSequence ifError: aBlock [
 ]
 
 { #category : #executing }
-DatabaseAccessor >> createTable: aGlorpDatabaseTable ifError: aBlock [ 
+DatabaseAccessor >> createTable: aGlorpDatabaseTable ifError: aBlock [
 	"This method should be used to create a database table from aTable"
-	aGlorpDatabaseTable isImaginary ifTrue: [^self].
+
+	aGlorpDatabaseTable isImaginary ifTrue: [ ^ self ].
 	self
 		executeInDDLOperation: [
-			self executeSQLStringNoResult: (self platform createTableStatementStringFor: aGlorpDatabaseTable)]
+			self executeSQLStringNoResult:
+				(self platform createTableStatementStringFor: aGlorpDatabaseTable) ]
 		ifError: aBlock
 ]
 
 { #category : #executing }
-DatabaseAccessor >> createTableFKConstraints: aGLORBDatabaseTable ifError: aBlock [ 
+DatabaseAccessor >> createTableFKConstraints: aGLORBDatabaseTable ifError: aBlock [
 	"This method should be used to define foreign key constraints for a database table from aTable"
 
 	aGLORBDatabaseTable foreignKeyConstraintsForCreation
-		do: [ :each | self addConstraint: each ifError: aBlock ].
+		do: [ :each | self addConstraint: each ifError: aBlock ]
 ]
 
 { #category : #executing }
-DatabaseAccessor >> createTableIndexes: aGlorpDatabaseTable ifError: aBlock [ 
+DatabaseAccessor >> createTableIndexes: aGlorpDatabaseTable ifError: aBlock [
 	"Create all indexes for this table"
 
-	self execute: 
-			[(self platform createTableIndexStatementStringsFor: aGlorpDatabaseTable) 
-				do: [:ea | self executeSQLStringNoResult: ea]]
-		ifError: aBlock.
+	self
+		execute: [
+			(self platform createTableIndexStatementStringsFor:
+				 aGlorpDatabaseTable) do: [ :ea |
+				self executeSQLStringNoResult: ea ] ]
+		ifError: aBlock
 ]
 
 { #category : #accessing }
 DatabaseAccessor >> currentLogin [
-	^currentLogin
+
+	^ currentLogin
 ]
 
 { #category : #accessing }
-DatabaseAccessor >> currentLogin: aLogin [ 
+DatabaseAccessor >> currentLogin: aLogin [
+
 	currentLogin := aLogin
 ]
 
 { #category : #cursors }
 DatabaseAccessor >> cursorFor: aStream [
-	^GlorpCursoredStream on: aStream accessor: self.
+
+	^ GlorpCursoredStream on: aStream accessor: self
 ]
 
 { #category : #cursors }
@@ -428,54 +437,60 @@ DatabaseAccessor >> cursorFor: answerStream command: aCommand [
 
 { #category : #accessing }
 DatabaseAccessor >> deniedCommands [
-	^deniedCommands.
+
+	^ deniedCommands
 ]
 
 { #category : #accessing }
 DatabaseAccessor >> deniedCommands: aCollection [
-	deniedCommands := aCollection.
+
+	deniedCommands := aCollection
 ]
 
 { #category : #permissions }
 DatabaseAccessor >> denyCommand: aCommand [
-	(aCommand isBehavior) ifFalse: [self error: 'invalid command type'].
-	self denyCommands: (Array with: aCommand).
+
+	aCommand isBehavior ifFalse: [ self error: 'invalid command type' ].
+	self denyCommands: (Array with: aCommand)
 ]
 
 { #category : #permissions }
 DatabaseAccessor >> denyCommands: aCollection [
-	deniedCommands := aCollection asArray.
+
+	deniedCommands := aCollection asArray
 ]
 
 { #category : #permissions }
 DatabaseAccessor >> denyReads [
-	deniedCommands := SelectCommand allSubclasses.
+
+	deniedCommands := SelectCommand allSubclasses
 ]
 
 { #category : #permissions }
 DatabaseAccessor >> denyWrites [
-	deniedCommands := RowBasedCommand allSubclasses.
+
+	deniedCommands := RowBasedCommand allSubclasses
 ]
 
 { #category : #transactions }
 DatabaseAccessor >> doDDLOperation: aBlock [
 	"Execute DDL SQL - something which creates/drops/modifies tables or other schema information. The main reason for this method is that some databases require a transaction, while others don't require it, and still others don't allow it. Try to do the right thing."
-	
-	^self platform requiresTransactionForTableOperations
-		ifTrue: [self inTransactionDo: aBlock]
-		ifFalse: aBlock.
+
+	^ self platform requiresTransactionForTableOperations
+		  ifTrue: [ self inTransactionDo: aBlock ]
+		  ifFalse: aBlock
 ]
 
 { #category : #executing }
-DatabaseAccessor >> dropConstraint: aConstraint [ 
-	
-	^self 
-		dropConstraint: aConstraint 
+DatabaseAccessor >> dropConstraint: aConstraint [
+
+	^self
+		dropConstraint: aConstraint
 		ifError:  [ :ex | 	| msg|
 				msg := ex messageText.
 				msg isEmpty ifTrue: [msg := 'no error message provided for top level exception'].
 				Transcript cr; show: ('Drop constraint <1s> ERROR: (<2s>'  expandMacrosWith: aConstraint name with: msg).
-				ex return: nil].
+				ex return: nil]
 ]
 
 { #category : #executing }
@@ -490,10 +505,10 @@ DatabaseAccessor >> dropConstraint: aConstraint ifError: aBlock [
 ]
 
 { #category : #executing }
-DatabaseAccessor >> dropFields: aCollection [ 
+DatabaseAccessor >> dropFields: aCollection [
 
-	self 
-		dropFields: aCollection 
+	self
+		dropFields: aCollection
 		ifError: [ :ex  | 	| msg |
 				msg := ex messageText.
 				msg isEmpty ifTrue: [msg := 'No error message provided for top level exception.'].
@@ -504,43 +519,46 @@ DatabaseAccessor >> dropFields: aCollection [
 { #category : #executing }
 DatabaseAccessor >> dropFields: aCollection ifError: aBlock [
 
-	aCollection
-		do: 	[:aField | 
-			self execute: [self executeSQLStringNoResult: (self platform createDropColumnStatementFor: aField)]
-				ifError: aBlock ].
+	aCollection do: [ :aField |
+		self
+			execute: [
+				self executeSQLStringNoResult:
+					(self platform createDropColumnStatementFor: aField) ]
+			ifError: aBlock ]
 ]
 
 { #category : #executing }
-DatabaseAccessor >> dropForeignKeyConstraintsForTable: aTable ifError: aBlock [ 
-	aTable isImaginary ifTrue: [^self].
-	aTable  foreignKeyConstraints do: [:each | self dropConstraint: each ifError: [ :ex | aBlock value: ex]].
+DatabaseAccessor >> dropForeignKeyConstraintsForTable: aTable ifError: aBlock [
+
+	aTable isImaginary ifTrue: [ ^ self ].
+	aTable foreignKeyConstraints do: [ :each |
+		self dropConstraint: each ifError: [ :ex | aBlock value: ex ] ]
 ]
 
 { #category : #executing }
-DatabaseAccessor >> dropSequence: aDatabaseSequence ifAbsent: aBlock [ 
+DatabaseAccessor >> dropSequence: aDatabaseSequence ifAbsent: aBlock [
+
 	self
-		executeInDDLOperation: [ self executeSQLStringNoResult: aDatabaseSequence dropString ]
+		executeInDDLOperation: [
+		self executeSQLStringNoResult: aDatabaseSequence dropString ]
 		ifError: aBlock
 ]
 
 { #category : #executing }
 DatabaseAccessor >> dropSequences: anArray [
-	anArray
-		do:
-			[:each | 
-			self
-				dropSequence: each
-				ifAbsent:
-					[:ex | 
-					Transcript show: (ex messageText ifNil: [ex printString]).
-					ex return: nil]].
+
+	anArray do: [ :each |
+		self dropSequence: each ifAbsent: [ :ex |
+			Transcript show: (ex messageText ifNil: [ ex printString ]).
+			ex return: nil ] ]
 ]
 
 { #category : #executing }
-DatabaseAccessor >> dropTable: aTable ifError: aBlock [ 
-	aTable isImaginary ifTrue: [^self].
+DatabaseAccessor >> dropTable: aTable ifError: aBlock [
+
+	aTable isImaginary ifTrue: [ ^ self ].
 	self dropForeignKeyConstraintsForTable: aTable ifError: aBlock.
-	self dropTableDefinition: aTable ifError: aBlock.
+	self dropTableDefinition: aTable ifError: aBlock
 ]
 
 { #category : #executing }
@@ -549,48 +567,57 @@ DatabaseAccessor >> dropTableDefinition: aTable ifError: aBlock [
 
 	aTable isImaginary ifTrue: [^self].
 	aTable hasPrimaryKeyConstraints ifTrue: [self dropConstraint: aTable  primaryKeyConstraints ifError: [:ex | aBlock value: ex]].
-	self dropTableNamed: aTable qualifiedName ifAbsent: aBlock.
+	self dropTableNamed: aTable qualifiedName ifAbsent: aBlock
 ]
 
 { #category : #executing }
-DatabaseAccessor >> dropTableNamed: aString [ 
-	self 
-		dropTableNamed: aString 
-		ifAbsent: [:ex | 	| msg|
-				msg := ex messageText.
-				msg isEmpty ifTrue: [msg := 'No error message provided for top level exception.'].
-				Transcript cr; show: ('Drop table <1s> ERROR: (<2s>) ' expandMacrosWith: aString with: msg).
-				ex return: nil]
+DatabaseAccessor >> dropTableNamed: aString [
+
+	self dropTableNamed: aString ifAbsent: [ :ex |
+		| msg |
+		msg := ex messageText.
+		msg isEmpty ifTrue: [
+			msg := 'No error message provided for top level exception.' ].
+		Transcript
+			cr;
+			show:
+				('Drop table <1s> ERROR: (<2s>) '
+					 expandMacrosWith: aString
+					 with: msg).
+		ex return: nil ]
 ]
 
 { #category : #executing }
-DatabaseAccessor >> dropTableNamed: aString ifAbsent: aBlock [ 
+DatabaseAccessor >> dropTableNamed: aString ifAbsent: aBlock [
+
 	self doDDLOperation: [
-		self 
-			execute: [self executeSQLStringNoResult: (self platform createDropTableStatementFor: aString )]
-			ifError: aBlock].
+		self
+			execute: [
+				self executeSQLStringNoResult:
+					(self platform createDropTableStatementFor: aString) ]
+			ifError: aBlock ]
 ]
 
 { #category : #executing }
-DatabaseAccessor >> dropTables: anArray [ 
+DatabaseAccessor >> dropTables: anArray [
 	anArray do: [:eachTable |
-				eachTable foreignKeyConstraints 
+				eachTable foreignKeyConstraints
 					do: [:eachConstraint | self dropConstraint: eachConstraint ifError: [nil]]].
 
-	anArray do: [:each | 
-				self dropTableDefinition: each 
+	anArray do: [:each |
+				self dropTableDefinition: each
 					ifError: [ :ex | 	| msg|
 							msg := ex messageText.
 							msg isEmpty ifTrue: [msg := 'no error message provided for top level exception'].
 							Transcript cr; show: 'ERROR : (', msg, ' )'.
-							ex return: nil]].
+							ex return: nil]]
 ]
 
 { #category : #accessing }
 DatabaseAccessor >> encoding [
 	"The connection is specific to the dialect;  some dialects will need to override this method."
 
-	^connection encoding
+	^ connection encoding
 ]
 
 { #category : #accessing }
@@ -598,96 +625,104 @@ DatabaseAccessor >> encoding: aSymbol [
 	"The platform is a Glorp databasePlatform, so its setter code is generic across all dialects.  The connection is specific to the dialect;  some dialects will need to override how its encoding is set.  In the hope that most dialects will find this works for them, and that coders porting to dialects in which it does not will benefit from seeing the walkback and knowing they have something to do, we attempt to set both at top level."
 
 	self platform characterEncoding: aSymbol.
-	connection encoding: aSymbol.
+	connection encoding: aSymbol
 ]
 
 { #category : #logging }
 DatabaseAccessor >> endLogging [
+
 	self logger: nil.
 	self logging: false.
-	self logOnly: false.
+	self logOnly: false
 ]
 
 { #category : #executing }
 DatabaseAccessor >> errorsToCatch [
-	^Dialect error.
+
+	^ Dialect error
 ]
 
 { #category : #executing }
 DatabaseAccessor >> execute: aBlock [
 
-	^self execute: aBlock ifError: [:ex | ex pass].
+	^ self execute: aBlock ifError: [ :ex | ex pass ]
 ]
 
 { #category : #executing }
 DatabaseAccessor >> execute: aBlock ifError: errorBlock [
 
-	^aBlock on: self errorsToCatch do: errorBlock.
+	^ aBlock
+		  on: self errorsToCatch
+		  do: errorBlock
 ]
 
 { #category : #executing }
 DatabaseAccessor >> executeCommand: command [
-	^self executeCommand: command returnCursor: false.
+
+	^ self executeCommand: command returnCursor: false
 ]
 
 { #category : #executing }
 DatabaseAccessor >> executeCommand: command returnCursor: aBoolean [
-	^mutex
-		critical:
-			[| result |
-			self checkPermissionFor: command.
-			result := [(self useBinding and: [command useBinding])
-				ifTrue: [command executeBoundIn: self]
-				ifFalse: [command executeUnboundIn: self]]
-				on: Dialect error
-				do: [:ex | self handleError: ex for: command].
-			aBoolean ifTrue: [result] ifFalse: [result upToEnd]].
+
+	^ mutex critical: [
+		  | result |
+		  self checkPermissionFor: command.
+		  result := [
+		            (self useBinding and: [ command useBinding ])
+			            ifTrue: [ command executeBoundIn: self ]
+			            ifFalse: [ command executeUnboundIn: self ] ]
+			            on: Dialect error
+			            do: [ :ex | self handleError: ex for: command ].
+		  aBoolean
+			  ifTrue: [ result ]
+			  ifFalse: [ result upToEnd ] ]
 ]
 
 { #category : #executing }
 DatabaseAccessor >> executeCommandBound: command [
 	"By default, we don't handle binding"
-	^command executeUnboundIn: self.
+
+	^ command executeUnboundIn: self
 ]
 
 { #category : #executing }
 DatabaseAccessor >> executeCommandUnbound: aCommand [
+
 	| cursor |
 	self logCommand: aCommand bound: false.
 	cursor := self basicExecuteSQLString: aCommand sqlString.
 	cursor command: aCommand.
-	^cursor.
+	^ cursor
 ]
 
 { #category : #transactions }
 DatabaseAccessor >> executeInDDLOperation: aBlock ifError: errorBlock [
 	"Execute DDL SQL - something which creates/drops/modifies tables or other schema information. The main reason for this method is that some databases require a transaction, while others don't require it, and still others don't allow it. Try to do the right thing."
 
-	^ self doDDLOperation: [
-		self
-			execute: aBlock
-			ifError: errorBlock ]
+	^ self doDDLOperation: [ self execute: aBlock ifError: errorBlock ]
 ]
 
 { #category : #executing }
 DatabaseAccessor >> executeSQLString: aString [
+
 	| result block time |
 	self log: aString.
-	block := [result := (self basicExecuteSQLString: aString) upToEnd].
+	block := [ result := (self basicExecuteSQLString: aString) upToEnd ].
 	time := self logging
-		ifTrue: [Time millisecondsToRun: block]
-		ifFalse:
-			[block value.
-			0].
+		        ifTrue: [ Time millisecondsToRun: block ]
+		        ifFalse: [
+			        block value.
+			        0 ].
 	self logTime: time.
-	^result.
+	^ result
 ]
 
 { #category : #executing }
 DatabaseAccessor >> executeSQLString: aString binding: aBindingArray [
 	| result block time |
 	self log: aString.
-	block := [ 
+	block := [
 		result := (self basicExecuteSQLString: aString binding: aBindingArray) upToEnd].
 	time := self logging
 		ifTrue: [Time millisecondsToRun: block]
@@ -695,7 +730,7 @@ DatabaseAccessor >> executeSQLString: aString binding: aBindingArray [
 			[block value.
 			0].
 	self logTime: time.
-	^result.
+	^result
 ]
 
 { #category : #executing }

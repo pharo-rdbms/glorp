@@ -251,7 +251,7 @@ ActiveRecordDescriptorSystem >> constructAllClasses [
 
 { #category : #private }
 ActiveRecordDescriptorSystem >> constructAllDescriptors [
-	self postInitializeAllDescriptors.
+	self postInitializeAllDescriptors
 ]
 
 { #category : #initialization }

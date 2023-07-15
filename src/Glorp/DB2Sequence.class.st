@@ -74,5 +74,5 @@ DB2Sequence >> tableSelectCommandFor: aTable in: aSession reserving: anInteger [
 			tableSelectCommand setSQLString: stream contents.
 			tableSelectCommand blockFactor: anInteger.
 			tableSelectCommand session: aSession].
-	^tableSelectCommand
+	^ tableSelectCommand
 ]
