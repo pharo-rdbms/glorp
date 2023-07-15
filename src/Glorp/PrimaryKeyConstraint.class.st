@@ -24,7 +24,7 @@ PrimaryKeyConstraint >> creationStringFor: aPlatform [
 	^ aPlatform createPrimaryKeyConstraintAddStatement: self
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 PrimaryKeyConstraint >> forTable: aTable [
 
 	super forTable: aTable.

@@ -79,10 +79,11 @@ InsertCommand >> printSQL [
 		separatedBy: [ self nextPutAll: '; ' ]
 ]
 
-{ #category : #accessing }
+{ #category : #'bound values' }
 InsertCommand >> singleRowBoundFields [
 	"Include only the fields that have values in our particular row"
-	^row nonGeneratedFieldsWithValues
+
+	^ row nonGeneratedFieldsWithValues
 ]
 
 { #category : #testing }

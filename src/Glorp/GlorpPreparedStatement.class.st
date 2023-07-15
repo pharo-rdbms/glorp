@@ -43,11 +43,11 @@ GlorpPreparedStatement >> initialize [
 	busy := false
 ]
 
-{ #category : #initialization }
+{ #category : #dependencies }
 GlorpPreparedStatement >> release [
 
 	super release.
-	statement isNil ifFalse: [
+	statement ifNotNil: [
 		| stmt |
 		stmt := statement.
 		statement := nil.

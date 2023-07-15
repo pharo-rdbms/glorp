@@ -112,7 +112,7 @@ Login >> encodingStrategy: anEncodingStrategy [
 	encodingStrategy := anEncodingStrategy
 ]
 
-{ #category : #accessing }
+{ #category : #comparing }
 Login >> hash [
 
 	^ self name hash + self database class hash + self username hash

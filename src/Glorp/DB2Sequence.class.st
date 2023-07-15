@@ -37,7 +37,7 @@ DB2Sequence >> backupReserveCommand: anInteger in: aSession [
 	^ command
 ]
 
-{ #category : #public }
+{ #category : #sequencing }
 DB2Sequence >> creationString [
 
 	^ 'create sequence ', self qualifiedName

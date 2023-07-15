@@ -44,7 +44,7 @@ OracleSequence >> backupReserveCommand: anInteger in: aSession [
 	^command
 ]
 
-{ #category : #public }
+{ #category : #sequencing }
 OracleSequence >> creationString [
 
 	^ self sequenceIncrement > 1
@@ -58,8 +58,9 @@ OracleSequence >> getSequenceValueFromDatabaseFor: aField in: aRow using: anAcce
 	aRow at: aField put: (self nextSequenceNumber: anAccessor)
 ]
 
-{ #category : #'initalize-release' }
+{ #category : #initialization }
 OracleSequence >> initialize [
+
 	super initialize.
 	count := 0.
 	sequenceIncrement := 1.

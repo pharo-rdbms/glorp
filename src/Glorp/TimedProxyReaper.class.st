@@ -203,12 +203,12 @@ TimedProxyReaper >> reapExpiredObjects [
 	indexOffset := indexOffset + numberReaped ] ensure: [ mutex signal ]
 ]
 
-{ #category : #initializing }
+{ #category : #dependencies }
 TimedProxyReaper >> release [
 
 	done := true.
 	maximumWork := 0.
-	reaperThread notNil ifTrue: [ reaperThread terminate ].
+	reaperThread ifNotNil: [ reaperThread terminate ].
 	reaperThread := nil
 ]
 

@@ -152,7 +152,7 @@ DatabaseRow >> contentsAt: aField ifAbsentPut: absentBlock [
 		  ifFalse: [ old ]
 ]
 
-{ #category : #accessing }
+{ #category : #'reflective operations' }
 DatabaseRow >> doesNotUnderstand: aMessage [
 
 	^ self
@@ -278,7 +278,7 @@ DatabaseRow >> hasValueFor: aField [
 	^ (self wrapperAt: aField ifAbsent: [ ^ false ]) hasValue
 ]
 
-{ #category : #testing }
+{ #category : #comparing }
 DatabaseRow >> hash [
 
 	| basic |
