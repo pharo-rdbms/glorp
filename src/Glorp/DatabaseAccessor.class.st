@@ -763,8 +763,9 @@ DatabaseAccessor >> inTransactionDo: aBlock [
 
 { #category : #initialization }
 DatabaseAccessor >> initialize [
-	deniedCommands := nil.
-	mutex := Semaphore forMutualExclusion.
+
+	super initialize.
+	mutex := Semaphore forMutualExclusion
 ]
 
 { #category : #executing }
