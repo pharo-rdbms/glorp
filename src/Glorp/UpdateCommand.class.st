@@ -42,10 +42,10 @@ UpdateCommand >> fieldsNeedingUpdate [
 		  ifFalse: [ row nonPrimaryKeyFields ]
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 UpdateCommand >> needsRowCount [
 
-	^ row lockKeyFields isEmpty not
+	^ row lockKeyFields isNotEmpty
 ]
 
 { #category : #printing }
