@@ -37,10 +37,11 @@ ActiveRecordDescriptorSystem class >> sessionForLogin: aGlorpLogin [
 
 { #category : #adding }
 ActiveRecordDescriptorSystem >> addToManyRelationshipNamed: aName inDescriptor: aDescriptor toClass: aClass [
+
 	| ivars realFromClass package |
 	package := ((Array with: self rootClass package name), self rootClass tags) joinUsing: '-'.
 	realFromClass := self tableClassForClass: aDescriptor describedClass.
-	realFromClass methodDictionary at: aName asSymbol ifAbsent: [ 
+	realFromClass methodDictionary at: aName asSymbol ifAbsent: [
 		"We need to stick in an ivar and accessor for the relationship proxy"
 		ivars := realFromClass instVarNames.
 		(ivars includes: aName asSymbol) ifFalse: [
@@ -51,8 +52,8 @@ ActiveRecordDescriptorSystem >> addToManyRelationshipNamed: aName inDescriptor: 
 				instanceVariableNames: (ivars joinUsing: ' ')
 				classVariableNames: realFromClass classVariablesString
 				package: package.
-				
-				(RBCreateAccessorsForVariableRefactoring
+
+				(RBCreateAccessorsForVariableTransformation
 					variable: aName asSymbol
 					class: realFromClass
 					classVariable: false) execute ]
@@ -65,7 +66,7 @@ ActiveRecordDescriptorSystem >> addToManyRelationshipNamed: aName inDescriptor: 
 			mapping := (aDescriptor newMapping: ToManyMapping)
 				attributeName: aName;
 				referenceClass: (self tableClassForClass: aClass).
-				table fields detect: [ :ea | self isSortingField: ea ] 
+				table fields detect: [ :ea | self isSortingField: ea ]
 					ifFound: [:f |
 						mapping orderBy: (inflector accessor: f name asSymbol); writeTheOrderField ] ]
 ]
@@ -87,7 +88,7 @@ ActiveRecordDescriptorSystem >> addToManyRelationshipNamed: aName inDescriptor: 
 				classVariableNames: realFromClass classVariablesString
 				package: package.
 				
-				(RBCreateAccessorsForVariableRefactoring
+				(RBCreateAccessorsForVariableTransformation
 					variable: aName asSymbol
 					class: realFromClass
 					classVariable: false) execute ]
@@ -121,7 +122,7 @@ ActiveRecordDescriptorSystem >> addToOneRelationshipNamed: aName inDescriptor: a
 				package: package 
 		].
 					
-			(RBCreateAccessorsForVariableRefactoring
+			(RBCreateAccessorsForVariableTransformation
 				variable: aName asSymbol
 				class: realFromClass
 				classVariable: false) execute 
@@ -220,7 +221,7 @@ ActiveRecordDescriptorSystem >> constructAllClasses [
 			"Construct accessors"
 			ivars
 				do: [ :var | 
-					(RBCreateAccessorsForVariableRefactoring
+					(RBCreateAccessorsForVariableTransformation
 						variable: var asSymbol
 						class: cls
 						classVariable: false) execute ].
