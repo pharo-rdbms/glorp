@@ -1001,10 +1001,6 @@ DatabaseAccessor >> populateField: aDatabaseField with: aValue ifError: errorBlo
 		ifError: errorBlock
 ]
 
-{ #category : #copying }
-DatabaseAccessor >> postCopy [
-]
-
 { #category : #executing }
 DatabaseAccessor >> renameField: aDatabaseField to: nameString ifError: errorBlock [
 
