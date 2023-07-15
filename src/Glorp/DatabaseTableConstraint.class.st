@@ -79,7 +79,8 @@ DatabaseTableConstraint >> generateName [
 { #category : #initialization }
 DatabaseTableConstraint >> initialize [
 
-	shouldCreateInDatabase := true.
+	super initialize.
+	shouldCreateInDatabase := true
 ]
 
 { #category : #testing }
