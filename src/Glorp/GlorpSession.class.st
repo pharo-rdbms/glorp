@@ -223,12 +223,6 @@ GlorpSession >> commitUnitOfWorkAndContinue [
 	self registerAll: registeredObjects
 ]
 
-{ #category : #copying }
-GlorpSession >> copy [
-
-	^ self shallowCopy postCopy
-]
-
 { #category : #'api/queries' }
 GlorpSession >> count: aClass [
 
