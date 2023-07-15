@@ -36,11 +36,13 @@ DatabaseDriver >> connect: aLogin [
 
 { #category : #accessing }
 DatabaseDriver >> connection [
+
 	^ connection
 ]
 
 { #category : #accessing }
 DatabaseDriver >> connection: anObject [
+
 	connection := anObject
 ]
 

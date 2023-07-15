@@ -143,6 +143,7 @@ Login >> host: aHost [
 
 { #category : #initialization }
 Login >> initialize [
+
 	super initialize.
 	settings := IdentityDictionary new.
 	secure := false.

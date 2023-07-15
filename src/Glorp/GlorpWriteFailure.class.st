@@ -19,7 +19,8 @@ Class {
 
 { #category : #'*Glorp' }
 GlorpWriteFailure class >> mayResume [
-	^true.
+
+	^ true
 ]
 
 { #category : #accessing }
@@ -36,7 +37,8 @@ GlorpWriteFailure >> command: anObject [
 
 { #category : #accessing }
 GlorpWriteFailure >> defaultMessageText [
-	^'Database write failed'.
+
+	^ 'Database write failed'
 ]
 
 { #category : #accessing }

@@ -49,7 +49,7 @@ DatabaseTableConstraint >> dropString [
 { #category : #printing }
 DatabaseTableConstraint >> dropStringFor: aPlatform [
 
-	^aPlatform createConstraintDropStatement: self
+	^ aPlatform createConstraintDropStatement: self
 ]
 
 { #category : #accessing }

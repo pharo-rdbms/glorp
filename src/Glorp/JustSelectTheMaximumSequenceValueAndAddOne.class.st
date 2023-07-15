@@ -46,6 +46,7 @@ JustSelectTheMaximumSequenceValueAndAddOne >> getSequenceValueFromDatabaseFor: a
 
 { #category : #sequencing }
 JustSelectTheMaximumSequenceValueAndAddOne >> reserveSequenceNumbers: anInteger in: anAccessor for: aTable [
+
 	| numberNeeded firstNumber fakeRow |
 	numberNeeded := anInteger - self availableReservedNumbers.
 	numberNeeded <= 0 ifTrue: [^self].
@@ -54,7 +55,7 @@ JustSelectTheMaximumSequenceValueAndAddOne >> reserveSequenceNumbers: anInteger 
 		getSequenceValueFromDatabaseFor: self field
 		in: fakeRow
 		using: anAccessor.
-	self reservedNumbers addAll: (firstNumber to: firstNumber + numberNeeded - 1).
+	self reservedNumbers addAll: (firstNumber to: firstNumber + numberNeeded - 1)
 ]
 
 { #category : #accessing }

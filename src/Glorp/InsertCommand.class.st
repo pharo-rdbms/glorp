@@ -10,13 +10,16 @@ Class {
 { #category : #accessing }
 InsertCommand >> arrayBoundFields [
 	"For array binding, include all the fields, except if we're inserting into a database with identity columns, where we must omit those columns"
-	^self platform usesIdentityColumns
-		ifTrue: [row table fields reject: [:each | each type isIdentityColumn]]
-		ifFalse: [row table fields].
+
+	^ self platform usesIdentityColumns
+		  ifTrue: [
+		  row table fields reject: [ :each | each type isIdentityColumn ] ]
+		  ifFalse: [ row table fields ]
 ]
 
 { #category : #accessing }
 InsertCommand >> basicPrintSQLFor: aRow [
+
 	| fields |
 	self nextPutAll: 'INSERT INTO '.
 	aRow table printSQLOn: self withParameters: #().
@@ -32,13 +35,13 @@ InsertCommand >> basicPrintSQLFor: aRow [
 	self nextPutAll: ' VALUES ('.
 	GlorpHelper
 		do:
-			[:each | 
+			[:each |
 			(self canBind: (aRow at: each ifAbsent: [nil]) to: each type)
 				ifTrue: [self nextPut: $?]
 				ifFalse: [aRow printValueOfField: each on: self]]
 		for: fields
 		separatedBy: [self nextPutAll: ','].
-	self nextPutAll: ')'.
+	self nextPutAll: ')'
 ]
 
 { #category : #'bound values' }
@@ -59,18 +62,21 @@ InsertCommand >> bindingTypes [
 
 { #category : #printing }
 InsertCommand >> printSQL [
+
 	| iterations |
 	iterations := self shouldUseGroupWriting
-		ifTrue:
-			[self platform usesArrayBindingRatherThanGroupWriting
-				ifTrue: [1]
-				ifFalse: [allRows size]]
-		ifFalse: [1].
+		              ifTrue: [
+			              self platform usesArrayBindingRatherThanGroupWriting
+				              ifTrue: [ 1 ]
+				              ifFalse: [ allRows size ] ]
+		              ifFalse: [ 1 ].
 	GlorpHelper
-		do:
-			[:i | self basicPrintSQLFor: (i = 1 ifTrue: [row] ifFalse: [allRows at: i])]
+		do: [ :i |
+			self basicPrintSQLFor: (i = 1
+					 ifTrue: [ row ]
+					 ifFalse: [ allRows at: i ]) ]
 		for: (1 to: iterations)
-		separatedBy: [self nextPutAll: '; '].
+		separatedBy: [ self nextPutAll: '; ' ]
 ]
 
 { #category : #accessing }
@@ -81,5 +87,6 @@ InsertCommand >> singleRowBoundFields [
 
 { #category : #testing }
 InsertCommand >> supportsGroupWriting [
-	^true.
+
+	^ true
 ]

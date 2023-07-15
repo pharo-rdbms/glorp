@@ -29,8 +29,9 @@ DeleteCommand >> printSQL [
 	row printPrimaryKeyTemplateOn: self
 ]
 
-{ #category : #accessing }
+{ #category : #'bound values' }
 DeleteCommand >> singleRowBoundFields [
+
 	| fields |
 	fields := row table primaryKeyFields.
 	fields isEmpty ifTrue: [fields := row fields].

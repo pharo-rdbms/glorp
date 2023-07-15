@@ -19,58 +19,62 @@ Class {
 { #category : #'wrap/unwrap' }
 TimedStrongCachePolicy >> cacheEntryFor: anObject [
 
-	^Array with: self totalSeconds with: anObject.
+	^ Array with: self totalSeconds with: anObject
 ]
 
 { #category : #'wrap/unwrap' }
 TimedStrongCachePolicy >> contentsOf: aCacheEntry [
 
-	^aCacheEntry at: 2.
+	^ aCacheEntry at: 2
 ]
 
-{ #category : #'wrap/unwrap' }
+{ #category : #expiry }
 TimedStrongCachePolicy >> expire: aCacheEntry [
 
-	^aCacheEntry at: 1 put: 0.
+	^ aCacheEntry at: 1 put: 0
 ]
 
 { #category : #'wrap/unwrap' }
 TimedStrongCachePolicy >> hasExpired: aCacheEntry [
 
-	^(self totalSeconds - (aCacheEntry at: 1)) >= timeout.
+	^ (self totalSeconds - (aCacheEntry at: 1)) >= timeout
 ]
 
 { #category : #initialization }
 TimedStrongCachePolicy >> initialize [
 
 	super initialize.
-	timeout := 300.
+	timeout := 300
 ]
 
 { #category : #'wrap/unwrap' }
 TimedStrongCachePolicy >> markEntryAsCurrent: aCacheEntry in: aCache [
 
-	aCacheEntry at: 1 put: self totalSeconds.
+	aCacheEntry at: 1 put: self totalSeconds
 ]
 
 { #category : #accessing }
 TimedStrongCachePolicy >> timeout [
-	^timeout
+
+	^ timeout
 ]
 
 { #category : #accessing }
 TimedStrongCachePolicy >> timeout: seconds [
+
 	timeout := seconds
 ]
 
 { #category : #accessing }
 TimedStrongCachePolicy >> timeoutSeconds [
-	^timeout
+
+	^ timeout
 ]
 
 { #category : #accessing }
 TimedStrongCachePolicy >> timeoutSeconds: anInteger [
-	timeout := anInteger.
+
+	timeout := anInteger
 ]
 
 { #category : #utilities }

@@ -27,6 +27,7 @@ OracleSequence >> alwaysGetFromDb [
 
 { #category : #private }
 OracleSequence >> backupReserveCommand: anInteger in: aSession [
+
 	| command stream |
 	stream := WriteStream on: (String new: 200).
 	stream nextPutAll: 'select '.
@@ -40,7 +41,7 @@ OracleSequence >> backupReserveCommand: anInteger in: aSession [
 	command setSQLString: stream contents.
 	command parameters: (Array with: anInteger).
 	command session: aSession.
-	^command.
+	^command
 ]
 
 { #category : #public }

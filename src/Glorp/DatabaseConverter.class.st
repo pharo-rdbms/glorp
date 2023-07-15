@@ -54,5 +54,8 @@ DatabaseConverter >> name: aString [
 { #category : #printing }
 DatabaseConverter >> printOn: aString [
 
-	aString nextPutAll: 'DatabaseConverter(' , name , ')'
+	aString
+		nextPutAll: 'DatabaseConverter(';
+		nextPutAll: name;
+		nextPutAll: ')'
 ]

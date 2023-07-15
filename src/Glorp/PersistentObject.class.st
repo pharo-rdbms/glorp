@@ -120,7 +120,8 @@ PersistentObject >> bePersistent [
 
 { #category : #accessing }
 PersistentObject >> classModel [
-	^self descriptor classModel
+
+	^ self descriptor classModel
 ]
 
 { #category : #actions }
@@ -140,18 +141,19 @@ PersistentObject >> delete [
 
 { #category : #accessing }
 PersistentObject >> descriptor [
-	^self session descriptorFor: self class
+
+	^ self session descriptorFor: self class
 ]
 
 { #category : #'finding objects' }
 PersistentObject >> find [
 	"This is a query by example facility. We take whichever fields are filled in the object and read back any objects in the database that match."
-	
+
 	| instances |
 	instances := GlorpVirtualCollection on: self class in: self session.
-	self descriptor mappings do: [:eachMapping | 
-		instances := self findMapping: eachMapping in: instances].
-	^instances.
+	self descriptor mappings do: [ :eachMapping |
+		instances := self findMapping: eachMapping in: instances ].
+	^ instances
 ]
 
 { #category : #private }
@@ -169,21 +171,20 @@ PersistentObject >> hash [
 	"Implement hash to compare primary keys if they are set. Make sure that if we have proxies, we check through them."
 
 	| myKey |
-
 	"If the primary key contains nils, then fall back to the default hash. If they don't, hash the collection."
 	myKey := self descriptor primaryKeyCollectionFor: self.
-	^(myKey includes: nil) 
-		ifTrue: [super hash]
-		ifFalse: [myKey hash]
+	^ (myKey includes: nil)
+		  ifTrue: [ super hash ]
+		  ifFalse: [ myKey hash ]
 ]
 
 { #category : #private }
 PersistentObject >> matchAttribute: anExpression to: value [
 	"We match expressions differently depending on what type they are."
-	
-	^(value isString and: [value includes: $%]) 
-		ifTrue: [anExpression like: value] 
-		ifFalse: [anExpression = value].
+
+	^ (value isString and: [ value includes: $% ])
+		  ifTrue: [ anExpression like: value ]
+		  ifFalse: [ anExpression = value ]
 ]
 
 { #category : #actions }

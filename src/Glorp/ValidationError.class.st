@@ -12,7 +12,7 @@ Class {
 { #category : #'*Glorp' }
 ValidationError class >> mayResume [
 
-	^true
+	^ true
 ]
 
 { #category : #accessing }

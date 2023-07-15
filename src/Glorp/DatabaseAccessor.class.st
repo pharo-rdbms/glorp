@@ -735,10 +735,8 @@ DatabaseAccessor >> executeSQLString: aString binding: aBindingArray [
 
 { #category : #executing }
 DatabaseAccessor >> executeSQLStringNoResult: aString [
-	^self
-		executeSQLStringNoResult: aString
-		doing: []
-		forCommand: nil.
+
+	^ self executeSQLStringNoResult: aString doing: [  ] forCommand: nil
 ]
 
 { #category : #executing }
@@ -746,20 +744,22 @@ DatabaseAccessor >> executeSQLStringNoResult: aString doing: aBlock forCommand: 
 	"Execute the string and discard the result. Evaluate aBlock before releasing the statement's answer stream"
 
 	| block time |
-	aCommand isNil ifTrue: [self log: aString] ifFalse: [self logCommand: aCommand bound: false].
-	block := [self basicExecuteSQLStringNoResult: aString doing: aBlock].
+	aCommand
+		ifNil: [ self log: aString ]
+		ifNotNil: [ self logCommand: aCommand bound: false ].
+	block := [ self basicExecuteSQLStringNoResult: aString doing: aBlock ].
 	time := self logging
-		ifTrue: [Time millisecondsToRun: block]
-		ifFalse:
-			[block value.
-			0].
-	self logTime: time.
+		        ifTrue: [ Time millisecondsToRun: block ]
+		        ifFalse: [
+			        block value.
+			        0 ].
+	self logTime: time
 ]
 
 { #category : #executing }
 DatabaseAccessor >> externalDatabaseErrorSignal [
 
-	self subclassResponsibility.
+	self subclassResponsibility
 ]
 
 { #category : #executing }
@@ -778,7 +778,7 @@ DatabaseAccessor >> handleError: exception for: command [
 			self logout.
 			self login.
 			exception restart]
-		ifFalse: [error return: nil].
+		ifFalse: [error return: nil]
 ]
 
 { #category : #transactions }
@@ -786,14 +786,14 @@ DatabaseAccessor >> inTransactionDo: aBlock [
 	"Execute aBlock in a database transaction. If one is already in progress, just continue. If not, start a transaction."
 
 	| alreadyInTransaction result |
-	[ 
+	[
 	alreadyInTransaction := self isInTransaction.
 	alreadyInTransaction ifFalse: [self beginTransaction. ].
 	result := aBlock numArgs = 1 ifTrue: [aBlock value: self] ifFalse: [aBlock value].
 	alreadyInTransaction ifFalse: [self commitTransaction]]
 		ifCurtailed:
 			[alreadyInTransaction ifFalse: [self rollbackTransaction]].
-	^result.
+	^result
 ]
 
 { #category : #initialization }
@@ -805,51 +805,56 @@ DatabaseAccessor >> initialize [
 
 { #category : #executing }
 DatabaseAccessor >> innerExceptionFor: exception [
-	^exception parameter.
+	^exception parameter
 ]
 
 { #category : #permissions }
 DatabaseAccessor >> insertOnly [
-	self denyCommands: (Array with: UpdateCommand with: DeleteCommand).
+	self denyCommands: (Array with: UpdateCommand with: DeleteCommand)
 ]
 
 { #category : #cursors }
 DatabaseAccessor >> isCursorAtEnd: aCursor [
 	"Return true if aCursor is at its end. This implementation may not work for all, but it seems like a reasonable default"
 
-	^aCursor atEnd.
+	^aCursor atEnd
 ]
 
 { #category : #testing }
 DatabaseAccessor >> isExistingTable: tableName inSchema: schemaName [
+
 	| databasePlatform sqlStatement result targetSchemaName |
 	databasePlatform := self currentLogin platform.
 	targetSchemaName := databasePlatform supportsInformationSchema
-		ifTrue: [schemaName]
-		ifFalse: [''].
-	sqlStatement := databasePlatform sqlStatementToTestExistenceOfTable: tableName inSchema: targetSchemaName.
+		                    ifTrue: [ schemaName ]
+		                    ifFalse: [ '' ].
+	sqlStatement := databasePlatform
+		                sqlStatementToTestExistenceOfTable: tableName
+		                inSchema: targetSchemaName.
 	result := self executeSQLString: sqlStatement.
-	^result notEmpty
-		ifTrue: [result first first > 0]
-		ifFalse: [false]
+	^ result notEmpty
+		  ifTrue: [ result first first > 0 ]
+		  ifFalse: [ false ]
 ]
 
 { #category : #transactions }
 DatabaseAccessor >> isInTransaction [
-	^self subclassResponsibility.
+
+	^ self subclassResponsibility
 ]
 
 { #category : #'queries metadata' }
 DatabaseAccessor >> listColumnsInTableNamed: aTable schemaNamed: schemaString [
 
 	| databasePlatform sqlStatement result |
-	
 	databasePlatform := self platform.
-	sqlStatement := databasePlatform sqlStatementToListColumnsForTable: aTable inSchema: schemaString.
+	sqlStatement := databasePlatform
+		                sqlStatementToListColumnsForTable: aTable
+		                inSchema: schemaString.
 	result := self executeSQLString: sqlStatement.
-	^result isEmpty
-		ifTrue: [#()]
-		ifFalse: [result]
+	^ result isEmpty
+		  ifTrue: [ #(  ) ]
+		  ifFalse: [ result ]
 ]
 
 { #category : #'queries metadata' }
@@ -857,11 +862,12 @@ DatabaseAccessor >> listTableNamesInSchemaNamed: schemaString [
 
 	| databasePlatform sqlStatement result |
 	databasePlatform := self currentLogin platform.
-	sqlStatement := databasePlatform sqlStatementToListTablesInSchema: schemaString.
+	sqlStatement := databasePlatform sqlStatementToListTablesInSchema:
+		                schemaString.
 	result := self executeSQLString: sqlStatement.
-	^result isEmpty
-		ifTrue: [#()]
-		ifFalse: [result collect: [:ea| ea at: 1 ]]
+	^ result isEmpty
+		  ifTrue: [ #(  ) ]
+		  ifFalse: [ result collect: [ :ea | ea at: 1 ] ]
 ]
 
 { #category : #logging }
@@ -870,39 +876,41 @@ DatabaseAccessor >> log: aStringOrBlock [
 	| string |
 	self logging ifFalse: [ ^ self ].
 	string := aStringOrBlock isString
-		ifTrue: [ aStringOrBlock ]
-		ifFalse: [ aStringOrBlock value ]. 
+		          ifTrue: [ aStringOrBlock ]
+		          ifFalse: [ aStringOrBlock value ].
 	string size > 4000 ifTrue: [ string := string copyFrom: 1 to: 4000 ].
-	(self logOnly and: [ string notEmpty and: [ string last ~= $; ] ]) 
+	(self logOnly and: [ string notEmpty and: [ string last ~= $; ] ])
 		ifTrue: [ string := string , ';' ].
 	self logger
 		cr;
 		nextPutAll: string;
-		flush.
+		flush
 ]
 
 { #category : #logging }
 DatabaseAccessor >> logCommand: aDatabaseCommand bound: aBoolean [
-
 	"Log the execution of a command"
+
 	| string |
 	self changed: #command: with: aDatabaseCommand.
-	self logging ifFalse: [^self].
+	self logging ifFalse: [ ^ self ].
 	string := aDatabaseCommand sqlString.
- 	aBoolean ifTrue: [string := string , '  ' , aDatabaseCommand bindings printString].
+	aBoolean ifTrue: [
+		string := string , '  ' , aDatabaseCommand bindings printString ].
 	self log: string
 ]
 
 { #category : #logging }
-DatabaseAccessor >> logError: anErrorObject [ 
+DatabaseAccessor >> logError: anErrorObject [
+
 	self log: anErrorObject printString
 ]
 
 { #category : #logging }
 DatabaseAccessor >> logOnly [
 
-	logOnly ifNil: [logOnly := false].
-	^logOnly and: [self logging]
+	logOnly ifNil: [ logOnly := false ].
+	^ logOnly and: [ self logging ]
 ]
 
 { #category : #logging }
@@ -915,9 +923,10 @@ DatabaseAccessor >> logOnly: aBoolean [
 DatabaseAccessor >> logOnlyOn: aTextCollector [
 	"logOnly implies you're logging and that you have a logger, so combine setting them into a single method (inverse is #endLogging)."
 
-	self logger: aTextCollector.
-	self logging: true.
-	self logOnly: true.
+	self
+		logger: aTextCollector;
+		logging: true;
+		logOnly: true
 ]
 
 { #category : #logging }
@@ -935,12 +944,12 @@ DatabaseAccessor >> logTime: aTimeOrBlock [
 { #category : #logging }
 DatabaseAccessor >> logger [
 
-	^logger ifNil: [Transcript]
+	^ logger ifNil: [ Transcript ]
 ]
 
 { #category : #logging }
 DatabaseAccessor >> logger: aTextCollector [
- 
+
 	logger := aTextCollector
 ]
 
@@ -951,63 +960,69 @@ DatabaseAccessor >> logging [
 ]
 
 { #category : #logging }
-DatabaseAccessor >> logging: aBoolean [ 
+DatabaseAccessor >> logging: aBoolean [
+
 	logging := aBoolean
 ]
 
 { #category : #login }
 DatabaseAccessor >> login [
-	
-	| |
-	self loginIfError: [:ex | 
-		ex pass].
+
+	self loginIfError: [ :ex | ex pass ].
 	"Just to help avoid confusion if someone thinks they're getting a login object back from this"
-	^nil.
+	^ nil
 ]
 
 { #category : #login }
 DatabaseAccessor >> loginIfError: aBlock [
 
-	self subclassResponsibility.
+	self subclassResponsibility
 ]
 
 { #category : #login }
 DatabaseAccessor >> logout [
-	^self subclassResponsibility.
+
+	^ self subclassResponsibility
 ]
 
-{ #category : #notification }
+{ #category : #dependencies }
 DatabaseAccessor >> myDependents [
-	^dependents.
+
+	^ dependents
 ]
 
-{ #category : #notification }
+{ #category : #dependencies }
 DatabaseAccessor >> myDependents: aCollection [
-	dependents := aCollection.
+
+	dependents := aCollection
 ]
 
 { #category : #accessing }
 DatabaseAccessor >> numberOfPreparedStatements [
-	^0
+
+	^ 0
 ]
 
 { #category : #permissions }
 DatabaseAccessor >> permitEverything [
 	"Note that nil is treated as a flag indicating that all commands are allowed"
-	deniedCommands := nil.
+
+	deniedCommands := nil
 ]
 
 { #category : #permissions }
 DatabaseAccessor >> permitNothing [
-	deniedCommands := DatabaseCommand allSubclasses asArray.
+
+	deniedCommands := DatabaseCommand allSubclasses asArray
 ]
 
 { #category : #permissions }
 DatabaseAccessor >> permitNothingDuring: aBlock [
+
 	| oldCommands |
 	oldCommands := self deniedCommands.
 	self permitNothing.
-	aBlock ensure: [deniedCommands := oldCommands].
+	aBlock ensure: [ deniedCommands := oldCommands ]
 ]
 
 { #category : #permissions }
@@ -1024,7 +1039,8 @@ DatabaseAccessor >> permitsUpdates [
 
 { #category : #accessing }
 DatabaseAccessor >> platform [
-	^currentLogin database.
+
+	^ currentLogin database
 ]
 
 { #category : #executing }
@@ -1040,7 +1056,10 @@ DatabaseAccessor >> populateField: aDatabaseField with: aValue ifError: errorBlo
 DatabaseAccessor >> renameField: aDatabaseField to: nameString ifError: errorBlock [
 
 	self
-		executeInDDLOperation: [ self executeSQLStringNoResult: (self platform sqlStatementToRenameColumn: aDatabaseField to: nameString) ]
+		executeInDDLOperation: [
+			self executeSQLStringNoResult: (self platform
+					 sqlStatementToRenameColumn: aDatabaseField
+					 to: nameString) ]
 		ifError: errorBlock
 ]
 
