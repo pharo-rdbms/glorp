@@ -236,7 +236,7 @@ DatabaseTable >> createFieldNamed: aString type: dbType [
 	existingField := fields
 		                 detect: [ :each | each name = aString ]
 		                 ifNone: [ nil ].
-	existingField notNil ifTrue: [
+	existingField ifNotNil: [
 		self error: 'field ' , aString , ' already exists' ].
 	^ self addField: (DatabaseField named: aString type: dbType)
 ]
@@ -426,7 +426,7 @@ DatabaseTable >> hasForeignKeyConstraintTheSameAs: aConstraint [
 { #category : #testing }
 DatabaseTable >> hasForeignKeyConstraints [
 
-	^ foreignKeyConstraints isEmpty not
+	^ foreignKeyConstraints isNotEmpty
 ]
 
 { #category : #constraints }
@@ -473,7 +473,7 @@ DatabaseTable >> hasUniqueConstraintMatching: aConstraint [
 { #category : #testing }
 DatabaseTable >> hasUniqueConstraints [
 
-	^ uniqueConstraints isEmpty not
+	^ uniqueConstraints isNotEmpty
 ]
 
 { #category : #printing }
@@ -629,7 +629,9 @@ DatabaseTable >> primaryKeyConstraints [
 { #category : #accessing }
 DatabaseTable >> primaryKeyFields [
 
-	primaryKeyFields isNil ifTrue: [primaryKeyFields := fields select: [:each | each isPrimaryKey yourSelf "might be a proxy"]].
+	primaryKeyFields ifNil: [
+		primaryKeyFields := fields select: [ :each |
+			                    each isPrimaryKey yourSelf "might be a proxy" ] ].
 	^ primaryKeyFields
 ]
 
@@ -685,8 +687,10 @@ DatabaseTable >> printOn: aStream [
 	super printOn: aStream.
 	aStream
 		nextPutAll: '(';
-		nextPutAll: ((schema isNil or: [schema isEmpty]) ifTrue: [''] ifFalse: [schema, '.']);
-		nextPutAll: (name isNil ifTrue: [''] ifFalse: [name]);
+		nextPutAll: ((schema isNil or: [ schema isEmpty ])
+				 ifTrue: [ '' ]
+				 ifFalse: [ schema , '.' ]);
+		nextPutAll: (name ifNil: [ '' ] ifNotNil: [ name ]);
 		nextPutAll: ')'
 ]
 
@@ -760,8 +764,7 @@ DatabaseTable >> schema [
 DatabaseTable >> schema: aString [
 
 	schema := aString.
-	parent isNil ifTrue: [
-		self sequences do: [ :each | each schema: aString ] ]
+	parent ifNil: [ self sequences do: [ :each | each schema: aString ] ]
 ]
 
 { #category : #accessing }
@@ -791,12 +794,12 @@ DatabaseTable >> sqlString [
 DatabaseTable >> sqlTableName [
 	"Our name, as appropriate for the list of tables in a SQL statement. Take into account aliasing"
 
-	^ parent isNil
-		  ifTrue: [
+	^ parent
+		  ifNil: [
 			  self isImaginary
 				  ifTrue: [ self imaginaryReplacementName ]
 				  ifFalse: [ self qualifiedName ] ]
-		  ifFalse: [ parent sqlTableName , ' ' , self qualifiedName ]
+		  ifNotNil: [ parent sqlTableName , ' ' , self qualifiedName ]
 ]
 
 { #category : #accessing }
@@ -810,12 +813,12 @@ DatabaseTable >> uniqueConstraints [
 DatabaseTable >> unqualifiedSqlTableName [
 	"Our name, as appropriate for the list of tables in a SQL statement. Take into account aliasing"
 
-	^parent isNil
-		ifTrue:
-			[self isImaginary
-				ifTrue: [self imaginaryReplacementName]
-				ifFalse: [self qualifiedName]]
-		ifFalse: [parent sqlTableName].
+	^ parent
+		  ifNil: [
+			  self isImaginary
+				  ifTrue: [ self imaginaryReplacementName ]
+				  ifFalse: [ self qualifiedName ] ]
+		  ifNotNil: [ parent sqlTableName ]
 ]
 
 { #category : #validation }

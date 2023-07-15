@@ -51,7 +51,7 @@ GlorpSession >> accessor [
 GlorpSession >> accessor: aDatabaseAccessor [
 
 	accessor := aDatabaseAccessor.
-	system isNil ifFalse: [ system platform: accessor platform ]
+	system ifNotNil: [ system platform: accessor platform ]
 ]
 
 { #category : #accessing }
@@ -92,9 +92,9 @@ GlorpSession >> beginUnitOfWork [
 ]
 
 { #category : #caching }
-GlorpSession >> cacheAt: aKey  forClass: aClass ifNone: failureBlock [
+GlorpSession >> cacheAt: aKey forClass: aClass ifNone: failureBlock [
 
-	^cache lookupClass: aClass key: aKey ifAbsent: failureBlock
+	^ cache lookupClass: aClass key: aKey ifAbsent: failureBlock
 ]
 
 { #category : #caching }
@@ -107,8 +107,8 @@ GlorpSession >> cacheAt: keyObject put: valueObject [
 GlorpSession >> cacheContainsObject: anObject [
 
 	| descriptor key |
-	(descriptor := self descriptorFor: anObject) isNil ifTrue: [ ^ false ].
-	(key := descriptor primaryKeyFor: anObject) isNil ifTrue: [ ^ false ].
+	(descriptor := self descriptorFor: anObject) ifNil: [ ^ false ].
+	(key := descriptor primaryKeyFor: anObject) ifNil: [ ^ false ].
 	^ [ self cacheContainsObject: anObject key: key ]
 		  on: DuplicatePrimaryKeyException
 		  do: [ :ex | false ]
@@ -118,7 +118,7 @@ GlorpSession >> cacheContainsObject: anObject [
 GlorpSession >> cacheContainsObject: anObject key: aKey [
 	"Just test containment, don't return the result or trigger anything due to expiration"
 
-	aKey isNil ifTrue: [ ^ false ].
+	aKey ifNil: [ ^ false ].
 	^ cache containsObject: anObject key: aKey
 ]
 
@@ -126,7 +126,7 @@ GlorpSession >> cacheContainsObject: anObject key: aKey [
 GlorpSession >> cacheContainsObjectForClass: aClass key: aKey [
 	"Just test containment, don't return the result or trigger anything due to expiration"
 
-	aKey isNil ifTrue: [ ^ false ].
+	aKey ifNil: [ ^ false ].
 	^ cache containsObjectForClass: aClass key: aKey
 ]
 
@@ -253,7 +253,7 @@ GlorpSession >> createDeleteRowsFor: anObject in: rowMap [
 GlorpSession >> createRowsFor: anObject in: rowMap [
 
 	| descriptor |
-	(descriptor := self descriptorFor: anObject class) isNil ifFalse: [
+	(descriptor := self descriptorFor: anObject class) ifNotNil: [
 		descriptor createRowsFor: anObject in: rowMap ]
 ]
 
@@ -389,7 +389,7 @@ GlorpSession >> embeddedObjectsFor: anObject [
 
 	| embedded descriptor |
 	descriptor := self descriptorFor: anObject.
-	descriptor isNil ifTrue: [ ^ #(  ) ].
+	descriptor ifNil: [ ^ #(  ) ].
 	embedded := OrderedCollection new: 3.
 	descriptor mappings do: [ :each |
 		each class == EmbeddedValueOneToOneMapping ifTrue: [
@@ -708,7 +708,7 @@ GlorpSession >> privateGetCurrentUnitOfWork [
 GlorpSession >> privateRegisterAsNew: anObject [
 	"Register the object as one which is not already in cache. Private! Normally just use the register: operation."
 
-	currentUnitOfWork isNil ifTrue: [ ^ self ].
+	currentUnitOfWork ifNil: [ ^ self ].
 	currentUnitOfWork registerAsNew: anObject
 ]
 
@@ -717,7 +717,7 @@ GlorpSession >> privateRegisterAsOld: anObject [
 	"Register the object as something we already read from the database, skipping the isNew: test. Private! Normally you would just use register:"
 
 	| realObject |
-	currentUnitOfWork isNil ifTrue: [ ^ self ].
+	currentUnitOfWork ifNil: [ ^ self ].
 	realObject := self realObjectFor: anObject ifNone: [ ^ self ].
 
 	currentUnitOfWork register: realObject
@@ -844,7 +844,7 @@ GlorpSession >> realObjectFor: anObject ifNone: aBlock [
 { #category : #accessing }
 GlorpSession >> reaper [
 
-	reaper isNil ifTrue: [ self initializeReaper ].
+	reaper ifNil: [ self initializeReaper ].
 	^ reaper
 ]
 
@@ -903,17 +903,19 @@ GlorpSession >> refresh: anObject [
 	"Reload anObject from the corresponding row of its table. Return the refreshed instance."
 
 	| exp query realObject descriptor |
-	realObject := self realObjectFor: anObject ifNone: [^self].
+	realObject := self realObjectFor: anObject ifNone: [ ^ self ].
 	descriptor := self descriptorFor: realObject.
-	descriptor isNil
-		ifTrue: [self error: 'Cannot refresh an object with no descriptor'].
+	descriptor ifNil: [
+		self error: 'Cannot refresh an object with no descriptor' ].
 	exp := descriptor
-				primaryKeyExpressionFor: realObject
-				basedOn: (BaseExpression new  descriptor: (self descriptorFor: realObject class))
-				relation: #=.
+		       primaryKeyExpressionFor: realObject
+		       basedOn:
+		       (BaseExpression new descriptor:
+			        (self descriptorFor: realObject class))
+		       relation: #=.
 	query := self queryClass readOneOf: realObject class where: exp.
 	query shouldRefresh: true.
-	^self execute: query
+	^ self execute: query
 ]
 
 { #category : #api }
@@ -921,7 +923,7 @@ GlorpSession >> register: anObject [
 	"Register the object with our current unit of work. We need to do this *before* making changes to the object.  (If an object is read from the database, changed and then registered, and later written back to the database, the pre-registration change may be lost.)"
 
 	| realObject |
-	currentUnitOfWork isNil ifTrue: [ ^ self ].
+	currentUnitOfWork ifNil: [ ^ self ].
 	realObject := self realObjectFor: anObject ifNone: [ ^ self ].
 
 	(self isNew: realObject)
@@ -940,7 +942,7 @@ GlorpSession >> registerForDelete: anObject [
 	"Register the object with our current unit of work, with intent to delete it."
 
 	| realObject |
-	currentUnitOfWork isNil ifTrue: [ ^ self ].
+	currentUnitOfWork ifNil: [ ^ self ].
 	realObject := self realObjectFor: anObject ifNone: [ ^ self ].
 
 	currentUnitOfWork registerForDelete: realObject
@@ -967,13 +969,13 @@ GlorpSession >> reset [
 	accessor reset.
 	currentUnitOfWork := nil.
 	modificationTracker release.
-	modificationTracker isNil ifFalse: [ modificationTracker := #needed ]
+	modificationTracker ifNotNil: [ modificationTracker := #needed ]
 ]
 
 { #category : #initialization }
 GlorpSession >> resetPermissions [
 
-	accessor isNil ifFalse: [ accessor resetPermissions ]
+	accessor ifNotNil: [ accessor resetPermissions ]
 ]
 
 { #category : #testing }
@@ -998,7 +1000,7 @@ GlorpSession >> rollbackTransaction [
 { #category : #'api/transactions' }
 GlorpSession >> rollbackUnitOfWork [
 
-	currentUnitOfWork isNil ifTrue: [ ^ self ].
+	currentUnitOfWork ifNil: [ ^ self ].
 	currentUnitOfWork abort.
 	currentUnitOfWork := nil
 ]
@@ -1066,7 +1068,7 @@ GlorpSession >> shouldInsert: aDatabaseRow [
 	| isMappedObjectRow |
 	(currentUnitOfWork notNil and: [currentUnitOfWork forcesUpdateFor: aDatabaseRow]) ifTrue: [^false].
 
-	"If this is for a mapped object, so not a link table, then we are an insert if there is no corresponding row in the cache that we read from the database, and an update if there is such a row." 
+	"If this is for a mapped object, so not a link table, then we are an insert if there is no corresponding row in the cache that we read from the database, and an update if there is such a row."
 	isMappedObjectRow := (RowMap new isRowMapKey: aDatabaseRow owner) not.
 	isMappedObjectRow ifTrue: [
 		^(self cacheContainsObjectForRow: aDatabaseRow) not].
@@ -1081,7 +1083,7 @@ GlorpSession >> shouldUseModificationTracker: aBoolean [
 
 	aBoolean
 		ifTrue: [
-		modificationTracker isNil ifTrue: [ self useModificationTracker ] ]
+		modificationTracker ifNil: [ self useModificationTracker ] ]
 		ifFalse: [ modificationTracker := nil ]
 ]
 
@@ -1097,13 +1099,14 @@ GlorpSession >> system: aDescriptorSystem [
 	#validateDescriptorSystem may not yet be in the system, so we send it carefully"
 
 	aDescriptorSystem session: self.
-	accessor isNil ifFalse: [aDescriptorSystem platform: accessor currentLogin database].
+	accessor ifNotNil: [
+		aDescriptorSystem platform: accessor currentLogin database ].
 	system := aDescriptorSystem.
-	([system validateDescriptorSystem]
-		on: Error
-		do: [:exception | exception return: true])
-			ifTrue: [ system validate ]
-			ifFalse: [ system initializeRuntimeMappings ]
+	([ system validateDescriptorSystem ]
+		 on: Error
+		 do: [ :exception | exception return: true ])
+		ifTrue: [ system validate ]
+		ifFalse: [ system initializeRuntimeMappings ]
 ]
 
 { #category : #'internal/writing' }
@@ -1185,7 +1188,7 @@ GlorpSession >> updateTableFrom: aTable to: newTable [
 { #category : #testing }
 GlorpSession >> useBinding [
 
-	self accessor isNil ifTrue: [ ^ false ].
+	self accessor ifNil: [ ^ false ].
 	^ self accessor useBinding
 ]
 

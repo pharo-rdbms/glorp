@@ -47,7 +47,7 @@ DatabaseSequence >> getSequenceValueFromDatabaseFor: aField in: aRow using: aSes
 { #category : #sequencing }
 DatabaseSequence >> hasReservedNumbers [
 
-	^ reservedNumbers notNil and: [ reservedNumbers isEmpty not ]
+	^ reservedNumbers notNil and: [ reservedNumbers isNotEmpty ]
 ]
 
 { #category : #testing }
@@ -83,7 +83,7 @@ DatabaseSequence >> preWriteAssignSequenceValueFor: aField in: aRow using: anAcc
 { #category : #accessing }
 DatabaseSequence >> reservedNumbers [
 
-	reservedNumbers isNil ifTrue: [
+	reservedNumbers ifNil: [
 		reservedNumbers := OrderedCollection new: 50 ].
 	^ reservedNumbers
 ]

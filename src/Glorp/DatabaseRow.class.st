@@ -222,7 +222,7 @@ DatabaseRow >> fieldsAndValidValuesDo: aBlock [
 { #category : #initialization }
 DatabaseRow >> fieldsAndValuesDo: aBlock [
 
-	table isNil ifTrue: [ ^ self ].
+	table ifNil: [ ^ self ].
 	table fields do: [ :each |
 		aBlock
 			value: each
@@ -245,7 +245,7 @@ DatabaseRow >> fieldsNeedingUpdate [
 	"Return a list of the fields that are different from the previous version (if we know what that was)"
 
 	| result |
-	oldVersion isNil ifTrue: [ ^ self nonPrimaryKeyFields ].
+	oldVersion ifNil: [ ^ self nonPrimaryKeyFields ].
 	result := OrderedCollection new: contents size.
 	self fieldsDo: [ :each |
 		each isPrimaryKey ifFalse: [
@@ -307,7 +307,7 @@ DatabaseRow >> initialize [
 DatabaseRow >> isEmpty [
 
 	| empty |
-	contents isNil ifTrue: [ ^ true ].
+	contents ifNil: [ ^ true ].
 	empty := self class emptySlot.
 	contents do: [ :each | each == empty ifFalse: [ ^ false ] ].
 	^ true
@@ -383,7 +383,7 @@ DatabaseRow >> numberOfFields [
 { #category : #accessing }
 DatabaseRow >> oldVersionAt: aField ifAbsent: aBlock [
 
-	oldVersion isNil ifTrue: [ ^ aBlock value ].
+	oldVersion ifNil: [ ^ aBlock value ].
 	^ oldVersion at: aField ifAbsent: aBlock
 ]
 
@@ -481,10 +481,10 @@ DatabaseRow >> printEqualityTemplateForField: aDatabaseField on: aCommand withBi
 { #category : #printing }
 DatabaseRow >> printFieldNamesOn: aWriteStream [
 
-	GlorpHelper 
-		do: [:each | aWriteStream nextPutAll: each name]
+	GlorpHelper
+		do: [ :each | aWriteStream nextPutAll: each name ]
 		for: self table fields
-		separatedBy: [aWriteStream nextPutAll: ',']
+		separatedBy: [ aWriteStream nextPutAll: ',' ]
 ]
 
 { #category : #printing }
@@ -553,16 +553,15 @@ DatabaseRow >> relatedRowsIn: aRowMap [
 
 	| relatedRows |
 	relatedRows := OrderedCollection new.
-	self table foreignKeyConstraints
-		do:
-			[:eachConstraint | relatedRows addAll: (eachConstraint rowsRelatedTo: self)].
-	^relatedRows.
+	self table foreignKeyConstraints do: [ :eachConstraint |
+		relatedRows addAll: (eachConstraint rowsRelatedTo: self) ].
+	^ relatedRows
 ]
 
 { #category : #querying }
 DatabaseRow >> shouldBeWritten [
 
-	table isNil ifTrue: [ ^ shouldBeWritten ].
+	table ifNil: [ ^ shouldBeWritten ].
 	^ shouldBeWritten and: [ table shouldBeWritten ]
 ]
 
@@ -580,12 +579,15 @@ DatabaseRow >> shouldGenerateValueFor: aField [
 
 { #category : #sequencing }
 DatabaseRow >> shouldGenerateValueFor: aField in: aSession [
+
 	| isInsert |
-	aField isGenerated ifFalse: [^false].
-	aField type generatesOverExistingValues ifTrue: [^true].
+	aField isGenerated ifFalse: [ ^ false ].
+	aField type generatesOverExistingValues ifTrue: [ ^ true ].
 	"For those that don't write over existing values, only update them if this is an insert. Otherwise we can't tell the difference between an empty column and one which we're just not updating in this unit of work. This requires the session, but the session may be nil - if so, default to true, because that usage is just for reserving sequence numbers, and it's better to err on the side of too many."
-	isInsert := aSession isNil ifTrue: [true] ifFalse: [aSession shouldInsert: self].
-	^isInsert and: [(self hasValueFor: aField) not].
+	isInsert := aSession
+		            ifNil: [ true ]
+		            ifNotNil: [ aSession shouldInsert: self ].
+	^ isInsert and: [ (self hasValueFor: aField) not ]
 ]
 
 { #category : #accessing }
@@ -617,18 +619,20 @@ DatabaseRow >> table: aDatabaseTable [
 
 { #category : #api }
 DatabaseRow >> unifyField: eachSourceField withField: eachTargetField inRow: targetRow [
+
 	| sourceWrapper targetWrapper |
-	sourceWrapper := self wrapperAt: eachSourceField ifAbsent: [nil].
-	targetWrapper := targetRow wrapperAt: eachTargetField ifAbsent: [nil].
-	sourceWrapper isNil
-		ifTrue:
-			[targetWrapper isNil
-				ifTrue:
-					[targetWrapper := FieldValueWrapper new.
-					targetRow wrapperAt: eachTargetField put: targetWrapper].
-			^self wrapperAt: eachSourceField put: targetWrapper].
-	targetWrapper isNil ifTrue: [^targetRow wrapperAt: eachTargetField put: sourceWrapper].
-	sourceWrapper unifyWith: targetWrapper.
+	sourceWrapper := self wrapperAt: eachSourceField ifAbsent: [ nil ].
+	targetWrapper := targetRow
+		                 wrapperAt: eachTargetField
+		                 ifAbsent: [ nil ].
+	sourceWrapper ifNil: [
+		targetWrapper ifNil: [
+			targetWrapper := FieldValueWrapper new.
+			targetRow wrapperAt: eachTargetField put: targetWrapper ].
+		^ self wrapperAt: eachSourceField put: targetWrapper ].
+	targetWrapper ifNil: [
+		^ targetRow wrapperAt: eachTargetField put: sourceWrapper ].
+	sourceWrapper unifyWith: targetWrapper
 ]
 
 { #category : #accessing }
@@ -663,9 +667,11 @@ DatabaseRow >> wrapperAt: aField [
 DatabaseRow >> wrapperAt: aField ifAbsent: aBlock [
 
 	| thing |
-	contents isNil ifTrue: [^aBlock value].
+	contents ifNil: [ ^ aBlock value ].
 	thing := contents at: aField position.
-	^thing == self class emptySlot ifTrue: aBlock ifFalse: [thing]
+	^ thing == self class emptySlot
+		  ifTrue: aBlock
+		  ifFalse: [ thing ]
 ]
 
 { #category : #accessing }
