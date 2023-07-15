@@ -88,13 +88,6 @@ RowBasedCommand >> arrayBindings [
 	^allBindings asArray
 ]
 
-{ #category : #accessing }
-RowBasedCommand >> arrayBoundFields [
-	"Return the list of fields to be bound in the SQL string we will use for array binding. For array binding, we need to include all possible fields, rather than those that just have values in a particular row"
-
-	self subclassResponsibility
-]
-
 { #category : #'bound values' }
 RowBasedCommand >> batchStatementBindings [
 	"Return our bindings, which we assume are for multiple rows, as one big array, one statement after the other"
