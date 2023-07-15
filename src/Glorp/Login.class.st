@@ -160,9 +160,7 @@ Login >> isSSL [
 { #category : #accessing }
 Login >> name [
 
-	name isNil
-		ifTrue: [ ^ self connectString ]
-		ifFalse: [ ^ name ]
+	name ifNil: [ ^ self connectString ] ifNotNil: [ ^ name ]
 ]
 
 { #category : #accessing }

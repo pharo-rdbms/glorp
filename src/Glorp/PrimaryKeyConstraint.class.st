@@ -57,7 +57,7 @@ PrimaryKeyConstraint >> isTheSameAs: aPrimaryKeyConstraint [
 
 	self name asUppercase = aPrimaryKeyConstraint name asUppercase ifFalse: [^false].
 	self primaryKeyFields size = aPrimaryKeyConstraint primaryKeyFields size ifFalse: [^false].
-	self primaryKeyFields asSortedCollection with: aPrimaryKeyConstraint primaryKeyFields asSortedCollection do: [:a :b | (a isTheSameAs: b) ifFalse: [^false]].	
+	self primaryKeyFields asSortedCollection with: aPrimaryKeyConstraint primaryKeyFields asSortedCollection do: [:a :b | (a isTheSameAs: b) ifFalse: [^false]].
 	self shouldCreateInDatabase = aPrimaryKeyConstraint shouldCreateInDatabase ifFalse: [^false].
 	^ true
 ]

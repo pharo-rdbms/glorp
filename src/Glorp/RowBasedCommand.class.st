@@ -152,6 +152,7 @@ RowBasedCommand >> executeBoundIn: anAccessor [
 
 { #category : #executing }
 RowBasedCommand >> executeUnboundIn: anAccessor [
+
 	anAccessor returnRowCount: self needsRowCount.
 	(self hasMultipleRows and: [self shouldUseGroupWriting not])
 		ifTrue:
@@ -218,12 +219,12 @@ RowBasedCommand >> parameterTypeSignature [
 		ifTrue: [
 			row keysAndValuesDo: [ :eachKey :eachValInFirstRow |
 				| nextValue |
-				eachValInFirstRow notNil
-					ifTrue: [ result nextPutAll: eachValInFirstRow class name ]
-					ifFalse: [
+				eachValInFirstRow
+					ifNotNil: [ result nextPutAll: eachValInFirstRow class name ]
+					ifNil: [
 						allRows do: [ :eachRow |
-							(nextValue := eachRow at: eachKey ifAbsent: [ nil ]) notNil
-								ifTrue: [ result nextPutAll: nextValue class name ] ] ] ] ]
+							(nextValue := eachRow at: eachKey ifAbsent: [ nil ]) ifNotNil: [
+								result nextPutAll: nextValue class name ] ] ] ] ]
 		ifFalse: [
 			row keysAndValuesDo: [ :eachKey :eachValue |
 				result nextPutAll: eachValue class name ] ].

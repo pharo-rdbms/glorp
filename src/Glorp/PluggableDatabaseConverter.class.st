@@ -20,17 +20,13 @@ Class {
 { #category : #converting }
 PluggableDatabaseConverter >> convert: anObject fromDatabaseRepresentationAs: aDatabaseType [
 
-	^ dbToSt isNil
-		  ifTrue: [ anObject ]
-		  ifFalse: [ dbToSt value: anObject ]
+	^ dbToSt ifNil: [ anObject ] ifNotNil: [ dbToSt value: anObject ]
 ]
 
 { #category : #converting }
 PluggableDatabaseConverter >> convert: anObject toDatabaseRepresentationAs: aDatabaseType [
 
-	^ stToDb isNil
-		  ifTrue: [ anObject ]
-		  ifFalse: [ stToDb value: anObject ]
+	^ stToDb ifNil: [ anObject ] ifNotNil: [ stToDb value: anObject ]
 ]
 
 { #category : #accessing }

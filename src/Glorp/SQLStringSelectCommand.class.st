@@ -22,9 +22,7 @@ SQLStringSelectCommand class >> sqlString: aString parameters: aDictionaryOrArra
 { #category : #accessing }
 SQLStringSelectCommand >> bindingTypes [
 
-	^ query isNil
-		  ifTrue: [ #(  ) ]
-		  ifFalse: [ super bindingTypes ]
+	^ query ifNil: [ #(  ) ] ifNotNil: [ super bindingTypes ]
 ]
 
 { #category : #accessing }
@@ -32,7 +30,7 @@ SQLStringSelectCommand >> bindings [
 	"We're not actually sure if we're part of a query with a where clause, or being used in a more ad hoc way. So if we have a query, use either our pre-set parameters, or the query's bindings, whichever produces more. In a tie, pick the query's bindings."
 
 	| queryBindings |
-	query isNil ifTrue: [ ^ parameters ].
+	query ifNil: [ ^ parameters ].
 	queryBindings := super bindings.
 	^ queryBindings size >= parameters size
 		  ifTrue: [ queryBindings ]
@@ -42,10 +40,8 @@ SQLStringSelectCommand >> bindings [
 { #category : #accessing }
 SQLStringSelectCommand >> blockFactor [
 
-	blockFactor isNil ifTrue: [
-		blockFactor := query isNil
-			               ifTrue: [ 5 ]
-			               ifFalse: [ super blockFactor ] ].
+	blockFactor ifNil: [
+		blockFactor := query ifNil: [ 5 ] ifNotNil: [ super blockFactor ] ].
 	^ blockFactor
 ]
 
@@ -65,7 +61,5 @@ SQLStringSelectCommand >> setSQLString: aString [
 { #category : #reporting }
 SQLStringSelectCommand >> tables [
 
-	^ query isNil
-		  ifTrue: [ Array with: #Unknown ]
-		  ifFalse: [ super tables ]
+	^ query ifNil: [ Array with: #Unknown ] ifNotNil: [ super tables ]
 ]

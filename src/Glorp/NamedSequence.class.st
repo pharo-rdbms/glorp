@@ -59,7 +59,7 @@ NamedSequence >> printOn: aStream [
 	super printOn: aStream.
 	aStream
 		nextPut: $(;
-		nextPutAll: (name isNil ifTrue: ['unnamed'] ifFalse: [name]);
+		nextPutAll: (name ifNil: [ 'unnamed' ] ifNotNil: [ name ]);
 		nextPut: $)
 ]
 

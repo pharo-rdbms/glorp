@@ -158,12 +158,16 @@ PersistentObject >> find [
 
 { #category : #private }
 PersistentObject >> findMapping: aMapping in: aVirtualCollection [
-	
-	aMapping hasAttribute not ifTrue: [^aVirtualCollection].
-	aMapping attribute name = #session ifTrue: [^aVirtualCollection].
-	^(aMapping attribute getValueFrom: self)
-		ifNil: [aVirtualCollection]
-		ifNotNil: [:value | aVirtualCollection select: [:each | self matchAttribute: (each get: aMapping attribute name) to: value]].
+
+	aMapping hasAttribute ifFalse: [ ^ aVirtualCollection ].
+	aMapping attribute name = #session ifTrue: [ ^ aVirtualCollection ].
+	^ (aMapping attribute getValueFrom: self)
+		  ifNil: [ aVirtualCollection ]
+		  ifNotNil: [ :value |
+			  aVirtualCollection select: [ :each |
+				  self
+					  matchAttribute: (each get: aMapping attribute name)
+					  to: value ] ]
 ]
 
 { #category : #comparing }
@@ -199,7 +203,7 @@ PersistentObject >> refresh [
 PersistentObject >> rollback [
 	"Rollback our entries in the queue so that we are not involved in the commit."
 
-	self session hasUnitOfWork ifFalse: [^self].
+	self session hasUnitOfWork ifFalse: [ ^ self ].
 	self session rollbackUnitOfWorkFor: self
 ]
 
@@ -207,14 +211,14 @@ PersistentObject >> rollback [
 PersistentObject >> rollbackUnitOfWork [
 	"Rollback the entire unit of work; this may include objects other than myself."
 
-	self session hasUnitOfWork ifFalse: [^self].
+	self session hasUnitOfWork ifFalse: [ ^ self ].
 	self session rollbackUnitOfWork
 ]
 
 { #category : #accessing }
 PersistentObject >> session [
 
-	session isNil ifTrue: [ session := self class getSession ].
+	session ifNil: [ session := self class getSession ].
 	^ session
 ]
 

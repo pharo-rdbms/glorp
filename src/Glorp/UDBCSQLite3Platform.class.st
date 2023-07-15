@@ -32,8 +32,9 @@ UDBCSQLite3Platform >> isUDBCSQLite3Platform [
 { #category : #'conversion - times' }
 UDBCSQLite3Platform >> printDate: aTimestamp isoFormatOn: stream [
 	"Print the date as yyyy-mm-dd"
+
 	| monthNumber dayOfMonth |
-	aTimestamp isNil ifTrue: [^'NULL'].
+	aTimestamp ifNil: [ ^ 'NULL' ].
 	stream nextPut: $".
 	aTimestamp year printOn: stream.
 	stream nextPut: $-.
@@ -42,8 +43,7 @@ UDBCSQLite3Platform >> printDate: aTimestamp isoFormatOn: stream [
 	stream nextPut: $-.
 	dayOfMonth := aTimestamp dayOfMonth.
 	stream nextPutAll: (GlorpDatabaseType padToTwoDigits: dayOfMonth).
-	stream nextPut: $".
-
+	stream nextPut: $"
 ]
 
 { #category : #'conversion - times' }

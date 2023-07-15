@@ -218,7 +218,7 @@ PharoDatabaseAccessor >> logout [
 PharoDatabaseAccessor >> releaseCursor: aCursor in: aPreparedStatement [
 	"Release the cursor. We're trapping exceptions, so return true or false to indicate success/failure"
 
-	aCursor isNil ifTrue: [ ^ self ].
+	aCursor ifNil: [ ^ self ].
 	^ [
 	  aCursor close.
 	  true ]

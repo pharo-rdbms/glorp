@@ -20,7 +20,7 @@ Class {
 QuerySelectCommand >> bindingTypes [
 
 	self useBinding ifFalse: [ ^ #(  ) ].
-	boundExpressions isNil ifTrue: [ self findBoundExpressions ].
+	boundExpressions ifNil: [ self findBoundExpressions ].
 	^ boundExpressions collect: [ :each | each bindingType ]
 ]
 
@@ -28,14 +28,14 @@ QuerySelectCommand >> bindingTypes [
 QuerySelectCommand >> bindings [
 
 	self useBinding ifFalse: [ ^ #(  ) ].
-	boundExpressions isNil ifTrue: [ self findBoundExpressions ].
+	boundExpressions ifNil: [ self findBoundExpressions ].
 	^ boundExpressions collect: [ :each | each bindingIn: self ]
 ]
 
 { #category : #accessing }
 QuerySelectCommand >> blockFactor [
 
-	blockFactor isNil ifTrue: [ blockFactor := query expectedRows ].
+	blockFactor ifNil: [ blockFactor := query expectedRows ].
 	^ blockFactor
 ]
 
@@ -62,9 +62,9 @@ QuerySelectCommand >> findBoundExpressions [
 { #category : #accessing }
 QuerySelectCommand >> maximumLobSizeToRetrieveDirectly [
 
-	^ query isNil
-		  ifTrue: [ super maximumLobSizeToRetrieveDirectly ]
-		  ifFalse: [ query maximumLobSizeToRetrieveDirectly ]
+	^ query
+		  ifNil: [ super maximumLobSizeToRetrieveDirectly ]
+		  ifNotNil: [ query maximumLobSizeToRetrieveDirectly ]
 ]
 
 { #category : #printing }

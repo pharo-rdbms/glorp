@@ -51,7 +51,7 @@ SelectCommand >> blockFactor: anInteger [
 { #category : #testing }
 SelectCommand >> canBind: aValue to: aType [
 
-	aValue isNil ifTrue: [ ^ false ].
+	aValue ifNil: [ ^ false ].
 	^ super canBind: aValue to: aType
 ]
 
