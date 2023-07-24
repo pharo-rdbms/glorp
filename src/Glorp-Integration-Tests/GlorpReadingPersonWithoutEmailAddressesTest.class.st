@@ -3,13 +3,7 @@ Class {
 	#superclass : #GlorpTestCase,
 	#instVars : [
 		'session',
-		'personRow',
-		'addressRow',
-		'emailAddress1Row',
-		'emailAddress2Row',
-		'id1',
-		'id2',
-		'oldReuseState'
+		'personRow'
 	],
 	#category : #'Glorp-Integration-Tests-Database'
 }
@@ -33,8 +27,6 @@ GlorpReadingPersonWithoutEmailAddressesTest >> setUp [
 { #category : #running }
 GlorpReadingPersonWithoutEmailAddressesTest >> tearDown [
 
-	oldReuseState isNil ifFalse:
-		[session reusePreparedStatements: oldReuseState].
 	session rollbackTransaction.
 	session reset.
 	session := nil.
@@ -43,14 +35,15 @@ GlorpReadingPersonWithoutEmailAddressesTest >> tearDown [
 
 { #category : #tests }
 GlorpReadingPersonWithoutEmailAddressesTest >> testReadMultipleObjectsOneToMany [
+
 	| query result person addresses |
 
-	query := Query read: GlorpPerson where: [:eachPerson | eachPerson id = 4].
-	query alsoFetch: [:each | each emailAddresses asOuterJoin].
+	query := Query read: GlorpPerson where: [ :eachPerson | eachPerson id = 4 ].
+	query alsoFetch: [ :each | each emailAddresses asOuterJoin ].
 	result := query executeIn: session.
-	self assert: result size = 1.
+	self assert: result size equals: 1.
 	person := result first.
 	addresses := person emailAddresses.
-	self deny: addresses isGlorpProxy. "testing PR https://github.com/pharo-rdbms/glorp/pull/115"
-	self assert: addresses size = 0.
+	self deny: addresses isGlorpProxy "testing PR https://github.com/pharo-rdbms/glorp/pull/115".
+	self assert: addresses size equals: 0
 ]
