@@ -93,9 +93,14 @@ GlorpAddress >> number: anObject [
 GlorpAddress >> printOn: aStream [
 
 	super printOn: aStream.
-	aStream nextPutAll:
-		'(' , id printString , ',' , street printString , ','
-		, number printString , ')'
+	aStream nextPut: $(.
+	self id printOn: aStream.
+	aStream nextPut: $,.
+	self street printOn: aStream.
+	aStream nextPut: $,.
+	self number printOn: aStream.
+	aStream nextPut: $).
+
 ]
 
 { #category : #accessing }
