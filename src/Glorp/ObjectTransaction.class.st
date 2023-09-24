@@ -143,7 +143,7 @@ ObjectTransaction >> registeredObjectsDo: aBlock [
 
 	| newAdditions previousVersion |
 	newAdditions := undoMap keys.
-	previousVersion := newAdditions.
+	previousVersion := newAdditions asSet.
 	[newAdditions isEmpty]
 		whileFalse:
 			[newAdditions do: aBlock.
