@@ -150,8 +150,7 @@ ObjectTransaction >> registeredObjectsDo: aBlock [
 			newAdditions := OrderedCollection new.
 			undoMap
 				keysDo:
-					[:eachKey | (previousVersion includes: eachKey) ifFalse: [newAdditions add: eachKey]].
-			newAdditions isEmpty ifFalse: [previousVersion := undoMap keys]]
+					[:eachKey | (previousVersion includes: eachKey) ifFalse: [newAdditions add: eachKey]]]
 ]
 
 { #category : #registering }
