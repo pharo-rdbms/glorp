@@ -151,7 +151,7 @@ ObjectTransaction >> registeredObjectsDo: aBlock [
 			undoMap
 				keysDo:
 					[:eachKey | (previousVersion includes: eachKey) ifFalse: [newAdditions add: eachKey]].
-			newAdditions isEmpty ifFalse: [previousVersion := undoMap keys asSet]
+			newAdditions ifNotEmpty: [previousVersion := undoMap keys asSet]
 				]
 ]
 
