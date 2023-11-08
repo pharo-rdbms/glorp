@@ -1,6 +1,6 @@
 # GLORP
 [![Pharo](https://img.shields.io/static/v1?style=for-the-badge&message=Pharo&color=3297d4&logo=Harbor&logoColor=FFFFFF&label=)](https://www.pharo.org) 
-[![Glorp](https://img.shields.io/static/v1?style=for-the-badge&message=Glorp&color=044a64&logo=amazondynamodb&logoColor=FFFFFF&label=)](https://www.glorp.org)
+[![Glorp](https://img.shields.io/static/v1?style=for-the-badge&message=Glorp&color=044a64&logo=amazondynamodb&logoColor=FFFFFF&label=)](https://glorp.org)
 
 [![Unit Tests](https://github.com/pharo-rdbms/glorp/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/pharo-rdbms/glorp/actions/workflows/unit-tests.yml)
 [![PostgreSQL Integration Tests](https://github.com/pharo-rdbms/glorp/actions/workflows/postgreSQL-integration-tests.yml/badge.svg)](https://github.com/pharo-rdbms/glorp/actions/workflows/postgreSQL-integration-tests.yml)
