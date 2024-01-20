@@ -30,7 +30,7 @@ Metacello new
 ```
 
 Note that Glorp requires database drivers for the actual database connectivity:
-- For SQLite3, see [Pharo-SQLite3](https://github.com/pharo-rdbms/Pharo-SQLite3). Use its Metacello snippet to load both Glorp and the driver in one go.
+- For SQLite3, see [Pharo-SQLite3](https://github.com/PierceNg/glorp-sqlite3). Use its Metacello snippet to load both Glorp and the driver in one go.
 - For PostgreSQL, see [P3](https://github.com/svenvc/P3). As per its README, load the driver after loading Glorp itself.
 - On Windows, for Oracle and SQLServer, see [PharoADO](https://github.com/eftomi/PharoADO). By default its Metacello snippet loads Glorp and the driver.  
 
