@@ -429,10 +429,10 @@ DatabasePlatform >> convertToNumber: aNumber for: aType [
 
 	| exponent result |
 	aNumber isNil ifTrue: [^nil].
-	aType precision isNil ifTrue: [^aNumber].
-	(Dialect doesPrecisionOf: aNumber equal: aType precision) ifTrue: [^aNumber].
+	aType scale isNil ifTrue: [^aNumber].
+	(Dialect doesScaleOf: aNumber equal: aType scale) ifTrue: [^aNumber].
 	exponent := Dialect
-		coerceToDoublePrecisionFloat: (10 raisedToInteger: aType precision).
+		coerceToDoublePrecisionFloat: (10 raisedToInteger: aType scale).
 	result := (aNumber * exponent) rounded / exponent.
 	^aNumber isInteger ifTrue: [result rounded] ifFalse: [result].
 ]
