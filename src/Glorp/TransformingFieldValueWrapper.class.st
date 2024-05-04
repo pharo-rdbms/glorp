@@ -9,88 +9,90 @@ Instance Variables:
 
 "
 Class {
-	#name : #TransformingFieldValueWrapper,
-	#superclass : #FieldValueWrapper,
+	#name : 'TransformingFieldValueWrapper',
+	#superclass : 'FieldValueWrapper',
 	#instVars : [
 		'forwardTransformation',
 		'inverseTransformation',
 		'innerWrapper'
 	],
-	#category : 'Glorp-UnitOfWork'
+	#category : 'Glorp-UnitOfWork',
+	#package : 'Glorp',
+	#tag : 'UnitOfWork'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransformingFieldValueWrapper >> allInnerWrappers [
 	^innerWrapper allInnerWrappers, (Array with: innerWrapper)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransformingFieldValueWrapper >> basicContents [
 	"Return the un-transformed contents"
 	^innerWrapper contents
 ]
 
-{ #category : #unifying }
+{ #category : 'unifying' }
 TransformingFieldValueWrapper >> containsWrapper: aFieldValueWrapper [
 	^self == aFieldValueWrapper or: [innerWrapper == aFieldValueWrapper
 		or: [aFieldValueWrapper innerWrapper == self
 			or: [aFieldValueWrapper innerWrapper == self innerWrapper]]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransformingFieldValueWrapper >> contents [
 
 	^forwardTransformation value: innerWrapper contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransformingFieldValueWrapper >> contents: anObject [
 
 	innerWrapper contents: (inverseTransformation value: anObject)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransformingFieldValueWrapper >> forwardTransformation [
 	^forwardTransformation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransformingFieldValueWrapper >> forwardTransformation: aBlock [
 	forwardTransformation := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransformingFieldValueWrapper >> hasValue [
 
 	^innerWrapper hasValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransformingFieldValueWrapper >> innerWrapper [
 	^innerWrapper
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransformingFieldValueWrapper >> innerWrapper: aFieldValueWrapper [
 	innerWrapper := aFieldValueWrapper
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransformingFieldValueWrapper >> inverseTransformation [
 	^inverseTransformation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransformingFieldValueWrapper >> inverseTransformation: aBlock [
 	inverseTransformation := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TransformingFieldValueWrapper >> privateSetContents: anObject [
 	innerWrapper privateSetContents: (inverseTransformation value: anObject)
 ]
 
-{ #category : #unifying }
+{ #category : 'unifying' }
 TransformingFieldValueWrapper >> replaceWith: aFieldValueWrapper [
 	innerWrapper replaceWith: aFieldValueWrapper
 ]

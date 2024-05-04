@@ -15,8 +15,8 @@ Instance Variables:
 
 "
 Class {
-	#name : #DatabaseField,
-	#superclass : #Object,
+	#name : 'DatabaseField',
+	#superclass : 'Object',
 	#instVars : [
 		'table',
 		'name',
@@ -28,16 +28,18 @@ Class {
 		'isLockKey',
 		'defaultValue'
 	],
-	#category : #'Glorp-Database'
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 DatabaseField class >> named: aString [
 
 	^self error: 'type needed'
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 DatabaseField class >> named: aString type: dbType [
 
 	^ super new initialize
@@ -45,68 +47,68 @@ DatabaseField class >> named: aString type: dbType [
 		type: dbType
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 DatabaseField class >> new [
 
 	^self error: 'dbType needed'
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 DatabaseField >> <= aField [
 
 	^ self name <= aField name
 ]
 
-{ #category : #obsolete }
+{ #category : 'obsolete' }
 DatabaseField >> asConstraintReferenceString [
 
 	^ table name , ' (' , self name , ')'
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 DatabaseField >> asDistinctFieldOn: anExpression [
 
 	^ (anExpression getField: self) asDistinctFieldOn: anExpression
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 DatabaseField >> asField [
 
 	^ self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 DatabaseField >> asGlorpExpression [
 
 	^ ParameterExpression forField: self basedOn: nil
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 DatabaseField >> asGlorpExpressionOn: anExpression [
 
 	^ ParameterExpression forField: self basedOn: anExpression
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 DatabaseField >> beIndexed [
 
 	self table addIndex: (DatabaseIndex forField: self)
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 DatabaseField >> beLockKey [
 
 	isLockKey := true.
 	self table ifNotNil: [ self table addAsLockKeyField: self ]
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 DatabaseField >> beNullable: aBoolean [
 
 	self isPrimaryKey ifFalse: [ isNullable := aBoolean ]
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 DatabaseField >> bePrimaryKey [
 
 	isPrimaryKey := true.
@@ -114,7 +116,7 @@ DatabaseField >> bePrimaryKey [
 	self table ifNotNil: [ self table addAsPrimaryKeyField: self ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 DatabaseField >> converterForStType: aClass [
 
 	^ self type converterForStType: (aClass isBehavior
@@ -122,33 +124,33 @@ DatabaseField >> converterForStType: aClass [
 			   ifFalse: [ aClass class ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseField >> defaultValue [
 
 	^ defaultValue
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 DatabaseField >> defaultValue: anObject [
 
 	defaultValue := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseField >> foreignKeyConstraints [
 
 	^ self table foreignKeyConstraints select: [ :each |
 		  each sourceFields includes: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseField >> impliedSmalltalkType [
 	"Return the default Smalltalk type corresponding to our database type"
 
 	^ self type impliedSmalltalkType
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DatabaseField >> initialize [
 
 	isPrimaryKey := false.
@@ -157,52 +159,52 @@ DatabaseField >> initialize [
 	isLockKey := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseField >> isDistinct [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseField >> isGenerated [
 
 	^ type isGenerated or: [ defaultValue notNil ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseField >> isIndexed [
 
 	^ self table hasIndexForField: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseField >> isLockKey [
 
 	isLockKey ifNil: [ isLockKey := false ].
 	^ isLockKey
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseField >> isMappable [
 	"Return true if we're something that can be returned in a select statement. Always true for fields"
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseField >> isNullable [
 
 	^ isNullable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseField >> isPrimaryKey [
 	"Private - Answer the value of the receiver's ''isPrimaryKey'' instance variable."
 
 	^ isPrimaryKey yourSelf
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 DatabaseField >> isSameAliasedFieldAs: aField [
 	"Return true if we are the same as another aliased field. For non-aliased fields, identity is assured, so this is redundant. Note that we == the string. This will work because we know these must both be shallow copies of the same thing"
 
@@ -210,7 +212,7 @@ DatabaseField >> isSameAliasedFieldAs: aField [
 	^ self table == aField table and: [ self name == aField name ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 DatabaseField >> isTheSameAs: aDatabaseField [
 	"Validate that two fields are exactly the same. Most useful for testing purposes, rather than normal usage, which is why we don't just use the #= method."
 
@@ -224,7 +226,7 @@ DatabaseField >> isTheSameAs: aDatabaseField [
 	^ true
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 DatabaseField >> isTheSameTypeAs: aDatabaseField [
 
 	| myType aType |
@@ -238,20 +240,20 @@ DatabaseField >> isTheSameTypeAs: aDatabaseField [
 	^ self type = aDatabaseField type
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseField >> isUnique [
 
 	isUnique ifNil: [ isUnique := false ].
 	^ isUnique
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 DatabaseField >> isUnique: aBoolean [
 
 	isUnique := aBoolean
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseField >> matchesField: aField [
 
 	table name = aField table name ifFalse: [ ^ false ].
@@ -263,46 +265,46 @@ DatabaseField >> matchesField: aField [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseField >> name [
 	"Private - Answer the value of the receiver's ''name'' instance variable."
 
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseField >> name: aString [
 	"Private - Set the value of the receiver's ''name'' instance variable to the argument, anObject."
 
 	name := aString asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseField >> platform [
 
 	^ self type platform
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseField >> position [
 
 	^ position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseField >> position: anObject [
 
 	position := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DatabaseField >> postInitializeIn: aDescriptorSystem [
 	"Any initialization that has to be delayed until we're in the table"
 
 	type initializeForField: self in: aDescriptorSystem
 ]
 
-{ #category : #obsolete }
+{ #category : 'obsolete' }
 DatabaseField >> printForConstraintNameOn: aStream maxLength: maxLength [
 
 	| constraintName |
@@ -312,13 +314,13 @@ DatabaseField >> printForConstraintNameOn: aStream maxLength: maxLength [
 	aStream nextPutAll: constraintName
 ]
 
-{ #category : #obsolete }
+{ #category : 'obsolete' }
 DatabaseField >> printNameOn: aStream withParameters: anArray [
 
 	aStream nextPutAll: self name
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DatabaseField >> printOn: aStream [
 
 	aStream nextPutAll: 'Field'.
@@ -330,31 +332,31 @@ DatabaseField >> printOn: aStream [
 		nextPutAll: ')'
 ]
 
-{ #category : #obsolete }
+{ #category : 'obsolete' }
 DatabaseField >> printQualifiedSQLOn: aStream withParameters: aDictionary [
 
 	aStream nextPutAll: self qualifiedName
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DatabaseField >> printSQLOn: aStream withParameters: anArray [
 
 	aStream nextPutAll: self quotedQualifiedName
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DatabaseField >> printSelectSQLOn: aStream withParameters: anArray [
 
 	self printSQLOn: aStream withParameters: anArray
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DatabaseField >> printUnqualifiedSQLOn: aStream withParameters: anArray [
 
 	aStream nextPutAll: self name
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 DatabaseField >> qualifiedName [
 
 	^ table
@@ -362,7 +364,7 @@ DatabaseField >> qualifiedName [
 		  ifNotNil: [ self table qualifiedName , '.' , self name ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 DatabaseField >> quotedQualifiedName [
 
 	| basicName |
@@ -372,44 +374,44 @@ DatabaseField >> quotedQualifiedName [
 		  ifNotNil: [ self table qualifiedName , '.' , basicName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseField >> table [
 
 	^ table
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseField >> table: anObject [
 
 	table := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseField >> tablesToPrint [
 
 	^ Array with: table
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseField >> type [
 
 	^ type
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 DatabaseField >> type: aDatabaseType [
 
 	type := aDatabaseType.
 	(type notNil and: [ type isSerial ]) ifTrue: [ self bePrimaryKey ]
 ]
 
-{ #category : #database }
+{ #category : 'database' }
 DatabaseField >> typeString [
 
 	^ type typeString
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 DatabaseField >> withTable: aTable [
 	"Return a copy of ourselves, with the table set to aTable. Presumably aTable is an aliased version of our table"
 

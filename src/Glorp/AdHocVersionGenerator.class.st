@@ -8,34 +8,36 @@ Instance Variables:
 
 "
 Class {
-	#name : #AdHocVersionGenerator,
-	#superclass : #VersionGenerator,
+	#name : 'AdHocVersionGenerator',
+	#superclass : 'VersionGenerator',
 	#instVars : [
 		'block',
 		'numberOfArguments'
 	],
-	#category : #'Glorp-Database'
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 AdHocVersionGenerator class >> block: aBlock [
 	^self new block: aBlock.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AdHocVersionGenerator >> block [
 
 	^ block
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AdHocVersionGenerator >> block: aBlock [
 
 	block := aBlock.
 	numberOfArguments := Dialect argumentCountFor: block
 ]
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 AdHocVersionGenerator >> nextValueFor: aField in: aRow [
 	"Get the next value by evaluating the block. If it doesn't care about the field or row, don't pass them as arguments. If it does, then give it both."
 

@@ -9,23 +9,25 @@ Instance Variables:
 
 "
 Class {
-	#name : #OracleSequence,
-	#superclass : #NamedSequence,
+	#name : 'OracleSequence',
+	#superclass : 'NamedSequence',
 	#instVars : [
 		'count',
 		'sequenceIncrement',
 		'accessProtect'
 	],
-	#category : #'Glorp-Database'
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OracleSequence >> alwaysGetFromDb [
 
 	^ sequenceIncrement = 1
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OracleSequence >> backupReserveCommand: anInteger in: aSession [
 
 	| command stream |
@@ -44,7 +46,7 @@ OracleSequence >> backupReserveCommand: anInteger in: aSession [
 	^command
 ]
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 OracleSequence >> creationString [
 
 	^ self sequenceIncrement > 1
@@ -52,13 +54,13 @@ OracleSequence >> creationString [
 		ifTrue: ['create sequence ', self qualifiedName, ' increment by ', self sequenceIncrement printString]
 ]
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 OracleSequence >> getSequenceValueFromDatabaseFor: aField in: aRow using: anAccessor [
 
 	aRow at: aField put: (self nextSequenceNumber: anAccessor)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OracleSequence >> initialize [
 
 	super initialize.
@@ -67,13 +69,13 @@ OracleSequence >> initialize [
 	accessProtect := Semaphore forMutualExclusion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OracleSequence >> name: aString [
 
 	name := aString copyFrom: 1 to: (aString size min: OraclePlatform new maximumLengthOfTableName)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OracleSequence >> nextSequenceNumber: anAccessor [
 
 	accessProtect critical:
@@ -86,17 +88,17 @@ OracleSequence >> nextSequenceNumber: anAccessor [
 				ifFalse: [count]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OracleSequence >> nextSequenceNumberSelectString [
 
 	^ 'SELECT ' , self qualifiedName , '.NEXTVAL FROM DUAL'
 ]
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 OracleSequence >> postWriteAssignSequenceValueFor: aField in: aRow using: anAccessor [
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OracleSequence >> reserveViaBackupMechanism: anInteger in: aSession [
 	"The regular mechanism didn't work, (probably because there weren't enough rows in the table), try a different technique. Oracle doesn't repeatedly evaluate nextval if we do it multiple times on a line, so instead guess at a table we know should have lots of rows in Oracle and use it"
 
@@ -107,7 +109,7 @@ OracleSequence >> reserveViaBackupMechanism: anInteger in: aSession [
 	rows do: [:each | self reservedNumbers add: each first]
 ]
 
-{ #category : #SQL }
+{ #category : 'SQL' }
 OracleSequence >> reserveViaTableSelect: anInteger in: aSession for: aTable [
 	"In Oracle, there can be performance issues selecting against our tables, which we don't seem to get if we just use SYS.ALLOBJECTS. I'm suspicious the problem is if we have fragmentation of the file containing the table, but regardless, ALLOBJECTS seems consistently fast, so always use it"
 	self reserveViaBackupMechanism: anInteger in: aSession.
@@ -122,19 +124,19 @@ OracleSequence >> reserveViaTableSelect: anInteger in: aSession for: aTable [
 	rows do: [:each | self reservedNumbers add: each first]."
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OracleSequence >> sequenceIncrement [
 
 	^ sequenceIncrement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OracleSequence >> sequenceIncrement: aNumber [
 
 	sequenceIncrement := aNumber
 ]
 
-{ #category : #SQL }
+{ #category : 'SQL' }
 OracleSequence >> tableSelectCommandFor: aTable in: aSession reserving: anInteger [
 
 	| stream |

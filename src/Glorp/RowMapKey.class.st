@@ -7,16 +7,18 @@ key1	<Object>	One sub-key.
 key2	<Object>	The other sub-key.'
 "
 Class {
-	#name : #RowMapKey,
-	#superclass : #Object,
+	#name : 'RowMapKey',
+	#superclass : 'Object',
 	#instVars : [
 		'key1',
 		'key2'
 	],
-	#category : 'Glorp-UnitOfWork'
+	#category : 'Glorp-UnitOfWork',
+	#package : 'Glorp',
+	#tag : 'UnitOfWork'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RowMapKey >> = aRowMapKey [
 
 	aRowMapKey class == self class ifFalse: [^false].
@@ -24,7 +26,7 @@ RowMapKey >> = aRowMapKey [
 		key2 == aRowMapKey key1 and: [key1 == aRowMapKey key2]]
 ]
 
-{ #category : #adjusting }
+{ #category : 'adjusting' }
 RowMapKey >> adjustIn: aCorrespondenceMap [
 	"Adjust ourselves to refer to the copies rather than the originals"
 	| adjusted |
@@ -34,7 +36,7 @@ RowMapKey >> adjustIn: aCorrespondenceMap [
 	^adjusted
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 RowMapKey >> hash [
 	| hash1 hash2 hash1Temp longHash |
 	hash1 := key1 identityHash.
@@ -47,27 +49,27 @@ RowMapKey >> hash [
 	^Dialect fitHashIntoSmallInteger: longHash.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RowMapKey >> key1 [
 	^key1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RowMapKey >> key1: anObject [
 	key1 := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RowMapKey >> key2 [
 	^key2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RowMapKey >> key2: anObject [
 	key2 := anObject
 ]
 
-{ #category : #adjusting }
+{ #category : 'adjusting' }
 RowMapKey >> reverseAdjustIn: aRowMapForMementos [
 	"Adjust ourselves to refer to the copies rather than the originals"
 	| adjusted |

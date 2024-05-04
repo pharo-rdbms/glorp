@@ -1,6 +1,6 @@
-Extension { #name : #DatabaseTable }
+Extension { #name : 'DatabaseTable' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 DatabaseTable class >> named: aString [
 
 	^ self new name: aString

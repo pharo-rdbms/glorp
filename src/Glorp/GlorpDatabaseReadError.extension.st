@@ -1,6 +1,6 @@
-Extension { #name : #GlorpDatabaseReadError }
+Extension { #name : 'GlorpDatabaseReadError' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 GlorpDatabaseReadError class >> mayResume [
 
 	^ true

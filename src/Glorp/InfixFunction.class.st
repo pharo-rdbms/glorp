@@ -7,17 +7,19 @@ Instance Variables:
 
 "
 Class {
-	#name : #InfixFunction,
-	#superclass : #FunctionExpression,
+	#name : 'InfixFunction',
+	#superclass : 'FunctionExpression',
 	#instVars : [
 		'argument',
 		'arguments',
 		'functionParts'
 	],
-	#category : #'Glorp-Expressions'
+	#category : 'Glorp-Expressions',
+	#package : 'Glorp',
+	#tag : 'Expressions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 InfixFunction class >> named: aStringOrArray [
 	| instance trimmedName |
 	instance := self new.
@@ -30,31 +32,31 @@ InfixFunction class >> named: aStringOrArray [
 	^instance
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InfixFunction >> argument [
 
 	^ arguments first
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InfixFunction >> argument: anObject [
 
 	arguments := Array with: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InfixFunction >> arguments [
 
 	^ arguments
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InfixFunction >> arguments: anArray [
 
 	arguments := anArray
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 InfixFunction >> asExpressionJoiningSource: source toTarget: target [
 	"Create a general expression which represents this relationship where the values of the targets (which are normally parameters) are supplied out of the context provided by 'target' and the source fields are referencing things out of the context of source. Produces something suitable for ANDing into an expression when doing a join
    Example: If we had CUSTOMER.ADDRESS_ID = ADDRESS.ID as a parameter, and we want to AND this into an expression [:customer | customer address street = 'Main'] then we have customer as a base, and we get
@@ -66,14 +68,14 @@ InfixFunction >> asExpressionJoiningSource: source toTarget: target [
 	^(super asExpressionJoiningSource: source toTarget: target) arguments: newArguments
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 InfixFunction >> asField [
 	"If we correspond to a single field, return it. This is a bit of a hack having this only here, because for some functions it doesn't work."
 
 	^ self
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 InfixFunction >> do: aBlock skipping: aSet [
 	"Iterate over the expression tree. Keep track of who has already been visited, so we don't get trapped in cycles or visit nodes twice."
 
@@ -82,20 +84,20 @@ InfixFunction >> do: aBlock skipping: aSet [
 	arguments do: [ :each | each do: aBlock skipping: aSet ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InfixFunction >> functionParts [
 
 	functionParts isNil ifTrue: [ functionParts := Array with: function ].
 	^ functionParts
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InfixFunction >> functionParts: anArray [
 
 	functionParts := anArray
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 InfixFunction >> printSQLOn: aStream withParameters: aDictionary [
 
 	| translated |
@@ -113,7 +115,7 @@ InfixFunction >> printSQLOn: aStream withParameters: aDictionary [
 				ifFalse: [self type print: translated on: aStream]]]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 InfixFunction >> printTreeOn: aStream [
 
 	base printOn: aStream.
@@ -121,7 +123,7 @@ InfixFunction >> printTreeOn: aStream [
 	arguments printOn: aStream
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 InfixFunction >> printUnqualifiedSQLOn: aStream withParameters: aDictionary [
 
 	base printUnqualifiedSQLOn: aStream withParameters: aDictionary.
@@ -133,7 +135,7 @@ InfixFunction >> printUnqualifiedSQLOn: aStream withParameters: aDictionary [
 		arg printUnqualifiedSQLOn: aStream withParameters: aDictionary]
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 InfixFunction >> rebuildOn: aBaseExpression startingFrom: anExpression withOuterScopeBase: ultimateBaseExpression [
 
 	| rebuilt newArgs |

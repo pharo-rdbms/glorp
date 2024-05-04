@@ -8,49 +8,51 @@ Instance Variables:
 
 "
 Class {
-	#name : #GlorpDictionaryDescription,
-	#superclass : #Object,
+	#name : 'GlorpDictionaryDescription',
+	#superclass : 'Object',
 	#instVars : [
 		'keyExpression',
 		'valueExpression'
 	],
-	#category : 'Glorp-Queries'
+	#category : 'Glorp-Queries',
+	#package : 'Glorp',
+	#tag : 'Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GlorpDictionaryDescription >> copyEmpty: anInteger [
 	"Masquerade as a instance of a collection :-)"
 	^Dictionary new: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpDictionaryDescription >> keyExpression [
 	^keyExpression
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpDictionaryDescription >> keyExpression: anExpression [
 	keyExpression := anExpression
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GlorpDictionaryDescription >> new [
 	"Masquerade as a class"
 	^Dictionary new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GlorpDictionaryDescription >> new: anInteger [
 	"Masquerade as a class"
 	^Dictionary new: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpDictionaryDescription >> valueExpression [
 	^valueExpression
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpDictionaryDescription >> valueExpression: anExpression [
 	valueExpression := anExpression
 ]

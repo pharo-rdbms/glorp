@@ -2,15 +2,17 @@
 This builds full-blown persistent objects with descriptors. This is the most common type of builder.
 "
 Class {
-	#name : #ObjectBuilder,
-	#superclass : #ElementBuilder,
+	#name : 'ObjectBuilder',
+	#superclass : 'ElementBuilder',
 	#instVars : [
 		'queryCache'
 	],
-	#category : #'Glorp-Queries'
+	#category : 'Glorp-Queries',
+	#package : 'Glorp',
+	#tag : 'Queries'
 }
 
-{ #category : #'building objects' }
+{ #category : 'building objects' }
 ObjectBuilder >> buildObjectFrom: anArray [
 	self row: anArray.
 	self requiresPopulating ifTrue: [self populateInstance].
@@ -18,23 +20,23 @@ ObjectBuilder >> buildObjectFrom: anArray [
 		ifTrue: [self session markAsCurrentOfClass: instance class key: self key]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ObjectBuilder >> buildsObjects [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectBuilder >> cachedQueryFor: aMapping [
 	^self queryCache at: aMapping ifAbsent: [nil]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectBuilder >> cachedQueryFor: aMapping is: aQuery [
 	"Save a query which we will use when constructing filtered queries"
 	self queryCache at: aMapping put: aQuery
 ]
 
-{ #category : #'building objects' }
+{ #category : 'building objects' }
 ObjectBuilder >> canBuild [
 	"If we have a regular object with a nil primary key, or if we have an embedded object whose values are all nil, we can't build anything (probably due to an outer join)"
 	^self descriptor mapsPrimaryKeys
@@ -42,53 +44,53 @@ ObjectBuilder >> canBuild [
 		ifFalse: [true]
 ]
 
-{ #category : #'building objects' }
+{ #category : 'building objects' }
 ObjectBuilder >> canCache [
 	| keyFields |
 	keyFields := self descriptor keyFields.
 	^keyFields notNil and: [keyFields notEmpty]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectBuilder >> canCauseDuplicateRows [
 	^expression class == MappingExpression and: [expression mapping isToManyRelationship]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectBuilder >> command [
 	^cursor command
 ]
 
-{ #category : #'building objects' }
+{ #category : 'building objects' }
 ObjectBuilder >> createObjectOfClass: aClass [
 	"Try to create objects using new, so initialization can run. But if we can't do it, then just use basicNew."
 	^[aClass new] on: Error do: [:ex | ex return: aClass basicNew]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectBuilder >> descriptor [
 	
 	^expression descriptor
 ]
 
-{ #category : #'selecting fields' }
+{ #category : 'selecting fields' }
 ObjectBuilder >> fieldsForSelectStatement [
 	^self fieldsFromThePerspectiveOfTheMainSelect: (self fieldsFromMyPerspective)
 ]
 
-{ #category : #'selecting fields' }
+{ #category : 'selecting fields' }
 ObjectBuilder >> fieldsFromMyPerspective [
 	^query returnProxies 
 		ifTrue: [self descriptor table primaryKeyFields]
 		ifFalse: [self descriptor fieldsForSelectStatement]
 ]
 
-{ #category : #'selecting fields' }
+{ #category : 'selecting fields' }
 ObjectBuilder >> fieldsFromThePerspectiveOfTheMainSelect: aCollection [
 	^expression translateFields: aCollection
 ]
 
-{ #category : #'building objects' }
+{ #category : 'building objects' }
 ObjectBuilder >> findInstanceForRow: aRow proxyType: proxyType [
 	instance := nil.
 	self row: aRow.
@@ -111,19 +113,19 @@ ObjectBuilder >> findInstanceForRow: aRow proxyType: proxyType [
 	self canCache ifTrue: [self session cacheAt: self key put: instance]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ObjectBuilder >> initialize [
 
 	requiresPopulating := false.
 	isExpired := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectBuilder >> instance: anObject [
 	instance := anObject
 ]
 
-{ #category : #'building objects' }
+{ #category : 'building objects' }
 ObjectBuilder >> instanceDescriptor [
 	"Return the descriptor for the instance we're going to build. Note that we have to look it up by instance in order to find subclass. "
 	| basicDescriptor |
@@ -133,19 +135,19 @@ ObjectBuilder >> instanceDescriptor [
 	^expression descriptor.
 ]
 
-{ #category : #'building objects' }
+{ #category : 'building objects' }
 ObjectBuilder >> instanceExistsButIsDeleted [
 	instance isNil ifTrue: [^false].
 	instance := self session filterDeletionFrom: instance.
 	^instance isNil.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectBuilder >> key [
 	^self primaryKey
 ]
 
-{ #category : #'building objects' }
+{ #category : 'building objects' }
 ObjectBuilder >> knitResultIn: aCursoredStream [ 
 	"Connect up our built object with any other objects that reference it. Used if we retrieve more than one thing in the same query"
 
@@ -157,7 +159,7 @@ ObjectBuilder >> knitResultIn: aCursoredStream [
 			[expression mapping knitFromBuilder: relatedBuilder toBuilder: self]
 ]
 
-{ #category : #'building objects' }
+{ #category : 'building objects' }
 ObjectBuilder >> lookupCachedObject [
 	| resultClass |
 	self canBuild ifFalse: [^self].
@@ -175,7 +177,7 @@ ObjectBuilder >> lookupCachedObject [
 					requiresPopulating := instance isNil]].
 ]
 
-{ #category : #'building objects' }
+{ #category : 'building objects' }
 ObjectBuilder >> newProxyWithNewQueryForClass: aClass [
 	| parameters |
 	parameters := IdentityDictionary new.
@@ -190,7 +192,7 @@ ObjectBuilder >> newProxyWithNewQueryForClass: aClass [
 	^self
 ]
 
-{ #category : #'building objects' }
+{ #category : 'building objects' }
 ObjectBuilder >> populateInstance [
 	| tracker |
 	key isNil ifTrue: [^self].
@@ -199,13 +201,13 @@ ObjectBuilder >> populateInstance [
 	tracker isNil ifFalse: [tracker track: instance].
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 ObjectBuilder >> postCopy [
 	super postCopy.
 	queryCache := nil.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectBuilder >> primaryKey [
 	"We use self as a special guard value to indicate that the value hasn't changed"
 	key == self ifFalse: [^key].
@@ -216,7 +218,7 @@ ObjectBuilder >> primaryKey [
 	^key.
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ObjectBuilder >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
@@ -224,13 +226,13 @@ ObjectBuilder >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectBuilder >> queryCache [
 	queryCache isNil ifTrue: [queryCache := IdentityDictionary new: 5].
 	^queryCache.
 ]
 
-{ #category : #'building objects' }
+{ #category : 'building objects' }
 ObjectBuilder >> queryForNewProxy [
 	"Create a proxy with a primary key query in which the parameters are the primary key fields. We can't just reuse a mapping's query, it has to be a new primary key one, because the mapping's query has just run and been told to return proxies. This kind of stinks"
 	| whereExpression |
@@ -242,22 +244,22 @@ ObjectBuilder >> queryForNewProxy [
 		where: whereExpression
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectBuilder >> requiresPopulating [
 	^requiresPopulating and: [self returnProxies not]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectBuilder >> requiresPopulating: aBoolean [
 	requiresPopulating := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectBuilder >> returnProxies [
 	^query returnProxies
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectBuilder >> returnValueIn: aCursoredStream [
 	"If we're a to-many relationship, what we retrieve: is the collection containing us, not the individual items"
 	| relatedBuilder |
@@ -268,7 +270,7 @@ ObjectBuilder >> returnValueIn: aCursoredStream [
 	^expression mapping getValueFrom: relatedBuilder instance
 ]
 
-{ #category : #'building objects' }
+{ #category : 'building objects' }
 ObjectBuilder >> shouldProxyInstanceFor: proxyType [
 	^proxyType notNil
 ]

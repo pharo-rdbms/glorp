@@ -11,12 +11,14 @@ This class attempts to find the correct conversion function for the intended CAS
 
 "
 Class {
-	#name : #AccessCast,
-	#superclass : #Cast,
-	#category : #'Glorp-Expressions'
+	#name : 'AccessCast',
+	#superclass : 'Cast',
+	#category : 'Glorp-Expressions',
+	#package : 'Glorp',
+	#tag : 'Expressions'
 }
 
-{ #category : #functions }
+{ #category : 'functions' }
 AccessCast >> castFunctionName [
 
 	| targetType conversionFunctions |
@@ -32,7 +34,7 @@ AccessCast >> castFunctionName [
 	^ conversionFunctions at: targetType value selector
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AccessCast >> initialize [
 
 	super initialize.
@@ -40,7 +42,7 @@ AccessCast >> initialize [
 	separator := ''
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 AccessCast >> printBasicSQLOn: aStream withParameters: aDictionary forSelect: aBoolean [
 
 	aStream

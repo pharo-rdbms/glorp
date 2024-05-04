@@ -8,24 +8,26 @@ Subclasses must implement the following messages:
 
 "
 Class {
-	#name : #VersionGenerator,
-	#superclass : #GlorpDatabaseValueGenerator,
-	#category : #'Glorp-Database'
+	#name : 'VersionGenerator',
+	#superclass : 'GlorpDatabaseValueGenerator',
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 VersionGenerator class >> isAbstract [
 
 	^ self == VersionGenerator
 ]
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 VersionGenerator >> nextValueFor: aField in: aRow [
 
 	self subclassResponsibility
 ]
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 VersionGenerator >> preWriteAssignSequenceValueFor: aField in: aRow using: anAccessor [
 	"Overwrite a pre-existing value in the field if necessary"
 

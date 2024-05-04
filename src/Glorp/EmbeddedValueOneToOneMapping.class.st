@@ -2,22 +2,24 @@
 This represents a one-to-one mapping in which the referenced object is stored as part of the same table as the containing object.
 "
 Class {
-	#name : #EmbeddedValueOneToOneMapping,
-	#superclass : #OneToOneMapping,
+	#name : 'EmbeddedValueOneToOneMapping',
+	#superclass : 'OneToOneMapping',
 	#instVars : [
 		'fieldTranslation'
 	],
-	#category : 'Glorp-Mappings'
+	#category : 'Glorp-Mappings',
+	#package : 'Glorp',
+	#tag : 'Mappings'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 EmbeddedValueOneToOneMapping >> controlsTables [
 	"Return true if this type of method 'owns' the tables it's associated with, and expression nodes using this mapping should alias those tables where necessary"
 
 	^false
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 EmbeddedValueOneToOneMapping >> defaultTransformationExpressionFor: aDescriptor [ 
 	"If there's no transformation, get all the mapped fields from the other descriptor and construct a transformation of each onto itself. This lets us unify the fields in my row with the fields in its row"
 
@@ -29,51 +31,51 @@ EmbeddedValueOneToOneMapping >> defaultTransformationExpressionFor: aDescriptor 
 	^transform
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EmbeddedValueOneToOneMapping >> fieldTranslation [
 	^fieldTranslation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EmbeddedValueOneToOneMapping >> fieldTranslation: aPrimaryKeyExpression [ 
 	fieldTranslation := aPrimaryKeyExpression
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 EmbeddedValueOneToOneMapping >> fieldsForSelectStatement [
 	"Return a collection of fields that this mapping will read from a row"
 	"Return nothing, because our sub-objects will take care of adding their own fields, translated correctly through us."
 	^#().
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EmbeddedValueOneToOneMapping >> hasFieldTranslation [
 
 	^fieldTranslation notNil.
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 EmbeddedValueOneToOneMapping >> hasTransformation [
 
 	^false.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EmbeddedValueOneToOneMapping >> isStoredInSameTable [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EmbeddedValueOneToOneMapping >> join [
 	^nil.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EmbeddedValueOneToOneMapping >> join: anExpression [
 	self error: 'Embedded mappings do not use joins'.
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 EmbeddedValueOneToOneMapping >> joinExpressionFor: targetExpression [
 	"We're looking for the object represented by this mapping, and we know the object represented by its source. Use our mapping criteria to construct a join that traverses that instance of this relationship.
 	Embedded values never induce a join."
@@ -81,13 +83,13 @@ EmbeddedValueOneToOneMapping >> joinExpressionFor: targetExpression [
 	^nil.
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 EmbeddedValueOneToOneMapping >> knitFromBuilder: sourceBuilder toBuilder: targetBuilder [ 
 	sourceBuilder requiresPopulating ifFalse: [^self].
 	super knitFromBuilder: sourceBuilder toBuilder: targetBuilder
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 EmbeddedValueOneToOneMapping >> mapFromObject: anObject toTarget: target puttingRowsIn: aRowMap [ 
 
 	self transformationExpression 
@@ -100,7 +102,7 @@ EmbeddedValueOneToOneMapping >> mapFromObject: anObject toTarget: target putting
 			each shouldBeWritten: false]].
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 EmbeddedValueOneToOneMapping >> mapObject: anObject inElementBuilder: anElementBuilder [
 	| myTraceNode myBuilder |
 	"If the object already has a value in my slot, then this it got a cache hit, the embedded value was carried along for the ride, and we don't need to assign anything"
@@ -110,7 +112,7 @@ EmbeddedValueOneToOneMapping >> mapObject: anObject inElementBuilder: anElementB
 	self setValueIn: anObject to: myBuilder instance.
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 EmbeddedValueOneToOneMapping >> mappedFields [
 	"Return a collection of fields that this mapping will write into any of the containing object's rows"
 
@@ -118,7 +120,7 @@ EmbeddedValueOneToOneMapping >> mappedFields [
 	^self referenceDescriptor mappedFields.
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 EmbeddedValueOneToOneMapping >> reverseMapping [
 	^self class new
 		attributeName: #temporaryReverseMappingForEmbeddedMapping;
@@ -126,13 +128,13 @@ EmbeddedValueOneToOneMapping >> reverseMapping [
 		descriptor: self descriptor.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EmbeddedValueOneToOneMapping >> shouldProxy [
 
 	^false.
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 EmbeddedValueOneToOneMapping >> transformationExpression [
 
 	^self hasFieldTranslation
@@ -140,14 +142,14 @@ EmbeddedValueOneToOneMapping >> transformationExpression [
 		ifFalse: [fieldTranslation := self defaultTransformationExpressionFor: (self referenceDescriptor)].
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 EmbeddedValueOneToOneMapping >> translateFields: anOrderedCollection [ 
 	fieldTranslation isNil ifTrue: [^anOrderedCollection].
 	^anOrderedCollection collect: [:each |
 		fieldTranslation sourceForTarget: each].
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 EmbeddedValueOneToOneMapping >> translateTable: aTable [
 	"If we have a field translation, return the translated (i.e. real) table to use. This ideally allows us to use either the real table in which something is embedded, or the imaginary table"
 
@@ -160,7 +162,7 @@ EmbeddedValueOneToOneMapping >> translateTable: aTable [
 	^aTable.
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 EmbeddedValueOneToOneMapping >> valueOfField: aField fromObject: anObject ifNone: aBlock [
 	| targetField target |
 	targetField := self transformationExpression targetForSource: aField.

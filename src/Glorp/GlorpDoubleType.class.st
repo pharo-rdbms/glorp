@@ -2,23 +2,25 @@
 Double type
 "
 Class {
-	#name : #GlorpDoubleType,
-	#superclass : #GlorpAbstractNumericType,
-	#category : #'Glorp-Types'
+	#name : 'GlorpDoubleType',
+	#superclass : 'GlorpAbstractNumericType',
+	#category : 'Glorp-Types',
+	#package : 'Glorp',
+	#tag : 'Types'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 GlorpDoubleType >> converterForStType: aClass [
 
 	^self platform converterNamed: #numberToDouble.
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GlorpDoubleType >> impliedSmalltalkType [
 	^Dialect doublePrecisionFloatClass.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GlorpDoubleType >> initialize [
 	super initialize.
 	typeString := 'double precision'.

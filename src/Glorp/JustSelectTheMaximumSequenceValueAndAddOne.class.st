@@ -6,29 +6,31 @@ Instance Variables:
 	field <DatabaseField> the field we sequence.
 "
 Class {
-	#name : #JustSelectTheMaximumSequenceValueAndAddOne,
-	#superclass : #NamedSequence,
+	#name : 'JustSelectTheMaximumSequenceValueAndAddOne',
+	#superclass : 'NamedSequence',
 	#instVars : [
 		'field',
 		'table'
 	],
-	#category : #'Glorp-Database'
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JustSelectTheMaximumSequenceValueAndAddOne >> field [
 
 	field ifNil: [ field := table primaryKeyFields first ].
 	^ field
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JustSelectTheMaximumSequenceValueAndAddOne >> field: aDatabaseField [
 
 	field := aDatabaseField
 ]
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 JustSelectTheMaximumSequenceValueAndAddOne >> getSequenceValueFromDatabaseFor: aField in: aRow using: aSession [
 
 	| stream rows value |
@@ -46,7 +48,7 @@ JustSelectTheMaximumSequenceValueAndAddOne >> getSequenceValueFromDatabaseFor: a
 	^ value
 ]
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 JustSelectTheMaximumSequenceValueAndAddOne >> reserveSequenceNumbers: anInteger in: anAccessor for: aTable [
 
 	| numberNeeded firstNumber fakeRow |
@@ -60,7 +62,7 @@ JustSelectTheMaximumSequenceValueAndAddOne >> reserveSequenceNumbers: anInteger 
 	self reservedNumbers addAll: (firstNumber to: firstNumber + numberNeeded - 1)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JustSelectTheMaximumSequenceValueAndAddOne >> table: aTable [
 
 	table := aTable

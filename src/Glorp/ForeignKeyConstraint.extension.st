@@ -1,6 +1,6 @@
-Extension { #name : #ForeignKeyConstraint }
+Extension { #name : 'ForeignKeyConstraint' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 ForeignKeyConstraint class >> sourceField: aDatabaseField targetField: anotherDatabaseField [
 
 	^ self
@@ -9,7 +9,7 @@ ForeignKeyConstraint class >> sourceField: aDatabaseField targetField: anotherDa
 		  suffixExpression: nil
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 ForeignKeyConstraint class >> sourceField: aDatabaseField targetField: anotherDatabaseField suffixExpression: suffixExpression [
 
 	^ self new
@@ -19,7 +19,7 @@ ForeignKeyConstraint class >> sourceField: aDatabaseField targetField: anotherDa
 		  yourself
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 ForeignKeyConstraint class >> sourceFields: sourceFields targetFields: targetFields [
 
 	^ self
@@ -28,7 +28,7 @@ ForeignKeyConstraint class >> sourceFields: sourceFields targetFields: targetFie
 		  suffixExpression: nil
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 ForeignKeyConstraint class >> sourceFields: sourceFields targetFields: targetFields suffixExpression: suffixExpression [
 
 	^ self new

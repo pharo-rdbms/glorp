@@ -2,23 +2,25 @@
 This is a function that prints in different ways in a field list than it does in a where clause, typically because use of the where clause version isn't supported in field lists.
 "
 Class {
-	#name : #DualRoleFunction,
-	#superclass : #FunctionExpression,
+	#name : 'DualRoleFunction',
+	#superclass : 'FunctionExpression',
 	#instVars : [
 		'arguments',
 		'whereClauseVersion',
 		'selectListVersion'
 	],
-	#category : #'Glorp-Expressions'
+	#category : 'Glorp-Expressions',
+	#package : 'Glorp',
+	#tag : 'Expressions'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DualRoleFunction >> arguments [
 
 	^ arguments
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DualRoleFunction >> arguments: anArray [
 
 	arguments := anArray.
@@ -26,13 +28,13 @@ DualRoleFunction >> arguments: anArray [
 	selectListVersion arguments: anArray
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 DualRoleFunction >> asField [
 
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DualRoleFunction >> base: anExpression [
 
 	base := anExpression.
@@ -40,19 +42,19 @@ DualRoleFunction >> base: anExpression [
 	selectListVersion base: anExpression
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DualRoleFunction >> basicArguments: anArray [
 
 	arguments := anArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DualRoleFunction >> basicBase: anExpression [
 
 	base := anExpression
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 DualRoleFunction >> copy [
 
 	| new |
@@ -63,7 +65,7 @@ DualRoleFunction >> copy [
 	^ new
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 DualRoleFunction >> createFor: argumentList withBase: anExpression symbol: aSymbol [
 	| new newBase newArgument newFunction |
 	new := super createFor: argumentList withBase: anExpression symbol: aSymbol.
@@ -79,7 +81,7 @@ DualRoleFunction >> createFor: argumentList withBase: anExpression symbol: aSymb
 	^new.
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 DualRoleFunction >> do: aBlock skipping: aSet [
 	"Iterate over the expression tree. Keep track of who has already been visited, so we don't get trapped in cycles or visit nodes twice."
 
@@ -88,19 +90,19 @@ DualRoleFunction >> do: aBlock skipping: aSet [
 	arguments do: [ :each | each do: aBlock skipping: aSet ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DualRoleFunction >> field [
 
 	^ whereClauseVersion field
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DualRoleFunction >> printSQLOn: aStream withParameters: aDictionary [
 
 	whereClauseVersion printSQLOn: aStream withParameters: aDictionary
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DualRoleFunction >> printSelectSQLOn: aStream withParameters: aDictionary [
 
 	selectListVersion
@@ -108,7 +110,7 @@ DualRoleFunction >> printSelectSQLOn: aStream withParameters: aDictionary [
 		withParameters: aDictionary
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 DualRoleFunction >> rebuildOn: aBaseExpression startingFrom: anExpression withOuterScopeBase: ultimateBaseExpression [
 
 	| rebuilt |
@@ -128,19 +130,19 @@ DualRoleFunction >> rebuildOn: aBaseExpression startingFrom: anExpression withOu
 	^ rebuilt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DualRoleFunction >> selectListVersion [
 
 	^ selectListVersion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DualRoleFunction >> selectListVersion: aFunctionExpression [
 
 	selectListVersion := aFunctionExpression
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DualRoleFunction >> symbol: aSymbol [
 
 	symbol := aSymbol.
@@ -148,7 +150,7 @@ DualRoleFunction >> symbol: aSymbol [
 	selectListVersion symbol: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DualRoleFunction >> type: aSymbol [
 
 	super type: aSymbol.
@@ -156,13 +158,13 @@ DualRoleFunction >> type: aSymbol [
 	selectListVersion type: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DualRoleFunction >> whereClauseVersion [
 
 	^ whereClauseVersion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DualRoleFunction >> whereClauseVersion: aFunctionExpression [
 
 	whereClauseVersion := aFunctionExpression

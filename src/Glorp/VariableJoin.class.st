@@ -7,41 +7,43 @@ Instance Variables:
 
 "
 Class {
-	#name : #VariableJoin,
-	#superclass : #Object,
+	#name : 'VariableJoin',
+	#superclass : 'Object',
 	#instVars : [
 		'joins'
 	],
-	#category : 'Glorp-Expressions'
+	#category : 'Glorp-Expressions',
+	#package : 'Glorp',
+	#tag : 'Expressions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 VariableJoin class >> new [
 	^(super new )initialize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VariableJoin >> addJoinFor: aClass as: aJoin [
 	joins at: aClass put: aJoin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VariableJoin >> allSourceFields [
 	"We assume that variable joins vary in the targets, not the in sources."
 	^self anyJoin allSourceFields
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VariableJoin >> allTargetFields [
 	^joins inject: OrderedCollection new into: [:sum :each | sum addAll: each allTargetFields. sum]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VariableJoin >> anyJoin [
 	^joins detect: [:each | true]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 VariableJoin >> asGeneralGlorpExpression [
 	"We know that we represent querying for an abstract class, so we don't want to convert ourselves to a join form, but rather just to a source mapping form. There are some assumptions in here, but it should work for the basic cases anyway."
 
@@ -60,7 +62,7 @@ VariableJoin >> asGeneralGlorpExpression [
 	^expression.
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 VariableJoin >> asGeneralGlorpExpressionWithFields [
 	"The normal conversion of a join is to an expression equating fields and parameters. Instead, generate one with field to field comparisons."
 
@@ -75,7 +77,7 @@ VariableJoin >> asGeneralGlorpExpressionWithFields [
 	^expression.
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 VariableJoin >> asGlorpExpressionOn: aBaseExpression [
 	| copy |
 	copy := self copy.
@@ -83,17 +85,17 @@ VariableJoin >> asGlorpExpressionOn: aBaseExpression [
 	^copy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VariableJoin >> generalExpressionPart [
 	^nil
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 VariableJoin >> initialize [
 	joins := IdentityDictionary new
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 VariableJoin >> isConstant: aTarget [
 	"The target can be either a constant (which gets turned into a ConstantExpression) or (usually) a DatabaseField, representing a parameter to the query"
 	(aTarget class == DatabaseField) ifTrue: [^false].
@@ -101,27 +103,27 @@ VariableJoin >> isConstant: aTarget [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 VariableJoin >> isGlorpExpression [
 	^true.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 VariableJoin >> isJoin [
 	^true.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VariableJoin >> joins [
 	^joins.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VariableJoin >> joins: aCollection [
 	joins := aCollection.
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 VariableJoin >> mapFromSource: sourceObject andTarget: targetObject intoRowsIn: aRowMap [
 	(sourceObject isNil or: [targetObject isNil]) ifTrue: [^self].
 	^(joins at: targetObject class)
@@ -130,45 +132,45 @@ VariableJoin >> mapFromSource: sourceObject andTarget: targetObject intoRowsIn: 
 		intoRowsIn: aRowMap.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VariableJoin >> mappableSourceFieldsDo: aBlock [
 
 	self anyJoin mappableSourceFieldsDo: aBlock.
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 VariableJoin >> prepareIn: aQuery [
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : 'As yet unclassified' }
 VariableJoin >> primaryKeyFromDictionary: anIdentityDictionary [ 
 	^self anyJoin primaryKeyFromDictionary: anIdentityDictionary.
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 VariableJoin >> printOn: aStream [
 	[aStream query] on: Error do: [:ex | ^super printOn: aStream].
 	(joins at: aStream query resultClass) printOn: aStream.
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 VariableJoin >> printSQLOn: aStream withParameters: aDictionary [ 
 	[aStream query] on: Error do: [:ex | ^super printOn: aStream].
 	(joins at: aStream query resultClass) printSQLOn: aStream withParameters: aDictionary.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VariableJoin >> queryLevelBaseExpression [
 	^self ultimateBaseExpression.
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 VariableJoin >> rebuildOn: aBaseExpression startingFrom: anExpression withOuterScopeBase: ultimateBaseExpression [
 	^(self joins at: aBaseExpression descriptor describedClass) 
 		rebuildOn: aBaseExpression startingFrom: anExpression withOuterScopeBase: ultimateBaseExpression
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : 'As yet unclassified' }
 VariableJoin >> shortCircuitOnNullComparison: anIdentityDictionary [ 
 	joins do: [:each |
 		(each shortCircuitOnNullComparison: anIdentityDictionary)
@@ -176,7 +178,7 @@ VariableJoin >> shortCircuitOnNullComparison: anIdentityDictionary [
 	^true.
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 VariableJoin >> targetExpressionFor: eachTarget [ 
 	^(self isConstant: eachTarget)
 		ifTrue: [eachTarget]
@@ -186,7 +188,7 @@ VariableJoin >> targetExpressionFor: eachTarget [
 			ifFalse: [(self anyJoin base getTable: eachTarget table) getField: eachTarget]].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VariableJoin >> ultimateBaseExpression [
 
 	^self anyJoin base.

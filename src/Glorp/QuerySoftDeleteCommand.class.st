@@ -5,12 +5,14 @@ Instance Variables
 	query	<SimpleQuery>	The query that holds our where clause.
 "
 Class {
-	#name : #QuerySoftDeleteCommand,
-	#superclass : #QueryDeleteCommand,
-	#category : #'Glorp-Database'
+	#name : 'QuerySoftDeleteCommand',
+	#superclass : 'QueryDeleteCommand',
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 QuerySoftDeleteCommand >> printSQL [
 
 	| updates updateClause now |

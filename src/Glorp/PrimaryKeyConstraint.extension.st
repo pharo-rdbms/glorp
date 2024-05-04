@@ -1,6 +1,6 @@
-Extension { #name : #PrimaryKeyConstraint }
+Extension { #name : 'PrimaryKeyConstraint' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 PrimaryKeyConstraint class >> forTable: aDatabaseTable fields: collDatabaseFields [
 	^self new
 		forTable: aDatabaseTable  fields: collDatabaseFields;

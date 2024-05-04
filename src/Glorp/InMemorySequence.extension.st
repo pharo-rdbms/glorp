@@ -1,6 +1,6 @@
-Extension { #name : #InMemorySequence }
+Extension { #name : 'InMemorySequence' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 InMemorySequence class >> default [
 
 	^ self new

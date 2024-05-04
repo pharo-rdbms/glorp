@@ -8,35 +8,37 @@ Instance Variables:
 
 "
 Class {
-	#name : #PrefixFunction,
-	#superclass : #FunctionExpression,
+	#name : 'PrefixFunction',
+	#superclass : 'FunctionExpression',
 	#instVars : [
 		'arguments',
 		'separator',
 		'argumentModifierBlock'
 	],
-	#category : #'Glorp-Expressions'
+	#category : 'Glorp-Expressions',
+	#package : 'Glorp',
+	#tag : 'Expressions'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrefixFunction >> argumentModifierBlock [
 
 	^ argumentModifierBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrefixFunction >> argumentModifierBlock: aBlock [
 
 	argumentModifierBlock := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrefixFunction >> arguments [
 
 	^ arguments
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrefixFunction >> arguments: aCollection [
 	"Our arguments may have already been set to a block, in which case we evaluate it with the incoming collection."
 
@@ -45,14 +47,14 @@ PrefixFunction >> arguments: aCollection [
 	arguments := aCollection
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 PrefixFunction >> convertedStValueOf: anObject [
 	"This assumes that functions that do conversions have already had their effect in the database, and all we're concerned with is the fundamental data type conversion"
 
 	^ base convertedStValueOf: anObject
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 PrefixFunction >> do: aBlock skipping: aSet [
 	"Iterate over the expression tree. Keep track of who has already been visited, so we don't get trapped in cycles or visit nodes twice."
 
@@ -63,14 +65,14 @@ PrefixFunction >> do: aBlock skipping: aSet [
 	aBlock value: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PrefixFunction >> initialize [
 	super initialize.
 	arguments := #().
 	separator := ','
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 PrefixFunction >> printBasicSQLOn: aStream withParameters: aDictionary forSelect: aBoolean [
 
 	aStream
@@ -95,7 +97,7 @@ PrefixFunction >> printBasicSQLOn: aStream withParameters: aDictionary forSelect
 				nextPutAll: alias]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 PrefixFunction >> printSQLOn: aStream withParameters: aDictionary [
 
 	self printsIntoJoins
@@ -103,13 +105,13 @@ PrefixFunction >> printSQLOn: aStream withParameters: aDictionary [
 		ifFalse: [base printSQLOn: aStream withParameters: aDictionary]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 PrefixFunction >> printSelectSQLOn: aStream withParameters: aDictionary [
 
 	self printBasicSQLOn: aStream withParameters: aDictionary forSelect: true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 PrefixFunction >> printTreeOn: aStream [
 
 	aStream
@@ -119,13 +121,13 @@ PrefixFunction >> printTreeOn: aStream [
 	aStream nextPutAll: ')'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrefixFunction >> separator [
 
 	^ separator
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrefixFunction >> separator: aString [
 
 	separator := aString

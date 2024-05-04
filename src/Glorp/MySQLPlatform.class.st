@@ -2,15 +2,17 @@
 This is a definition for MySQL databases. It's not done yet, just here as a placeholder.
 "
 Class {
-	#name : #MySQLPlatform,
-	#superclass : #DatabasePlatform,
+	#name : 'MySQLPlatform',
+	#superclass : 'DatabasePlatform',
 	#instVars : [
 		'engine'
 	],
-	#category : #'Glorp-Platforms'
+	#category : 'Glorp-Platforms',
+	#package : 'Glorp',
+	#tag : 'Platforms'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 MySQLPlatform class >> createLoginFromConnectionDictionary: aDict [
 	" *** This method was defined by Glorp.DatabasePlatform class as a subclass responsibility.
 	Replace its body with a proper implementation. *** "
@@ -18,17 +20,17 @@ MySQLPlatform class >> createLoginFromConnectionDictionary: aDict [
 	self error: 'Subclass responsibility stub not reimplemented'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 MySQLPlatform class >> reservedWords [
 	^#('accessible' 'add' 'all' 'alter' 'analyze' 'and' 'as' 'asc' 'asensitive' 'before' 'between' 'bigint' 'binary' 'blob' 'both' 'by' 'call' 'cascade' 'case' 'change' 'char' 'character' 'check' 'collate' 'column' 'condition' 'constraint' 'continue' 'convert' 'create' 'cross' 'current_date' 'current_time' 'current_timestamp' 'current_user' 'cursor' 'database' 'databases' 'day_hour' 'day_microsecond' 'day_minute' 'day_second' 'dec' 'decimal' 'declare' 'default' 'delayed' 'delete' 'desc' 'describe' 'deterministic' 'distinct' 'distinctrow' 'div' 'double' 'drop' 'dual' 'each' 'else' 'elseif' 'enclosed' 'escaped' 'exists' 'exit' 'explain' 'false' 'fetch' 'float' 'float4' 'float8' 'for' 'force' 'foreign' 'from' 'fulltext' 'grant' 'group' 'having' 'high_priority' 'hour_microsecond' 'hour_minute' 'hour_second' 'if' 'ignore' 'in' 'index' 'infile' 'inner' 'inout' 'insensitive' 'insert' 'int' 'int1' 'int2' 'int3' 'int4' 'int8' 'integer' 'interval' 'into' 'is' 'iterate' 'join' 'key' 'keys' 'kill' 'leading' 'leave' 'left' 'like' 'limit' 'linear' 'lines' 'load' 'localtime' 'localtimestamp' 'lock' 'long' 'longblob' 'longtext' 'loop' 'low_priority' 'master_ssl_verify_server_cert' 'match' 'mediumblob' 'mediumint' 'mediumtext' 'middleint' 'minute_microsecond' 'minute_second' 'mod' 'modifies' 'natural' 'no_write_to_binlog' 'not' 'null' 'numeric' 'on' 'optimize' 'option' 'optionally' 'or' 'order' 'out' 'outer' 'outfile' 'precision' 'primary' 'procedure' 'purge' 'range' 'read' 'read_write' 'reads' 'real' 'references' 'regexp' 'release' 'rename' 'repeat' 'replace' 'require' 'restrict' 'return' 'revoke' 'right' 'rlike' 'schema' 'schemas' 'second_microsecond' 'select' 'sensitive' 'separator' 'set' 'show' 'smallint' 'spatial' 'specific' 'sql' 'sql_big_result' 'sql_calc_found_rows' 'sql_small_result' 'sqlexception' 'sqlstate' 'sqlwarning' 'ssl' 'starting' 'straight_join' 'table' 'terminated' 'then' 'tinyblob' 'tinyint' 'tinytext' 'to' 'trailing' 'trigger' 'true' 'undo' 'union' 'unique' 'unlock' 'unsigned' 'update' 'usage' 'use' 'using' 'utc_date' 'utc_time' 'utc_timestamp' 'values' 'varbinary' 'varchar' 'varcharacter' 'varying' 'when' 'where' 'while' 'with' 'write' 'xor' 'year_month' 'zerofill') asSet.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MySQLPlatform >> areSequencesExplicitlyCreated [
 	^false.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MySQLPlatform >> autoTrimsStringsLongerThanColumnSize [
 	"Answer true if the platform trims an string longer that the column size without triggering any error.
 	E.g. the string 'abcde' is trimmed to 'abcd' during if the column is a CHAR(4)."
@@ -36,79 +38,79 @@ MySQLPlatform >> autoTrimsStringsLongerThanColumnSize [
 	^true
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MySQLPlatform >> beArchive [
 	engine := 'ARCHIVE'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MySQLPlatform >> beBDB [
 	engine := 'BDB'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MySQLPlatform >> beBlackHole [
 	engine := 'BLACKHOLE'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MySQLPlatform >> beCSV [
 	engine := 'CSV'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MySQLPlatform >> beExample [
 	engine := 'EXAMPLE'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MySQLPlatform >> beFederated [
 	engine := 'FEDERATED'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MySQLPlatform >> beInnoDB [
 	engine := 'InnoDB'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MySQLPlatform >> beMemory [
 	engine := 'MEMORY'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MySQLPlatform >> beMyISAM [
 	engine := 'MyISAM'.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> bigint [
 	^self typeNamed: #bigint ifAbsentPut: [GlorpIntegerType new typeString: 'bigint'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> bigint: length [
 	^(self typeNamed: #bigint ifAbsentPut: [GlorpIntegerType new typeString: 'bigint'])
 ]
 
-{ #category : #binding }
+{ #category : 'binding' }
 MySQLPlatform >> bindingsForGroupWritingFor: aCommand [
 	"Return the bindings array for a group write. This can be in different formats, depending on the database and perhaps the mechanism in place."
 	^aCommand batchStatementBindings.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> blob [
 	"Return the MySQL type for long blob."
 	^self typeNamed: #blob ifAbsentPut: [GlorpBlobType new typeString: 'LONGBLOB'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> boolean [
 	^self typeNamed: #boolean ifAbsentPut: [GlorpMySQLBooleanType new typeString: 'boolean'].
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MySQLPlatform >> canUseInWhereClause: aValue type: aType [
 	"This is mostly for test support purposes. If we know we can't use a particular kind of value in the where clause on some database, don't try."
 
@@ -118,158 +120,158 @@ MySQLPlatform >> canUseInWhereClause: aValue type: aType [
 	^true.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MySQLPlatform >> capitalWritingOfTableName [
 	"^<Boolean>"
 
 	^false
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MySQLPlatform >> charactersThatNeedEscaping [
 	^#($' $\)
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> clob [
 	"Return the MySQL type for long text."
 	^self typeNamed: #clob ifAbsentPut: [GlorpMySQLClobType new typeString: 'LONGTEXT'].
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 MySQLPlatform >> convertJSONObjectToSQLString: anObject for: aType [
 	^anObject ifNotNil: [ NeoJSONWriter toString: anObject ]
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 MySQLPlatform >> convertSQLStringToJSONObject: anObject for: aType [
 	^anObject isString 
 		ifTrue: [ NeoJSONReader fromString: anObject ] 
 		ifFalse: [ anObject ]
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MySQLPlatform >> createTableStatementStringFor: aGLORPDatabaseTable [
 	^(super createTableStatementStringFor: aGLORPDatabaseTable), ' ENGINE=', self engine.
 ]
 
-{ #category : #sequences }
+{ #category : 'sequences' }
 MySQLPlatform >> databaseSequenceClass [
 	^MySQLSequence.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> date [
 	"Return the type we use to represent dates."
 	^self typeNamed: #date ifAbsentPut: [GlorpDateType new].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> decimal [
 	^self numeric
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> decimal: precision [
 	^self numeric precision: precision asInteger; yourself
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MySQLPlatform >> defaultOptimalINClauseLimit [
 	"MySQL users report that anything over 100 degrades performance significantly"
 
 	^100
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> double [
 	^self typeNamed: #double ifAbsentPut: [GlorpDoubleType new typeString: 'double' ].
 ]
 
-{ #category : #'services tables' }
+{ #category : 'services tables' }
 MySQLPlatform >> endColumnQuote [
 	"Return the character used to start quoting the name of a column so that we can avoid conflicts with reserved names. The default MySQL quoting is to use backquotes rather than the ANSI style."
 	^'`'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MySQLPlatform >> engine [
 	engine ifNil: [ self beInnoDB ].
 	^engine
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> float [
 	^self typeNamed: #float ifAbsentPut: [GlorpFloatType new typeString: 'float' ].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> float4 [
 	^self float.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> float8 [
 	^self double.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> float: precision [
 	(precision asInteger between: 0 and: 23) ifTrue: [ ^self float ].
 	(precision asInteger between: 24 and: 53) ifTrue: [ ^self double ]
 ]
 
-{ #category : #functions }
+{ #category : 'functions' }
 MySQLPlatform >> initializeFunctions [
 	super initializeFunctions.
 	functions at: #regexMatches: put: (InfixFunction named: 'REGEXP').
 	functions at: #, put: (PrefixFunction named: 'CONCAT').
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MySQLPlatform >> initializeReservedWords [
 	super initializeReservedWords.
 	reservedWords 
 		add: 'key'.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> int2 [
 	^self smallint
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> int4 [
 	^self typeNamed: #int4 ifAbsentPut: [GlorpIntegerType new typeString: 'int'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> int8 [
 	^self typeNamed: #int8 ifAbsentPut: [GlorpIntegerType new typeString: 'bigint'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> int: length [
 	^self integer length: length asInteger; yourself
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> integer [
 
 	^self typeNamed: #integer ifAbsentPut: [GlorpIntegerType new typeString: 'int'].
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MySQLPlatform >> isMySQLPlatform [
 	^true.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> json [
 	^self typeNamed: #json ifAbsentPut: [GlorpJSONType new]
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 MySQLPlatform >> jsonToStringConverter [
 
 	^DelegatingDatabaseConverter
@@ -279,7 +281,7 @@ MySQLPlatform >> jsonToStringConverter [
 		fromDbToSt: #convertSQLStringToJSONObject:for:.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MySQLPlatform >> maximumLengthOfColumnName [
 	"^<Integer> I return the maximum length of a column name.  (I am not sent at present;  I am here so that if I and #maximumLengthOfTableName (which is sent) should ever differ on some database platform, I can be used in revised truncation logic.)
 	Don't know the answer for this platform;  make something large up."
@@ -287,36 +289,36 @@ MySQLPlatform >> maximumLengthOfColumnName [
 	^64
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MySQLPlatform >> maximumLengthOfTableName [
 	"^<Integer> I return the max. length of a table name"
 	"Don't know, make something large up."
 	^64
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> mediumint [
 	^self bigint.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MySQLPlatform >> nameForPrimaryKeyConstraintsWhenDropping [
 	"Return the name we use to describe a constraint when dropping them. This is required because MySQL wants you to use 'DROP PRIMARY KEY' rather than the ANSI 'DROP CONSTRAINT'."
 	^'PRIMARY KEY'.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> number [
 
 	^self typeNamed: #number ifAbsentPut: [GlorpNumericType new typeString: 'decimal'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> numeric [
 	^self typeNamed: #numeric ifAbsentPut: [GlorpNumericType new typeString: 'numeric' ]
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> numeric: precisionCommaScale [
 	| md precision scale |
 	md := precisionCommaScale splitOn: ','.
@@ -325,7 +327,7 @@ MySQLPlatform >> numeric: precisionCommaScale [
 	^self numeric precision: precision; scale: scale; yourself
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 MySQLPlatform >> printDate: aDate for: aType [
 	| stream |
 	aDate isNil ifTrue: [^'NULL'].
@@ -338,7 +340,7 @@ MySQLPlatform >> printDate: aDate for: aType [
 	^stream contents.
 ]
 
-{ #category : #'database - specific' }
+{ #category : 'database - specific' }
 MySQLPlatform >> printOffset: anInteger on: aCommand [
 	"MySQL cannot have an offset without a limit.  A very large number, like 256T, is equivalent to an infinite limit. We only print it here if there is no limit, but there is an offset."
 
@@ -348,14 +350,14 @@ MySQLPlatform >> printOffset: anInteger on: aCommand [
 	anInteger printOn: aCommand.
 ]
 
-{ #category : #'database - specific' }
+{ #category : 'database - specific' }
 MySQLPlatform >> printPostLimit: anInteger on: aCommand [
     aCommand
         nextPutAll: ' LIMIT '.
     anInteger printOn: aCommand.
 ]
 
-{ #category : #'services tables' }
+{ #category : 'services tables' }
 MySQLPlatform >> printSqlStatementToListColumnsInTable: aDatabaseTable inSchema: schemaString on: aStream [
 	" Query to fetch column definitions in mysql in the format ActiveRecordDescriptorSystem wants"
 	aStream nextPutAll: ((String streamContents: [ :s | s
@@ -380,7 +382,7 @@ MySQLPlatform >> printSqlStatementToListColumnsInTable: aDatabaseTable inSchema:
 		
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 MySQLPlatform >> printTime: aTime for: aType [
 	| stream |
 	aTime isNil ifTrue: [^'NULL'].
@@ -394,7 +396,7 @@ MySQLPlatform >> printTime: aTime for: aType [
 	^stream contents.
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 MySQLPlatform >> printTimestamp: aTimestamp on: stream for: aType [
 	aTimestamp isNil ifTrue: [stream nextPutAll: 'NULL'. ^self].
 	stream nextPut: $".
@@ -409,7 +411,7 @@ MySQLPlatform >> printTimestamp: aTimestamp on: stream for: aType [
 	stream nextPut: $".
 ]
 
-{ #category : #'database - specific' }
+{ #category : 'database - specific' }
 MySQLPlatform >> queryWithUnsupportedOperationsEliminatedFrom: aQuery do: aBlock [
 	"If aQuery has operations that we don't support, rewrite it to do them in terms of lower level operations. In particular, rewrite INTERSECT/EXCEPT operations into EXISTS clauses in a single query. Pass the new query to aBlock."
 	| newQuery |
@@ -418,36 +420,36 @@ MySQLPlatform >> queryWithUnsupportedOperationsEliminatedFrom: aQuery do: aBlock
 	newQuery == aQuery ifFalse: [aBlock value: newQuery].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> sequence [
 	^self serial.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> serial [
 
 	^self typeNamed: #serial ifAbsentPut: [GlorpSerialType new typeString: 'int AUTO_INCREMENT'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> smallint [
 
 	^self typeNamed: #smallint ifAbsentPut: [GlorpSmallIntType new typeString: 'SMALLINT'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> smallint: length [
 
 	^(self typeNamed: #smallint ifAbsentPut: [GlorpIntegerType new typeString: 'smallint'])
 ]
 
-{ #category : #'services tables' }
+{ #category : 'services tables' }
 MySQLPlatform >> startColumnQuote [
 	"Return the character used to start quoting the name of a column so that we can avoid conflicts with reserved names. The default MySQL quoting is to use backquotes rather than the ANSI style."
 	^'`'.
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 MySQLPlatform >> stringToByteArrayOneWayConverter [
 	"This is a special converter for MySQL that is a null conversion on the way out, but converts the byte arrays that we get back from blobs into strings."
 	^DelegatingDatabaseConverter
@@ -457,13 +459,13 @@ MySQLPlatform >> stringToByteArrayOneWayConverter [
 		fromDbToSt: #byteArrayToString:for:.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MySQLPlatform >> supportsANSIJoins [
 	"Do we support the JOIN <tableName> USING <criteria> syntax. Currently hard-coded, but may also vary by database version"
 	^true.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MySQLPlatform >> supportsArithmeticOperatorsOnDates [
 	"Answer whether arithmetic operators such as + or - can be used on DATE like columns.
 	Some platforms require the use of specific functions."
@@ -471,73 +473,73 @@ MySQLPlatform >> supportsArithmeticOperatorsOnDates [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MySQLPlatform >> supportsBinding [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MySQLPlatform >> supportsDecimalsOnAllNumerics [
 	"Return true if a general 'numeric' type will allow numbers after the decimal place"
 	^false.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MySQLPlatform >> supportsIntersect [
 	"Do we support operations like UNION ALL And INTERSECT."
 	^false.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MySQLPlatform >> supportsLimit [
 	"Do we support LIMIT ... (or something analogous to it), returning only the first N rows."
 
 	^true
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 MySQLPlatform >> supportsMillisecondsInTimes [
 	^false.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MySQLPlatform >> supportsOffset [
 	"Do we support OFFSET ... (or something analogous to it), skipping the first N rows."
 
 	^true
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> time [
 	^self typeNamed: #time ifAbsentPut: [GlorpTimeType new typeString: 'time'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> timestamp [
 	"Although MySQL has a type called 'timestamp', 'datetime' is more suitable."
 	^self typeNamed: #timestamp ifAbsentPut: [GlorpTimeStampType new typeString: 'DATETIME'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> tinyint [
 	^(self typeNamed: #tinyint ifAbsentPut: [GlorpIntegerType new typeString: 'tinyint'])
 		
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> tinyint: length [
 	^(self typeNamed: #tinyint ifAbsentPut: [GlorpIntegerType new typeString: 'tinyint'])
 		
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> typeWithDatabaseName: aString characterWidth: aNumber extraInformation: extraValue [
 	"Return our type which matches the database name for the type. Assumes all variable width fields are strings right now."
 	extraValue = 'auto_increment' ifTrue: [^self serial].
 	^super typeWithDatabaseName: aString characterWidth: aNumber.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> typeWithQueriedDatabaseDescription: row inflector: inflector [
 	| type zerofill unsigned |
 	zerofill := (row at: 7) = 1.
@@ -548,44 +550,44 @@ MySQLPlatform >> typeWithQueriedDatabaseDescription: row inflector: inflector [
 	^type
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MySQLPlatform >> usesArrayBindingRatherThanGroupWriting [
 	^false.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MySQLPlatform >> usesArrayBindingRatherThanGrouping [
 	^false.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MySQLPlatform >> usesIdentityColumns [
 	^true.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MySQLPlatform >> usesInformationSchema [
 
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MySQLPlatform >> usesLengthNotEndPosInSubstring [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MySQLPlatform >> usesPrimaryKeyUniqueConstraintNames [
 	"When dropping/creating primary key constraints, do they have distinguished names."
 	^false.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 MySQLPlatform >> varchar [
 	^self typeNamed: #varchar ifAbsentPut: [GlorpVarCharType new].
 ]
 
-{ #category : #'services constraints' }
+{ #category : 'services constraints' }
 MySQLPlatform >> writeConstraintToDrop: aConstraint onStream: aStream [
 	"Return the term we use to describe a constraint when dropping them.  This is required because MySQL wants you to use
 		'DROP PRIMARY KEY' for primary key constraints (and then says don't name the constraint name in the drop statement!)

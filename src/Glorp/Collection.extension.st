@@ -1,22 +1,22 @@
-Extension { #name : #Collection }
+Extension { #name : 'Collection' }
 
-{ #category : #'*Glorp-Core' }
+{ #category : '*Glorp-Core' }
 Collection >> copyEmpty: aSize [
 	^self species new: aSize
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 Collection >> glorpAddAll: aCollection [
 	^self addAll: aCollection.
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 Collection >> glorpAddAllToDictionary: aDictionary [
 	"Assumes that we are a collection of associations"
 	self do: [:each | aDictionary add: each].
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 Collection >> glorpGroupedBy: aBlock [
 	"Same as VW groupedBy:. This is too useful not to be able to use, but we don't want to conflict with other dialects/extensions that might implement, so make our own prefixed version"
 
@@ -45,13 +45,13 @@ Collection >> glorpGroupedBy: aBlock [
 	^result
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 Collection >> glorpIsCollection [
 
 	^true.
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 Collection >> glorpPrintSQLOn: aCommand [
 	aCommand nextPut: $(.
 	self isEmpty
@@ -64,7 +64,7 @@ Collection >> glorpPrintSQLOn: aCommand [
 	aCommand nextPut: $).
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 Collection >> glorpPrintSQLOn: aStream for: aType [
 	aStream nextPut: $(.
 	self isEmpty
@@ -77,7 +77,7 @@ Collection >> glorpPrintSQLOn: aStream for: aType [
 	aStream nextPut: $).
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 Collection >> glorpRegisterCollectionInternalsIn: anObjectTransaction [ 
 	"Explicitly register any internal structures (e.g. a VW identity dictionary's valueArray) with the transaction. Assume we can safely register everything inside the collection reflectively. The obvious exceptions would be dependents and sortblocks. This is a cheat, and for peculiar cases you'll need to override this in the subclass"
 
@@ -89,7 +89,7 @@ Collection >> glorpRegisterCollectionInternalsIn: anObjectTransaction [
 				ifFalse: [anObjectTransaction register: (self instVarAt: index)]]
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 Collection >> writeStream [
 	^AddingWriteStream on: self
 ]

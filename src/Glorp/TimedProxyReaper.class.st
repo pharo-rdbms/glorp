@@ -7,8 +7,8 @@ API Methods:
 
 "
 Class {
-	#name : #TimedProxyReaper,
-	#superclass : #Object,
+	#name : 'TimedProxyReaper',
+	#superclass : 'Object',
 	#instVars : [
 		'weakValueDictionary',
 		'keysSortedByExpiryTime',
@@ -22,16 +22,18 @@ Class {
 		'done',
 		'startTime'
 	],
-	#category : #'Glorp-Core'
+	#category : 'Glorp-Core',
+	#package : 'Glorp',
+	#tag : 'Core'
 }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 TimedProxyReaper class >> delay: seconds [
 
 	^ self new delay: seconds
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 TimedProxyReaper class >> delay: seconds maximumWork: milliseconds [
 
 	^ self new
@@ -39,7 +41,7 @@ TimedProxyReaper class >> delay: seconds maximumWork: milliseconds [
 		  maximumWork: milliseconds
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 TimedProxyReaper >> add: aTimedProxy [
 
 	[
@@ -48,7 +50,7 @@ TimedProxyReaper >> add: aTimedProxy [
 	self restartIfNecessary
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 TimedProxyReaper >> at: id ifAbsent: errorBlock [
 
 	| result |
@@ -59,28 +61,28 @@ TimedProxyReaper >> at: id ifAbsent: errorBlock [
 	^ result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimedProxyReaper >> delay [
 	"Answer the delay, in seconds, between runs of the reaper process."
 
 	^ delay
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimedProxyReaper >> delay: seconds [
 	"Set delay between runs of the reaper process in seconds."
 
 	delay := seconds
 ]
 
-{ #category : #reaping }
+{ #category : 'reaping' }
 TimedProxyReaper >> finish [
 	"	Transcript cr; show: 'Done', (Time millisecondClockValue // 1000) printString."
 
 	done := true
 ]
 
-{ #category : #reaping }
+{ #category : 'reaping' }
 TimedProxyReaper >> forkReaperThread [
 
 	| block |
@@ -91,14 +93,14 @@ TimedProxyReaper >> forkReaperThread [
 	reaperThread := block forkAt: Processor userBackgroundPriority
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 TimedProxyReaper >> includes: aTimedProxy [
 
 	self at: aTimedProxy glorpId ifAbsent: [ ^ false ].
 	^ true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TimedProxyReaper >> initialize [
 
 	done := false.
@@ -116,28 +118,28 @@ TimedProxyReaper >> initialize [
 	self forkReaperThread
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimedProxyReaper >> maximumWork [
 	"Answer the maximum amount of time the reaper thread will run for before yielding."
 
 	^ maximumWork
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimedProxyReaper >> maximumWork: milliseconds [
 	"Set the maximum amount of time the reaper thread will run for before yielding."
 
 	maximumWork := milliseconds
 ]
 
-{ #category : #reaping }
+{ #category : 'reaping' }
 TimedProxyReaper >> mournKeyOf: anEphemeron [
 	"Don't really need to do anything."
 
 	anEphemeron value uninstantiate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimedProxyReaper >> nextSequenceNumber [
 
 	| id |
@@ -146,7 +148,7 @@ TimedProxyReaper >> nextSequenceNumber [
 	^ id
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 TimedProxyReaper >> noWaitAdd: aTimedProxy [
 
 	| association id |
@@ -160,7 +162,7 @@ TimedProxyReaper >> noWaitAdd: aTimedProxy [
 	aTimedProxy glorpReaper: self
 ]
 
-{ #category : #reaping }
+{ #category : 'reaping' }
 TimedProxyReaper >> privateReapObjects [
 	"Private - Go through all of the objects (sorted by time) and remove those which have expired from the receiver's weakValueDictionary.
 	Answer the number of objects reaped."
@@ -190,7 +192,7 @@ TimedProxyReaper >> privateReapObjects [
 	^numberReaped
 ]
 
-{ #category : #reaping }
+{ #category : 'reaping' }
 TimedProxyReaper >> reapExpiredObjects [
 
 	| numberReaped |
@@ -203,7 +205,7 @@ TimedProxyReaper >> reapExpiredObjects [
 	indexOffset := indexOffset + numberReaped ] ensure: [ mutex signal ]
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 TimedProxyReaper >> release [
 
 	done := true.
@@ -212,13 +214,13 @@ TimedProxyReaper >> release [
 	reaperThread := nil
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 TimedProxyReaper >> remove: aTimedProxy ifAbsent: errorBlock [
 
 	^ self removeKey: aTimedProxy glorpId ifAbsent: errorBlock
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 TimedProxyReaper >> removeKey: key ifAbsent: errorBlock [
 	"Note: The key is NOT removed from keysSortedByExpiryTime. The reaper
 	will eventually reap the given key, and ignore it since it is already gone.
@@ -234,7 +236,7 @@ TimedProxyReaper >> removeKey: key ifAbsent: errorBlock [
 	^ result
 ]
 
-{ #category : #reaping }
+{ #category : 'reaping' }
 TimedProxyReaper >> restartIfNecessary [
 
 	[
@@ -244,7 +246,7 @@ TimedProxyReaper >> restartIfNecessary [
 		self forkReaperThread ] ] ensure: [ mutex signal ]
 ]
 
-{ #category : #reaping }
+{ #category : 'reaping' }
 TimedProxyReaper >> shouldReap: anAssociation [
 	"Check that either we've passed the start time, or that there's been a wraparound in the millisecond value and we're now larger than it by some ridiculous margin, which we'll call 24 hours."
 
@@ -257,7 +259,7 @@ TimedProxyReaper >> shouldReap: anAssociation [
 	^ shouldReap
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 TimedProxyReaper >> touch: aTimedProxy [
 
 	[

@@ -2,23 +2,25 @@
 Time type
 "
 Class {
-	#name : #GlorpTimeType,
-	#superclass : #GlorpDatabaseType,
-	#category : #'Glorp-Types'
+	#name : 'GlorpTimeType',
+	#superclass : 'GlorpDatabaseType',
+	#category : 'Glorp-Types',
+	#package : 'Glorp',
+	#tag : 'Types'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 GlorpTimeType >> converterForStType: aClass [
 
 	^self platform converterNamed: #time.
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GlorpTimeType >> impliedSmalltalkType [
 	^Time.
 ]
 
-{ #category : #SQL }
+{ #category : 'SQL' }
 GlorpTimeType >> print: aValue on: aStream [
 	aStream nextPutAll: (self platform printTime: aValue for: self).
 ]

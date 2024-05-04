@@ -15,8 +15,8 @@ Instance Variables:
 
 "
 Class {
-	#name : #GlorpCursoredStream,
-	#superclass : #Stream,
+	#name : 'GlorpCursoredStream',
+	#superclass : 'Stream',
 	#instVars : [
 		'command',
 		'cursor',
@@ -28,39 +28,41 @@ Class {
 		'rawPeekBuffer',
 		'statement'
 	],
-	#category : #'Glorp-Queries'
+	#category : 'Glorp-Queries',
+	#package : 'Glorp',
+	#tag : 'Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GlorpCursoredStream class >> on: aStream [
 	^self basicNew cursor: aStream
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GlorpCursoredStream class >> on: aStream accessor: aDatabaseAccessor [
 	^(self on: aStream)
 		databaseAccessor: aDatabaseAccessor
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GlorpCursoredStream class >> on: aStream for: aCommand [
 	^(self on: aStream)
 		command: aCommand
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GlorpCursoredStream class >> on: aStream for: aCommand accessor: aDatabaseAccessor [
 	^(self on: aStream)
 		command: aCommand;
 		databaseAccessor: aDatabaseAccessor
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpCursoredStream >> accessor [
 	^databaseAccessor
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpCursoredStream >> atEnd [
 	"Release ourselves fairly aggressively when we hit the end"
 	| accessor |
@@ -77,7 +79,7 @@ GlorpCursoredStream >> atEnd [
 			self rawPeek isNil].
 ]
 
-{ #category : #'building objects' }
+{ #category : 'building objects' }
 GlorpCursoredStream >> buildObjectsForRow: aRow [
 
 	self query isNil ifTrue: [ ^ aRow ].
@@ -99,7 +101,7 @@ GlorpCursoredStream >> buildObjectsForRow: aRow [
 				  each returnValueIn: self ] ]
 ]
 
-{ #category : #'building objects' }
+{ #category : 'building objects' }
 GlorpCursoredStream >> buildersThatReturnResults [
 	buildersThatReturnResults isNil ifTrue: [
 		buildersThatReturnResults := OrderedCollection new.
@@ -117,7 +119,7 @@ GlorpCursoredStream >> buildersThatReturnResults [
 	^buildersThatReturnResults.
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 GlorpCursoredStream >> collect: aBlock [ 
 	| newStream |
 	newStream := WriteStream on: (Array new: 100).
@@ -125,7 +127,7 @@ GlorpCursoredStream >> collect: aBlock [
 	^newStream contents
 ]
 
-{ #category : #'building objects' }
+{ #category : 'building objects' }
 GlorpCursoredStream >> collectionTypeFor: aCollectionType [
 	"Make sure that we can reasonably return aCollectionType. If not, default to something we can"
 
@@ -134,12 +136,12 @@ GlorpCursoredStream >> collectionTypeFor: aCollectionType [
 	^Array
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpCursoredStream >> command [
 	^command
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpCursoredStream >> command: aDatabaseCommand [
 	command := aDatabaseCommand.
 	aDatabaseCommand isNil ifTrue: [^self].
@@ -149,27 +151,27 @@ GlorpCursoredStream >> command: aDatabaseCommand [
 	builders do: [:each | each cursor: self]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpCursoredStream >> contents [
 	self shouldNotImplement.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpCursoredStream >> cursor [
 	^cursor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpCursoredStream >> cursor: aStream [
 	cursor := aStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpCursoredStream >> databaseAccessor: aDatabaseAccessor [
 	databaseAccessor := aDatabaseAccessor
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 GlorpCursoredStream >> detect: aBlock [ 
 	"Evaluate aBlock with each of the receiver's elements as the argument.
 	Answer the first element for which aBlock evaluates to true."
@@ -177,7 +179,7 @@ GlorpCursoredStream >> detect: aBlock [
 	^self detect: aBlock ifNone: [self error: 'not found']
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 GlorpCursoredStream >> detect: aBlock ifNone: exceptionBlock [ 
 	"Evaluate aBlock with each of the receiver's elements as the argument.
 	Answer the first element for which aBlock evaluates to true."
@@ -186,7 +188,7 @@ GlorpCursoredStream >> detect: aBlock ifNone: exceptionBlock [
 	^exceptionBlock value
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 GlorpCursoredStream >> do: aBlock [ 
 	"Evaluate aBlock for each of the elements of the receiver."
 
@@ -194,17 +196,17 @@ GlorpCursoredStream >> do: aBlock [
 		whileFalse: [aBlock value: self next]
 ]
 
-{ #category : #'building objects' }
+{ #category : 'building objects' }
 GlorpCursoredStream >> elementBuilderFor: anExpression [ 
 	^builders detect: [:each | each expression == anExpression] ifNone: [nil]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpCursoredStream >> flush [
 	^self
 ]
 
-{ #category : #'building objects' }
+{ #category : 'building objects' }
 GlorpCursoredStream >> hasCompleteAnswerFor: objects [
 	| nextAnswer |
 	self atEnd ifTrue: [^true].
@@ -213,27 +215,27 @@ GlorpCursoredStream >> hasCompleteAnswerFor: objects [
 	^objects ~= nextAnswer
 ]
 
-{ #category : #initializing }
+{ #category : 'initializing' }
 GlorpCursoredStream >> initialize [
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpCursoredStream >> isReadable [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpCursoredStream >> isWritable [
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpCursoredStream >> mightHaveDuplicateRows [
 	mightHaveDuplicateRows isNil ifTrue: [mightHaveDuplicateRows := self query isNil ifTrue: [false] ifFalse: [self query mightHaveDuplicateRows]].
 	^mightHaveDuplicateRows.
 ]
 
-{ #category : #'building objects' }
+{ #category : 'building objects' }
 GlorpCursoredStream >> newCollectionOfSize: aSize for: aCollectionType [
 	"Make sure that we can reasonably return aCollectionType. If not, default to something we can"
 	| theType |
@@ -241,7 +243,7 @@ GlorpCursoredStream >> newCollectionOfSize: aSize for: aCollectionType [
 	^theType isBehavior ifTrue: [theType new: aSize] ifFalse: [theType copyEmpty: aSize]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpCursoredStream >> next [
 	| answer session |
 	self atEnd ifTrue: [^nil].
@@ -257,13 +259,13 @@ GlorpCursoredStream >> next [
 	^answer.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpCursoredStream >> next: anInteger [
 
 	^super next: anInteger
 ]
 
-{ #category : #'building objects' }
+{ #category : 'building objects' }
 GlorpCursoredStream >> nextAnswer [
 	| result |
 	peekBuffer isNil ifFalse: [
@@ -273,7 +275,7 @@ GlorpCursoredStream >> nextAnswer [
 	^self nextAnswerFromUnderlyingCursor.
 ]
 
-{ #category : #'building objects' }
+{ #category : 'building objects' }
 GlorpCursoredStream >> nextAnswerFromUnderlyingCursor [
 	| objects |
 	rawPeekBuffer isNil ifTrue: [rawPeekBuffer := cursor next].
@@ -283,7 +285,7 @@ GlorpCursoredStream >> nextAnswerFromUnderlyingCursor [
 	^objects.
 ]
 
-{ #category : #'building objects' }
+{ #category : 'building objects' }
 GlorpCursoredStream >> nextObjectFrom: aRow [
 	| objects |
 	objects := self buildObjectsForRow: aRow.
@@ -292,41 +294,41 @@ GlorpCursoredStream >> nextObjectFrom: aRow [
 		^objects]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpCursoredStream >> nextPut: anObject [
 	self shouldNotImplement
 ]
 
-{ #category : #'building objects' }
+{ #category : 'building objects' }
 GlorpCursoredStream >> objectBuilderFor: anExpression [ 
 	"Return the builder for this expression, but only those that directly build compound objects. Most importantly, exclude dictionary builders"
 	^builders detect: [:each | 
 		each buildsObjects and: [each expression == anExpression]] ifNone: [nil]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpCursoredStream >> peek [
 	peekBuffer = nil ifFalse: [^peekBuffer].
 	peekBuffer := self nextAnswer.
 	^peekBuffer.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpCursoredStream >> privateGetBuilders [
 	^builders
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpCursoredStream >> query [
 	command isNil ifTrue: [^nil].
 	^command query.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpCursoredStream >> query: x [
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GlorpCursoredStream >> rawPeek [
 	"Peek at the underlying rows, but don't build objects"
 	rawPeekBuffer isNil ifFalse: [^rawPeekBuffer].
@@ -334,13 +336,13 @@ GlorpCursoredStream >> rawPeek [
 	^rawPeekBuffer.
 ]
 
-{ #category : #'building objects' }
+{ #category : 'building objects' }
 GlorpCursoredStream >> registerInstances [
 	self session isNil ifTrue: [^self].
 	builders do: [:each | self session register: each instance].
 ]
 
-{ #category : #initializing }
+{ #category : 'initializing' }
 GlorpCursoredStream >> release [
 	super release.
 	self releaseCursor.
@@ -356,7 +358,7 @@ GlorpCursoredStream >> release [
 	databaseAccessor := nil.
 ]
 
-{ #category : #initializing }
+{ #category : 'initializing' }
 GlorpCursoredStream >> releaseCursor [
 	
 	self accessor isNil
@@ -365,12 +367,12 @@ GlorpCursoredStream >> releaseCursor [
 			self accessor completedCommand: command].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpCursoredStream >> rowCount [
 	^ self cursor rowCount
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 GlorpCursoredStream >> rows [
 	"This will extract all the rows and replace the internal stream with a regular stream on the rows. This is useful for debugging, but in real use rather destroys the purpose of the cursored stream"
 	| rows |
@@ -380,22 +382,22 @@ GlorpCursoredStream >> rows [
 	^rows
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpCursoredStream >> session [
 	^self query isNil ifTrue: [nil] ifFalse: [self query session]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpCursoredStream >> statement [
 	^statement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpCursoredStream >> statement: aGlorpPreparedStatement [
 	statement := aGlorpPreparedStatement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpCursoredStream >> upToEnd [
 	| result |
 	result := WriteStream on: (Array new: 100).

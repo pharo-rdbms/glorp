@@ -10,17 +10,19 @@ Instance Variables:
 
 "
 Class {
-	#name : #DictionaryMapping,
-	#superclass : #ToManyMapping,
+	#name : 'DictionaryMapping',
+	#superclass : 'ToManyMapping',
 	#instVars : [
 		'keyMapping',
 		'valueMapping',
 		'associationDescriptor'
 	],
-	#category : #'Glorp-Mappings'
+	#category : 'Glorp-Mappings',
+	#package : 'Glorp',
+	#tag : 'Mappings'
 }
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 DictionaryMapping >> associationClassModel [
 	| model |
 	model := GlorpClassModel for: Association.
@@ -29,7 +31,7 @@ DictionaryMapping >> associationClassModel [
 	^model
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 DictionaryMapping >> associationDescriptor [
 	associationDescriptor isNil ifTrue: [
 		associationDescriptor := Descriptor new.
@@ -38,12 +40,12 @@ DictionaryMapping >> associationDescriptor [
 	^associationDescriptor.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DictionaryMapping >> basicReferenceDescriptor [
 	^self system descriptorFor: self basicReferenceClass
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 DictionaryMapping >> buildQuery [
 	| keyExpression valueExpression |
 	query := super buildQuery.
@@ -53,7 +55,7 @@ DictionaryMapping >> buildQuery [
 	^query
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 DictionaryMapping >> buildRowMapKeyForSource: source target: target index: index [
 	^self mapsSimpleObject 
 		ifTrue: [
@@ -64,7 +66,7 @@ DictionaryMapping >> buildRowMapKeyForSource: source target: target index: index
 		ifFalse: [super buildRowMapKeyForSource: source target: target index: index]
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 DictionaryMapping >> chooseBaseForMapping: aMapping from: base and: phantomExpression [
 	aMapping isNil ifTrue: [^base].
 	^(aMapping mappedFields
@@ -73,36 +75,36 @@ DictionaryMapping >> chooseBaseForMapping: aMapping from: base and: phantomExpre
 		ifFalse: [phantomExpression]
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 DictionaryMapping >> defaultCollectionType [
 	^Dictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DictionaryMapping >> field [
 	^self valueField
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DictionaryMapping >> glorpCanHaveDescriptorDirectly [
 	"We allow instances of ourselves to have a descriptor, which normally only classes can do. This is so that we can have multiple different descriptors in use for e.g. String, depending on the particular usage."
 "	^self mapsSimpleObject."
 	^true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DictionaryMapping >> initialize [
 	super initialize.
 	usesLinkTable := true.
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 DictionaryMapping >> initializeRuntimeMappings [
 	super initializeRuntimeMappings.
 	self initializeValueMapping.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DictionaryMapping >> initializeValueMapping [
 	| referenceDescriptor |
 	self descriptor system privateAndBasicAddDescriptorFor: self as: self associationDescriptor.
@@ -112,7 +114,7 @@ DictionaryMapping >> initializeValueMapping [
 	(referenceDescriptor isNil or: [referenceDescriptor tables isEmpty]) ifTrue: [self initializeValueMappingJoin].
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DictionaryMapping >> initializeValueMappingJoin [
 	| tables |
 	"We don't know which of these will come first in the descriptor, so call the other initialization if it looks like we have enough information, and it hasn't been done"
@@ -137,7 +139,7 @@ DictionaryMapping >> initializeValueMappingJoin [
 				controlsTables: false].
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 DictionaryMapping >> keyExpression [
 	"Return the expression to use for our key. The key can be built using data from either the target object, or from the link table, so build the expression on one or the other, as appropriate"
 	 | base intermediate |
@@ -148,29 +150,29 @@ DictionaryMapping >> keyExpression [
 	^intermediate getMapping: keyMapping named: #key
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DictionaryMapping >> keyField [
 	^keyMapping field
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DictionaryMapping >> keyField: aDatabaseField [
 	keyMapping := self newMapping: DirectMapping.
 	keyMapping attributeName: #key.
 	keyMapping from: #key to: aDatabaseField
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DictionaryMapping >> keyMapping [
 	^keyMapping
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DictionaryMapping >> keyMapping: aMapping [
 	keyMapping := aMapping
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DictionaryMapping >> mappedFields [
 	"Return a collection of fields that this mapping will write into any of the containing object's rows"
 
@@ -182,24 +184,24 @@ DictionaryMapping >> mappedFields [
 	^fields
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DictionaryMapping >> mapsSimpleObject [
 	^valueMapping notNil and: [valueMapping mapsSimpleObject]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DictionaryMapping >> name [
 	"This can get called when we're masquering as a class, for purposes of indexing descriptors, so just print something useful"
 	^self printString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DictionaryMapping >> needsSpecialRowMapKey [
 	^super needsSpecialRowMapKey or: [
 		self mapsSimpleObject]
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 DictionaryMapping >> newMapping: aMappingClass [
 	"Implement this so that we can create our sub-mappings without having them added to the parent descriptor as independent mappings"
 	| mapping |
@@ -209,7 +211,7 @@ DictionaryMapping >> newMapping: aMappingClass [
 	^mapping
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 DictionaryMapping >> pseudoDescriptor [
 	"Return a pretend descriptor for our reference class. Since that class is a primitive, it won't have a real descriptor, and it may vary by usage anyway"
 	| pseudoDescriptor |
@@ -218,14 +220,14 @@ DictionaryMapping >> pseudoDescriptor [
 	^pseudoDescriptor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DictionaryMapping >> referenceClass [
 	"Return ourselves as the reference class, as a sort of a proxy for what we really want, which is a primitive, and varies according to the relationship anyway. Note that we have stuffed in a descriptor in the system, with ourselves (this instance) as the class."
 "	^self mapsSimpleObject ifTrue: [self] ifFalse: [super referenceClass]."
 	^self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DictionaryMapping >> referenceDescriptor [
 	| ref |
 	ref := super referenceDescriptor.
@@ -236,7 +238,7 @@ DictionaryMapping >> referenceDescriptor [
 		ifFalse: [ref]
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 DictionaryMapping >> setGeneralQueryRetrievalIn: newQuery basedOn: base phantom: phantomExpression [
 	| keyExpression valueExpression collType keyExpressionBase valueExpressionBase |
 	self descriptor primaryKeyMappings
@@ -260,7 +262,7 @@ DictionaryMapping >> setGeneralQueryRetrievalIn: newQuery basedOn: base phantom:
 	newQuery retrieve: base
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 DictionaryMapping >> validate [
 	self initializeValueMapping.
 	super validate.
@@ -271,7 +273,7 @@ DictionaryMapping >> validate [
 	(self usesLinkTable and: [self mapsSimpleObject]) ifTrue: [self error: 'Dictionary mappings to simple objects cannot use a link table'].
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 DictionaryMapping >> valueExpression [
 	 | base intermediate |
 	valueMapping isNil ifTrue: [ ^[:each | each value] ].
@@ -282,12 +284,12 @@ DictionaryMapping >> valueExpression [
 	^intermediate getMapping: valueMapping named: #value.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DictionaryMapping >> valueField [
 	^valueMapping field
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DictionaryMapping >> valueField: aDatabaseField [
 	| mapping |
 	mapping := self newMapping: DirectMapping.
@@ -296,17 +298,17 @@ DictionaryMapping >> valueField: aDatabaseField [
 	self valueMapping: mapping
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DictionaryMapping >> valueMapping [
 	^valueMapping
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DictionaryMapping >> valueMapping: aMapping [
 	valueMapping := aMapping
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 DictionaryMapping >> writeExtraInformationInto: aRowMap atKey: rowMapKey forSourceObject: sourceObject targetObject: targetObject atIndex: eachKey [
 	"Write out any additional information that goes in the link table or else the target table. That means our key, if necessary. If we have a specific value mapping, rather than just using the normal attributes of this mapping, then write that as well. That normally happens when our value is simple"
 	

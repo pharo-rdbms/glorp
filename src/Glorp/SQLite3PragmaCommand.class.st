@@ -2,12 +2,14 @@
 Pragma command for SQL3
 "
 Class {
-	#name : #SQLite3PragmaCommand,
-	#superclass : #SQLStringSelectCommand,
-	#category : #'Glorp-Core'
+	#name : 'SQLite3PragmaCommand',
+	#superclass : 'SQLStringSelectCommand',
+	#category : 'Glorp-Core',
+	#package : 'Glorp',
+	#tag : 'Core'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 SQLite3PragmaCommand >> printSQL [
 
 	stream nextPutAll: 'PRAGMA '.

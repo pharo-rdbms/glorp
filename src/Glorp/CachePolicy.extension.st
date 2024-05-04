@@ -1,6 +1,6 @@
-Extension { #name : #CachePolicy }
+Extension { #name : 'CachePolicy' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 CachePolicy class >> default [
 
 	^ self new

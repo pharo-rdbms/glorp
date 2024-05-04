@@ -1,6 +1,6 @@
-Extension { #name : #IdentityDictionary }
+Extension { #name : 'IdentityDictionary' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 IdentityDictionary >> glorpAtIdentity: aKey ifAbsent: aBlock [
 	^self at: aKey ifAbsent: aBlock.
 ]

@@ -20,8 +20,8 @@ Instance Variables
 
 "
 Class {
-	#name : #GlorpSession,
-	#superclass : #Object,
+	#name : 'GlorpSession',
+	#superclass : 'Object',
 	#instVars : [
 		'system',
 		'currentUnitOfWork',
@@ -32,55 +32,57 @@ Class {
 		'errorAction',
 		'modificationTracker'
 	],
-	#category : #'Glorp-Core'
+	#category : 'Glorp-Core',
+	#package : 'Glorp',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GlorpSession class >> forSystem: aSystem [
 
 	^ self new system: aSystem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpSession >> accessor [
 
 	^ accessor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpSession >> accessor: aDatabaseAccessor [
 
 	accessor := aDatabaseAccessor.
 	system ifNotNil: [ system platform: accessor platform ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpSession >> addToReaper: aProxy [
 
 	aProxy class == TimedProxy ifFalse: [ ^ self ].
 	self reaper add: aProxy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpSession >> applicationData [
 
 	^ applicationData
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpSession >> applicationData: anObject [
 
 	applicationData := anObject
 ]
 
-{ #category : #'api/transactions' }
+{ #category : 'api/transactions' }
 GlorpSession >> beginTransaction [
 	"Start a database transaction, to be in sole control of when and whether data is saved to the database."
 
 	accessor beginTransaction
 ]
 
-{ #category : #'api/transactions' }
+{ #category : 'api/transactions' }
 GlorpSession >> beginUnitOfWork [
 	"Start a UnitOfWork, to organize your updates."
 
@@ -91,19 +93,19 @@ GlorpSession >> beginUnitOfWork [
 	currentUnitOfWork session: self
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 GlorpSession >> cacheAt: aKey forClass: aClass ifNone: failureBlock [
 
 	^ cache lookupClass: aClass key: aKey ifAbsent: failureBlock
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 GlorpSession >> cacheAt: keyObject put: valueObject [
 
 	^ cache at: keyObject insert: valueObject
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 GlorpSession >> cacheContainsObject: anObject [
 
 	| descriptor key |
@@ -114,7 +116,7 @@ GlorpSession >> cacheContainsObject: anObject [
 		  do: [ :ex | false ]
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 GlorpSession >> cacheContainsObject: anObject key: aKey [
 	"Just test containment, don't return the result or trigger anything due to expiration"
 
@@ -122,7 +124,7 @@ GlorpSession >> cacheContainsObject: anObject key: aKey [
 	^ cache containsObject: anObject key: aKey
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 GlorpSession >> cacheContainsObjectForClass: aClass key: aKey [
 	"Just test containment, don't return the result or trigger anything due to expiration"
 
@@ -130,7 +132,7 @@ GlorpSession >> cacheContainsObjectForClass: aClass key: aKey [
 	^ cache containsObjectForClass: aClass key: aKey
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 GlorpSession >> cacheContainsObjectForRow: aDatabaseRow [
 
 	^ self
@@ -138,25 +140,25 @@ GlorpSession >> cacheContainsObjectForRow: aDatabaseRow [
 		  key: aDatabaseRow primaryKey
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpSession >> cacheFor: anObject [
 
 	^ cache cacheFor: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpSession >> cacheForClass: aClass [
 
 	^ cache cacheForClass: aClass
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 GlorpSession >> cacheLookupForClass: aClass key: aKey [
 
 	^ self cacheAt: aKey forClass: aClass ifNone: [ nil ]
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 GlorpSession >> cacheLookupObjectForRow: aDatabaseRow [
 
 	^ self
@@ -164,7 +166,7 @@ GlorpSession >> cacheLookupObjectForRow: aDatabaseRow [
 		  key: aDatabaseRow primaryKey
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 GlorpSession >> cacheRemoveObject: anObject [
 
 	| key |
@@ -172,7 +174,7 @@ GlorpSession >> cacheRemoveObject: anObject [
 	cache removeClass: anObject class key: key ifAbsent: [  ]
 ]
 
-{ #category : #'internal/writing' }
+{ #category : 'internal/writing' }
 GlorpSession >> commandForHomogeneousRows: aCollectionOfDatabaseRows [
 	"Create the command for this set of rows. These are assumed to be homogeneous, in that they are all for the same table, and are all the same type of operation (i.e. all insert or all update)"
 
@@ -185,7 +187,7 @@ GlorpSession >> commandForHomogeneousRows: aCollectionOfDatabaseRows [
 		ifFalse: [ UpdateCommand forRows: aCollectionOfDatabaseRows useBinding: self useBinding session: self ]
 ]
 
-{ #category : #'internal/writing' }
+{ #category : 'internal/writing' }
 GlorpSession >> commandForRow: aDatabaseRow [
 
 	(aDatabaseRow forDeletion) ifTrue: [^DeleteCommand forRow: aDatabaseRow useBinding: self useBinding session: self].
@@ -195,14 +197,14 @@ GlorpSession >> commandForRow: aDatabaseRow [
 		ifFalse: [ UpdateCommand forRow: aDatabaseRow useBinding: self useBinding session: self ]
 ]
 
-{ #category : #'api/transactions' }
+{ #category : 'api/transactions' }
 GlorpSession >> commitTransaction [
 	"Commit the current database connection transaction."
 
 	accessor commitTransaction
 ]
 
-{ #category : #'api/transactions' }
+{ #category : 'api/transactions' }
 GlorpSession >> commitUnitOfWork [
 	"Send updates to the database, in an already-existing Transaction if present, otherwise in a newly-created one. A newly-created Transaction is committed.  An existing Transaction is left for the surrounding code (i.e. that created it) to commit or rollback."
 
@@ -214,7 +216,7 @@ GlorpSession >> commitUnitOfWork [
 	currentUnitOfWork := nil
 ]
 
-{ #category : #'api/transactions' }
+{ #category : 'api/transactions' }
 GlorpSession >> commitUnitOfWorkAndContinue [
 	"Commit the current unit of work, but then keep going with the same set of registered objects, with their state updated to reflect current values."
 
@@ -228,19 +230,19 @@ GlorpSession >> commitUnitOfWorkAndContinue [
 	self registerAll: registeredObjects
 ]
 
-{ #category : #'api/queries' }
+{ #category : 'api/queries' }
 GlorpSession >> count: aClass [
 
 	^ self execute: (self queryClass count: aClass)
 ]
 
-{ #category : #'api/queries' }
+{ #category : 'api/queries' }
 GlorpSession >> count: aClass where: anExpression [
 
 	^ self execute: (self queryClass count: aClass where: anExpression)
 ]
 
-{ #category : #'internal/writing' }
+{ #category : 'internal/writing' }
 GlorpSession >> createDeleteRowsFor: anObject in: rowMap [
 	"Create records for rows that require deletion"
 
@@ -249,7 +251,7 @@ GlorpSession >> createDeleteRowsFor: anObject in: rowMap [
 		in: rowMap
 ]
 
-{ #category : #'internal/writing' }
+{ #category : 'internal/writing' }
 GlorpSession >> createRowsFor: anObject in: rowMap [
 
 	| descriptor |
@@ -257,14 +259,14 @@ GlorpSession >> createRowsFor: anObject in: rowMap [
 		descriptor createRowsFor: anObject in: rowMap ]
 ]
 
-{ #category : #'table creation' }
+{ #category : 'table creation' }
 GlorpSession >> createTables [
 	"Create the tables for our descriptor system. This will fail if the tables already exist. Use recreateTables for that."
 
 	self createTables: system allTables
 ]
 
-{ #category : #'table creation' }
+{ #category : 'table creation' }
 GlorpSession >> createTables: aCollection [
 	"Create the tables for our descriptor system. This will fail if the tables already exist. Use recreateTables for that."
 
@@ -278,13 +280,13 @@ GlorpSession >> createTables: aCollection [
 	self platform supportsConstraints ifTrue: [aCollection do: [:each | accessor createTableFKConstraints: each ifError: [:ex | ex signal]]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpSession >> currentLogin [
 
 	^ accessor currentLogin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpSession >> currentServerUTCTimestampOrNil [
 	"This is kind of ugly, but it is Smalltalk Dialect neutral"
 
@@ -303,13 +305,13 @@ GlorpSession >> currentServerUTCTimestampOrNil [
 			  ifFalse: [ result first first ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpSession >> databaseTableClass [
 
 	^ system databaseTableClass
 ]
 
-{ #category : #'api/queries' }
+{ #category : 'api/queries' }
 GlorpSession >> delete: anObject [
 
 	| realObject |
@@ -321,7 +323,7 @@ GlorpSession >> delete: anObject [
 		self inUnitOfWorkDo: [ currentUnitOfWork delete: realObject ] ]
 ]
 
-{ #category : #'api/queries' }
+{ #category : 'api/queries' }
 GlorpSession >> delete: aClass where: aBlock [
 	"Delete all instances in the database satisfying the query block."
 
@@ -332,47 +334,47 @@ GlorpSession >> delete: aClass where: aBlock [
 	^ self deleteAllSatisfying: q
 ]
 
-{ #category : #'api/queries' }
+{ #category : 'api/queries' }
 GlorpSession >> deleteAll: aCollection [
 
 	aCollection do: [ :each | self delete: each ]
 ]
 
-{ #category : #'api/queries' }
+{ #category : 'api/queries' }
 GlorpSession >> deleteAllSatisfying: aQuery [
 
 	^ aQuery deleteWithParameters: #(  ) in: self
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 GlorpSession >> descriptorFor: aClassOrInstance [
 	"If the parameter is a class that my DescriptorSystem includes, but its descriptor doesn't exist yet, an initial descriptor for it will be created.  If my DescriptorSystem has neither descriptor nor class, I return nil."
 
 	^ system descriptorFor: aClassOrInstance
 ]
 
-{ #category : #'api/transactions' }
+{ #category : 'api/transactions' }
 GlorpSession >> doDDLOperation: aBlock [
 	"Execute DDL SQL - something which creates/drops/modifies tables or other schema information. The main reason for this method is that some databases require a transaction, while others don't require it, and still others don't allow it. Try to do the right thing."
 
 	^ self accessor doDDLOperation: aBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GlorpSession >> dontUseModificationTracker [
 
 	modificationTracker release.
 	modificationTracker := nil
 ]
 
-{ #category : #'table creation' }
+{ #category : 'table creation' }
 GlorpSession >> dropTables [
 	"Drop the tables for our descriptor system, and their associated sequences."
 
 	self dropTables: system allTables
 ]
 
-{ #category : #'table creation' }
+{ #category : 'table creation' }
 GlorpSession >> dropTables: aCollection [
 	"Drop the tables for our descriptor system, and their associated sequences."
 
@@ -383,7 +385,7 @@ GlorpSession >> dropTables: aCollection [
 		accessor dropSequences: sequences ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GlorpSession >> embeddedObjectsFor: anObject [
 	"Return all the objects embedded into this one"
 
@@ -397,31 +399,31 @@ GlorpSession >> embeddedObjectsFor: anObject [
 	^ embedded
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpSession >> errorAction [
 
 	^ errorAction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpSession >> errorAction: aThreeArgumentBlockExceptionSessionCommand [
 
 	errorAction := aThreeArgumentBlockExceptionSessionCommand
 ]
 
-{ #category : #'api/queries' }
+{ #category : 'api/queries' }
 GlorpSession >> execute: aQuery [
 
 	^ aQuery executeWithParameters: #(  ) in: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GlorpSession >> expiredInstanceOf: aClass key: key [
 
 	^ cache expiredInstanceOf: aClass key: key
 ]
 
-{ #category : #'read/write' }
+{ #category : 'read/write' }
 GlorpSession >> filterDeletionFrom: anObject [
 
 	self hasUnitOfWork ifFalse: [ ^ anObject ].
@@ -430,7 +432,7 @@ GlorpSession >> filterDeletionFrom: anObject [
 	^ anObject
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 GlorpSession >> forceSaveOf: anObject [
 	"This is the same as registering an object, but it tells us to disregard whether/how the object has changed and to save all of its fields. This is useful if we need to register an object after changes have occurred, and can be used to implement something more like an object by object save facility. Still somewhat experimental."
 
@@ -440,7 +442,7 @@ GlorpSession >> forceSaveOf: anObject [
 	self inUnitOfWorkDo: [ currentUnitOfWork registerAsNew: realObject ]
 ]
 
-{ #category : #'read/write' }
+{ #category : 'read/write' }
 GlorpSession >> groupWrite: aCollectionOfDatabaseRows [
 
 	| command |
@@ -458,45 +460,45 @@ GlorpSession >> groupWrite: aCollectionOfDatabaseRows [
 				  signal ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 GlorpSession >> hasDescriptorFor: aClass [
 	"This returns false only if my DescriptorSystem has neither the requested descriptor nor the requesting class.  (If the parameter is a class that my DescriptorSystem includes, but its descriptor doesn't exist yet, an initial descriptor for it will be created and true returned.)"
 
 	^ system hasDescriptorFor: aClass
 ]
 
-{ #category : #'api/queries' }
+{ #category : 'api/queries' }
 GlorpSession >> hasExpired: anObject [
 
 	^ cache hasExpired: anObject
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 GlorpSession >> hasExpired: aClass key: key [
 
 	^ cache hasExpired: aClass key: key
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 GlorpSession >> hasObjectExpiredOfClass: aClass withKey: key [
 
 	^ cache hasObjectExpiredOfClass: aClass withKey: key
 ]
 
-{ #category : #'api/transactions' }
+{ #category : 'api/transactions' }
 GlorpSession >> hasUnitOfWork [
 
 	^ currentUnitOfWork notNil
 ]
 
-{ #category : #'api/transactions' }
+{ #category : 'api/transactions' }
 GlorpSession >> inTransactionDo: aBlock [
 	"Execute aBlock in a database transaction. If one is already in progress, evaluate aBlock and return. If not, start a transaction, evaluate aBlock and commit or rollback the transaction before returning."
 
 	^ self accessor inTransactionDo: aBlock
 ]
 
-{ #category : #'api/transactions' }
+{ #category : 'api/transactions' }
 GlorpSession >> inUnitOfWorkDo: aBlock [
 	"Evaluate aBlock within a UnitOfWork. This method will only commit or rollback a unit of work that it creates. If there is an ongoing unit of work, the sender must commit or rollback. Likewise, if there is an ongoing transaction, the sender must commit or rollback the transaction. See the class comment for more details."
 
@@ -512,40 +514,40 @@ GlorpSession >> inUnitOfWorkDo: aBlock [
 	^ result
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GlorpSession >> initialize [
 
 	super initialize.
 	self initializeCache
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GlorpSession >> initializeCache [
 
 	cache release.
 	cache := CacheManager forSession: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GlorpSession >> initializeReaper [
 
 	self releaseReaper.
 	reaper := TimedProxyReaper new
 ]
 
-{ #category : #'api/transactions' }
+{ #category : 'api/transactions' }
 GlorpSession >> isInTransaction [
 
 	^ accessor isInTransaction
 ]
 
-{ #category : #login }
+{ #category : 'login' }
 GlorpSession >> isLoggedIn [
 
 	^ accessor isLoggedIn
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpSession >> isNew: anObject [ 
 	"When registering, do we need to add this object to the collection of new objects? New objects are treated specially when computing what needs to be written, since we don't have their previous state"
 
@@ -575,27 +577,27 @@ GlorpSession >> isNew: anObject [
 				ifFalse: [ex pass]].
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 GlorpSession >> isRegistered: anObject [
 
 	currentUnitOfWork isNil ifTrue: [ ^ false ].
 	^ currentUnitOfWork isRegistered: anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpSession >> isUninstantiatedProxy: anObject [
 
 	^ anObject isGlorpProxy and: [ anObject isInstantiated not ]
 ]
 
-{ #category : #login }
+{ #category : 'login' }
 GlorpSession >> login [
 
 	self isLoggedIn ifTrue: [ ^ nil ].
 	^ self loginIfError: [ :ex | ex pass ]
 ]
 
-{ #category : #login }
+{ #category : 'login' }
 GlorpSession >> loginIfError: aBlock [
 
 	| result |
@@ -604,13 +606,13 @@ GlorpSession >> loginIfError: aBlock [
 	^ result
 ]
 
-{ #category : #login }
+{ #category : 'login' }
 GlorpSession >> logout [
 
 	^ self accessor logout
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 GlorpSession >> lookupRootClassFor: aClass [
 
 	| descriptor |
@@ -620,13 +622,13 @@ GlorpSession >> lookupRootClassFor: aClass [
 		  ifFalse: [ aClass ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GlorpSession >> markAsCurrentOfClass: aClass key: key [
 
 	cache markAsCurrentOfClass: aClass key: key
 ]
 
-{ #category : #'table creation' }
+{ #category : 'table creation' }
 GlorpSession >> migrateFromSystem: from toSystem: to [
 
 	| fromTables toTables toDelete toAdd toModify newVersion |
@@ -645,13 +647,13 @@ GlorpSession >> migrateFromSystem: from toSystem: to [
 			self updateTableFrom: each to: newVersion]]
 ]
 
-{ #category : #'table creation' }
+{ #category : 'table creation' }
 GlorpSession >> migrateFromVersion: fromVersionNumber toVersion: toVersionNumber [ 
 	self halt.
 	"Get the class name of our system, strip off version number, replace with to and from, create systems for them."
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpSession >> modificationTracker [
 	"If we killed off the tracker due to a session reset, then bring it back again."
 
@@ -659,13 +661,13 @@ GlorpSession >> modificationTracker [
 	^ modificationTracker
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpSession >> modificationTracker: aGlorpModificationTrackingPolicy [
 
 	modificationTracker := aGlorpModificationTrackingPolicy
 ]
 
-{ #category : #'api/transactions' }
+{ #category : 'api/transactions' }
 GlorpSession >> modify: anObject in: aBlock [
 	"Evaluate aBlock inside a unit of work. Start a database transaction at the beginning and commit it at the end. If we don't terminate normally, roll everything back. Register anObject before starting. Explicitly circumvent the registration of  the block result at the end, because that can cause problems if we're doing things like delete and re-insert and end up returning e.g. the deleted object"
 
@@ -677,13 +679,13 @@ GlorpSession >> modify: anObject in: aBlock [
 	^ result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpSession >> platform [
 
 	^ self system platform
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 GlorpSession >> postCopy [
 
 	super postCopy.
@@ -692,19 +694,19 @@ GlorpSession >> postCopy [
 	accessor := accessor copy
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GlorpSession >> privateGetCache [
 
 	^ cache
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GlorpSession >> privateGetCurrentUnitOfWork [
 
 	^ currentUnitOfWork
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GlorpSession >> privateRegisterAsNew: anObject [
 	"Register the object as one which is not already in cache. Private! Normally just use the register: operation."
 
@@ -712,7 +714,7 @@ GlorpSession >> privateRegisterAsNew: anObject [
 	currentUnitOfWork registerAsNew: anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GlorpSession >> privateRegisterAsOld: anObject [
 	"Register the object as something we already read from the database, skipping the isNew: test. Private! Normally you would just use register:"
 
@@ -723,27 +725,27 @@ GlorpSession >> privateRegisterAsOld: anObject [
 	currentUnitOfWork register: realObject
 ]
 
-{ #category : #'api/queries' }
+{ #category : 'api/queries' }
 GlorpSession >> queryClass [
 
 	^ system queryClass
 ]
 
-{ #category : #'api/queries' }
+{ #category : 'api/queries' }
 GlorpSession >> read: aClass [
 	"Return an array of instances of aClass, each one from a row of its corresponding database table."
 
 	^ self execute: (self queryClass read: aClass)
 ]
 
-{ #category : #'api/queries' }
+{ #category : 'api/queries' }
 GlorpSession >> read: aClass limit: anInteger [
 	"Return an array of not more than anInteger of instances of aClass, each one from a row of its corresponding database table."
 
 	^ self execute: (self queryClass read: aClass limit: anInteger)
 ]
 
-{ #category : #'api/queries' }
+{ #category : 'api/queries' }
 GlorpSession >> read: aClass orderBy: aCriteria [
 	"aCriteria can be a block, such as [:each | each id], or a symbol (that Glorp can translate into such a block), such as #id."
 
@@ -753,14 +755,14 @@ GlorpSession >> read: aClass orderBy: aCriteria [
 	^ self execute: query
 ]
 
-{ #category : #'api/queries' }
+{ #category : 'api/queries' }
 GlorpSession >> read: aClass where: aBlock [
 	"aBlock should return a boolean, for example, [:each | each lastname = 'Doe']."
 
 	^ self execute: (self queryClass read: aClass where: aBlock)
 ]
 
-{ #category : #'api/queries' }
+{ #category : 'api/queries' }
 GlorpSession >> read: aClass where: aBlock limit: anInteger [
 	"Return an array of up to anInteger instances of aClass for which aBlock returns true, each from a row from its table."
 
@@ -768,7 +770,7 @@ GlorpSession >> read: aClass where: aBlock limit: anInteger [
 		  (self queryClass read: aClass where: aBlock limit: anInteger)
 ]
 
-{ #category : #'api/queries' }
+{ #category : 'api/queries' }
 GlorpSession >> readManyOf: aClass [
 	"readManyOf: and returningManyOf: are synonyms of read:. This now seems more natural to me, to be consistent with session API."
 
@@ -776,7 +778,7 @@ GlorpSession >> readManyOf: aClass [
 	^ self read: aClass
 ]
 
-{ #category : #'api/queries' }
+{ #category : 'api/queries' }
 GlorpSession >> readManyOf: aClass limit: anInteger [
 	"readManyOf: and returningManyOf: are synonyms of read:. This now seems more natural to me, to be consistent with session API."
 
@@ -784,7 +786,7 @@ GlorpSession >> readManyOf: aClass limit: anInteger [
 	^ self read: aClass limit: anInteger
 ]
 
-{ #category : #'api/queries' }
+{ #category : 'api/queries' }
 GlorpSession >> readManyOf: aClass orderBy: aCriteria [
 	"readManyOf: and returningManyOf: are synonyms of read:. This now seems more natural to me, to be consistent with session API."
 
@@ -792,7 +794,7 @@ GlorpSession >> readManyOf: aClass orderBy: aCriteria [
 	^ self read: aClass orderBy: aCriteria
 ]
 
-{ #category : #'api/queries' }
+{ #category : 'api/queries' }
 GlorpSession >> readManyOf: aClass where: aBlock [
 	"readManyOf: and returningManyOf: are synonyms of read:. This now seems more natural to me, to be consistent with session API."
 
@@ -800,7 +802,7 @@ GlorpSession >> readManyOf: aClass where: aBlock [
 	^ self read: aClass where: aBlock
 ]
 
-{ #category : #'api/queries' }
+{ #category : 'api/queries' }
 GlorpSession >> readManyOf: aClass where: aBlock limit: anInteger [
 	"readManyOf: and returningManyOf: are synonyms of read:. This now seems more natural to me, to be consistent with session API."
 
@@ -808,28 +810,28 @@ GlorpSession >> readManyOf: aClass where: aBlock limit: anInteger [
 	^ self read: aClass where: aBlock limit: anInteger
 ]
 
-{ #category : #'api/queries' }
+{ #category : 'api/queries' }
 GlorpSession >> readOneOf: aClass [
 	"Return a single instance of aClass from a row of its table."
 
 	^ self execute: (self queryClass readOneOf: aClass)
 ]
 
-{ #category : #'api/queries' }
+{ #category : 'api/queries' }
 GlorpSession >> readOneOf: aClass where: aBlock [
 	"aBlock should return a boolean, for example, [:each | each title='Report']."
 
 	^ self execute: (self queryClass readOneOf: aClass where: aBlock)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GlorpSession >> realObjectFor: anObject [
 	"If this is a proxy, return the contents (if available). Otherwise, return nil"
 
 	^ self realObjectFor: anObject ifNone: [ nil ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GlorpSession >> realObjectFor: anObject ifNone: aBlock [
 	"If this is a proxy, return the contents (if available). Otherwise, evalute the block"
 
@@ -841,21 +843,21 @@ GlorpSession >> realObjectFor: anObject ifNone: aBlock [
 		  ifFalse: [ anObject ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpSession >> reaper [
 
 	reaper ifNil: [ self initializeReaper ].
 	^ reaper
 ]
 
-{ #category : #'table creation' }
+{ #category : 'table creation' }
 GlorpSession >> recreateTables [
 	"Drop and re-create the tables for our descriptor system, and their associated sequences."
 
 	self recreateTables: system allTables
 ]
 
-{ #category : #'table creation' }
+{ #category : 'table creation' }
 GlorpSession >> recreateTables: aCollection [
 	"Drop the tables for our descriptor system, and their associated sequences."
 
@@ -873,7 +875,7 @@ GlorpSession >> recreateTables: aCollection [
 	self platform supportsConstraints ifTrue: [aCollection do: [:each | accessor createTableFKConstraints: each ifError: [:ex | self halt]]]
 ]
 
-{ #category : #'table creation' }
+{ #category : 'table creation' }
 GlorpSession >> recreateTables: aCollection ifError: aBlock [
 	"Drop the tables for our descriptor system, and their associated sequences."
 
@@ -891,14 +893,14 @@ GlorpSession >> recreateTables: aCollection ifError: aBlock [
 	self platform supportsConstraints ifTrue: [aCollection do: [:each | accessor createTableFKConstraints: each ifError: [:ex | ^aBlock value: ex]]]
 ]
 
-{ #category : #'table creation' }
+{ #category : 'table creation' }
 GlorpSession >> recreateTablesIfError: aBlock [
 	"Drop and re-create the tables for our descriptor system, and their associated sequences."
 
 	self recreateTables: system allTables ifError: aBlock
 ]
 
-{ #category : #'api/queries' }
+{ #category : 'api/queries' }
 GlorpSession >> refresh: anObject [
 	"Reload anObject from the corresponding row of its table. Return the refreshed instance."
 
@@ -918,7 +920,7 @@ GlorpSession >> refresh: anObject [
 	^ self execute: query
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 GlorpSession >> register: anObject [
 	"Register the object with our current unit of work. We need to do this *before* making changes to the object.  (If an object is read from the database, changed and then registered, and later written back to the database, the pre-registration change may be lost.)"
 
@@ -931,13 +933,13 @@ GlorpSession >> register: anObject [
 		ifFalse: [ currentUnitOfWork register: realObject ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 GlorpSession >> registerAll: aCollection [
 
 	aCollection do: [ :ea | self register: ea ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 GlorpSession >> registerForDelete: anObject [
 	"Register the object with our current unit of work, with intent to delete it."
 
@@ -948,20 +950,20 @@ GlorpSession >> registerForDelete: anObject [
 	currentUnitOfWork registerForDelete: realObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GlorpSession >> releaseReaper [
 
 	reaper release
 ]
 
-{ #category : #'api/transactions' }
+{ #category : 'api/transactions' }
 GlorpSession >> requireUnitOfWork [
 	"Start a unit of work if there isn't one already."
 
 	self hasUnitOfWork ifFalse: [ self beginUnitOfWork ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GlorpSession >> reset [
 
 	self initializeCache.
@@ -972,32 +974,32 @@ GlorpSession >> reset [
 	modificationTracker ifNotNil: [ modificationTracker := #needed ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GlorpSession >> resetPermissions [
 
 	accessor ifNotNil: [ accessor resetPermissions ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpSession >> reusePreparedStatements [
 
 	^ accessor reusePreparedStatements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpSession >> reusePreparedStatements: aBoolean [
 
 	accessor reusePreparedStatements: aBoolean
 ]
 
-{ #category : #'api/transactions' }
+{ #category : 'api/transactions' }
 GlorpSession >> rollbackTransaction [
 	"Rollback the current database connection transaction."
 
 	accessor execute: [ accessor rollbackTransaction ]
 ]
 
-{ #category : #'api/transactions' }
+{ #category : 'api/transactions' }
 GlorpSession >> rollbackUnitOfWork [
 
 	currentUnitOfWork ifNil: [ ^ self ].
@@ -1005,13 +1007,13 @@ GlorpSession >> rollbackUnitOfWork [
 	currentUnitOfWork := nil
 ]
 
-{ #category : #'api/transactions' }
+{ #category : 'api/transactions' }
 GlorpSession >> rollbackUnitOfWorkFor: anObject [
 
 	currentUnitOfWork abort: anObject
 ]
 
-{ #category : #'api/transactions' }
+{ #category : 'api/transactions' }
 GlorpSession >> save: anObject [
 	"Make sure anObject will be written to the database by starting a unit of work if we aren't already in one, and registering the object. This is in most ways the same as just registering an object, but it tells us to disregard whether/how the object has changed and to save all of its fields. This is useful if we need to register an object *after* changes have occurred, and can be used to implement something more like an object by object save facility. Still somewhat experimental."
 
@@ -1024,44 +1026,44 @@ GlorpSession >> save: anObject [
 			self inUnitOfWorkDo: [ currentUnitOfWork registerAsNew: realObject ] ]
 ]
 
-{ #category : #'api/transactions' }
+{ #category : 'api/transactions' }
 GlorpSession >> saveAndContinue [
 	"A shorter synonym"
 
 	^ self commitUnitOfWorkAndContinue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpSession >> schema [
 
 	^ self accessor schema
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 GlorpSession >> sendPostFetchEventTo: anObject [
 
 	^ anObject glorpPostFetch: self
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 GlorpSession >> sendPostFetchValidateEventTo: anObject [
 
 	^ anObject glorpPostFetchValidate: self
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 GlorpSession >> sendPostWriteEventTo: anObject [
 
 	anObject glorpPostWrite: self
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 GlorpSession >> sendPreWriteEventTo: anObject [
 
 	anObject glorpPreWrite: self
 ]
 
-{ #category : #'internal/writing' }
+{ #category : 'internal/writing' }
 GlorpSession >> shouldInsert: aDatabaseRow [
 
 	"We may have forced this to explicitly be an update"
@@ -1078,7 +1080,7 @@ GlorpSession >> shouldInsert: aDatabaseRow [
 	^ aDatabaseRow hasOldVersion not
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GlorpSession >> shouldUseModificationTracker: aBoolean [
 
 	aBoolean
@@ -1087,13 +1089,13 @@ GlorpSession >> shouldUseModificationTracker: aBoolean [
 		ifFalse: [ modificationTracker := nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpSession >> system [
 
 	^ system
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 GlorpSession >> system: aDescriptorSystem [
 	"Why the on:do:? Because when loading over an old version, the method
 	#validateDescriptorSystem may not yet be in the system, so we send it carefully"
@@ -1109,13 +1111,13 @@ GlorpSession >> system: aDescriptorSystem [
 		ifFalse: [ system initializeRuntimeMappings ]
 ]
 
-{ #category : #'internal/writing' }
+{ #category : 'internal/writing' }
 GlorpSession >> tablesInCommitOrder [
 
 	^ system tablesInCommitOrder
 ]
 
-{ #category : #'api/transactions' }
+{ #category : 'api/transactions' }
 GlorpSession >> transact: aBlock [
 	"Evaluate aBlock inside a transaction and inside a unit of work. This could be called inUnitOfWorkInsideTransactionDo: (but that's too verbose) because we start both a transaction and/or a unit of work if we are not in either or both already.  We commit or rollback only what we started. Otherwise, the sender controls commit/rollback. (Comparing this method with #inUnitOfWorkDo:, in the latter, if there is not already an ongoing transaction a transaction will not get started until the UnitOfWork commits.)"
 
@@ -1134,13 +1136,13 @@ GlorpSession >> transact: aBlock [
 	^ result
 ]
 
-{ #category : #'api/queries' }
+{ #category : 'api/queries' }
 GlorpSession >> undelete: anObject [
 
 	self undelete: anObject ifNotDeleted: [ self error: 'Trying to undelete something that was not deleted' ]
 ]
 
-{ #category : #'api/queries' }
+{ #category : 'api/queries' }
 GlorpSession >> undelete: anObject ifNotDeleted: aBlock [
 
 	| realObject |
@@ -1152,7 +1154,7 @@ GlorpSession >> undelete: anObject ifNotDeleted: aBlock [
 			[self error: 'Can only undelete while the unit of work is in progress']
 ]
 
-{ #category : #'table creation' }
+{ #category : 'table creation' }
 GlorpSession >> updateTableFrom: aTable to: newTable [
 	"Update the given table based on the metadata."
 
@@ -1185,26 +1187,26 @@ GlorpSession >> updateTableFrom: aTable to: newTable [
 	newUniqueConstraints do: [:each | accessor addConstraint: each]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpSession >> useBinding [
 
 	self accessor ifNil: [ ^ false ].
 	^ self accessor useBinding
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GlorpSession >> useModificationTracker [
 
 	^ self
 ]
 
-{ #category : #'virtual collections' }
+{ #category : 'virtual collections' }
 GlorpSession >> virtualCollectionOf: aClass [
 
 	^ GlorpVirtualCollection on: aClass in: self
 ]
 
-{ #category : #'read/write' }
+{ #category : 'read/write' }
 GlorpSession >> writeHomogeneousRows: aCollectionOfDatabaseRows [
 	"Write out a collection of rows belonging to a single table"
 
@@ -1225,7 +1227,7 @@ GlorpSession >> writeHomogeneousRows: aCollectionOfDatabaseRows [
 	^ succeeded
 ]
 
-{ #category : #'read/write' }
+{ #category : 'read/write' }
 GlorpSession >> writeHomogeneousRows: aCollectionOfDatabaseRows from: startIndex to: endIndex [
 	"Write out the specified range from a collection of rows belonging to a single table"
 
@@ -1243,7 +1245,7 @@ GlorpSession >> writeHomogeneousRows: aCollectionOfDatabaseRows from: startIndex
 			succeeded]
 ]
 
-{ #category : #'read/write' }
+{ #category : 'read/write' }
 GlorpSession >> writeRow: aDatabaseRow [
 
 	| command success |

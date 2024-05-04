@@ -4,12 +4,14 @@ When we use an expression as a join, we tend to write it backwards. We use expre
 However, this means that when we're trying to rebuild this expression and fit it into a query, it's backwards from most expressions. We know that, so we give it a special kind of base that makes it rebuild itself slightly different, by preferring the target rather than the source.  
 "
 Class {
-	#name : #JoinBaseExpression,
-	#superclass : #BaseExpression,
-	#category : #'Glorp-Expressions'
+	#name : 'JoinBaseExpression',
+	#superclass : 'BaseExpression',
+	#category : 'Glorp-Expressions',
+	#package : 'Glorp',
+	#tag : 'Expressions'
 }
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 JoinBaseExpression >> asExpressionJoiningSource: source toTarget: target [
 	"Create a general expression which represents this relationship where the values of the targets (which are normally parameters) are supplied out of the context provided by 'target' and the source fields are referencing things out of the context of source. Produces something suitable for ANDing into an expression when doing a join
    Example: If we had CUSTOMER.ADDRESS_ID = ADDRESS.ID as a parameter, and we want to AND this into an expression [:customer | customer address street = 'Main'] then we have customer as a base, and we get 

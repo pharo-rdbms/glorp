@@ -12,8 +12,8 @@ Instance Variables:
 
 "
 Class {
-	#name : #GlorpRowSorter,
-	#superclass : #Object,
+	#name : 'GlorpRowSorter',
+	#superclass : 'Object',
 	#instVars : [
 		'childSelector',
 		'queue',
@@ -22,10 +22,12 @@ Class {
 		'items',
 		'childCache'
 	],
-	#category : #'Glorp-UnitOfWork'
+	#category : 'Glorp-UnitOfWork',
+	#package : 'Glorp',
+	#tag : 'UnitOfWork'
 }
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 GlorpRowSorter >> childrenOf: anItem [
 	^childCache at: anItem ifAbsentPut: [
 		childSelector isSymbol
@@ -33,38 +35,38 @@ GlorpRowSorter >> childrenOf: anItem [
 			ifFalse: [childSelector value: anItem]].
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 GlorpRowSorter >> currentChildren [
 	^self childrenOf: current.
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 GlorpRowSorter >> currentItemIsDone [
 	^current status = #done.
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 GlorpRowSorter >> currentItemIsInProgress [
 	^current status = #visitedOnce.
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 GlorpRowSorter >> currentItemIsNew [
 	^current status = #notVisited.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpRowSorter >> getChildrenVia: aSelector [
 	childSelector := aSelector.
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 GlorpRowSorter >> hasSomethingToProcess [
 	self next.
 	^current notNil.
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 GlorpRowSorter >> initialVisit [
 	| children |
 	children := self currentChildren select: [:each  | each status == #notVisited].
@@ -74,14 +76,14 @@ GlorpRowSorter >> initialVisit [
 	children isEmpty ifTrue: [queue add: current].
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GlorpRowSorter >> initialize [
 	queue := OrderedCollection new: 100.
 	sorted := OrderedCollection new: 100.
 	childCache := IdentityDictionary new: 100.
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 GlorpRowSorter >> next [
 	queue isEmpty ifTrue: [
 		| candidate |
@@ -94,7 +96,7 @@ GlorpRowSorter >> next [
 	current := queue isEmpty ifTrue: [nil] ifFalse: [queue removeFirst].
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 GlorpRowSorter >> processCurrent [
 	self currentItemIsNew ifTrue: [^self initialVisit].
 	self currentItemIsInProgress ifTrue: [^self secondVisit].
@@ -102,7 +104,7 @@ GlorpRowSorter >> processCurrent [
 	self error: 'Unknown item status'.
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 GlorpRowSorter >> secondVisit [
 	sorted add: current.
 	current status: #done.
@@ -114,7 +116,7 @@ GlorpRowSorter >> secondVisit [
 			current parent: nil].
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 GlorpRowSorter >> sort: aCollection [
 	items := aCollection readStream.
 	aCollection do: [:each | each status: #notVisited].

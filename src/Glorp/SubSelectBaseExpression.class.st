@@ -7,68 +7,70 @@ Instance Variables:
 
 "
 Class {
-	#name : #SubSelectBaseExpression,
-	#superclass : #BaseExpression,
+	#name : 'SubSelectBaseExpression',
+	#superclass : 'BaseExpression',
 	#instVars : [
 		'trueBase'
 	],
-	#category : #'Glorp-Expressions'
+	#category : 'Glorp-Expressions',
+	#package : 'Glorp',
+	#tag : 'Expressions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SubSelectBaseExpression class >> on: aBaseExpression [
 	^self new trueBase: aBaseExpression
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SubSelectBaseExpression >> additionalExpressions [
 	"We effectively take over the join for the thing we're based on, because we want it to happen in the subselect, not in the main one."
 
 	^ trueBase additionalExpressionsOn: self
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 SubSelectBaseExpression >> additionalExpressionsOn: anExpression [
 
 	^ trueBase additionalExpressionsOn: anExpression
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SubSelectBaseExpression >> base [
 
 	^ trueBase base
 ]
 
-{ #category : #introspection }
+{ #category : 'introspection' }
 SubSelectBaseExpression >> className [
 
 	^ 'SubSelectBase'
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 SubSelectBaseExpression >> convertedDbValueOf: anObject [
 
 	^ self trueBase mapping convertedDbValueOf: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SubSelectBaseExpression >> descriptor [
 	^trueBase descriptor.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SubSelectBaseExpression >> field [
 
 	^ self trueBase mapping field
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SubSelectBaseExpression >> join [
 
 	^ self trueBase join
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SubSelectBaseExpression >> printSQLOn: aStream withParameters: aDictionary [
 	"If I'm ever going to print this directly, it's because I'm participating in a direct to-many relationship, so I do have a valid field"
 
@@ -77,13 +79,13 @@ SubSelectBaseExpression >> printSQLOn: aStream withParameters: aDictionary [
 		withParameters: aDictionary
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 SubSelectBaseExpression >> queryLevelBaseExpression [
 
 	^ self
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 SubSelectBaseExpression >> rebuildOn: aBaseExpression startingFrom: anExpression withOuterScopeBase: ultimateBaseExpression [
 	| newBase |
 	anExpression isNil ifTrue: [^aBaseExpression].
@@ -94,36 +96,36 @@ SubSelectBaseExpression >> rebuildOn: aBaseExpression startingFrom: anExpression
 	^self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SubSelectBaseExpression >> representsDerivedObject [
 	^self trueBase representsDerivedObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SubSelectBaseExpression >> table [
 
 	^ self trueBase table
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SubSelectBaseExpression >> trueBase [
 
 	^ trueBase
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SubSelectBaseExpression >> trueBase: aBaseExpression [
 
 	trueBase := aBaseExpression
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 SubSelectBaseExpression >> ultimateBaseExpression [
 
 	^trueBase ultimateBaseExpression
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 SubSelectBaseExpression >> validate [
 
 	super validate.

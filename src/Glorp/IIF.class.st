@@ -8,21 +8,23 @@ For example:
 	IIF (('SELECT count(*) FROM aTable')= '0', 0, 1 ) AS alias
 "
 Class {
-	#name : #IIF,
-	#superclass : #PrefixFunction,
+	#name : 'IIF',
+	#superclass : 'PrefixFunction',
 	#instVars : [
 		'argumentTypes'
 	],
-	#category : #'Glorp-Expressions'
+	#category : 'Glorp-Expressions',
+	#package : 'Glorp',
+	#tag : 'Expressions'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 IIF >> argumentTypes: anArray [
 
 	argumentTypes := anArray
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 IIF >> initialize [
 
 	super initialize.
@@ -31,7 +33,7 @@ IIF >> initialize [
 	argumentTypes := OrderedCollection new: 3
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 IIF >> printBasicSQLOn: aStream withParameters: aDictionary forSelect: aBoolean [
 	"Example: IIF(Condition, ReturnIfTrue, ReturnIfValue)
 		IIF ( base? = arg1, arg2, arg3 ) AS alias"

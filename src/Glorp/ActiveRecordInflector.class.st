@@ -14,8 +14,8 @@ Uncountables are words that are same in plural or singular like 'sheep'.  You ca
 Irregulars are words that completely change form like person to people.  Adding an irregular adds a rule to both the plurals and the singulars rules.  As rules are applied from most recently added to oldest, the most general rules are added first and irregulars are added last.
 "
 Class {
-	#name : #ActiveRecordInflector,
-	#superclass : #Object,
+	#name : 'ActiveRecordInflector',
+	#superclass : 'Object',
 	#instVars : [
 		'uncountable',
 		'singular',
@@ -25,16 +25,18 @@ Class {
 		'prefixTableNames',
 		'prefixClassKeys'
 	],
-	#category : #'Glorp-ActiveRecord'
+	#category : 'Glorp-ActiveRecord',
+	#package : 'Glorp',
+	#tag : 'ActiveRecord'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordInflector >> accessor: aString [
 
 	^ (self camelize: aString capitalized: false) asSymbol
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ActiveRecordInflector >> addIrregularSingular: asSingular plural: asPlural [
 
 	self removeUncountable: asSingular.
@@ -44,7 +46,7 @@ ActiveRecordInflector >> addIrregularSingular: asSingular plural: asPlural [
 	self addSingularRule: '(.*)' , asPlural , '$' replacement: asSingular
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ActiveRecordInflector >> addPluralRule: rule replacement: replacement [
 
 	rule isString ifTrue: [ self removeUncountable: rule ].
@@ -54,7 +56,7 @@ ActiveRecordInflector >> addPluralRule: rule replacement: replacement [
 			 ifFalse: [ rule ]) -> replacement
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ActiveRecordInflector >> addSingularRule: rule replacement: replacement [
 
 	rule isString ifTrue: [ self removeUncountable: rule ].
@@ -64,13 +66,13 @@ ActiveRecordInflector >> addSingularRule: rule replacement: replacement [
 			 ifFalse: [ rule ]) -> replacement
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ActiveRecordInflector >> addUncountable: aString [
 
 	uncountable add: (self uncountableRegexFrom: aString)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ActiveRecordInflector >> applyRules: rules to: aString [
 
 	^ uncountable
@@ -84,7 +86,7 @@ ActiveRecordInflector >> applyRules: rules to: aString [
 				  ifNone: [ aString ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordInflector >> camelize: aString [
 
 	| subs |
@@ -95,7 +97,7 @@ ActiveRecordInflector >> camelize: aString [
 		  (subs collect: [ :ea | ea asLowercase capitalized ]) joinUsing: '' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordInflector >> camelize: aString capitalized: shouldCapitalize [
 
 	^ shouldCapitalize
@@ -103,7 +105,7 @@ ActiveRecordInflector >> camelize: aString capitalized: shouldCapitalize [
 		  ifFalse: [ (self camelize: aString) uncapitalized ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordInflector >> classKey: aClass [
 
 	^ self prefixClassKeys
@@ -111,7 +113,7 @@ ActiveRecordInflector >> classKey: aClass [
 		  ifFalse: [ self demodulize: aClass asString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordInflector >> classify: aTableName [
 
 	| name |
@@ -123,13 +125,13 @@ ActiveRecordInflector >> classify: aTableName [
 	^ self modulize: (self camelize: name)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordInflector >> constantize: aString [
 
 	^ self class environment at: aString asSymbol ifAbsent: [  ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordInflector >> demodulize: aString [
 
 	^ (prefix notEmpty and: [ aString beginsWith: prefix ])
@@ -137,7 +139,7 @@ ActiveRecordInflector >> demodulize: aString [
 		  ifFalse: [ aString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordInflector >> foreignKey: aClassName [
 
 	^ self prefixTableNames
@@ -145,7 +147,7 @@ ActiveRecordInflector >> foreignKey: aClassName [
 		  ifFalse: [ (self tableize: aClassName) , '_id' ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ActiveRecordInflector >> initialize [
 
 	super initialize.
@@ -163,7 +165,7 @@ ActiveRecordInflector >> initialize [
 	^ self
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 ActiveRecordInflector >> initializeIrregular [
 
 	{
@@ -177,7 +179,7 @@ ActiveRecordInflector >> initializeIrregular [
 	^ self
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 ActiveRecordInflector >> initializePlural [
 	"Rules based on Rails Inflector at https://github.com/rails/rails/blob/f33d52c95217212cbacc8d5e44b5a8e3cdc6f5b3/activesupport/lib/active_support/inflections.rb"
 
@@ -201,7 +203,7 @@ ActiveRecordInflector >> initializePlural [
 	^ self
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 ActiveRecordInflector >> initializeSingular [
 
 	self addSingularRule: '(.*)s$' asRegexIgnoringCase replacement:  ''.
@@ -257,13 +259,13 @@ ActiveRecordInflector >> initializeSingular [
 	^self
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 ActiveRecordInflector >> initializeUncountable [
 
 	#('bison' 'bream' 'breeches' 'britches' 'carp' 'chassis' 'clippers' 'cod' 'contretemps' 'corps' 'debris' 'deer' 'diabetes' 'djinn' 'eland' 'elk' 'equipment' 'fish' 'flounder' 'gallows' 'graffiti' 'headquarters' 'herpes' 'high-jinks' 'homework' 'information' 'innings' 'itis' 'jackanapes' 'jeans' 'mackerel' 'measles' 'metadata' 'mews' 'money' 'mumps' 'news' 'ois' 'pincers' 'pliers' 'police' 'pox' 'proceedings' 'rabies' 'rice' 'salmon' 'scissors' 'sea-bass' 'shears' 'sheep' 'species' 'swine' 'trout' 'tuna' 'whiting' 'wildebeest') do: [ :ea | self addUncountable: ea ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordInflector >> modulize: aString [
 
 	^ (prefix notEmpty and: [ aString beginsWith: prefix ])
@@ -271,13 +273,13 @@ ActiveRecordInflector >> modulize: aString [
 		  ifFalse: [ prefix , aString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordInflector >> mutator: aString [
 
 	^ ((self camelize: aString capitalized: false) , ':') asSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordInflector >> ordinal: anInteger [
 
 	| integer |
@@ -288,79 +290,79 @@ ActiveRecordInflector >> ordinal: anInteger [
 		  #( 'st' 'nd' 'rd' ) at: integer \\ 10 ifAbsent: [ 'th' ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordInflector >> ordinalize: anInteger [
 
 	^ anInteger asString , (self ordinal: anInteger)
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 ActiveRecordInflector >> pluralMatch: aString [
 
 	^ plural detect: [ :ea | ea key matches: aString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordInflector >> pluralize: aString [
 
 	^ self applyRules: plural to: aString
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 ActiveRecordInflector >> pluralizeTableNames [
 
 	^ pluralizeTableNames
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 ActiveRecordInflector >> pluralizeTableNames: aBoolean [
 
 	pluralizeTableNames := aBoolean
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 ActiveRecordInflector >> prefix [
 
 	^ prefix
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 ActiveRecordInflector >> prefix: aString [
 
 	prefix := aString ifNil: [ '' ] ifNotNil: [ aString asUppercase ]
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 ActiveRecordInflector >> prefixClassKeys [
 
 	^ prefix notEmpty and: [ prefixClassKeys ]
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 ActiveRecordInflector >> prefixClassKeys: aBoolean [
 
 	prefixClassKeys := aBoolean
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 ActiveRecordInflector >> prefixTableNames [
 
 	^ prefix notEmpty and: [ prefixTableNames ]
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 ActiveRecordInflector >> prefixTableNames: aBoolean [
 
 	prefixTableNames := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordInflector >> primaryKey: aClassName [
 
 	^ 'id'
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ActiveRecordInflector >> removeUncountable: aString [
 
 	uncountable
@@ -368,19 +370,19 @@ ActiveRecordInflector >> removeUncountable: aString [
 		ifAbsent: [  ]
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 ActiveRecordInflector >> singularMatch: aString [
 
 	^ singular detect: [ :ea | ea key matches: aString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordInflector >> singularize: aString [
 
 	^ self applyRules: singular to: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordInflector >> tableize: aClassName [
 
 	| name |
@@ -392,7 +394,7 @@ ActiveRecordInflector >> tableize: aClassName [
 		   ifFalse: [ self underscore: name ])
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ActiveRecordInflector >> uncountableRegexFrom: aString [
 
 	^ (String streamContents: [ :s |
@@ -402,7 +404,7 @@ ActiveRecordInflector >> uncountableRegexFrom: aString [
 			   nextPutAll: '$' ]) asRegexIgnoringCase
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordInflector >> underscore: aString [
 
 	^ String streamContents: [ :s |

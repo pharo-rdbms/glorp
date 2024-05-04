@@ -2,29 +2,31 @@
 Abstract integer type
 "
 Class {
-	#name : #GlorpAbstractIntegerType,
-	#superclass : #GlorpAbstractNumericType,
-	#category : #'Glorp-Types'
+	#name : 'GlorpAbstractIntegerType',
+	#superclass : 'GlorpAbstractNumericType',
+	#category : 'Glorp-Types',
+	#package : 'Glorp',
+	#tag : 'Types'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 GlorpAbstractIntegerType >> converterForStType: aClass [
 	(aClass includesBehavior: Boolean) ifTrue: [^self platform converterNamed: #booleanToInteger].
 	^self platform converterNamed: #numberToInteger.
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GlorpAbstractIntegerType >> impliedSmalltalkType [
 	^Integer.
 ]
 
-{ #category : #'exdi specific' }
+{ #category : 'exdi specific' }
 GlorpAbstractIntegerType >> initialize [
 	super initialize.
 	typeString := 'integer'.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpAbstractIntegerType >> isIntegerType [
 	^true
 ]

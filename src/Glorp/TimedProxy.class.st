@@ -11,8 +11,8 @@ Instance Variables:
 
 "
 Class {
-	#name : #TimedProxy,
-	#superclass : #Proxy,
+	#name : 'TimedProxy',
+	#superclass : 'Proxy',
 	#instVars : [
 		'id',
 		'reaper',
@@ -20,54 +20,56 @@ Class {
 		'timeToDie',
 		'association'
 	],
-	#category : 'Glorp-Queries'
+	#category : 'Glorp-Queries',
+	#package : 'Glorp',
+	#tag : 'Queries'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimedProxy >> class [
 	^TimedProxy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimedProxy >> doesNotUnderstand: aMessage [
 
 	self glorpTouch.
 	^super doesNotUnderstand: aMessage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimedProxy >> glorpAssociation [
 	^association
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimedProxy >> glorpAssociation: anAssociation [
 	association := anAssociation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimedProxy >> glorpId [
 	^id
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimedProxy >> glorpId: uniqueInteger [
 	id := uniqueInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimedProxy >> glorpReaper: aTimedProxyReaper [
 	reaper := aTimedProxyReaper
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimedProxy >> glorpSecondsToLive [
 	"Answer the number of seconds the receiver should live after having been instantiated or sent a message."
 
 	^secondsToLive
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimedProxy >> glorpSecondsToLive: seconds [
 
 	secondsToLive := seconds.
@@ -75,34 +77,34 @@ TimedProxy >> glorpSecondsToLive: seconds [
 	reaper notNil ifTrue: [self glorpTouch]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimedProxy >> glorpTimeToDie [
 	"Answer the time at which the receiver is scheduled to die."
 
 	^timeToDie
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimedProxy >> glorpTouch [
 	self updateExpiryTime.
 	reaper isNil ifFalse: [reaper touch: self].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimedProxy >> proxyInitialize [
 	super proxyInitialize.
 	secondsToLive := 30.
 	self updateExpiryTime.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimedProxy >> uninstantiate [
 
 	super uninstantiate.
 	association := nil.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TimedProxy >> updateExpiryTime [
 	timeToDie := Time millisecondClockValue + (secondsToLive * 1000)
 ]

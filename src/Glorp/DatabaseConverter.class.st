@@ -12,46 +12,48 @@ Instance Variables:
 
 "
 Class {
-	#name : #DatabaseConverter,
-	#superclass : #Object,
+	#name : 'DatabaseConverter',
+	#superclass : 'Object',
 	#instVars : [
 		'name'
 	],
-	#category : #'Glorp-Database'
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 DatabaseConverter >> convert: anObject fromDatabaseRepresentationAs: aDatabaseType [
 
 	self subclassResponsibility
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 DatabaseConverter >> convert: anObject toDatabaseRepresentationAs: aDatabaseType [
 
 	self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DatabaseConverter >> initialize [
 
 	super initialize.
 	name := #unnamed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseConverter >> name [
 
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseConverter >> name: aString [
 
 	name := aString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DatabaseConverter >> printOn: aString [
 
 	aString

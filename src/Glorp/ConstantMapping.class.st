@@ -10,27 +10,29 @@ Instance Variables:
 
 "
 Class {
-	#name : #ConstantMapping,
-	#superclass : #Mapping,
+	#name : 'ConstantMapping',
+	#superclass : 'Mapping',
 	#instVars : [
 		'constantValue',
 		'valueIsSession'
 	],
-	#category : #'Glorp-Mappings'
+	#category : 'Glorp-Mappings',
+	#package : 'Glorp',
+	#tag : 'Mappings'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConstantMapping >> constantValue [
 	^constantValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConstantMapping >> constantValue: anObject [
 
 	constantValue := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConstantMapping >> constantValueIn: aSession [
 
 	^valueIsSession
@@ -38,42 +40,42 @@ ConstantMapping >> constantValueIn: aSession [
 		ifFalse: [constantValue].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConstantMapping >> constantValueIsSession [
 
 	valueIsSession := true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ConstantMapping >> controlsTables [
 	"Return true if this type of method 'owns' the tables it's associated with, and expression nodes using this mapping should alias those tables where necessary"
 
 	^false
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ConstantMapping >> getValueFrom: anObject [
 
 	^constantValue
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ConstantMapping >> initialize [
 
 	super initialize.
 	valueIsSession := false.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ConstantMapping >> isRelationship [
 	^false
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 ConstantMapping >> mapFromObject: anObject intoRowsIn: aRowMap [
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 ConstantMapping >> mapObject: anObject inElementBuilder: anElementBuilder [
 	| value |
 	value := anElementBuilder isNil
@@ -82,26 +84,26 @@ ConstantMapping >> mapObject: anObject inElementBuilder: anElementBuilder [
 	self setValueIn: anObject to: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConstantMapping >> mappedFields [
 	"Return a collection of fields that this mapping will write into any of the containing object's rows"
 
 	^#()
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 ConstantMapping >> referencedIndependentObjectsFrom: anObject [
 
 	^#()
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 ConstantMapping >> trace: aTracing context: anExpression [
 
 	^self
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 ConstantMapping >> validateAttribute [
 	^self
 ]

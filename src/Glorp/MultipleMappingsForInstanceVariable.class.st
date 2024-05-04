@@ -8,41 +8,43 @@ Instance Variables:
 
 "
 Class {
-	#name : #MultipleMappingsForInstanceVariable,
-	#superclass : #ValidationError,
+	#name : 'MultipleMappingsForInstanceVariable',
+	#superclass : 'ValidationError',
 	#instVars : [
 		'attributeNames',
 		'readableMappings'
 	],
-	#category : #'Glorp-Exceptions'
+	#category : 'Glorp-Exceptions',
+	#package : 'Glorp',
+	#tag : 'Exceptions'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MultipleMappingsForInstanceVariable >> attributeNames [
 
 	^ attributeNames
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MultipleMappingsForInstanceVariable >> attributeNames: anObject [
 
 	attributeNames := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MultipleMappingsForInstanceVariable >> messageText [
 
 	^ 'Multiple readable mappings for one instance variable:<1s>'
 		  expandMacrosWith: self readableMappings printString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MultipleMappingsForInstanceVariable >> readableMappings [
 
 	^ readableMappings
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MultipleMappingsForInstanceVariable >> readableMappings: anObject [
 
 	readableMappings := anObject

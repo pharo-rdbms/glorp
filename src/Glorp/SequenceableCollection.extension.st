@@ -1,6 +1,6 @@
-Extension { #name : #SequenceableCollection }
+Extension { #name : 'SequenceableCollection' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 SequenceableCollection >> atIndex: anInteger [ 
 	^self at: anInteger
 ]

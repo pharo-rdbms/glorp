@@ -2,29 +2,31 @@
 MSSQL Float type 
 "
 Class {
-	#name : #GlorpMSSQLFloatType,
-	#superclass : #GlorpAbstractNumericType,
-	#category : #'Glorp-Types'
+	#name : 'GlorpMSSQLFloatType',
+	#superclass : 'GlorpAbstractNumericType',
+	#category : 'Glorp-Types',
+	#package : 'Glorp',
+	#tag : 'Types'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 GlorpMSSQLFloatType >> converterForStType: aClass [
 
 	^self platform converterNamed: #numberToDouble.
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GlorpMSSQLFloatType >> impliedSmalltalkType [
 	^Float.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GlorpMSSQLFloatType >> initialize [
 	super initialize.
 	typeString := 'float'.
 ]
 
-{ #category : #SQL }
+{ #category : 'SQL' }
 GlorpMSSQLFloatType >> typeString [
 	^'float'.
 ]

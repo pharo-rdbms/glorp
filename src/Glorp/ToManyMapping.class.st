@@ -8,16 +8,18 @@ Instance Variables:
 
 "
 Class {
-	#name : #ToManyMapping,
-	#superclass : #RelationshipMapping,
+	#name : 'ToManyMapping',
+	#superclass : 'RelationshipMapping',
 	#instVars : [
 		'orderBy',
 		'shouldWriteTheOrderField'
 	],
-	#category : #'Glorp-Mappings'
+	#category : 'Glorp-Mappings',
+	#package : 'Glorp',
+	#tag : 'Mappings'
 }
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 ToManyMapping >> buildGeneralQueryIn: anObjectBuilder [
 	| newQuery |
 	newQuery := super buildGeneralQueryIn: anObjectBuilder.
@@ -25,7 +27,7 @@ ToManyMapping >> buildGeneralQueryIn: anObjectBuilder [
 	^newQuery
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 ToManyMapping >> buildQuery [
 	| targetDescriptor |
 	targetDescriptor := self referenceDescriptor.
@@ -41,22 +43,22 @@ ToManyMapping >> buildQuery [
 	^ query
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ToManyMapping >> collectionType [
 	^self attribute collectionType
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ToManyMapping >> collectionType: aClass [
 	self attribute collectionType: aClass
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 ToManyMapping >> defaultCollectionType [
 	^OrderedCollection
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ToManyMapping >> hasValueThatCanProvideField: aField from: anObject [
 	"Return true if we have enough information in ourselves to populate our fields. The only time this won't be true is if we're either holding an uninstantiated proxy or have a to-many relationship mapping with an empty collection. Inline the superclass implementation to avoid fetching the value twice."
 	| value |
@@ -65,13 +67,13 @@ ToManyMapping >> hasValueThatCanProvideField: aField from: anObject [
 	^value isEmpty not
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ToManyMapping >> initialize [
 	super initialize.
 	shouldWriteTheOrderField := false.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ToManyMapping >> initializeAttribute [
 	"This is where we can initialize aspects of the attribute, if required. The motivating example is initializing the collection type of the attribute if it wasn't set. We need it to have some type, but we don't want to initialize it while we're doing basic initialization and aren't yet properly attached to a descriptor or class model"
 	super initializeAttribute.
@@ -79,13 +81,13 @@ ToManyMapping >> initializeAttribute [
 		ifTrue: [self attribute collectionType: self defaultCollectionType].
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 ToManyMapping >> keyForOrderingFrom: anObject to: target [
 	self usesLinkTable ifFalse: [^target].
 	^self orderField table == self linkTable ifTrue: [target] ifFalse: [anObject]
 ]
 
-{ #category : #'private/expressions' }
+{ #category : 'private/expressions' }
 ToManyMapping >> linkTable [
 	| referenceKeys |
 	self usesLinkTable ifFalse: [^nil].
@@ -93,35 +95,35 @@ ToManyMapping >> linkTable [
 	^referenceKeys first table.
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ToManyMapping >> orderBy [
 	^orderBy
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ToManyMapping >> orderBy: aBlockOrSelector [
 	orderBy isNil ifTrue: [orderBy := OrderedCollection new].
 	orderBy add: aBlockOrSelector
 ]
 
-{ #category : #'private/expressions' }
+{ #category : 'private/expressions' }
 ToManyMapping >> orderField [
 	| exp |
 	exp := self session queryClass new expressionBlockFor: orderBy first.
 	^(exp asGlorpExpressionOn: (BaseExpression new descriptor: self referenceDescriptor)) field
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ToManyMapping >> shouldWriteTheOrderField [
 	^shouldWriteTheOrderField
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ToManyMapping >> shouldWriteTheOrderField: aBoolean [
 	shouldWriteTheOrderField := aBoolean
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 ToManyMapping >> validate [
 
 	| targetClassModel |
@@ -144,7 +146,7 @@ ToManyMapping >> validate [
 				self error: attribute printString, ' is attempting to order by #', attributeName, ' which is not a mapped attribute of ', targetClassModel describedClass name]]].
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 ToManyMapping >> writeExtraInformationInto: aRowMap atKey: rowMapKey forSourceObject: sourceObject targetObject: targetObject atIndex: index [
 	shouldWriteTheOrderField
 		ifTrue:
@@ -156,7 +158,7 @@ ToManyMapping >> writeExtraInformationInto: aRowMap atKey: rowMapKey forSourceOb
 				put: index]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ToManyMapping >> writeTheOrderField [
 	shouldWriteTheOrderField := true
 ]

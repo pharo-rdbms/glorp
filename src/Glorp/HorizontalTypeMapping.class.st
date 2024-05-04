@@ -8,23 +8,25 @@ Instance Variables:
 
 "
 Class {
-	#name : #HorizontalTypeMapping,
-	#superclass : #TypeMapping,
+	#name : 'HorizontalTypeMapping',
+	#superclass : 'TypeMapping',
 	#instVars : [
 		'mappedClass',
 		'isAbstract'
 	],
-	#category : #'Glorp-Mappings'
+	#category : 'Glorp-Mappings',
+	#package : 'Glorp',
+	#tag : 'Mappings'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HorizontalTypeMapping class >> forClass: aClass [
 	^self new
 		mappedClass: aClass;
 		yourself
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 HorizontalTypeMapping >> allDescribedConcreteClasses [
 	| col |
 	col := OrderedCollection new
@@ -36,33 +38,33 @@ HorizontalTypeMapping >> allDescribedConcreteClasses [
 		(self system descriptorFor: each) typeMapping isAbstract not ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HorizontalTypeMapping >> beAbstract [
 	isAbstract := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HorizontalTypeMapping >> isAbstract [
 	^isAbstract isNil ifTrue: [ isAbstract := false ] ifFalse: [ isAbstract ]
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 HorizontalTypeMapping >> mapFromObject: anObject intoRowsIn: aRowMap [
 
 	"do nothing"
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HorizontalTypeMapping >> mappedClass: aClass [
 	mappedClass := aClass
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 HorizontalTypeMapping >> mappedFields [
 	^#()
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 HorizontalTypeMapping >> trace: aTracing context: anExpression [
 
 	^self

@@ -1,6 +1,6 @@
-Extension { #name : #Date }
+Extension { #name : 'Date' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 Date >> glorpPrintSQLOn: aCommand [
 	"Print the date in ISO format. 'yyyy-mm-dd'  Don't rely on any dialect-specific formatting or padding mechanisms"
 	| monthString dayString |

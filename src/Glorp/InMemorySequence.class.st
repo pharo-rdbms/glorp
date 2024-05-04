@@ -6,42 +6,44 @@ Instance Variables:
 
 "
 Class {
-	#name : #InMemorySequence,
-	#superclass : #DatabaseSequence,
+	#name : 'InMemorySequence',
+	#superclass : 'DatabaseSequence',
 	#instVars : [
 		'count'
 	],
-	#category : #'Glorp-Database'
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 InMemorySequence class >> default [
 
 	^ self new
 ]
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 InMemorySequence >> getSequenceValueFromDatabaseFor: aField in: aRow using: aSession [
 
 	aRow at: aField put: (count := count + 1)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 InMemorySequence >> initialize [
 
 	super initialize.
 	count := 0
 ]
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 InMemorySequence >> postWriteAssignSequenceValueFor: aField in: aRow [
 ]
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 InMemorySequence >> postWriteAssignSequenceValueFor: aField in: aRow using: anAccessor [
 ]
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 InMemorySequence >> preWriteAssignSequenceValueFor: aField in: aRow [
 
 	aRow at: aField put: (count := count + 1)

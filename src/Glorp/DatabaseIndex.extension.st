@@ -1,13 +1,13 @@
-Extension { #name : #DatabaseIndex }
+Extension { #name : 'DatabaseIndex' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 DatabaseIndex class >> forField: aField [
 	^(self new initialize)
 		addField: aField;
 		yourself
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 DatabaseIndex class >> forFields: aCollection [
 	^(self new)
 		addFields: aCollection;

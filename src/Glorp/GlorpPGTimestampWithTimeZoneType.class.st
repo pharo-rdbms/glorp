@@ -1,21 +1,23 @@
 Class {
-	#name : #GlorpPGTimestampWithTimeZoneType,
-	#superclass : #GlorpDatabaseType,
-	#category : 'Glorp-Types'
+	#name : 'GlorpPGTimestampWithTimeZoneType',
+	#superclass : 'GlorpDatabaseType',
+	#category : 'Glorp-Types',
+	#package : 'Glorp',
+	#tag : 'Types'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 GlorpPGTimestampWithTimeZoneType >> impliedSmalltalkType [
 	^Dialect timestampClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpPGTimestampWithTimeZoneType >> initialize [
 	super initialize.
 	typeString := 'TIMESTAMP WITH TIME ZONE'.
 ]
 
-{ #category : #SQL }
+{ #category : 'SQL' }
 GlorpPGTimestampWithTimeZoneType >> print: aValue on: aStream [
 	"Print as though we were a regular timestamp field, since we have no time zone information."
 

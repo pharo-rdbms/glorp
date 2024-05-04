@@ -15,8 +15,8 @@ Instance Variables:
 
 "
 Class {
-	#name : #Descriptor,
-	#superclass : #Object,
+	#name : 'Descriptor',
+	#superclass : 'Object',
 	#instVars : [
 		'tables',
 		'mappings',
@@ -31,10 +31,12 @@ Class {
 		'imaginaryTableReplacements',
 		'mappingsForFields'
 	],
-	#category : #'Glorp-Mappings'
+	#category : 'Glorp-Mappings',
+	#package : 'Glorp',
+	#tag : 'Mappings'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> addMapping: aMapping [
 
 	self basicAddMapping: aMapping.
@@ -45,39 +47,39 @@ Descriptor >> addMapping: aMapping [
 				'If you have a classModel you must use newMapping: rather than addMapping:' ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> addMultipleTableJoin: anExpression [
 
 	self multipleTableJoin add: anExpression
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> addTable: aDatabaseTable [
 
 	tables add: aDatabaseTable
 ]
 
-{ #category : #'type mapping' }
+{ #category : 'type mapping' }
 Descriptor >> allDescribedConcreteClasses [
 
 	^ self typeMapping allDescribedConcreteClasses
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> allMappingsForField: aField [
 	"Return all of the mappings that use this field"
 
 	^ mappings select: [ :each | each mappedFields includes: aField ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> allTables [
 	"Return all tables used by this descriptor or its subclasses. For a non-inheritance descriptor, this is the same as tables."
 
 	^ self typeResolver allTablesFor: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> basicAddMapping: aMapping [
 
 	mappings := mappings , (Array with: aMapping).
@@ -85,7 +87,7 @@ Descriptor >> basicAddMapping: aMapping [
 	self resetMappedFields
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 Descriptor >> buildReplacementTableSelect [
 	"We have an imaginary table which is defined by selecting from our attributes instead of from the table. Build the query for that."
 
@@ -109,7 +111,7 @@ Descriptor >> buildReplacementTableSelect [
 	self primaryTable replacementSubSelect: mainQuery
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 Descriptor >> buildReplacementTableSelectFrom: sourceMapping to: targetMapping [
 	"Build a select statement that combines the two mappings. We expect that both are relationships from a single object whose table is imaginary, so we need to knit together the information from the mappings to join the real tables directly together."
 
@@ -138,38 +140,38 @@ Descriptor >> buildReplacementTableSelectFrom: sourceMapping to: targetMapping [
 	^ subQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> cachePolicy [
 
 	cachePolicy isNil ifTrue: [ ^ system cachePolicy ].
 	^ cachePolicy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> cachePolicy: aCachePolicy [
 
 	cachePolicy := aCachePolicy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> classModel [
 
 	^ classModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> classModel: aGlorpClassModel [
 
 	classModel := aGlorpClassModel
 ]
 
-{ #category : #'type resolution' }
+{ #category : 'type resolution' }
 Descriptor >> classesRequiringIndependentQueries [
 
 	^ self typeResolver classesRequiringIndependentQueriesFor: self describedClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Descriptor >> computeMapsPrimaryKeys [
 
 	| primaryKeyFields |
@@ -182,7 +184,7 @@ Descriptor >> computeMapsPrimaryKeys [
 	^ true
 ]
 
-{ #category : #deleting }
+{ #category : 'deleting' }
 Descriptor >> createDeleteRowFor: anObject table: aTable in: aRowMap [
 	"Create records for rows that require deletion"
 
@@ -190,7 +192,7 @@ Descriptor >> createDeleteRowFor: anObject table: aTable in: aRowMap [
 		each first mapFromObject: anObject intoRowsIn: aRowMap ]
 ]
 
-{ #category : #deleting }
+{ #category : 'deleting' }
 Descriptor >> createDeleteRowsFor: anObject in: aRowMap [
 	"Create records for rows that require deletion"
 
@@ -211,7 +213,7 @@ allow the multiple table criteria to specify them if that's the only one. If the
 	self mappings do: [:each | each  createDeleteRowFor: anObject in: aRowMap]
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 Descriptor >> createRowsFor: anObject in: aRowMap [
 
 	| row |
@@ -237,25 +239,25 @@ Descriptor >> createRowsFor: anObject in: aRowMap [
 						intoRowsIn: aRowMap]]
 ]
 
-{ #category : #tracing }
+{ #category : 'tracing' }
 Descriptor >> defaultTracing [
 
 	^ Tracing new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> describedClass [
 
 	^ classModel describedClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> describedClass: aClass [
 
 	classModel := self system classModelFor: aClass
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 Descriptor >> describedConcreteClassFor: row withBuilder: builder [
 	"Lookup the class that is represented by the row when there is a possibility
 		of this row representing any class within a hierarchy. "
@@ -266,13 +268,13 @@ Descriptor >> describedConcreteClassFor: row withBuilder: builder [
 		  descriptor: self
 ]
 
-{ #category : #'creating mappings' }
+{ #category : 'creating mappings' }
 Descriptor >> directMapping [
 
 	^ self newMapping: DirectMapping
 ]
 
-{ #category : #'creating mappings' }
+{ #category : 'creating mappings' }
 Descriptor >> directMappingFor: attributeName [
 	"Create a direct mapping from the attribute of this name to the field in the table with a matching name. For convenience when there's a good correspondence between the field and instance variable names."
 
@@ -287,7 +289,7 @@ Descriptor >> directMappingFor: attributeName [
 	^ self directMapping from: attributeName to: field
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> directMappingForField: aField [
 	"Return a single, direct mapping for this field.  There may conceivably be more than one, 
 	but they all have to agree, so it shouldn't matter as far as the value. There may also be none.
@@ -298,7 +300,7 @@ Descriptor >> directMappingForField: aField [
 		  ifNone: [ nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> directMappingsForField: aField [
 	"Return all the relationship mappings that use this field"
 
@@ -306,7 +308,7 @@ Descriptor >> directMappingsForField: aField [
 		  :each | each isRelationship ]
 ]
 
-{ #category : #'creating mappings' }
+{ #category : 'creating mappings' }
 Descriptor >> fieldFor: aFieldOrString [
 	"We allow either a field or a string naming the field, and return the appropriate field object."
 
@@ -319,7 +321,7 @@ Descriptor >> fieldFor: aFieldOrString [
 		, '. Please pass in the field object'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> fieldsForSelectStatement [
 
 	| myFields inheritedFields |
@@ -330,14 +332,14 @@ Descriptor >> fieldsForSelectStatement [
 		  ifFalse: [ myFields , inheritedFields ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> imaginaryTableIsDefinedByRelationFrom: sourceAttributeName to: targetAttributeName [
 
 	self imaginaryTableReplacements add:
 		(Array with: sourceAttributeName with: targetAttributeName)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> imaginaryTableReplacements [
 
 	imaginaryTableReplacements isNil ifTrue: [
@@ -345,14 +347,14 @@ Descriptor >> imaginaryTableReplacements [
 	^ imaginaryTableReplacements
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Descriptor >> initialize [
 
 	mappings := Array new.
 	tables := OrderedCollection new: 1
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 Descriptor >> initializeRuntimeMappings [
 	"Do any setups we need to make sure that my mappings are initialized for runtime"
 
@@ -360,13 +362,13 @@ Descriptor >> initializeRuntimeMappings [
 		eachMapping initializeRuntimeMappings ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Descriptor >> isForAssociation [
 
 	^ self describedClass == Association
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Descriptor >> isPrimaryKeyAutogeneratedFor: anObject [
 	"Answer if the primary keys are database-generated"
 
@@ -376,13 +378,13 @@ Descriptor >> isPrimaryKeyAutogeneratedFor: anObject [
 		  field type isSerial ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Descriptor >> isTypeMappingRoot [
 
 	^ self typeResolver isTypeMappingRoot: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> keyFields [
 	"Return the fields we use as primary keys for caching purposes. Typically, these are just going to be the primary keys of our primary table. Objects intended to be embedded won't map the primary keys at all. Weird objects may supply their own keys (e.g. functions rather than fields directly)"
 
@@ -394,14 +396,14 @@ Descriptor >> keyFields [
 		  ifFalse: [ keyFields ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> keyFields: aFieldCollection [
 	"Set the fields we use as primary keys for caching purposes. Typically, these are just going to be the primary keys of our primary table"
 
 	keyFields := aFieldCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> mappedFields [
 	"Return all the fields that are mapped, in the order that they occur in the table. This specifically omits fields that are not in the selected set of tables (so e.g. even if a mapping uses a link table field, if it's not in the list of tables to select from, we don't want it). We also include mapped, non-constant expressions, which we would normally expect to be functions"
 
@@ -417,14 +419,14 @@ Descriptor >> mappedFields [
 	^ mappedFields
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> mappedFieldsCount [
 	"Return all the fields that are mapped, in the order that they occur in the table. This specifically omits fields that are not in the selected set of tables (so e.g. even if a mapping uses a link table field, if it's not in the list of tables to select from, we don't want it). We also include mapped, non-constant expressions, which we would normally expect to be functions"
 
 	^ self mappedFields size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> mappingForAttributeNamed: aSymbol [
 
 	^ mappings
@@ -434,19 +436,19 @@ Descriptor >> mappingForAttributeNamed: aSymbol [
 				  self valueDescriptor mappingForAttributeNamed: aSymbol ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> mappingForField: aField [
 
 	^ (self mappingsForFields at: aField ifAbsent: [ ^ nil ]) first
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 Descriptor >> mappings [
 
 	^ ReadStream on: mappings
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> mappingsForFields [
 	"Return a dictionary from fields to the mappings that contain them. This specifically omits fields that are not in the selected set of tables (so e.g. even if a mapping uses a link table field, if it's not in the list of tables to select from, we don't want it). We also include mapped, non-constant expressions, which we would normally expect to be functions"
 
@@ -458,7 +460,7 @@ Descriptor >> mappingsForFields [
 	^ mappingsForFields
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Descriptor >> mapsPrimaryKeys [
 
 	mapsPrimaryKeys isNil ifTrue: [
@@ -466,7 +468,7 @@ Descriptor >> mapsPrimaryKeys [
 	^ mapsPrimaryKeys
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> multipleTableJoin [
 
 	multipleTableJoin isNil ifTrue: [
@@ -474,7 +476,7 @@ Descriptor >> multipleTableJoin [
 	^ multipleTableJoin
 ]
 
-{ #category : #'creating mappings' }
+{ #category : 'creating mappings' }
 Descriptor >> newMapping: aClass [
 
 	| mapping |
@@ -483,13 +485,13 @@ Descriptor >> newMapping: aClass [
 	^ mapping
 ]
 
-{ #category : #'creating mappings' }
+{ #category : 'creating mappings' }
 Descriptor >> oneToOneMapping [
 
 	^ self newMapping: OneToOneMapping
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 Descriptor >> populateObject: anObject inBuilder: anElementBuilder [
 	"Answer an object using the values for the specified fields."
 
@@ -499,7 +501,7 @@ Descriptor >> populateObject: anObject inBuilder: anElementBuilder [
 			each mapObject: anObject inElementBuilder: anElementBuilder]
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 Descriptor >> primaryKeyCollectionFor: anObject [
 	"Find the primary key for anObject. Always return it as a collection."
 
@@ -511,7 +513,7 @@ Descriptor >> primaryKeyCollectionFor: anObject [
 		  self valueOfField: each fromObject: anObject ]
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 Descriptor >> primaryKeyExpressionFor: anObject basedOn: anExpression relation: aSymbol [
 	"anObject can be either a real domain object, or a constant expression containing it, or an expression representing the object"
 
@@ -540,7 +542,7 @@ Descriptor >> primaryKeyExpressionFor: anObject basedOn: anExpression relation: 
 	^expression
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 Descriptor >> primaryKeyFor: anObject [
 	"Find the primary key for anObject. If it's a single field, just return a single value. Otherwise, return a collection. Caller is expected to know what to expect."
 	| fields |
@@ -553,7 +555,7 @@ Descriptor >> primaryKeyFor: anObject [
 			[fields collect: [:each | self valueOfField: each fromObject: anObject]]
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 Descriptor >> primaryKeyMappings [
 	"Return things that map to our primary key fields. Prefer direct mappings"
 
@@ -568,7 +570,7 @@ Descriptor >> primaryKeyMappings [
 	^ pkMappings
 ]
 
-{ #category : #deleting }
+{ #category : 'deleting' }
 Descriptor >> primaryKeyMappingsFor: aTable [
 	"Return our primary key mappings as a collection of mappings, one collection per primary key"
 
@@ -584,14 +586,14 @@ Descriptor >> primaryKeyMappingsFor: aTable [
 	^ allMappings
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> primaryTable [
 
 	tables isEmpty ifTrue: [ ^ nil ].
 	^ tables first
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Descriptor >> printOn: aStream [
 
 	super printOn: aStream.
@@ -600,11 +602,11 @@ Descriptor >> printOn: aStream [
 	aStream nextPutAll: ')'
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 Descriptor >> readBackNewRowInformationFor: anObject [
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 Descriptor >> readBackNewRowInformationFor: anObject in: aRowMap [
 
 	anObject yourSelf class == self describedClass ifFalse: [
@@ -613,7 +615,7 @@ Descriptor >> readBackNewRowInformationFor: anObject in: aRowMap [
 		each readBackNewRowInformationFor: anObject fromRowsIn: aRowMap ]
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 Descriptor >> referencedIndependentObjectsFrom: anObject do: aBlock [
 
 	mappings do: [ :each |
@@ -621,7 +623,7 @@ Descriptor >> referencedIndependentObjectsFrom: anObject do: aBlock [
 			:eachReferencedObject | aBlock value: eachReferencedObject ] ]
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 Descriptor >> referencedIndependentObjectsWithMappingsFrom: anObject do: aBlock [
 
 	mappings do: [:each |
@@ -629,20 +631,20 @@ Descriptor >> referencedIndependentObjectsWithMappingsFrom: anObject do: aBlock 
 			aBlock value: eachReferencedObject value: each]]
 ]
 
-{ #category : #'type mapping' }
+{ #category : 'type mapping' }
 Descriptor >> registerTypeResolver: aResolver [
 
 	self registerTypeResolver: aResolver abstract: false
 ]
 
-{ #category : #'type mapping' }
+{ #category : 'type mapping' }
 Descriptor >> registerTypeResolver: aResolver abstract: shouldBeAbstract [
 
 	shouldBeAbstract ifFalse: [ self beAbstract ].
 	aResolver register: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> relationshipMappingForField: aField [
 	"Return a single, direct mapping for this field. There may conceivably be more than one, but they all have to agree, so it shouldn't matter as far as the value. There may also be none."
 
@@ -651,7 +653,7 @@ Descriptor >> relationshipMappingForField: aField [
 		  ifNone: [ nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> relationshipMappingsForField: aField [
 	"Return all the relationship mappings that use this field, excluding pseudoVariable mappings"
 
@@ -659,25 +661,25 @@ Descriptor >> relationshipMappingsForField: aField [
 		  :each | each isRelationship & each canRead ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> removeMapping: aMapping [
 
 	mappings := mappings copyWithout: aMapping
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> resetMappedFields [
 
 	mappedFields := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> session [
 
 	^ system session
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 Descriptor >> setFieldValue: each in: row from: anObject [
 	"Try to set the value of the field, which is normally a primary key field, in the row, based on data in the object. Useful for the case where we have only a relationship mapping to the object that holds our primary key, and it is uninstantiated"
 
@@ -693,7 +695,7 @@ Descriptor >> setFieldValue: each in: row from: anObject [
 			row at: each put: value ]
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 Descriptor >> setRetrievalExpressionsInReplacementTableForQuery: subQuery fromMapping: sourceMapping toMapping: targetMapping [
 
 	self primaryTable fields
@@ -711,40 +713,40 @@ Descriptor >> setRetrievalExpressionsInReplacementTableForQuery: subQuery fromMa
 			subQuery retrieve: expression]
 ]
 
-{ #category : #tracing }
+{ #category : 'tracing' }
 Descriptor >> setupTracing: aTracing [
 	"Find all the other objects that need to be read when this one is read"
 
 	self trace: aTracing context: aTracing base
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Descriptor >> supportsOrdering [
 
 	typeResolver isNil ifTrue: [ ^ true ].
 	^ typeResolver supportsOrderingFor: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> system [
 
 	^ system
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> system: anObject [
 
 	system := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> table [
 
 	tables isEmpty ifTrue: [ ^ nil ].
 	^ tables first
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> table: aDatabaseTable [
 
 	| table |
@@ -754,19 +756,19 @@ Descriptor >> table: aDatabaseTable [
 	tables add: table
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> tables [
 
 	^ tables
 ]
 
-{ #category : #'creating mappings' }
+{ #category : 'creating mappings' }
 Descriptor >> toManyMapping [
 
 	^ self newMapping: ToManyMapping
 ]
 
-{ #category : #tracing }
+{ #category : 'tracing' }
 Descriptor >> trace: aTracing context: anExpression [
 	"For each mapping, check if the relationship is involved in the set of things
 to be read"
@@ -774,7 +776,7 @@ to be read"
 	mappings do: [ :each | each trace: aTracing context: anExpression ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> typeMapping [
 
 	^ mappings detect: [ :each | each isTypeMapping ] ifNone: [
@@ -784,13 +786,13 @@ Descriptor >> typeMapping [
 		  mapping ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> typeMapping: aMapping [
 
 	self addMapping: aMapping
 ]
 
-{ #category : #'type mapping' }
+{ #category : 'type mapping' }
 Descriptor >> typeMappingCriteriaIn: base [
 
 	| r l |
@@ -799,32 +801,32 @@ Descriptor >> typeMappingCriteriaIn: base [
 	^ l in: r
 ]
 
-{ #category : #'type resolution' }
+{ #category : 'type resolution' }
 Descriptor >> typeMappingRoot [
 
 	^ self typeResolver typeMappingRoot
 ]
 
-{ #category : #'type resolution' }
+{ #category : 'type resolution' }
 Descriptor >> typeMappingRootDescriptor [
 
 	^ self typeResolver typeMappingRootDescriptor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> typeResolver [
 
 	typeResolver isNil ifTrue: [ IdentityTypeResolver new register: self ].
 	^ typeResolver
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> typeResolver: anObject [
 
 	typeResolver := anObject
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 Descriptor >> validate [
 	"Do any tests we can to make sure that this definition makes sense in this context"
 
@@ -844,7 +846,7 @@ Descriptor >> validate [
 	self typeResolver validate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Descriptor >> valueDescriptor [
 
 	| valueMapping |
@@ -853,13 +855,13 @@ Descriptor >> valueDescriptor [
 	^ valueMapping referenceDescriptor
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 Descriptor >> valueOfField: aField fromObject: anObject [
 
 	^ self valueOfField: aField fromObject: anObject ifNone: [ nil ]
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 Descriptor >> valueOfField: aField fromObject: anObject ifNone: aBlock [
 
 	| directMapping notFound |

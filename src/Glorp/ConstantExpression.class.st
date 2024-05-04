@@ -8,34 +8,36 @@ Instance Variables:
 
 "
 Class {
-	#name : #ConstantExpression,
-	#superclass : #GlorpExpression,
+	#name : 'ConstantExpression',
+	#superclass : 'GlorpExpression',
 	#instVars : [
 		'value',
 		'alias'
 	],
-	#category : #'Glorp-Expressions'
+	#category : 'Glorp-Expressions',
+	#package : 'Glorp',
+	#tag : 'Expressions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ConstantExpression class >> for: anObject [
 
 	^ self new value: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConstantExpression >> alias [
 
 	^ alias
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConstantExpression >> alias: anObject [
 
 	alias := anObject
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 ConstantExpression >> asExpressionJoiningSource: source toTarget: target [
 	"Create a general expression which represents this relationship where the values of the targets (which are normally parameters) are supplied out of the context provided by 'target' and the source fields are referencing things out of the context of source. Produces something suitable for ANDing into an expression when doing a join
    Example: If we had CUSTOMER.ADDRESS_ID = ADDRESS.ID as a parameter, and we want to AND this into an expression [:customer | customer address street = 'Main'] then we have customer as a base, and we get
@@ -45,7 +47,7 @@ ConstantExpression >> asExpressionJoiningSource: source toTarget: target [
 	^ self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ConstantExpression >> asGlorpExpressionForDescriptor: aDescriptor [
 	"This should only get sent to us if we're the top level of an expression. And since we don't have children, we're also the bottom level. This is only useful for the case where the expression is [:each | true] or [:each | false]."
 
@@ -53,33 +55,33 @@ ConstantExpression >> asGlorpExpressionForDescriptor: aDescriptor [
 		  (BaseExpression new descriptor: aDescriptor)
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ConstantExpression >> asGlorpExpressionOn: aBaseExpression [
 
 	^ self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ConstantExpression >> canBind [
 	"Return true if this represents a value that can be bound into a prepared statement"
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ConstantExpression >> canHaveBase [
 	"Return true if this type of expression can have a base expression on which other things can be built. Doesn't say whether we actually have a valid one or not."
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConstantExpression >> field [
 
 	^ self
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ConstantExpression >> get: aSymbol withArguments: anArray [
 
 	| functionExpression |
@@ -91,37 +93,37 @@ ConstantExpression >> get: aSymbol withArguments: anArray [
 		withArguments: anArray
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ConstantExpression >> isConstantExpression [
 
 	^ true
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 ConstantExpression >> mappedFields [
 
 	^ Array with: self
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 ConstantExpression >> mappedFieldsCount [
 
 	^ 1
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ConstantExpression >> printOnlySelfOn: aStream [
 
 	aStream print: value
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ConstantExpression >> printSQLOn: aStream withParameters: aDictionary [
 
 	self value glorpPrintSQLOn: aStream
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ConstantExpression >> printSelectSQLOn: aStream withParameters: aDictionary [
 
 	self value glorpPrintSelectSQLOn: aStream.
@@ -131,61 +133,61 @@ ConstantExpression >> printSelectSQLOn: aStream withParameters: aDictionary [
 			nextPutAll: alias ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ConstantExpression >> printTreeOn: aStream [
 
 	aStream print: value
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ConstantExpression >> printUnqualifiedSQLOn: aStream withParameters: aDictionary [
 
 	self printSQLOn: aStream withParameters: aDictionary
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 ConstantExpression >> rebuildOn: aBaseExpression startingFrom: anExpression withOuterScopeBase: ultimateBaseExpression [
 
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConstantExpression >> table [
 
 	^ nil
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 ConstantExpression >> ultimateBaseExpression [
 
 	^ nil
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 ConstantExpression >> value [
 
 	^ value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConstantExpression >> value: anObject [
 
 	value := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConstantExpression >> valueIn: aDictionary [
 
 	^ value
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 ConstantExpression >> valueInBuilder: aBuilder [
 
 	^ value
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 ConstantExpression >> valueInBuilder: aBuilder as: anExpression [
 
 	^ value

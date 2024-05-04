@@ -1,12 +1,12 @@
-Extension { #name : #NullSequence }
+Extension { #name : 'NullSequence' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 NullSequence class >> default [
 
 	^self new.
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 NullSequence class >> new [
 
 	Singleton isNil ifTrue: [Singleton := self basicNew].

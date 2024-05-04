@@ -14,8 +14,8 @@ Instance Variables:
 
 "
 Class {
-	#name : #GlorpAttributeModel,
-	#superclass : #Object,
+	#name : 'GlorpAttributeModel',
+	#superclass : 'Object',
 	#instVars : [
 		'name',
 		'type',
@@ -28,16 +28,18 @@ Class {
 		'canRead',
 		'canWrite'
 	],
-	#category : #'Glorp-Mappings'
+	#category : 'Glorp-Mappings',
+	#package : 'Glorp',
+	#tag : 'Mappings'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GlorpAttributeModel class >> named: aSymbol [
 
 	^ self new name: aSymbol
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GlorpAttributeModel class >> named: aSymbol collection: aCollectionClass of: aClass [
 
 	^ self new
@@ -46,13 +48,13 @@ GlorpAttributeModel class >> named: aSymbol collection: aCollectionClass of: aCl
 		  collectionType: aCollectionClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GlorpAttributeModel class >> named: aSymbol collectionOf: aClass [
 
 	^ self named: aSymbol collection: OrderedCollection of: aClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GlorpAttributeModel class >> named: aSymbol dictionary: dictionaryClass from: keyClass to: valueClass [
 
 	^ self new
@@ -62,7 +64,7 @@ GlorpAttributeModel class >> named: aSymbol dictionary: dictionaryClass from: ke
 		  collectionType: dictionaryClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GlorpAttributeModel class >> named: aSymbol dictionaryFrom: keyClass to: valueClass [
 
 	^ self
@@ -72,7 +74,7 @@ GlorpAttributeModel class >> named: aSymbol dictionaryFrom: keyClass to: valueCl
 		  to: valueClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GlorpAttributeModel class >> named: aSymbol type: aClass [
 
 	^ self new
@@ -80,7 +82,7 @@ GlorpAttributeModel class >> named: aSymbol type: aClass [
 		  type: aClass
 ]
 
-{ #category : #knitting }
+{ #category : 'knitting' }
 GlorpAttributeModel >> add: anObject to: aCollection in: ourObject [
 	"If this is an array we can't just add to it, we must concatenate and re-set the value"
 	| newCollection |
@@ -93,40 +95,40 @@ GlorpAttributeModel >> add: anObject to: aCollection in: ourObject [
 		ifFalse: [aCollection add: anObject]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpAttributeModel >> beForPseudoVariable [
 	"Make this be a pseudo-variable - one which is neither read nor written, and doesn't have a corresponding instance variable, but is only used for queries."
 	canRead := false.
 	canWrite := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpAttributeModel >> canRead [
 	^canRead
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpAttributeModel >> canRead: aBoolean [
 	canRead := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpAttributeModel >> canWrite [
 	^canWrite
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpAttributeModel >> canWrite: aBoolean [
 	canWrite := aBoolean
 ]
 
-{ #category : #'get/set' }
+{ #category : 'get/set' }
 GlorpAttributeModel >> checkTargetType: anObject [
 	"Check that anObject's type corresponds to something we know how to handle for this attribute. We expect this to be a real object, not a collection."
 	self checkTargetType: anObject against: self type
 ]
 
-{ #category : #'get/set' }
+{ #category : 'get/set' }
 GlorpAttributeModel >> checkTargetType: anObject against: aClass [
 	"Check that anObject's type corresponds to aClass, which we expect as our values. We expect this to be a real object, not a collection."
 	| targetModel |
@@ -139,7 +141,7 @@ GlorpAttributeModel >> checkTargetType: anObject against: aClass [
 			ifFalse: [(GlorpInvalidTypeError new object: anObject; expectedType: aClass) signal]]
 ]
 
-{ #category : #'get/set' }
+{ #category : 'get/set' }
 GlorpAttributeModel >> checkTargetTypeForKey: aKey value: anObject [
 	"Check that anObject's type corresponds to something we know how to handle for this attribute. We expect this to be a real object, not a collection. This is the version used for checking a dictionary, where we check both key and value, but only if they correspond to mapped classes."
 	(self system classModelFor: self keyType) isNil 
@@ -148,33 +150,33 @@ GlorpAttributeModel >> checkTargetTypeForKey: aKey value: anObject [
 		ifFalse: [self checkTargetType: anObject against: type]
 ]
 
-{ #category : #'get/set' }
+{ #category : 'get/set' }
 GlorpAttributeModel >> checkType: anObject [
 	(self classModel matches: anObject)
 		ifFalse: [self error: 'Wrong type of object']
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpAttributeModel >> classModel [
 	^classModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpAttributeModel >> classModel: aGlorpClassModel [
 	classModel := aGlorpClassModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpAttributeModel >> collectionType [
 	^collectionType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpAttributeModel >> collectionType: aClass [
 	collectionType := aClass
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 GlorpAttributeModel >> copyFrom: anAttributeModel [
 	"Copy over the attributes if it defines them and we don't"
 	anAttributeModel isNil ifTrue: [^self].
@@ -187,7 +189,7 @@ GlorpAttributeModel >> copyFrom: anAttributeModel [
 	canWrite := anAttributeModel canWrite.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GlorpAttributeModel >> directGetValueFrom: anObject [ 
 	| index |
 	index := self instVarIndexIn: anObject.
@@ -195,7 +197,7 @@ GlorpAttributeModel >> directGetValueFrom: anObject [
 	^anObject instVarAt: index
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GlorpAttributeModel >> directSetValueIn: anObject to: aValue [ 
 	| index |
 	index := self instVarIndexIn: anObject.
@@ -203,7 +205,7 @@ GlorpAttributeModel >> directSetValueIn: anObject to: aValue [
 	^anObject instVarAt: index put: aValue
 ]
 
-{ #category : #'get/set' }
+{ #category : 'get/set' }
 GlorpAttributeModel >> getValueFrom: anObject [
 	| real |
 	real := anObject yourSelf.
@@ -212,13 +214,13 @@ GlorpAttributeModel >> getValueFrom: anObject [
 	^real perform: self name
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GlorpAttributeModel >> initialize [
 	canRead := true.
 	canWrite := true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GlorpAttributeModel >> instVarIndex [
 	| soughtName |
 	attributeIndex == nil ifFalse: [^attributeIndex].
@@ -227,28 +229,28 @@ GlorpAttributeModel >> instVarIndex [
 				indexOf: soughtName
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GlorpAttributeModel >> instVarIndexIn: anObject [ 
 	^self instVarIndex
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 GlorpAttributeModel >> isCollectionAttribute [
 	^collectionType notNil
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 GlorpAttributeModel >> isDictionaryAttribute [
 	^collectionType isBehavior and: [collectionType includesBehavior: Dictionary]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpAttributeModel >> isForPseudoVariable [
 	"Return true if this is a pseudo-variable - one which is neither read nor written, and doesn't have a corresponding instance variable, but is only used for queries."
 	^(canRead not & canWrite not) or: [self isValid not]
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 GlorpAttributeModel >> isReadable [
 	self canRead ifFalse: [^false].
 	^self useDirectAccess 
@@ -256,12 +258,12 @@ GlorpAttributeModel >> isReadable [
 		ifFalse: [self classModel describedClass canUnderstand: self name]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GlorpAttributeModel >> isValid [
 	^name notNil and: [classModel notNil]
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 GlorpAttributeModel >> isWritable [
 	self canWrite ifFalse: [^false].
 	^self useDirectAccess 
@@ -269,17 +271,17 @@ GlorpAttributeModel >> isWritable [
 		ifFalse: [self classModel describedClass canUnderstand: self setSelector]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpAttributeModel >> keyType [
 	^keyType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpAttributeModel >> keyType: aClass [
 	keyType := aClass
 ]
 
-{ #category : #knitting }
+{ #category : 'knitting' }
 GlorpAttributeModel >> knit: ourObject to: anotherObject [
 	"Set up the relationship from our object to another one, indicated by our mapping."
 
@@ -297,7 +299,7 @@ GlorpAttributeModel >> knit: ourObject to: anotherObject [
 		ifFalse: [ self setValueIn: ourObject to: anotherObject ]
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 GlorpAttributeModel >> loopOver: mightBeACollection doing: aBlock [
 	"It is possible that the value for a dictionary attribute is nil. If so, do not map it back"
 	| index |
@@ -319,46 +321,46 @@ GlorpAttributeModel >> loopOver: mightBeACollection doing: aBlock [
 			index := index + 1]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpAttributeModel >> name [
 	^name isNil ifTrue: [''] ifFalse: [name]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpAttributeModel >> name: aSymbol [
 	| symbol |
 	symbol := aSymbol isNil ifTrue: [aSymbol] ifFalse: [aSymbol asSymbol].
 	name := symbol
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GlorpAttributeModel >> newCollection [
 	collectionType == GlorpVirtualCollection ifTrue: [^OrderedCollection new].
 	^collectionType isBehavior ifTrue: [collectionType new] ifFalse: [collectionType copyEmpty].
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 GlorpAttributeModel >> printOn: aStream [
 	aStream nextPutAll: self classModel printString, '>>', self name
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GlorpAttributeModel >> privateUseDirectAccess [
 	^useDirectAccess
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GlorpAttributeModel >> raiseInvalidAttributeError [
 	self error: 'Invalid attribute: ', classModel printString, '>>', name printString.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GlorpAttributeModel >> setSelector [
 	setSelector  == nil ifTrue: [setSelector := (name, ':') asSymbol].
 	^setSelector.
 ]
 
-{ #category : #'get/set' }
+{ #category : 'get/set' }
 GlorpAttributeModel >> setValueIn: anObject to: aValue [ 
 	| real |
 	self isValid ifFalse: [^self].
@@ -368,45 +370,45 @@ GlorpAttributeModel >> setValueIn: anObject to: aValue [
 	^real perform: self setSelector with: aValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpAttributeModel >> system [
 	classModel isNil ifTrue: [^nil].
 	^classModel system.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpAttributeModel >> type [
 	^type
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpAttributeModel >> type: aClass [
 	type := aClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpAttributeModel >> useDirectAccess [
 	useDirectAccess isNil ifFalse: [^useDirectAccess].
 	self system isNil ifTrue: [^true].  "A global default, although only applicable if we're not in a valid setup"
 	^self system useDirectAccessForMapping.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpAttributeModel >> useDirectAccess: aBoolean [
 	useDirectAccess := aBoolean
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 GlorpAttributeModel >> validate [
 	name isEmpty ifTrue: [self error: 'Invalid attribute name']
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 GlorpAttributeModel >> validateCanRead [
 	self isReadable ifFalse: [self raiseInvalidAttributeError]
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 GlorpAttributeModel >> validateCanWrite [
 	self isWritable ifFalse: [self raiseInvalidAttributeError]
 ]

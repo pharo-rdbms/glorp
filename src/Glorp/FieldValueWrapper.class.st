@@ -9,69 +9,71 @@ Instance Variables:
 
 "
 Class {
-	#name : #FieldValueWrapper,
-	#superclass : #Object,
+	#name : 'FieldValueWrapper',
+	#superclass : 'Object',
 	#instVars : [
 		'contents',
 		'hasValue',
 		'containedBy'
 	],
-	#category : #'Glorp-UnitOfWork'
+	#category : 'Glorp-UnitOfWork',
+	#package : 'Glorp',
+	#tag : 'UnitOfWork'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FieldValueWrapper >> allInnerWrappers [
 	^#()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FieldValueWrapper >> basicContents [
 	"Return the un-transformed contents"
 	^self contents
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FieldValueWrapper >> containedBy [
 
 	^containedBy
 ]
 
-{ #category : #unifying }
+{ #category : 'unifying' }
 FieldValueWrapper >> containsWrapper: aFieldValueWrapper [
 	^self == aFieldValueWrapper
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FieldValueWrapper >> contents [
 
 	^contents
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FieldValueWrapper >> contents: anObject [
 
 	(hasValue and: [contents ~= anObject]) ifTrue: [self error: 'Inconsistent values in field'].
 	self privateSetContents: anObject
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FieldValueWrapper >> hasValue [
 
 	^hasValue
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FieldValueWrapper >> initialize [
 
 	hasValue := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FieldValueWrapper >> innerWrapper [
 	^self
 ]
 
-{ #category : #containing }
+{ #category : 'containing' }
 FieldValueWrapper >> isNowContainedBy: aRow and: aField [
 	"Optimize this for memory consumption with the common case of one container. If we're contained by nothing, make it a single association. Otherwise, use a dictionary"
 	| shortCircuit thisFieldsEntries |
@@ -91,7 +93,7 @@ FieldValueWrapper >> isNowContainedBy: aRow and: aField [
 	(thisFieldsEntries includes: aRow) ifFalse: [thisFieldsEntries add: aRow]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FieldValueWrapper >> printOn: aStream [
 
 	aStream 
@@ -101,13 +103,13 @@ FieldValueWrapper >> printOn: aStream [
 		nextPutAll: '>>'
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FieldValueWrapper >> privateSetContents: anObject [
 	contents := anObject.
 	hasValue := true
 ]
 
-{ #category : #unifying }
+{ #category : 'unifying' }
 FieldValueWrapper >> replaceWith: aFieldValueWrapper [
 	containedBy isNil ifTrue: [^nil].
 	containedBy
@@ -115,7 +117,7 @@ FieldValueWrapper >> replaceWith: aFieldValueWrapper [
 			[:eachField :eachListOfRows | eachListOfRows do: [:eachRow | eachRow wrapperAt: eachField put: aFieldValueWrapper]]
 ]
 
-{ #category : #unifying }
+{ #category : 'unifying' }
 FieldValueWrapper >> unifyWith: targetWrapper [
 	(self containsWrapper: targetWrapper) ifTrue: [^self].
 	(targetWrapper containsWrapper: self) ifTrue: [^self].

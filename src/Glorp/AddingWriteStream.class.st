@@ -7,51 +7,53 @@ Instance Variables:
 
 "
 Class {
-	#name : #AddingWriteStream,
-	#superclass : #Object,
+	#name : 'AddingWriteStream',
+	#superclass : 'Object',
 	#instVars : [
 		'target'
 	],
-	#category : #'Glorp-Core'
+	#category : 'Glorp-Core',
+	#package : 'Glorp',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AddingWriteStream class >> on: aCollection [
 
 	^ self new target: aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AddingWriteStream >> contents [
 
 	^ target
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AddingWriteStream >> nextPut: anObject [
 
 	target add: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AddingWriteStream >> nextPutAll: aCollection [
 
 	target glorpAddAll: aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AddingWriteStream >> on: aSet [
 
 	target := aSet
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AddingWriteStream >> target [
 
 	^ target
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AddingWriteStream >> target: aCollection [
 
 	target := aCollection

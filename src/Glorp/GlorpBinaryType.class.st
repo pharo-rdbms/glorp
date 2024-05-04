@@ -2,17 +2,19 @@
 The bytea data type allows storage of binary strings. It is a binary data type in the PostgreSQL
 "
 Class {
-	#name : #GlorpBinaryType,
-	#superclass : #GlorpDatabaseType,
-	#category : #'Glorp-Types'
+	#name : 'GlorpBinaryType',
+	#superclass : 'GlorpDatabaseType',
+	#category : 'Glorp-Types',
+	#package : 'Glorp',
+	#tag : 'Types'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 GlorpBinaryType >> converterForStType: aClass [
 	^self platform byteaConverter 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GlorpBinaryType >> initialize [ 
 	super initialize.
 	typeString := #bytea

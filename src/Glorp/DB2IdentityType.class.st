@@ -3,12 +3,14 @@ DB2IdentityType represents identity column types in DB2. Glorp prefers sequences
 
 "
 Class {
-	#name : #DB2IdentityType,
-	#superclass : #GlorpSerialType,
-	#category : #'Glorp-Types'
+	#name : 'DB2IdentityType',
+	#superclass : 'GlorpSerialType',
+	#category : 'Glorp-Types',
+	#package : 'Glorp',
+	#tag : 'Types'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DB2IdentityType >> initializeForField: aDatabaseField in: aDescriptorSystem [
 
 	sequence isNil ifFalse: [^self].
@@ -17,7 +19,7 @@ DB2IdentityType >> initializeForField: aDatabaseField in: aDescriptorSystem [
 	sequence schema: aDatabaseField table schema
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DB2IdentityType >> isIdentityColumn [
 	^true
 ]

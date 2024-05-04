@@ -4,27 +4,29 @@ This is a conditional mapping, but one where the condition is applied to a relat
 This is experimental, and probably suffers from lots of limitations.
 "
 Class {
-	#name : #ConditionalToManyMapping,
-	#superclass : #ToManyMapping,
+	#name : 'ConditionalToManyMapping',
+	#superclass : 'ToManyMapping',
 	#instVars : [
 		'conditional'
 	],
-	#category : 'Glorp-Mappings'
+	#category : 'Glorp-Mappings',
+	#package : 'Glorp',
+	#tag : 'Mappings'
 }
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 ConditionalToManyMapping >> applicableMappingForObject: anObject [
 	"We can actually be called here with our parent object, but the contexts in which that happens we basically just want to do nothing, so return our conditional mapping."
 	[self attribute checkTargetType: anObject] on: GlorpInvalidTypeError do: [:ex | ^self conditional].
 	^self conditional applicableMappingForObject: anObject
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 ConditionalToManyMapping >> applicableMappingForRow: anArray in: anElementBuilder [
 	^self conditional applicableMappingForRow: anArray in: anElementBuilder
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 ConditionalToManyMapping >> buildQuery [
 	query := CompositeQuery new.
 	self conditional casesDo: [:each |
@@ -32,40 +34,40 @@ ConditionalToManyMapping >> buildQuery [
 	^query
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConditionalToManyMapping >> conditional [
 	conditional isNil ifTrue: [conditional := self newMapping: ConditionalMapping].
 	^conditional.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConditionalToManyMapping >> conditional: anObject [
 	conditional := anObject
 ]
 
-{ #category : #conditions }
+{ #category : 'conditions' }
 ConditionalToManyMapping >> conditionalField: aField [
 	self conditional conditionalField: aField
 ]
 
-{ #category : #conditions }
+{ #category : 'conditions' }
 ConditionalToManyMapping >> conditionalMethod: aSymbol [
 	self conditional conditionalMethod: aSymbol
 ]
 
-{ #category : #conditions }
+{ #category : 'conditions' }
 ConditionalToManyMapping >> forField: aField attribute: attributeBlock if: testBlock useMapping: aMapping [
 	self conditionalField: aField.
 	self conditionalMethod: attributeBlock.
 	self if: testBlock then: aMapping
 ]
 
-{ #category : #conditions }
+{ #category : 'conditions' }
 ConditionalToManyMapping >> if: conditionSelector then: aMapping [
 	self conditional if: conditionSelector then: aMapping
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 ConditionalToManyMapping >> mapOneFromObject: sourceObject toTarget: targetObject intermediate: aRowMapKey atPosition: index puttingRowsIn: aRowMap [
 	
 	(self applicableMappingForObject: targetObject) mapOneFromObject:
@@ -73,12 +75,12 @@ ConditionalToManyMapping >> mapOneFromObject: sourceObject toTarget: targetObjec
 			index puttingRowsIn: aRowMap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConditionalToManyMapping >> mappedFields [
 	^self conditional mappedFields
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ConditionalToManyMapping >> newMapping: aMappingClass [
 	"Implement this so that we can create our sub-mappings without having them added to the parent descriptor as independent mappings"
 	| mapping |
@@ -88,12 +90,12 @@ ConditionalToManyMapping >> newMapping: aMappingClass [
 	^mapping
 ]
 
-{ #category : #conditions }
+{ #category : 'conditions' }
 ConditionalToManyMapping >> otherwise: aMapping [
 	self conditional otherwise: aMapping
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 ConditionalToManyMapping >> parametersIn: anElementBuilder [
 	| parameters |
 	self shouldUseFilteredRead ifTrue: [^anElementBuilder command parameters].
@@ -104,7 +106,7 @@ ConditionalToManyMapping >> parametersIn: anElementBuilder [
 	^parameters
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 ConditionalToManyMapping >> rowMapKeyForSource: source target: target index: index [
 	^(self applicableMappingForObject: target) rowMapKeyForSource: source target: target index: index
 ]

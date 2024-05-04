@@ -8,49 +8,51 @@ Instance Variables:
 
 "
 Class {
-	#name : #DictionaryBuilder,
-	#superclass : #ElementBuilder,
+	#name : 'DictionaryBuilder',
+	#superclass : 'ElementBuilder',
 	#instVars : [
 		'keyBuilder',
 		'valueBuilder'
 	],
-	#category : #'Glorp-Queries'
+	#category : 'Glorp-Queries',
+	#package : 'Glorp',
+	#tag : 'Queries'
 }
 
-{ #category : #'building objects' }
+{ #category : 'building objects' }
 DictionaryBuilder >> buildObjectFrom: anArray [
 	"We just build an association out of the sub-builders "
 
 	self row: anArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DictionaryBuilder >> canCauseDuplicateRows [
 	^expression class == MappingExpression and: [expression mapping isToManyRelationship]
 ]
 
-{ #category : #'selecting fields' }
+{ #category : 'selecting fields' }
 DictionaryBuilder >> fieldsForSelectStatement [
 	^#()
 ]
 
-{ #category : #'selecting fields' }
+{ #category : 'selecting fields' }
 DictionaryBuilder >> fieldsFromMyPerspective [
 	^#()
 ]
 
-{ #category : #'building objects' }
+{ #category : 'building objects' }
 DictionaryBuilder >> findInstanceForRow: aRow proxyType: proxyType [
 
 	instance := Association new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DictionaryBuilder >> instanceValue [
 	^self instance value
 ]
 
-{ #category : #'building objects' }
+{ #category : 'building objects' }
 DictionaryBuilder >> knitResultIn: aCursoredStream [
 	"Connect up our built object with any other objects that reference it. Used if we retrieve more than one thing in the same query"
 	| relatedBuilder |
@@ -65,11 +67,11 @@ DictionaryBuilder >> knitResultIn: aCursoredStream [
 			[expression mapping knitFromBuilder: relatedBuilder toBuilder: self]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 DictionaryBuilder >> postCopy [
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 DictionaryBuilder >> reconcileWithBuilders: oldCollection andCopy: newCollection [
 	"Fix up references to our internal sub-builders"
 	| keyIndex valueIndex |
@@ -79,7 +81,7 @@ DictionaryBuilder >> reconcileWithBuilders: oldCollection andCopy: newCollection
 	valueBuilder := newCollection at: valueIndex
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DictionaryBuilder >> setup [
 	"Do any initialization once we've got our parameters"
 	| base collectionType |
@@ -89,12 +91,12 @@ DictionaryBuilder >> setup [
 	valueBuilder := ElementBuilder basicFor: (collectionType valueExpression asGlorpExpressionOn: expression) in: query
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DictionaryBuilder >> subBuilders [
 	^Array with: keyBuilder with: valueBuilder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DictionaryBuilder >> withAllSubBuilders [
 	^Array with: self with: keyBuilder with: valueBuilder
 ]

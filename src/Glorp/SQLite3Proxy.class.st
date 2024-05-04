@@ -3,17 +3,19 @@ SQLiteProxy is different from a normal proxy in that its >>glorpTriggerProxyActi
 
 "
 Class {
-	#name : #SQLite3Proxy,
-	#superclass : #Proxy,
-	#category : 'Glorp-Queries'
+	#name : 'SQLite3Proxy',
+	#superclass : 'Proxy',
+	#category : 'Glorp-Queries',
+	#package : 'Glorp',
+	#tag : 'Queries'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SQLite3Proxy >> class [
 	^SQLite3Proxy
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 SQLite3Proxy >> getValue [
 	"This method further modifies the retrieved value using the action block."
 
@@ -28,7 +30,7 @@ SQLite3Proxy >> getValue [
 	^value
 ]
 
-{ #category : #'proxy actions' }
+{ #category : 'proxy actions' }
 SQLite3Proxy >> glorpTriggerProxyAction: target [
 	"Evaluate our action with the owner and the newly retrieved target.
 	Return the result of this evaluation, or self if there is no action.

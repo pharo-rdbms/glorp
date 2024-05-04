@@ -3,12 +3,14 @@ This is the exception we raise if we encounter a database error trying to commit
 
 "
 Class {
-	#name : #GlorpTransactionFailure,
-	#superclass : #GlorpError,
-	#category : #'Glorp-Exceptions'
+	#name : 'GlorpTransactionFailure',
+	#superclass : 'GlorpError',
+	#category : 'Glorp-Exceptions',
+	#package : 'Glorp',
+	#tag : 'Exceptions'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpTransactionFailure >> defaultMessageText [
 
 	^ 'Optimistic Lock Conflict'

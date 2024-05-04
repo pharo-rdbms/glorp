@@ -2,39 +2,41 @@
 A command to update our set of rows.
 "
 Class {
-	#name : #UpdateCommand,
-	#superclass : #RowBasedCommand,
-	#category : #'Glorp-Database'
+	#name : 'UpdateCommand',
+	#superclass : 'RowBasedCommand',
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #'bound values' }
+{ #category : 'bound values' }
 UpdateCommand >> arrayBindings [
 	"I don't think we can array bind updates. There may be values in the row that we haven't read, and if we attempt to write all the fields we'll be overwriting them with nulls. It's possible that there's a set of rows with all the same fields and we could update them all the same way, but that isn't done yet"
 
 	self error: 'cannot array bind an update'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UpdateCommand >> arrayBoundFields [
 
 	^ row table nonPrimaryKeyFields asArray
 	  , row table primaryKeyFields asArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UpdateCommand >> bindingTypes [
 
 	^ super bindingTypes
 	  , (row lockKeyFields collect: [ :each | each type ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UpdateCommand >> blockFactor [
 
 	^ 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UpdateCommand >> fieldsNeedingUpdate [
 
 	^ self shouldUpdateOnlyChangedFields
@@ -42,13 +44,13 @@ UpdateCommand >> fieldsNeedingUpdate [
 		  ifFalse: [ row nonPrimaryKeyFields ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 UpdateCommand >> needsRowCount [
 
 	^ row lockKeyFields isNotEmpty
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 UpdateCommand >> printSQL [
 
 	| bodyFields |
@@ -71,14 +73,14 @@ UpdateCommand >> printSQL [
 				separatedBy: [self nextPutAll: ' AND ']]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 UpdateCommand >> shouldUpdateOnlyChangedFields [
 	"Return true if we should write only changed fields out in an update statement, or if we should write all of them. The tradeoff is that writing only the changed ones will produce less SQL, but make more variations of the statement, and require us to keep more prepared statements around if we're using binding. By default, use this option only if we're not using binding by default. It would be nice if we could delegate this decision to somewhere the user has control over, e.g. the descriptor system, but we don't actually know about it"
 
 	^ self system shouldUpdateOnlyChangedFieldsFor: self
 ]
 
-{ #category : #'bound values' }
+{ #category : 'bound values' }
 UpdateCommand >> singleRowBindings [
 	"Whether binding or not, my printSQL method writes IS NULL if a lock field's value is nil since, in the where clause, the SQL must be WHERE ... IS NULL, not WHERE ... =NULL, and so at the least must not be offered as WHERE ... =? VALUES(..., nil) to PostgreSQL sockets.
 	The lock fields come last, so if there is only one lock field then its final nil binding value can be provided for a lower layer to ignore, as was done in older Glorp.  However if there are two lock fields (rarer case), the nil value for the first gets bound to the second's ? in the SQL, its own value being ignored.  Therefore I must not bind nil to a lock field.
@@ -96,7 +98,7 @@ UpdateCommand >> singleRowBindings [
 	^ basic, lockValues
 ]
 
-{ #category : #'bound values' }
+{ #category : 'bound values' }
 UpdateCommand >> singleRowBoundFields [
 	"Note: We will actually have to bind one more thing than this, the optimistic lock fields (if present). That's handled in the caller"
 

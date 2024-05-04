@@ -1,6 +1,6 @@
-Extension { #name : #AdHocProxy }
+Extension { #name : 'AdHocProxy' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 AdHocProxy class >> readBlock: aZeroArgumentBlock [
 
 	^self new glorpReadBlock: aZeroArgumentBlock

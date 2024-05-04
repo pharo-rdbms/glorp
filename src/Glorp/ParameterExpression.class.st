@@ -8,16 +8,18 @@ Instance Variables:
 . 
 "
 Class {
-	#name : #ParameterExpression,
-	#superclass : #GlorpExpression,
+	#name : 'ParameterExpression',
+	#superclass : 'GlorpExpression',
 	#instVars : [
 		'base',
 		'lookupKey'
 	],
-	#category : #'Glorp-Expressions'
+	#category : 'Glorp-Expressions',
+	#package : 'Glorp',
+	#tag : 'Expressions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ParameterExpression class >> forField: aField basedOn: anObjectExpression [
 
 	^(self new) 
@@ -25,14 +27,14 @@ ParameterExpression class >> forField: aField basedOn: anObjectExpression [
 		yourself
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 ParameterExpression >> addToTargetFields: aCollection [
 	"If we can provide target fields, add them to the collection"
 	lookupKey class == DatabaseField ifTrue: [
 		aCollection add: lookupKey].
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 ParameterExpression >> asExpressionJoiningSource: source toTarget: target [
 	"Create a general expression which represents this relationship where the values of the targets (which are normally parameters) are supplied out of the context provided by 'target' and the source fields are referencing things out of the context of source. Produces something suitable for ANDing into an expression when doing a join
    Example: If we had CUSTOMER.ADDRESS_ID = ADDRESS.ID as a parameter, and we want to AND this into an expression [:customer | customer address street = 'Main'] then we have customer as a base, and we get
@@ -42,34 +44,34 @@ ParameterExpression >> asExpressionJoiningSource: source toTarget: target [
 	^ source getField: lookupKey
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ParameterExpression >> base [
 
 	^ base
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ParameterExpression >> canBind [
 	"Return true if this represents a value that can be bound into a prepared statement"
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ParameterExpression >> canHaveBase [
 	"Return true if this type of expression can have a base expression on which other things can be built. Doesn't say whether we actually have a valid one or not."
 
 	^ true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ParameterExpression >> convertedDbValueOf: anObject [
 	"We don't do any conversion"
 
 	^ anObject
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 ParameterExpression >> do: aBlock skipping: aSet [
 
 	(aSet includes: self) ifTrue: [ ^ self ].
@@ -78,20 +80,20 @@ ParameterExpression >> do: aBlock skipping: aSet [
 	aBlock value: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ParameterExpression >> field [
 
 	^ lookupKey
 ]
 
-{ #category : #'initialize/release' }
+{ #category : 'initialize/release' }
 ParameterExpression >> field: aDatabaseField base: aBaseExpression [
 
 	lookupKey := aDatabaseField.
 	base := aBaseExpression
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ParameterExpression >> get: aSelector withArguments: anArray [
 
 	| functionExpression |
@@ -105,7 +107,7 @@ ParameterExpression >> get: aSelector withArguments: anArray [
 		  withArguments: anArray
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ParameterExpression >> getMapping: aMapping named: aSymbol [
 	"Get an expression given the actual mapping. Only if you really know what you're doing! In this case, what we're probably doing is rewriting a parameter that's a mapped object into a set of parameters, one for each of its primary keys."
 
@@ -116,7 +118,7 @@ ParameterExpression >> getMapping: aMapping named: aSymbol [
 	^ expression
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ParameterExpression >> printOn: aStream [
 
 	aStream nextPutAll: 'Parameter('.
@@ -124,19 +126,19 @@ ParameterExpression >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ParameterExpression >> printOnlySelfOn: aStream [
 
 	lookupKey printSQLOn: aStream withParameters: #(  )
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ParameterExpression >> printSQLOn: aStream withParameters: aDictionary [
 
 	self field type print: (self valueIn: aDictionary) on: aStream
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ParameterExpression >> printTreeOn: aStream [
 
 	[ lookupKey printSQLOn: aStream withParameters: #(  ) ]
@@ -144,13 +146,13 @@ ParameterExpression >> printTreeOn: aStream [
 		do: [ :ex | lookupKey printOn: aStream ]
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 ParameterExpression >> queryLevelBaseExpression [
 
 	^ base queryLevelBaseExpression
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 ParameterExpression >> rebuildOn: aBaseExpression startingFrom: anExpression withOuterScopeBase: ultimateBaseExpression [
 
 	self == anExpression ifTrue: [ ^ aBaseExpression ].
@@ -158,13 +160,13 @@ ParameterExpression >> rebuildOn: aBaseExpression startingFrom: anExpression wit
 	^ aBaseExpression getParameter: lookupKey
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 ParameterExpression >> ultimateBaseExpression [
 
 	^ base ultimateBaseExpression
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ParameterExpression >> valueIn: aDictionary [
 
 	^ aDictionary at: lookupKey

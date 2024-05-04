@@ -8,46 +8,48 @@ Instance Variables
 
 "
 Class {
-	#name : #PluggableDatabaseConverter,
-	#superclass : #DatabaseConverter,
+	#name : 'PluggableDatabaseConverter',
+	#superclass : 'DatabaseConverter',
 	#instVars : [
 		'stToDb',
 		'dbToSt'
 	],
-	#category : #'Glorp-Database'
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 PluggableDatabaseConverter >> convert: anObject fromDatabaseRepresentationAs: aDatabaseType [
 
 	^ dbToSt ifNil: [ anObject ] ifNotNil: [ dbToSt value: anObject ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 PluggableDatabaseConverter >> convert: anObject toDatabaseRepresentationAs: aDatabaseType [
 
 	^ stToDb ifNil: [ anObject ] ifNotNil: [ stToDb value: anObject ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableDatabaseConverter >> dbToSt [
 
 	^ dbToSt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableDatabaseConverter >> dbToStConverter: aBlock [
 
 	dbToSt := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableDatabaseConverter >> stToDb [
 
 	^ stToDb
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableDatabaseConverter >> stToDbConverter: aBlock [
 
 	stToDb := aBlock

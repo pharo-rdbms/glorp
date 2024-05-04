@@ -1,6 +1,6 @@
-Extension { #name : #RowBasedCommand }
+Extension { #name : 'RowBasedCommand' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 RowBasedCommand class >> forRow: aDatabaseRow useBinding: aBoolean session: aSession [
 
 	^ self new
@@ -10,7 +10,7 @@ RowBasedCommand class >> forRow: aDatabaseRow useBinding: aBoolean session: aSes
 		  yourself
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 RowBasedCommand class >> forRows: aCollectionOfDatabaseRows useBinding: aBoolean session: aSession [
 
 	^ self new

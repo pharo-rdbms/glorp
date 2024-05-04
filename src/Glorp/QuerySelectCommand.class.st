@@ -8,15 +8,17 @@ Instance Variables:
 
 "
 Class {
-	#name : #QuerySelectCommand,
-	#superclass : #SelectCommand,
+	#name : 'QuerySelectCommand',
+	#superclass : 'SelectCommand',
 	#instVars : [
 		'boundExpressions'
 	],
-	#category : #'Glorp-Database'
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QuerySelectCommand >> bindingTypes [
 
 	self useBinding ifFalse: [ ^ #(  ) ].
@@ -24,7 +26,7 @@ QuerySelectCommand >> bindingTypes [
 	^ boundExpressions collect: [ :each | each bindingType ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QuerySelectCommand >> bindings [
 
 	self useBinding ifFalse: [ ^ #(  ) ].
@@ -32,26 +34,26 @@ QuerySelectCommand >> bindings [
 	^ boundExpressions collect: [ :each | each bindingIn: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QuerySelectCommand >> blockFactor [
 
 	blockFactor ifNil: [ blockFactor := query expectedRows ].
 	^ blockFactor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QuerySelectCommand >> boundExpressions [
 
 	^ boundExpressions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QuerySelectCommand >> boundExpressions: anObject [
 
 	boundExpressions := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QuerySelectCommand >> findBoundExpressions [
 
 	self useBinding ifFalse: [ ^ nil ].
@@ -59,7 +61,7 @@ QuerySelectCommand >> findBoundExpressions [
 	query addBoundExpressionsIn: self to: boundExpressions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QuerySelectCommand >> maximumLobSizeToRetrieveDirectly [
 
 	^ query
@@ -67,7 +69,7 @@ QuerySelectCommand >> maximumLobSizeToRetrieveDirectly [
 		  ifNotNil: [ query maximumLobSizeToRetrieveDirectly ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 QuerySelectCommand >> printOn: aStream [
 
 	super printOn: aStream.
@@ -76,7 +78,7 @@ QuerySelectCommand >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 QuerySelectCommand >> printSQL [
 
 	stream nextPutAll: 'SELECT '.
@@ -91,19 +93,19 @@ QuerySelectCommand >> printSQL [
 	query printOffsetOn: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QuerySelectCommand >> query [
 
 	^ query
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QuerySelectCommand >> query: aQuery [
 
 	query := aQuery
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 QuerySelectCommand >> tables [
 
 	^ (self query tablesToPrint collect: [ :each | each parent ]) asSet

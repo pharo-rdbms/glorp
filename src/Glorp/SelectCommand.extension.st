@@ -1,6 +1,6 @@
-Extension { #name : #SelectCommand }
+Extension { #name : 'SelectCommand' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 SelectCommand class >> forQuery: aQuery parameters: aDictionary [
 
 	^ self new
@@ -9,7 +9,7 @@ SelectCommand class >> forQuery: aQuery parameters: aDictionary [
 		  yourself
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 SelectCommand class >> forQuery: aQuery parameters: aDictionary useBinding: aBoolean session: aSession [
 
 	^ self new

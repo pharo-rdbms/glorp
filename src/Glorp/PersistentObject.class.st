@@ -2,20 +2,22 @@
 This is an abstract superclass for Glorp persistent objects. Things don't have to subclass from this in order to be persistent, but if they do, they will inherit some methods which may be useful.
 "
 Class {
-	#name : #PersistentObject,
-	#superclass : #Object,
+	#name : 'PersistentObject',
+	#superclass : 'Object',
 	#instVars : [
 		'session'
 	],
-	#category : #'Glorp-Core'
+	#category : 'Glorp-Core',
+	#package : 'Glorp',
+	#tag : 'Core'
 }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 PersistentObject class >> classModel [
 	^self descriptor classModel
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 PersistentObject class >> count [
 	"Count the number of objects in the database"
 	"Person count"
@@ -23,12 +25,12 @@ PersistentObject class >> count [
 	^ self getSession count: self
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 PersistentObject class >> descriptor [
 	^self getSession descriptorFor: self
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 PersistentObject class >> find: primaryKey [
 	"Query the database for an object whose primary key = the given value."
 	"Person find: 1"
@@ -38,14 +40,14 @@ PersistentObject class >> find: primaryKey [
 	^session execute: (self query: primaryKey).
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 PersistentObject class >> findAll [
 	"Query the database for all objects of this class."
 	"Person findAll"
 	^self getSession read: self.
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 PersistentObject class >> findWhere: aBlock [
 	"Query the database for all objects of this class satisfying aBlock. The block has to be a query block, meaning you can't execute arbitrary code, but rather it will be analyzed and used to generate SQL."
 	"Person findWhere: [:each | (each name = 'John Doe') & (each address houseNum = 1000)]"
@@ -53,13 +55,13 @@ PersistentObject class >> findWhere: aBlock [
 	^self getSession read: self where: aBlock.
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 PersistentObject class >> getSession [
 	"Return the session to be used for the current query. In general, we don't know how to find our session. Callers can catch the CannotFindSession exception and resume it, or subclasses can implement this method to find the session using mechanisms like process environment, a global, or whatever else they have available."
 	^CannotFindSession raise.
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 PersistentObject class >> query: primaryKey [
 	"Return a query object that will query the database for an object whose primary key = the given value. If you want to just return the object, use find: instead. The advantage of this is that you can use this to get a basic query, but then modify it before executing it."
 	"Person query: 1"
@@ -70,14 +72,14 @@ PersistentObject class >> query: primaryKey [
 	^Query readOneOf: self where: [:each | (each perform: pkAttribute) = primaryKey].
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 PersistentObject class >> queryAll [
 	"Return a query object that will query the database for all objects of this class. If you want to just return the object, use find: instead. The advantage of this is that you can use this to get a basic query, but then modify it before executing it."
 	"Person queryAll"
 	^Query read: self.
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 PersistentObject class >> queryWhere: aBlock [
 	"Return a Query object that will query the database for all objects of this class satisfying aBlock. The block has to be a query block, meaning you can't execute arbitrary code, but rather it will be analyzed and used to generate SQL. If you want to just return the objects, use findWhere: instead. The advantage of this is that you can use this to get a basic query, but then modify it before executing it, e.g. using AND: or OR:."
 	"Person queryWhere: [:each | (each name = 'John Doe') & (each address houseNum = 1000)]"
@@ -85,12 +87,12 @@ PersistentObject class >> queryWhere: aBlock [
 	^Query read: self where: aBlock.
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 PersistentObject class >> table [
 	^self descriptor ifNotNil: [:descriptor | descriptor table]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 PersistentObject >> = anObject [
 	"Implement equality to compare primary keys if they are set. Make sure that if we have proxies, we check through them."
 
@@ -109,7 +111,7 @@ PersistentObject >> = anObject [
 		ifFalse: [true]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PersistentObject >> bePersistent [
 	"Queue our object to be saved to the database upon commit."
 
@@ -118,13 +120,13 @@ PersistentObject >> bePersistent [
 		register: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PersistentObject >> classModel [
 
 	^ self descriptor classModel
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PersistentObject >> commitUnitOfWork [
 	"Commit the entire unit of work; this may include objects other than myself."
 
@@ -132,20 +134,20 @@ PersistentObject >> commitUnitOfWork [
 	self session commitUnitOfWork
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PersistentObject >> delete [
 	"Queue our object to be removed from the database on commit."
 
 	self session delete: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PersistentObject >> descriptor [
 
 	^ self session descriptorFor: self class
 ]
 
-{ #category : #'finding objects' }
+{ #category : 'finding objects' }
 PersistentObject >> find [
 	"This is a query by example facility. We take whichever fields are filled in the object and read back any objects in the database that match."
 
@@ -156,7 +158,7 @@ PersistentObject >> find [
 	^ instances
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PersistentObject >> findMapping: aMapping in: aVirtualCollection [
 
 	aMapping hasAttribute ifFalse: [ ^ aVirtualCollection ].
@@ -170,7 +172,7 @@ PersistentObject >> findMapping: aMapping in: aVirtualCollection [
 					  to: value ] ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 PersistentObject >> hash [
 	"Implement hash to compare primary keys if they are set. Make sure that if we have proxies, we check through them."
 
@@ -182,7 +184,7 @@ PersistentObject >> hash [
 		  ifFalse: [ myKey hash ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PersistentObject >> matchAttribute: anExpression to: value [
 	"We match expressions differently depending on what type they are."
 
@@ -191,7 +193,7 @@ PersistentObject >> matchAttribute: anExpression to: value [
 		  ifFalse: [ anExpression = value ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PersistentObject >> refresh [
 	"Refresh our object from the database and rollback any changes registered in the unit of work."
 
@@ -199,7 +201,7 @@ PersistentObject >> refresh [
 	self session refresh: self
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PersistentObject >> rollback [
 	"Rollback our entries in the queue so that we are not involved in the commit."
 
@@ -207,7 +209,7 @@ PersistentObject >> rollback [
 	self session rollbackUnitOfWorkFor: self
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PersistentObject >> rollbackUnitOfWork [
 	"Rollback the entire unit of work; this may include objects other than myself."
 
@@ -215,14 +217,14 @@ PersistentObject >> rollbackUnitOfWork [
 	self session rollbackUnitOfWork
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PersistentObject >> session [
 
 	session ifNil: [ session := self class getSession ].
 	^ session
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PersistentObject >> session: aGlorpSession [
 
 	session := aGlorpSession

@@ -2,23 +2,25 @@
 Float type
 "
 Class {
-	#name : #GlorpFloatType,
-	#superclass : #GlorpAbstractNumericType,
-	#category : #'Glorp-Types'
+	#name : 'GlorpFloatType',
+	#superclass : 'GlorpAbstractNumericType',
+	#category : 'Glorp-Types',
+	#package : 'Glorp',
+	#tag : 'Types'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 GlorpFloatType >> converterForStType: aClass [
 
 	^self platform converterNamed: #numberToFloat.
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GlorpFloatType >> impliedSmalltalkType [
 	^Float.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GlorpFloatType >> initialize [
 	super initialize.
 	typeString := 'float4'.

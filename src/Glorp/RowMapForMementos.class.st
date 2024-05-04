@@ -7,24 +7,26 @@ So this rowmap keeps the correspondence map and knows that it has to compensate 
 
 "
 Class {
-	#name : #RowMapForMementos,
-	#superclass : #RowMap,
+	#name : 'RowMapForMementos',
+	#superclass : 'RowMap',
 	#instVars : [
 		'correspondenceMap',
 		'reversedCorrespondenceMap',
 		'collectionMementos'
 	],
-	#category : 'Glorp-UnitOfWork'
+	#category : 'Glorp-UnitOfWork',
+	#package : 'Glorp',
+	#tag : 'UnitOfWork'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RowMapForMementos class >> withCorrespondenceMap: aDictionary [
 
 	^self new
 		correspondenceMap: aDictionary
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RowMapForMementos >> adjustForMementos: objects [
 	"We may be being passed row map keys that refer to originals when they should refer to mementos. Fix.This is horribly ugly."
 
@@ -35,52 +37,52 @@ RowMapForMementos >> adjustForMementos: objects [
 	^objects
 ]
 
-{ #category : #'private/mapping' }
+{ #category : 'private/mapping' }
 RowMapForMementos >> collectionMementoFor: aCollection [
 
 	aCollection glorpIsCollection ifFalse: [^aCollection].
 	^collectionMementos at: aCollection ifAbsent: [correspondenceMap at: aCollection]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RowMapForMementos >> collectionMementos: aDictionary [
 	collectionMementos := aDictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RowMapForMementos >> correspondenceMap [
 	^correspondenceMap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RowMapForMementos >> correspondenceMap: anObject [
 	correspondenceMap := anObject
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RowMapForMementos >> deleteRowForTable: aTable withKey: aKey ifAbsent: aBlock [
 	^super deleteRowForTable: aTable withKey: (self mementoFor: aKey) ifAbsent: aBlock
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RowMapForMementos >> findOrAddRowForTable: aTable withKey: aKey [ 
 	^super findOrAddRowForTable: aTable withKey: (self mementoFor: aKey)
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RowMapForMementos >> mementoFor: aKey [
 	^(self isRowMapKey: aKey)
 		ifTrue: [aKey adjustIn: correspondenceMap]
 		ifFalse: [correspondenceMap at: aKey ifAbsent: [aKey]]
 ]
 
-{ #category : #'private/mapping' }
+{ #category : 'private/mapping' }
 RowMapForMementos >> originalObjectFor: anObject [
 
 	^correspondenceMap at: anObject
 ]
 
-{ #category : #'private/mapping' }
+{ #category : 'private/mapping' }
 RowMapForMementos >> reverseLookup: anObject [
 
       (self isRowMapKey: anObject) ifTrue: [
@@ -88,7 +90,7 @@ RowMapForMementos >> reverseLookup: anObject [
       ^ self reversedCorrespondenceMap at: anObject
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RowMapForMementos >> reversedCorrespondenceMap [
 	(reversedCorrespondenceMap isNil
 		or: [reversedCorrespondenceMap size ~= correspondenceMap size])
@@ -100,7 +102,7 @@ RowMapForMementos >> reversedCorrespondenceMap [
 	^reversedCorrespondenceMap
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RowMapForMementos >> rowForTable: aTable withKey: aKey ifAbsent: aBlock [
 	^super
 		rowForTable: aTable

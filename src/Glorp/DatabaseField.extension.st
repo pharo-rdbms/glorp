@@ -1,12 +1,12 @@
-Extension { #name : #DatabaseField }
+Extension { #name : 'DatabaseField' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 DatabaseField class >> named: aString [
 
 	^self error: 'type needed'
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 DatabaseField class >> named: aString type: dbType [
 
 	^ super new initialize
@@ -14,7 +14,7 @@ DatabaseField class >> named: aString type: dbType [
 		type: dbType
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 DatabaseField class >> new [
 
 	^self error: 'dbType needed'

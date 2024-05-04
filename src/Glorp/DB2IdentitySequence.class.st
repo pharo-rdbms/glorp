@@ -6,23 +6,25 @@ One can obtain the most recently installed number using a query like this.
 
 "
 Class {
-	#name : #DB2IdentitySequence,
-	#superclass : #NamedSequence,
-	#category : #'Glorp-Database'
+	#name : 'DB2IdentitySequence',
+	#superclass : 'NamedSequence',
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 DB2IdentitySequence >> getSequenceValueFromDatabaseFor: aDatabaseField in: aDatabaseRow using: anAccessor [
 	"I do nothing, but I am here for subclassResponsibility reasons"
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DB2IdentitySequence >> isIdentityColumn [
 
 	^ true
 ]
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 DB2IdentitySequence >> postWriteAssignSequenceValueFor: aDatabaseField in: aDatabaseRow using: anAccessor [
 
 	aDatabaseRow at: aDatabaseField
@@ -30,7 +32,7 @@ DB2IdentitySequence >> postWriteAssignSequenceValueFor: aDatabaseField in: aData
 				executeSQLString: 'VALUES IDENTITY_VAL_LOCAL()') first atIndex: 1) asInteger)
 ]
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 DB2IdentitySequence >> reserveSequenceNumbers: anInteger in: aSession for: aTable [
 	"No real sequences here, just identity columns, which we can't pre-allocate"
 ]

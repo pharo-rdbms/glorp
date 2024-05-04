@@ -9,24 +9,26 @@ Instance Variables
 
 "
 Class {
-	#name : #DelegatingDatabaseConverter,
-	#superclass : #DatabaseConverter,
+	#name : 'DelegatingDatabaseConverter',
+	#superclass : 'DatabaseConverter',
 	#instVars : [
 		'host',
 		'stToDbSelector',
 		'dbToStSelector'
 	],
-	#category : #'Glorp-Database'
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 DelegatingDatabaseConverter class >> hostedBy: anObject fromStToDb: stDbSelector fromDbToSt: dbStSelector [
 
 	^super new
 		hostedBy: anObject fromStToDb: stDbSelector fromDbToSt: dbStSelector
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 DelegatingDatabaseConverter class >> named: aSymbol hostedBy: anObject fromStToDb: stDbSelector fromDbToSt: dbStSelector [
 	^super new
 		named: aSymbol
@@ -35,19 +37,19 @@ DelegatingDatabaseConverter class >> named: aSymbol hostedBy: anObject fromStToD
 		fromDbToSt: dbStSelector.
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 DelegatingDatabaseConverter >> convert: anObject fromDatabaseRepresentationAs: aDatabaseType [
 
 	^ host perform: dbToStSelector with: anObject with: aDatabaseType
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 DelegatingDatabaseConverter >> convert: anObject toDatabaseRepresentationAs: aDatabaseType [
 
 	^ host perform: stToDbSelector with: anObject with: aDatabaseType
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DelegatingDatabaseConverter >> hostedBy: anObject fromStToDb: stDbSelector fromDbToSt: dbStSelector [
 
 	host := anObject.
@@ -55,7 +57,7 @@ DelegatingDatabaseConverter >> hostedBy: anObject fromStToDb: stDbSelector fromD
 	dbToStSelector := dbStSelector
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DelegatingDatabaseConverter >> named: aSymbol hostedBy: anObject fromStToDb: stDbSelector fromDbToSt: dbStSelector [
 
 	name := aSymbol.

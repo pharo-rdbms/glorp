@@ -1,6 +1,6 @@
-Extension { #name : #SortedCollection }
+Extension { #name : 'SortedCollection' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 SortedCollection >> writeStream [
 	^AddingWriteStream on: self.
 ]

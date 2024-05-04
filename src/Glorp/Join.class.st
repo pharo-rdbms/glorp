@@ -15,8 +15,8 @@ Instance Variables:
 
 "
 Class {
-	#name : #Join,
-	#superclass : #Object,
+	#name : 'Join',
+	#superclass : 'Object',
 	#instVars : [
 		'sources',
 		'targets',
@@ -24,17 +24,19 @@ Class {
 		'outerJoin',
 		'owningMapping'
 	],
-	#category : #'Glorp-Expressions'
+	#category : 'Glorp-Expressions',
+	#package : 'Glorp',
+	#tag : 'Expressions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Join class >> from: aField to: anotherField [
 
 	^self new
 		addSource: aField target: anotherField
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Join class >> from: from1Field to: to1Field
 from: from2Field to: to2Field [
 
@@ -43,7 +45,7 @@ from: from2Field to: to2Field [
 		addSource: from2Field target: to2Field
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Join class >> from: from1Field to: to1Field
 from: from2Field to: to2Field
 from: from3Field to: to3Field [
@@ -54,7 +56,7 @@ from: from3Field to: to3Field [
 		addSource: from3Field target: to3Field
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Join class >> from: from1Field to: to1Field
 from: from2Field to: to2Field
 from: from3Field to: to3Field
@@ -67,7 +69,7 @@ from: from4Field to: to4Field [
 		addSource: from4Field target: to4Field
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Join class >> from: from1Field to: to1Field
 from: from2Field to: to2Field
 from: from3Field to: to3Field
@@ -82,14 +84,14 @@ from: from5Field to: to5Field [
 		addSource: from5Field target: to5Field
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Join class >> fromAll: sourceFields toAll: targetFields [
 
 	^self new
 		sourceFields: sourceFields targetFields: targetFields
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Join >> , aJoin [
 	| newJoin |
 	aJoin isNil ifTrue: [^self].
@@ -100,7 +102,7 @@ Join >> , aJoin [
 	^newJoin
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Join >> = aJoin [
 	aJoin class == self class ifFalse: [^false].
 	aJoin allSourceFields = sources ifFalse: [^false].
@@ -108,7 +110,7 @@ Join >> = aJoin [
 	^true.
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 Join >> addSource: aField target: anotherField [ 
 	| value targetValue |
 	value := (self isConstant: aField) 
@@ -123,41 +125,41 @@ Join >> addSource: aField target: anotherField [
 	targets add: targetValue
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 Join >> addToTargetFields: aCollection [
 	"If we can provide target fields, add them to the collection"
 	aCollection addAll: targets.
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 Join >> additionalExpressions [
 	^#()
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 Join >> additionalExpressionsIn: aQuery [ 
 	^#()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Join >> allControlledTables [
 
 	^ self allTables
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Join >> allSourceFields [
 
 	^sources
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Join >> allTables [
 
 	^(targets collect: [:each | each table]) asSet.
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 Join >> allTablesToPrint [
 
 	^ targets inject: Set new into: [ :sum :each |
@@ -165,13 +167,13 @@ Join >> allTablesToPrint [
 		  sum ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Join >> allTargetFields [
 
 	^targets
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 Join >> asExpressionJoiningSource: source toTarget: target [
 	"Create a general expression which represents this relationship where the values of the targets (which are normally parameters) are supplied out of the context provided by 'target' and the source fields are referencing things out of the context of source. Produces something suitable for ANDing into an expression when doing a join
    Example: If we had CUSTOMER.ADDRESS_ID = ADDRESS.ID as a parameter, and we want to AND this into an expression [:customer | customer address street = 'Main'] then we have customer as a base, and we get 
@@ -190,7 +192,7 @@ Join >> asExpressionJoiningSource: source toTarget: target [
 	^completeExpression
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Join >> asGeneralGlorpExpression [
 	"Convert this to a 'normal' expression representing the same information"
 
@@ -209,7 +211,7 @@ Join >> asGeneralGlorpExpression [
 	^main
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Join >> asGeneralGlorpExpressionWithFields [
 	"The normal conversion of a join is to an expression equating fields and parameters. Instead, generate one with field to field comparisons"
 
@@ -227,19 +229,19 @@ Join >> asGeneralGlorpExpressionWithFields [
 	^main
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 Join >> asGlorpExpression [
 
 	^self.
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 Join >> asGlorpExpressionForDescriptor: aDescriptor [
 
 	base descriptor: aDescriptor.
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 Join >> asGlorpExpressionOn: aBaseExpression [
 	| copy |
 	copy := self copy.
@@ -248,37 +250,37 @@ Join >> asGlorpExpressionOn: aBaseExpression [
 	^copy.
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 Join >> asOuterJoin [
 	^self copy beOuterJoin.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Join >> base [
 	^base.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Join >> base: aBaseExpression [
 	base := aBaseExpression.
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 Join >> beOuterJoin [
 	outerJoin := true.
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 Join >> condenseBooleanEquality [
 	^self.
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 Join >> condenseBooleanEqualityExpressions [
 	^self.
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 Join >> do: aBlock skipping: aSet [
 	"Joins act as if they don't have children, and just evaluate for themselves"
 	| |
@@ -287,30 +289,30 @@ Join >> do: aBlock skipping: aSet [
 	aBlock value: self.
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 Join >> fieldsDo: aBlock [
 
 	sources with: targets do: aBlock.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Join >> from: aField to: anotherField [
 
 	^self addSource: aField target: anotherField.
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Join >> generalExpressionPart [
 	^nil.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Join >> hasDescriptor [
 
 	^false.
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 Join >> initialize [
 
 	sources := OrderedCollection new: 2.
@@ -319,7 +321,7 @@ Join >> initialize [
 	outerJoin := false.
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Join >> inverseJoin [
 	| inverse |
 	inverse := self class new
@@ -330,7 +332,7 @@ Join >> inverseJoin [
 	^inverse.
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Join >> isConstant: aTarget [
 	"The target can be either a constant (which gets turned into a ConstantExpression) or (usually) a DatabaseField, representing a parameter to the query"
 	(aTarget class == DatabaseField) ifTrue: [^false].
@@ -338,27 +340,27 @@ Join >> isConstant: aTarget [
 	^true.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Join >> isEmptyExpression [
 	^sources isEmpty.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Join >> isGlorpExpression [
 	^true.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Join >> isJoin [
 	^true.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Join >> isOuterJoin [
 	^outerJoin.
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 Join >> mapFromSource: sourceObject andTarget: targetObject intoRowsIn: aRowMap [
 	(sourceObject isNil or: [targetObject isNil]) ifTrue: [^self].
 	1
@@ -378,61 +380,61 @@ Join >> mapFromSource: sourceObject andTarget: targetObject intoRowsIn: aRowMap 
 						key: targetObject]].
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 Join >> mappableFieldsDo: aBlock [
 
 	sources with: targets do: [:source :target |
 		source isMappable ifTrue: [aBlock value: source value: target]].
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 Join >> mappableSourceFieldsDo: aBlock [
 
 	sources do: [:source  |
 		source isMappable ifTrue: [aBlock value: source]].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Join >> numberOfParameters [
 	^sources size
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 Join >> onlyJoinParts [
 	"Strip out any generic parts, leaving only the things that are actually joins"
 	
 	^self.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Join >> outerJoin [
 	^outerJoin.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Join >> outerJoin: aBoolean [
 	outerJoin := aBoolean.
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 Join >> owningMapping [
 	"Return the mapping (if there is one) that is responsible for. Not needed for the code, but might be a useful debugging aid if trying to figure out where a @#%#@% join came from"
 	^owningMapping.
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 Join >> owningMapping: aMapping [
 	owningMapping := aMapping.
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 Join >> prepareIn: aQuery [ 
 	"Do nothing."
 	aQuery whereClause: (self asGeneralGlorpExpression).
 	aQuery whereClause prepareIn: aQuery.
 ]
 
-{ #category : #'primary keys' }
+{ #category : 'primary keys' }
 Join >> primaryKeyFromDictionary: aDictionary [
 	"Given a set of parameters, return a primary key suitable for retrieving our target. Return either a value for the key, nil for no key found, or an array for compound keys."
 	
@@ -440,7 +442,7 @@ Join >> primaryKeyFromDictionary: aDictionary [
 	^sources collect: [:each | aDictionary at: each ifAbsent: [nil]].
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Join >> printOn: aStream [
 
 	sources with: targets do: [:source :target |
@@ -451,7 +453,7 @@ Join >> printOn: aStream [
 		aStream nextPutAll: ') ']
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Join >> printSQLOn: aStream withParameters: aDictionary [ 
 	1 to: sources size
 		do: 
@@ -469,22 +471,22 @@ Join >> printSQLOn: aStream withParameters: aDictionary [
 			i = targets size ifFalse: [aStream nextPutAll: ' AND ']]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Join >> queryLevelBaseExpression [
 	^self ultimateBaseExpression.
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : 'As yet unclassified' }
 Join >> rebuildOn: aGlorpMappingExpression [ 
 	^self asGlorpExpressionOn: aGlorpMappingExpression.
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 Join >> rebuildOn: aBaseExpression startingFrom: anExpression withOuterScopeBase: ultimateBaseExpression [
 	^self asGlorpExpressionOn: aBaseExpression.
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Join >> removeDuplicates [
 	| existing newSources newTargets |
 	existing := Set new.
@@ -505,19 +507,19 @@ Join >> removeDuplicates [
 	targets := newTargets.
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 Join >> removeNonJoinParts [
 	"Remove anything that's not an actual join. Only useful if we have something that has mixed joins and general expressions, where we assume we don't want to use the general ones, because they're not field level."
 	^self.
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 Join >> replaceJoinsWithInverse [
 	"Replace any actual Join objects we have with their inverse. Only useful if we have something that has mixed joins and general expressions, where we assume we don't want to mess with the general ones, because they're not field-level. As actual joins, we ignore this, because it will be done at the parent level"
 	^self.
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Join >> replacing: aTable withEquivalenceFrom: aJoin [
 	"Create a new join in which references to fields in aTable have been replaced with the equivalent based on a Join (we assume that aTable references are in the sources of aJoin). If the field doesn't occur in the translation, just remove it"
 	| newSources newTargets newSource |
@@ -533,12 +535,12 @@ Join >> replacing: aTable withEquivalenceFrom: aJoin [
 	^self class fromAll: newSources toAll: newTargets.
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 Join >> rewriteEquality [
 	^self.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Join >> shortCircuitOnNullComparison: parameters [
 	"Return true if we represent an expression that compares null to a non-nullable value (in any of our clauses), so we don't ever need to really evaluate it"
 
@@ -547,7 +549,7 @@ Join >> shortCircuitOnNullComparison: parameters [
 	^false.
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Join >> sourceExpressionFor: source [
 	
 	^((self isConstant: source) or: [source isMappable not]) "This might be a subselect"
@@ -555,13 +557,13 @@ Join >> sourceExpressionFor: source [
 		ifFalse: [base getParameter: source].
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 Join >> sourceFields: sourceFields targetFields: targetFields [
 	sources := sourceFields.
 	targets := targetFields.
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 Join >> sourceForTarget: aField [
 
 	| index |
@@ -570,7 +572,7 @@ Join >> sourceForTarget: aField [
 	^sources at: index.
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Join >> targetExpressionFor: eachTarget [ 
 	^(self isConstant: eachTarget)
 		ifTrue: [eachTarget]
@@ -580,7 +582,7 @@ Join >> targetExpressionFor: eachTarget [
 			ifFalse: [(base getTable: eachTarget table) getField: eachTarget]].
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 Join >> targetForSource: aField [
 
 	| index |
@@ -589,13 +591,13 @@ Join >> targetForSource: aField [
 	^targets at: index.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Join >> targetKeys [
 
 	^targets.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Join >> ultimateBaseExpression [
 
 	^base ultimateBaseExpression.

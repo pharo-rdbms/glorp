@@ -2,12 +2,14 @@
 This implements postgresql sequences using nextVal. The mechanism is similar to Oracle sequences, but we don't have to give it a table to select against when all we want is a bunch of numbers, so the implementation is simpler.
 "
 Class {
-	#name : #PGSequence,
-	#superclass : #NamedSequence,
-	#category : #'Glorp-Database'
+	#name : 'PGSequence',
+	#superclass : 'NamedSequence',
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 PGSequence >> backupReserveCommand: anInteger in: aSession [
 
 	| stream command |
@@ -25,7 +27,7 @@ PGSequence >> backupReserveCommand: anInteger in: aSession [
 	^command
 ]
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 PGSequence >> getSequenceValueFromDatabaseFor: aDatabaseField in: aDatabaseRow using: anAccessor [
 
 	| statement rows pk |
@@ -39,7 +41,7 @@ PGSequence >> getSequenceValueFromDatabaseFor: aDatabaseField in: aDatabaseRow u
 	aDatabaseRow at: aDatabaseField put: pk
 ]
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 PGSequence >> postWriteAssignSequenceValueFor: aDatabaseField in: aDatabaseRow using: anAccessor [
 
 "No-op;  for user information, we show, commented, the code that was provided here circa Glorp 0.2.*.
@@ -48,7 +50,7 @@ PGSequence >> postWriteAssignSequenceValueFor: aDatabaseField in: aDatabaseRow u
 				executeSQLString: 'SELECT CURRVAL(' , self qualifiedName 	, ')')."
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PGSequence >> reserveViaBackupMechanism: anInteger in: aSession [
 	"The regular mechanism didn't work, (probably because there weren't enough rows in the table), try a different technique."
 
@@ -58,7 +60,7 @@ PGSequence >> reserveViaBackupMechanism: anInteger in: aSession [
 	self reservedNumbers addAll: row
 ]
 
-{ #category : #SQL }
+{ #category : 'SQL' }
 PGSequence >> tableSelectCommandFor: aTable in: aSession reserving: anInteger [
 	| stream |
 	(tableSelectCommand notNil and: [tableSelectCommand parameters includes: anInteger]) ifFalse:
@@ -75,14 +77,14 @@ PGSequence >> tableSelectCommandFor: aTable in: aSession reserving: anInteger [
 	^tableSelectCommand
 ]
 
-{ #category : #SQL }
+{ #category : 'SQL' }
 PGSequence >> tableToSelectFromFor: aTable [
 	"Sometimes it's inefficient to select sequence values against our own table and we can use a database-specific system table instead to be much faster. Subclasses can override where this is the case"
 
 	^ DatabaseTable named: 'pg_attribute'
 ]
 
-{ #category : #SQL }
+{ #category : 'SQL' }
 PGSequence >> tableToSelectFromIn: session for: aTable [
 	"Sometimes it's inefficient to select sequence values against our own table and we can use a database-specific system table instead to be much faster. Subclasses can override where this is the case"
 

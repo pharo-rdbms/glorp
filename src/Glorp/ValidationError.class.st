@@ -4,30 +4,32 @@ ValidationError is a superclass for all errors that are raise while validating a
 
 "
 Class {
-	#name : #ValidationError,
-	#superclass : #GlorpError,
-	#category : #'Glorp-Exceptions'
+	#name : 'ValidationError',
+	#superclass : 'GlorpError',
+	#category : 'Glorp-Exceptions',
+	#package : 'Glorp',
+	#tag : 'Exceptions'
 }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 ValidationError class >> mayResume [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ValidationError >> description [
 
 	^ self messageText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ValidationError >> model [
 
 	^ self parameter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ValidationError >> model: aClass [
 
 	self parameter: aClass

@@ -7,34 +7,36 @@ Instance Variables:
 
 "
 Class {
-	#name : #TableBasedSequence,
-	#superclass : #DatabaseSequence,
+	#name : 'TableBasedSequence',
+	#superclass : 'DatabaseSequence',
 	#instVars : [
 		'sequenceTableName'
 	],
-	#category : #'Glorp-Database'
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 TableBasedSequence class >> default [
 
 	^self new sequenceTableName: 'SEQUENCE'.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TableBasedSequence >> isIdentityColumn [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TableBasedSequence >> sequenceTableName [
 	"Private - Answer the value of the receiver's ''sequenceTableName'' instance variable."
 
 	^ sequenceTableName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TableBasedSequence >> sequenceTableName: aString [
 
 	sequenceTableName := aString

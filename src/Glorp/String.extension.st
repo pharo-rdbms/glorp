@@ -1,12 +1,12 @@
-Extension { #name : #String }
+Extension { #name : 'String' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 String >> glorpIsCollection [
 	"For our purposes, these aren't collections, but rather a simple database type"
 	^false.
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 String >> glorpPrintSQLOn: aCommand [
 	| platform requiresEscape |
 	platform := [aCommand platform] on: MessageNotUnderstood do: [:ex | ex return: nil].
@@ -24,7 +24,7 @@ String >> glorpPrintSQLOn: aCommand [
 	aCommand nextPut: $'.
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 String >> like: wildcardString [
 	" 'abcde' like: 'abc%'  "
 
@@ -37,7 +37,7 @@ String >> like: wildcardString [
 	^newString match: self."
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 String >> likePattern: aPattern from: patternStart sourceStart: sourceStart [ 
 	"Note that this uses, with permission, the code from ObjectStudio that does this. It's a recursive implementation, but this is primarily for in-memory mimicking of database operations so the performance limitations shouldn't be a big issue."
 	| c |

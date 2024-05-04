@@ -10,18 +10,20 @@ Instance Variables:
 
 "
 Class {
-	#name : #AdHocMapping,
-	#superclass : #Mapping,
+	#name : 'AdHocMapping',
+	#superclass : 'Mapping',
 	#instVars : [
 		'fromDbMappingBlock',
 		'toDbMappingBlock',
 		'mappedFields',
 		'shouldProxy'
 	],
-	#category : #'Glorp-Mappings'
+	#category : 'Glorp-Mappings',
+	#package : 'Glorp',
+	#tag : 'Mappings'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AdHocMapping class >> forAttribute: aSymbol fromDb: fromBlock toDb: toBlock mappingFields: aFieldCollection [ 
 	^super new 
 		setAttribute: aSymbol
@@ -30,7 +32,7 @@ AdHocMapping class >> forAttribute: aSymbol fromDb: fromBlock toDb: toBlock mapp
 		mappingFields: aFieldCollection
 ]
 
-{ #category : #'printing SQL' }
+{ #category : 'printing SQL' }
 AdHocMapping >> allRelationsFor: rootExpression [
 	"We may have multiple relationships."
 	| tables rows result rightChild rightHandSide |
@@ -50,12 +52,12 @@ AdHocMapping >> allRelationsFor: rootExpression [
 	^result.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AdHocMapping >> controlsTables [
 	^false
 ]
 
-{ #category : #'printing SQL' }
+{ #category : 'printing SQL' }
 AdHocMapping >> convertedDbValueOf: anObject [
 	| tables rows |
 	tables := self mappedTables.
@@ -66,7 +68,7 @@ AdHocMapping >> convertedDbValueOf: anObject [
 		^eachRow at: mappedFields first].
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 AdHocMapping >> field [
 	| fields |
 	fields := self mappedFields.
@@ -74,7 +76,7 @@ AdHocMapping >> field [
 	^fields first
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AdHocMapping >> forAttribute: aSymbol fromDb: fromBlock toDb: toBlock mappingFields: aFieldCollection [
 	self
 		setAttribute: aSymbol
@@ -83,32 +85,32 @@ AdHocMapping >> forAttribute: aSymbol fromDb: fromBlock toDb: toBlock mappingFie
 		mappingFields: aFieldCollection
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AdHocMapping >> hasImpliedClauses [
 	"We may imply more than one clause, or a clause which is different from the one directly implied by the relationship"
 	^true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AdHocMapping >> initialize [
 
 	super initialize.
 	self shouldProxy: false.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AdHocMapping >> isRelationship [
 	"True when the mapping associates different persistent classes."
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AdHocMapping >> isStoredInSameTable [
 	^true.
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 AdHocMapping >> mapFromObject: anObject intoRowsIn: aRowMap [
 
 	| target sourceRows targetRows valueDescriptor |
@@ -127,7 +129,7 @@ AdHocMapping >> mapFromObject: anObject intoRowsIn: aRowMap [
 	toDbMappingBlock value: sourceRows value: target value: targetRows.
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 AdHocMapping >> mapObject: anObject inElementBuilder: anElementBuilder [
 
 	| readBlock row |
@@ -138,19 +140,19 @@ AdHocMapping >> mapObject: anObject inElementBuilder: anElementBuilder [
 		ifFalse: [self setValueIn: anObject to: readBlock value]
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 AdHocMapping >> mappedFields [
 
 	^mappedFields
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 AdHocMapping >> mappedFieldsCount [
 
 	^mappedFields size
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 AdHocMapping >> referencedIndependentObjectsFrom: anObject [
 	"Assumes that the only object this might affect is our primary attribute. That's probably valid. I think."
 	| object otherDescriptor |
@@ -160,7 +162,7 @@ AdHocMapping >> referencedIndependentObjectsFrom: anObject [
 	^otherDescriptor isNil ifTrue: [#()] ifFalse: [Array with: object]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AdHocMapping >> setAttribute: aSymbol fromDb: fromBlock toDb: toBlock mappingFields: aFieldCollection [
  
 	self attributeName: aSymbol.
@@ -169,24 +171,24 @@ AdHocMapping >> setAttribute: aSymbol fromDb: fromBlock toDb: toBlock mappingFie
 	mappedFields := aFieldCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AdHocMapping >> shouldProxy [
 
 	^shouldProxy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AdHocMapping >> shouldProxy: aBoolean [
 
 	shouldProxy := aBoolean
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 AdHocMapping >> trace: aTracing context: anExpression [
 	^self
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 AdHocMapping >> valueIn: anElementBuilder as: anExpression [
 	^fromDbMappingBlock
 		value: anElementBuilder row

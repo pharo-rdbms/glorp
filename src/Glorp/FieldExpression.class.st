@@ -10,17 +10,19 @@ Instance Variables:
 
 "
 Class {
-	#name : #FieldExpression,
-	#superclass : #GlorpExpression,
+	#name : 'FieldExpression',
+	#superclass : 'GlorpExpression',
 	#instVars : [
 		'field',
 		'base',
 		'alias'
 	],
-	#category : #'Glorp-Expressions'
+	#category : 'Glorp-Expressions',
+	#package : 'Glorp',
+	#tag : 'Expressions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FieldExpression class >> forField: aField basedOn: anObjectExpression [
 
 	^(self new)
@@ -28,20 +30,20 @@ FieldExpression class >> forField: aField basedOn: anObjectExpression [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FieldExpression >> alias [
 
 	^ alias
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FieldExpression >> alias: aString [
 	"What column name, if anything, should we print for 'as X' when retrieving"
 
 	alias := aString
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 FieldExpression >> asExpressionJoiningSource: source toTarget: target [
 	"Create a general expression which represents this relationship where the values of the targets (which are normally parameters) are supplied out of the context provided by 'target' and the source fields are referencing things out of the context of source. Produces something suitable for ANDing into an expression when doing a join
    Example: If we had CUSTOMER.ADDRESS_ID = ADDRESS.ID as a parameter, and we want to AND this into an expression [:customer | customer address street = 'Main'] then we have customer as a base, and we get
@@ -55,46 +57,46 @@ FieldExpression >> asExpressionJoiningSource: source toTarget: target [
 	^newTarget getField: field
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 FieldExpression >> base [
 
 	^ base
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FieldExpression >> basicField [
 
 	^ field
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FieldExpression >> canBeUsedForRetrieve [
 	"Return true if this is a valid argument for a retrieve: clause"
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FieldExpression >> canHaveBase [
 	"Return true if this type of expression can have a base expression on which other things can be built. Doesn't say whether we actually have a valid one or not."
 
 	^ true
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : 'As yet unclassified' }
 FieldExpression >> convertedDbValueOf: anObject [
 	"We don't do any conversion"
 
 	^ anObject
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FieldExpression >> converterForStType: aClass [
 
 	^ self field converterForStType: aClass
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 FieldExpression >> do: aBlock skipping: aSet [
 	"Iterate over the expression tree"
 
@@ -104,24 +106,24 @@ FieldExpression >> do: aBlock skipping: aSet [
 	aBlock value: self.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FieldExpression >> field [
 	^base translateField: field
 ]
 
-{ #category : #initializing }
+{ #category : 'initializing' }
 FieldExpression >> field: aField base: anObjectExpression [
 
 	field := aField.
 	base := anObjectExpression.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FieldExpression >> fieldExpression [
 	^self.
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 FieldExpression >> get: aSymbol withArguments: anArray [
 
 	| functionExpression |
@@ -131,50 +133,50 @@ FieldExpression >> get: aSymbol withArguments: anArray [
 	^RelationExpression named: aSymbol basedOn: self withArguments: anArray.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FieldExpression >> hasField [
 	^true.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FieldExpression >> impliedSmalltalkType [
 	^self field impliedSmalltalkType.
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 FieldExpression >> mappedFields [
 	^Array with: self field.
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 FieldExpression >> mappedFieldsCount [
 	^1.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FieldExpression >> name [
 	^field name.
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FieldExpression >> printOnlySelfOn: aStream [ 
 	base printsTable
 		ifTrue: [field printUnqualifiedSQLOn: aStream withParameters: #()]
 		ifFalse: [field printSQLOn: aStream withParameters: #()]
 ]
 
-{ #category : #'printing SQL' }
+{ #category : 'printing SQL' }
 FieldExpression >> printSQLOn: aStream withParameters: aDictionary [
 	self field printSQLOn: aStream withParameters:aDictionary.
 ]
 
-{ #category : #'printing SQL' }
+{ #category : 'printing SQL' }
 FieldExpression >> printSelectSQLOn: aStream withParameters: aDictionary [
 	self printSQLOn: aStream withParameters:aDictionary.
 	alias notNil ifTrue: [aStream nextPutAll: ' AS '; nextPutAll: alias].
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FieldExpression >> printTreeOn: aStream [ 
 	base printOn: aStream.
 	aStream nextPut: $..
@@ -183,17 +185,17 @@ FieldExpression >> printTreeOn: aStream [
 		ifFalse: [field printSQLOn: aStream withParameters: #()]
 ]
 
-{ #category : #'printing SQL' }
+{ #category : 'printing SQL' }
 FieldExpression >> printUnqualifiedSQLOn: aStream withParameters: aDictionary [
 	self field printUnqualifiedSQLOn: aStream withParameters:aDictionary.
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 FieldExpression >> queryLevelBaseExpression [
 	^base queryLevelBaseExpression.
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 FieldExpression >> rebuildOn: aBaseExpression startingFrom: anExpression withOuterScopeBase: ultimateBaseExpression [
 	| result |
 	self == anExpression ifTrue: [^aBaseExpression].
@@ -202,61 +204,61 @@ FieldExpression >> rebuildOn: aBaseExpression startingFrom: anExpression withOut
 	^result.
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 FieldExpression >> setTable: aTable [
 	"Modify (do not copy) ourselves to use aTable. Presumably aTable is an aliased version of our table"
 	field := field withTable: aTable.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FieldExpression >> table [
 
 	^ self field table
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : 'As yet unclassified' }
 FieldExpression >> tableForANSIJoin [
 
 	^ self field table
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 FieldExpression >> tables [
 
 	^ base tables
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 FieldExpression >> tablesToPrint [
 
 	^ Array with: self table
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FieldExpression >> type [
 
 	^ self field type
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 FieldExpression >> ultimateBaseExpression [
 
 	^ base ultimateBaseExpression
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 FieldExpression >> valueInBuilder: anElementBuilder [
 
 	^ self valueInBuilder: anElementBuilder as: self field
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 FieldExpression >> valueInBuilder: anElementBuilder as: anExpression [
 
 	^ anElementBuilder valueOfField: anExpression
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 FieldExpression >> withTable: aTable [
 	"Modify (do not copy) ourselves to use aTable. Presumably aTable is an aliased version of our table"
 

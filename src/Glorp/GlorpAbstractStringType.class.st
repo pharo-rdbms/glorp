@@ -13,22 +13,24 @@ width
 
 "
 Class {
-	#name : #GlorpAbstractStringType,
-	#superclass : #GlorpDatabaseType,
+	#name : 'GlorpAbstractStringType',
+	#superclass : 'GlorpDatabaseType',
 	#instVars : [
 		'width',
 		'queryType'
 	],
-	#category : #'Glorp-Types'
+	#category : 'Glorp-Types',
+	#package : 'Glorp',
+	#tag : 'Types'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpAbstractStringType class >> isAbstract [
 
 	^ self == GlorpAbstractStringType
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 GlorpAbstractStringType >> = aType [
 	super = aType ifFalse: [^false].
 	self width = aType width ifFalse: [^false].
@@ -37,7 +39,7 @@ GlorpAbstractStringType >> = aType [
 	^true.
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GlorpAbstractStringType >> converterForStType: aClass [
 	(aClass includesBehavior: Boolean) ifTrue: [^self platform converterNamed: #booleanToStringTF].
 	(aClass includesBehavior: Symbol) ifTrue: [^self platform converterNamed: #symbolToString].
@@ -47,62 +49,62 @@ GlorpAbstractStringType >> converterForStType: aClass [
 	^super converterForStType: aClass.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpAbstractStringType >> hasParameters [
 	"Return true if this has modifiable parameters. That is, when we return one of these, should we return a copy rather than trying to save space be re-using instances"
 	^true.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpAbstractStringType >> hasWidth [
 	"Return true if this type has a width attribute - basically meaning it's a string or LOB type. Note that this is different from the isVariableWidth test, which tells us if a field has fixed vs. varying width. So a CHAR field hasWidth=>true, but isVariableWidth=>false, while a VARCHAR field hasWidth=>true isVariableWidth=>false, and a NUMBER has both false."
 	^true.
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 GlorpAbstractStringType >> hash [
 	^self queryType == self
 		ifTrue: [super hash bitXor: self width hash]
 		ifFalse: [(super hash bitXor: self width hash) bitXor: self queryType hash]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GlorpAbstractStringType >> impliedSmalltalkType [
 	^String.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpAbstractStringType >> isStringType [
 	^true.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpAbstractStringType >> isVariableWidth [
 	self subclassResponsibility.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpAbstractStringType >> queryType [
 	queryType isNil ifTrue: [^self].
 	^queryType.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpAbstractStringType >> queryType: aType [
 	queryType := aType
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GlorpAbstractStringType >> typeName [
 	^typeString.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GlorpAbstractStringType >> typeName: aString [
 	typeString := aString.
 ]
 
-{ #category : #SQL }
+{ #category : 'SQL' }
 GlorpAbstractStringType >> typeString [
 	typeString isNil
 		ifTrue:
@@ -112,19 +114,19 @@ GlorpAbstractStringType >> typeString [
 	^typeString.
 ]
 
-{ #category : #SQL }
+{ #category : 'SQL' }
 GlorpAbstractStringType >> typeString: aString [
 	"If we set the typeString, we are presumably setting it to the non-parameterized name as well"
 	typeString := aString.
 	super typeString: aString.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpAbstractStringType >> width [
 	^width.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpAbstractStringType >> width: anInteger [
 
 	width := anInteger = 0 ifTrue: [nil] ifFalse: [anInteger]

@@ -2,24 +2,26 @@
 VARCHAR type
 "
 Class {
-	#name : #GlorpVarCharType,
-	#superclass : #GlorpAbstractStringType,
-	#category : #'Glorp-Types'
+	#name : 'GlorpVarCharType',
+	#superclass : 'GlorpAbstractStringType',
+	#category : 'Glorp-Types',
+	#package : 'Glorp',
+	#tag : 'Types'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GlorpVarCharType >> initialize [
 	super initialize.
 	typeString := 'varchar'.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpVarCharType >> isVariableWidth [
 	"Return true if this type allows varying length data within a particular instance. e.g., this is true for a varchar, but false for a fixed size character field"
 	^true.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpVarCharType >> typeString [
 	
 	^self typeName,   ( width ifNil: [''] ifNotNil: [ :w |'(', w printString, ')'])

@@ -1,6 +1,6 @@
-Extension { #name : #DatabaseSequence }
+Extension { #name : 'DatabaseSequence' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 DatabaseSequence class >> named: aString [
 
 	^ self new name: aString

@@ -9,23 +9,25 @@ Instance Variables:
 
 "
 Class {
-	#name : #FilteredTypeMapping,
-	#superclass : #TypeMapping,
+	#name : 'FilteredTypeMapping',
+	#superclass : 'TypeMapping',
 	#instVars : [
 		'field',
 		'key',
 		'keyDictionary'
 	],
-	#category : #'Glorp-Mappings'
+	#category : 'Glorp-Mappings',
+	#package : 'Glorp',
+	#tag : 'Mappings'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FilteredTypeMapping class >> to: field keyedBy: key [
 	^(self new)
 		field: field keyedBy: key
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 FilteredTypeMapping >> addTypeMappingCriteriaTo: collection in: base [
 
 	| singleRightValue r l |
@@ -39,7 +41,7 @@ FilteredTypeMapping >> addTypeMappingCriteriaTo: collection in: base [
 			 ifFalse: [ l in: r ])
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FilteredTypeMapping >> buildKeyDictionary [
 	| subclassDescriptor |
 	keyDictionary := Dictionary new.
@@ -54,13 +56,13 @@ FilteredTypeMapping >> buildKeyDictionary [
 							put: subclassDescriptor describedClass]]
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 FilteredTypeMapping >> describedConcreteClassFor: aRow withBuilder: builder [
 
 	^self keyDictionary at: (aRow at: (builder translateFieldPosition: field))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FilteredTypeMapping >> field [
 	"If we don't have this, look it up from one of our sub-mappings"
 	| concrete |
@@ -70,34 +72,34 @@ FilteredTypeMapping >> field [
 	^field.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FilteredTypeMapping >> field: aField keyedBy: aKey [
 	field := aField.
 	key := aKey
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FilteredTypeMapping >> keyDictionary [
 	keyDictionary isNil ifTrue: [ self buildKeyDictionary ].
 	^keyDictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FilteredTypeMapping >> keyedBy [
 	^key
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FilteredTypeMapping >> keyedBy: aKey [
 	key := aKey
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 FilteredTypeMapping >> keys [
 	^self keyDictionary keys
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 FilteredTypeMapping >> mapFromObject: anObject intoRowsIn: aRowMap [
 
 	| row |
@@ -106,19 +108,19 @@ FilteredTypeMapping >> mapFromObject: anObject intoRowsIn: aRowMap [
 	row at: field put: key
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FilteredTypeMapping >> mappedFields [
 	"Return a collection of fields that this mapping will write into any of the containing object's rows"
 
 	^Array with: self field
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 FilteredTypeMapping >> trace: aTracing context: anExpression [
 	^self
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 FilteredTypeMapping >> valueOfField: aField fromObject: anObject [
 	^self keyDictionary keyAtValue: anObject class
 ]

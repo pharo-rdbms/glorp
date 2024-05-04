@@ -13,43 +13,45 @@ sequence
 
 "
 Class {
-	#name : #GlorpSerialType,
-	#superclass : #GlorpAbstractIntegerType,
+	#name : 'GlorpSerialType',
+	#superclass : 'GlorpAbstractIntegerType',
 	#instVars : [
 		'generated',
 		'sequence',
 		'increment'
 	],
-	#category : #'Glorp-Types'
+	#category : 'Glorp-Types',
+	#package : 'Glorp',
+	#tag : 'Types'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpSerialType >> hasParameters [
 	^true.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpSerialType >> hasSequence [
 	^true.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpSerialType >> increment [
 	^increment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpSerialType >> increment: anInteger [
 	increment := anInteger.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GlorpSerialType >> initialize [
 	super initialize.
 	generated := true.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GlorpSerialType >> initializeForField: aDatabaseField in: aDescriptorSystem [
 	sequence isNil
 		ifFalse: [ ^ self ].
@@ -62,49 +64,49 @@ GlorpSerialType >> initializeForField: aDatabaseField in: aDescriptorSystem [
 	sequence schema: aDatabaseField table schema
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpSerialType >> isGenerated [
 	"answer if we should autogenerate a value for this type, i.e. if it is a database-generated primary key column"
 
 	^generated
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpSerialType >> isIdentityColumn [
 	^self sequence isIdentityColumn.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpSerialType >> isSerial [
 	"answer if this is a database-generated primary key column"
 
 	^true
 ]
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 GlorpSerialType >> postWriteAssignSequenceValueFor: aDatabaseField in: aDatabaseRow using: anAccessor [
 
 	^sequence postWriteAssignSequenceValueFor: aDatabaseField in: aDatabaseRow using: anAccessor.
 ]
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 GlorpSerialType >> preWriteAssignSequenceValueFor: aDatabaseField in: aDatabaseRow using: anAccessor [
 
 	^sequence preWriteAssignSequenceValueFor: aDatabaseField in: aDatabaseRow using: anAccessor.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpSerialType >> printSelectSQLOn: aCommand withParameters: aDictionary [
 	"We record our type as serial, but that isn't really useful for a cast. We assume serials are integers, so just print a generic integer type instead."
 	self platform integer printSelectSQLOn: aCommand withParameters: aDictionary.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpSerialType >> sequence [
 	^sequence.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpSerialType >> sequence: aDatabaseSequence [
 	sequence := aDatabaseSequence.
 ]

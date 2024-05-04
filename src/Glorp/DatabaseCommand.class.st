@@ -21,85 +21,87 @@ Instance Variables:
 
 "
 Class {
-	#name : #DatabaseCommand,
-	#superclass : #Object,
+	#name : 'DatabaseCommand',
+	#superclass : 'Object',
 	#instVars : [
 		'useBinding',
 		'stream',
 		'sqlString',
 		'session'
 	],
-	#category : #'Glorp-Database'
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseCommand class >> isAbstract [
 
 	^ self == DatabaseCommand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseCommand >> arrayBoundFields [
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseCommand >> bindingTypes [
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseCommand >> bindings [
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseCommand >> blockFactor [
 
 	^ 5 "A reasonable default if we don't know"
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseCommand >> canBind: aValue to: aType [
 
 	useBinding ifFalse: [ ^ false ].
 	^ self platform canBind: aValue to: aType underlyingType
 ]
 
-{ #category : #'stream behaviour' }
+{ #category : 'stream behaviour' }
 DatabaseCommand >> contents [
 
 	^ stream contents
 ]
 
-{ #category : #'stream behaviour' }
+{ #category : 'stream behaviour' }
 DatabaseCommand >> cr [
 
 	stream cr
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseCommand >> executeBoundIn: anAccessor [
 
 	^ anAccessor executeCommandBound: self
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseCommand >> executeUnboundIn: anAccessor [
 
 	^ anAccessor executeCommandUnbound: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseCommand >> hasMultipleRows [
 
 	^ false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DatabaseCommand >> initialize [
 
 	super initialize.
@@ -107,123 +109,123 @@ DatabaseCommand >> initialize [
 	stream := WriteStream on: (String new: 100)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseCommand >> isDeleteCommand [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseCommand >> isReadCommand [
 
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseCommand >> maximumLobSizeToRetrieveDirectly [
 
 	^ 32768
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseCommand >> needsRowCount [
 
 	^ false
 ]
 
-{ #category : #'stream behaviour' }
+{ #category : 'stream behaviour' }
 DatabaseCommand >> nextPut: aCharacter [
 
 	^ stream nextPut: aCharacter
 ]
 
-{ #category : #'stream behaviour' }
+{ #category : 'stream behaviour' }
 DatabaseCommand >> nextPutAll: aString [
 
 	^ stream nextPutAll: aString
 ]
 
-{ #category : #'stream behaviour' }
+{ #category : 'stream behaviour' }
 DatabaseCommand >> nextPutString: aString [
 
 	^ self nextPutAll: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseCommand >> parameterTypeSignature [
 
 	self subclassResponsibility
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : 'As yet unclassified' }
 DatabaseCommand >> platform [
 
 	self session ifNil: [ ^ nil ].
 	^ self session platform
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseCommand >> platform: aDatabasePlatform [
 
 	self error: 'This API is obsolete. Pass the session instead'
 ]
 
-{ #category : #'stream behaviour' }
+{ #category : 'stream behaviour' }
 DatabaseCommand >> policy [
 
 	^ stream policy
 ]
 
-{ #category : #'stream behaviour' }
+{ #category : 'stream behaviour' }
 DatabaseCommand >> print: anObject [
 
 	anObject printOn: self
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DatabaseCommand >> printSQL [
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseCommand >> query [
 
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseCommand >> session [
 
 	^ session
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : 'As yet unclassified' }
 DatabaseCommand >> session: aGlorpSession [
 
 	session := aGlorpSession
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseCommand >> shouldUseGroupWriting [
 
 	^ self hasMultipleRows and: [
 		  self platform supportsGroupWritingFor: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseCommand >> signature [
 
 	^ self sqlString , self parameterTypeSignature
 ]
 
-{ #category : #'stream behaviour' }
+{ #category : 'stream behaviour' }
 DatabaseCommand >> space [
 
 	stream space
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseCommand >> sqlString [
 
 	sqlString ifNil: [
@@ -234,33 +236,33 @@ DatabaseCommand >> sqlString [
 	^ sqlString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseCommand >> succeeded [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseCommand >> system [
 
 	self session ifNil: [ ^ nil ].
 	^ self session system
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 DatabaseCommand >> tables [
 	"Return a list of the tables we will affect"
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseCommand >> useBinding [
 
 	^ useBinding
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseCommand >> useBinding: aBoolean [
 
 	useBinding := aBoolean

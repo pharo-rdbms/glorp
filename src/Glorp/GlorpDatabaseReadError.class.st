@@ -9,59 +9,61 @@ Instance Variables:
 
 "
 Class {
-	#name : #GlorpDatabaseReadError,
-	#superclass : #GlorpError,
+	#name : 'GlorpDatabaseReadError',
+	#superclass : 'GlorpError',
 	#instVars : [
 		'command',
 		'databaseError',
 		'accessor'
 	],
-	#category : #'Glorp-Exceptions'
+	#category : 'Glorp-Exceptions',
+	#package : 'Glorp',
+	#tag : 'Exceptions'
 }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 GlorpDatabaseReadError class >> mayResume [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpDatabaseReadError >> accessor [
 
 	^ accessor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpDatabaseReadError >> accessor: aDatabaseAccessor [
 
 	accessor := aDatabaseAccessor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpDatabaseReadError >> command [
 
 	^ command
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpDatabaseReadError >> command: aDatabaseCommand [
 
 	command := aDatabaseCommand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpDatabaseReadError >> databaseError [
 
 	^ databaseError
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpDatabaseReadError >> databaseError: aDatabaseErrorObject [
 
 	databaseError := aDatabaseErrorObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpDatabaseReadError >> session [
 
 	^ command session

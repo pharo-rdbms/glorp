@@ -9,18 +9,20 @@ representationType
 
 "
 Class {
-	#name : #GlorpInMemorySequenceDatabaseType,
-	#superclass : #GlorpDatabaseType,
+	#name : 'GlorpInMemorySequenceDatabaseType',
+	#superclass : 'GlorpDatabaseType',
 	#instVars : [
 		'representationType'
 	],
 	#classInstVars : [
 		'count'
 	],
-	#category : 'Glorp-Types'
+	#category : 'Glorp-Types',
+	#package : 'Glorp',
+	#tag : 'Types'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 GlorpInMemorySequenceDatabaseType class >> next [
 
 	(count isNil)
@@ -29,49 +31,49 @@ GlorpInMemorySequenceDatabaseType class >> next [
 	^count
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 GlorpInMemorySequenceDatabaseType class >> representedBy: dbType [
 
 	^super new
 		representedBy: dbType
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 GlorpInMemorySequenceDatabaseType class >> reset [
 
 	count := 0
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GlorpInMemorySequenceDatabaseType >> impliedSmalltalkType [
 	^Integer.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpInMemorySequenceDatabaseType >> isGenerated [
 
 	^true
 ]
 
-{ #category : #SQL }
+{ #category : 'SQL' }
 GlorpInMemorySequenceDatabaseType >> preWriteAssignSequenceValueFor: aDatabaseField in: aDatabaseRow using: anAccessor [
 
 	aDatabaseRow at: aDatabaseField put: (self class next)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 GlorpInMemorySequenceDatabaseType >> representedBy: dbType [
 
 	representationType := dbType
 ]
 
-{ #category : #SQL }
+{ #category : 'SQL' }
 GlorpInMemorySequenceDatabaseType >> typeName [
 
 	^representationType typeName.
 ]
 
-{ #category : #SQL }
+{ #category : 'SQL' }
 GlorpInMemorySequenceDatabaseType >> typeString [
 
 	^representationType typeString

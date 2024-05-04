@@ -2,22 +2,24 @@
 MSSQL  Sysname type 
 "
 Class {
-	#name : #GlorpMSSQLSysnameType,
-	#superclass : #GlorpDatabaseType,
-	#category : 'Glorp-Types'
+	#name : 'GlorpMSSQLSysnameType',
+	#superclass : 'GlorpDatabaseType',
+	#category : 'Glorp-Types',
+	#package : 'Glorp',
+	#tag : 'Types'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 GlorpMSSQLSysnameType >> impliedSmalltalkType [
 	^String.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpMSSQLSysnameType >> isStringType [
 	^true.
 ]
 
-{ #category : #SQL }
+{ #category : 'SQL' }
 GlorpMSSQLSysnameType >> typeString [
 
 	^'sysname'.

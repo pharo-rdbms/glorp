@@ -2,51 +2,53 @@
 This is a platform for the socket protocol 2 API of the PostgreSQL database.
 "
 Class {
-	#name : #PostgreSQLPlatform,
-	#superclass : #PostgresPlatform,
-	#category : #'Glorp-Platforms'
+	#name : 'PostgreSQLPlatform',
+	#superclass : 'PostgresPlatform',
+	#category : 'Glorp-Platforms',
+	#package : 'Glorp',
+	#tag : 'Platforms'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 PostgreSQLPlatform class >> useBindingByDefault [
 	^false
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 PostgreSQLPlatform >> NeoJSONReaderSQLStringToJSONObject: aString for: aType [
 	aString isNil
 		ifTrue: [ ^ nil ].
 	^ NeoJSONReader  fromString: aString
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 PostgreSQLPlatform >> areSequencesExplicitlyCreated [
 	^true.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgreSQLPlatform >> bigint [
 	^self typeNamed: #bigint ifAbsentPut: [GlorpIntegerType new typeString: 'bigint'].
 ]
 
-{ #category : #binding }
+{ #category : 'binding' }
 PostgreSQLPlatform >> bindingsForGroupWritingFor: aCommand [
 	"Return the bindings array for a group write. This can be in different formats, depending on the database and perhaps the mechanism in place."
 	^aCommand batchStatementBindings.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgreSQLPlatform >> blob [
 
 	^self typeNamed: #blob ifAbsentPut: [GlorpBlobType new typeString: 'bytea'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgreSQLPlatform >> boolean [
 	^self typeNamed: #boolean ifAbsentPut: [GlorpBooleanType new typeString: 'boolean'].
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 PostgreSQLPlatform >> byteArrayToSQLStringConverter [
 
 	^DelegatingDatabaseConverter
@@ -56,7 +58,7 @@ PostgreSQLPlatform >> byteArrayToSQLStringConverter [
 		fromDbToSt: #convertSQLStringToByteArray:for:.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PostgreSQLPlatform >> canBind: aValue to: aType [
 	"In 7.10, the Postgres protocol 2.0 EXDI can accept Timestamp and Number formats for binding.  Date and time formats have not yet been handled."
 
@@ -66,29 +68,29 @@ PostgreSQLPlatform >> canBind: aValue to: aType [
 	^super canBind: aValue to: aType
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgreSQLPlatform >> char [
 	^self typeNamed: #char ifAbsentPut: [GlorpCharType new typeName: 'character'].
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 PostgreSQLPlatform >> charactersThatNeedEscaping [
 	^#($')
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgreSQLPlatform >> clob [
 
 	^self typeNamed: #clob ifAbsentPut: [GlorpClobType new typeString: 'text'].
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 PostgreSQLPlatform >> convertByteArrayToSQLString: aByteArray for: aType [
 
 	^aByteArray ifNotNil: [:array | array asString]
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 PostgreSQLPlatform >> convertEscapeSQLStringToByteArray: aString [
 	^ ByteArray
 		new: aString size // 4
@@ -106,7 +108,7 @@ PostgreSQLPlatform >> convertEscapeSQLStringToByteArray: aString [
 							ifFalse: [ nextChar asInteger ]) ] ]
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 PostgreSQLPlatform >> convertHexSQLStringToByteArray: aString [
 	^ ByteArray
 		new: aString size // 2 - 1
@@ -115,7 +117,7 @@ PostgreSQLPlatform >> convertHexSQLStringToByteArray: aString [
 			[ in atEnd ] whileFalse: [ out nextPut: (Number readFrom: (in next: 2) base: 16) ] ]
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 PostgreSQLPlatform >> convertSQLStringToByteArray: aString for: aType [
 	aString isNil
 		ifTrue: [ ^ nil ].
@@ -124,29 +126,29 @@ PostgreSQLPlatform >> convertSQLStringToByteArray: aString for: aType [
 		ifFalse: [ self convertEscapeSQLStringToByteArray: aString ]
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 PostgreSQLPlatform >> convertSQLStringToString: aString for: aType [
 	aString isNil
 		ifTrue: [ ^ nil ].
 	^ (self convertSQLStringToByteArray: aString for: aType) asString
 ]
 
-{ #category : #sequences }
+{ #category : 'sequences' }
 PostgreSQLPlatform >> databaseSequenceClass [
 	^PGSequence.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgreSQLPlatform >> date [
 	^self typeNamed: #date ifAbsentPut: [GlorpDateType new typeString: 'date'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgreSQLPlatform >> dateAndTime [
 	^self typeNamed: #dateAndTime ifAbsentPut: [GlorpDateAndTimeType new typeString: 'timestamp without time zone'].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PostgreSQLPlatform >> dateAndTimeConverter [
 
 	^PluggableDatabaseConverter new
@@ -155,32 +157,32 @@ PostgreSQLPlatform >> dateAndTimeConverter [
 		yourself
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgreSQLPlatform >> decimal [
 	^self numeric.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgreSQLPlatform >> double [
 	^self float8
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgreSQLPlatform >> float [
 	^self float4.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgreSQLPlatform >> float4 [
 	^self typeNamed: #float4 ifAbsentPut: [GlorpFloatType new].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgreSQLPlatform >> float8 [
 	^self typeNamed: #float8 ifAbsentPut: [GlorpDoubleType new].
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 PostgreSQLPlatform >> hexPrintBlob: aByteArray on: aStream for: aType [
 
 	aStream nextPutAll: 'E'''.
@@ -189,68 +191,68 @@ PostgreSQLPlatform >> hexPrintBlob: aByteArray on: aStream for: aType [
 	aStream nextPutAll: '''::bytea'.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgreSQLPlatform >> inet [
 	^self text
 ]
 
-{ #category : #functions }
+{ #category : 'functions' }
 PostgreSQLPlatform >> initializeFunctions [
 	super initializeFunctions.
 	functions at: #copyFrom:to: put: (SubstringFunction named: 'substring').
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgreSQLPlatform >> int [
 	^self int4
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgreSQLPlatform >> int2 [
 	^self typeNamed: #int2 ifAbsentPut: [GlorpIntegerType new typeString: 'int2'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgreSQLPlatform >> int4 [
 	^self typeNamed: #int4 ifAbsentPut: [GlorpIntegerType new typeString: 'int4'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgreSQLPlatform >> int8 [
 	^self typeNamed: #int8 ifAbsentPut: [GlorpIntegerType new typeString: 'int8'].
 ]
 
-{ #category : #sql }
+{ #category : 'sql' }
 PostgreSQLPlatform >> isPostgreSQLPlatform [
 	^true.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 PostgreSQLPlatform >> maximumLengthOfColumnName [
 	"^<Integer> I return the maximum length of a column name.  (I am not sent at present;  I am here so that if I and #maximumLengthOfTableName (which is sent) should ever differ on some database platform, I can be used in revised truncation logic.)"
 
 	^31
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 PostgreSQLPlatform >> maximumLengthOfTableName [
 	"^<Integer> I return the max. length of a table name"
 
 	^31
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PostgreSQLPlatform >> measuresStringFieldWidthsInBytes [
 	"Return true if we measure the width of a string in bytes rather than characters. So, a 255-character field can hold 255 bytes worth of string, not 255 characters. This is important with encodings"
 	^true.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgreSQLPlatform >> numeric [
 	^self typeNamed: #numeric ifAbsentPut: [GlorpNumericType new].
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 PostgreSQLPlatform >> printBlob: aByteArray on: aStream for: aType [
 
 	aByteArray isNil ifTrue: [^aStream nextPutAll: 'NULL'].
@@ -259,7 +261,7 @@ PostgreSQLPlatform >> printBlob: aByteArray on: aStream for: aType [
 
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 PostgreSQLPlatform >> printDate: aDate for: aType [
 	"Print a date (or timestamp) as yyyy-mm-dd"
 	| stream |
@@ -273,21 +275,21 @@ PostgreSQLPlatform >> printDate: aDate for: aType [
 	^stream contents.
 ]
 
-{ #category : #'database - specific' }
+{ #category : 'database - specific' }
 PostgreSQLPlatform >> printOffset: anInteger on: aCommand [
 	aCommand
 		nextPutAll: ' OFFSET '.
 	anInteger printOn: aCommand.
 ]
 
-{ #category : #'database - specific' }
+{ #category : 'database - specific' }
 PostgreSQLPlatform >> printPostLimit: anInteger on: aCommand [
 	aCommand
 		nextPutAll: ' LIMIT '.
 	anInteger printOn: aCommand.
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 PostgreSQLPlatform >> printTime: aTime for: aType [
 	"Print a time (or timestamp) as hh:mm:ss.fff"
 	| stream |
@@ -301,7 +303,7 @@ PostgreSQLPlatform >> printTime: aTime for: aType [
 	^stream contents.
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 PostgreSQLPlatform >> printTimestamp: aTimestamp on: stream for: aType [
 	aTimestamp isNil ifTrue: [stream nextPutAll: 'NULL'. ^self].
 	stream nextPut: $'.
@@ -315,47 +317,47 @@ PostgreSQLPlatform >> printTimestamp: aTimestamp on: stream for: aType [
 	stream nextPut: $'.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgreSQLPlatform >> real [
 	^self float4
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PostgreSQLPlatform >> requiresCastsForNullsInUnions [
 	"If we have explicit nulls in a query which is unioned, do we need to cast them to the appropriate type in order to keep the database happy."
 	^true.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 PostgreSQLPlatform >> requiresTransactionForTableOperations [
 	"Return true if we need a transaction in order to do table creation, deletion, and so forth. Some databases require it. Others don't like it"
 	^false.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgreSQLPlatform >> sequence [
 
 	^self serial
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgreSQLPlatform >> serial [
 	"For postgresql, we use sequences, and explicitly get the values ourselves, so just tell the database that they're integers."
 	^self typeNamed: #serial ifAbsentPut: [GlorpSerialType new typeString: 'integer'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgreSQLPlatform >> smallint [
 	^self int2
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 PostgreSQLPlatform >> sqlTextCurrentServerUTCTimestamp [
 
 	^'SELECT CURRENT_TIMESTAMP AT TIME ZONE ''UTC'' '
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 PostgreSQLPlatform >> stringToSQLStringConverter [
 
 	^DelegatingDatabaseConverter
@@ -365,41 +367,41 @@ PostgreSQLPlatform >> stringToSQLStringConverter [
 		fromDbToSt: #convertSQLStringToString:for:.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PostgreSQLPlatform >> supportsANSIJoins [
 	"Do we support the JOIN <tableName> USING <criteria> syntax."
 	^true.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PostgreSQLPlatform >> supportsCaseInsensitiveLike [
 	^true.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PostgreSQLPlatform >> supportsGroupWritingFor: aCommand [
 	^aCommand supportsGroupWriting.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PostgreSQLPlatform >> supportsLimit [
 	"Do we support anything analogous to the postgresql LIMIT, returning only the first N rows"
 	^true.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 PostgreSQLPlatform >> supportsMillisecondsInTimes [
 	"I think this depends on settings, but it's easier right now to just turn it off"
 	^false.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PostgreSQLPlatform >> supportsOffset [
 	"Do we support anything analogous to the postgresql OFFSET, skipping the first N rows"
 	^true.
 ]
 
-{ #category : #'services tables' }
+{ #category : 'services tables' }
 PostgreSQLPlatform >> tableNameFor: aStringRepresentingATableName [
 	"Return the table name, as modified to be used in a database statement."
 	
@@ -410,27 +412,27 @@ PostgreSQLPlatform >> tableNameFor: aStringRepresentingATableName [
 	ifFalse: ['"' , aStringRepresentingATableName , '"'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgreSQLPlatform >> time [
 	^self typeNamed: #time ifAbsentPut: [GlorpTimeType new typeString: 'time'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgreSQLPlatform >> timeStampTypeString [
 	^'timestamp'.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgreSQLPlatform >> timestamp [
 	^self typeNamed: #timestamp ifAbsentPut: [GlorpTimeStampType new typeString: 'timestamp without time zone'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgreSQLPlatform >> timetz [
 	^self typeNamed: #timetz ifAbsentPut: [GlorpPGTimeWithTimeZoneType new].
 ]
 
-{ #category : #'type helpers' }
+{ #category : 'type helpers' }
 PostgreSQLPlatform >> typesWithValues [
 	super typesWithValues.
 	self boolean.
@@ -452,13 +454,13 @@ PostgreSQLPlatform >> typesWithValues [
 	^self types.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PostgreSQLPlatform >> usesArrayBindingRatherThanGrouping [
 	"Return true if we use array binding for grouped writes rather than printing the sql multiple times. Only applies if we support grouped writes"
 	^false.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgreSQLPlatform >> varchar [
 	^self typeNamed: #varchar ifAbsentPut: [GlorpVarCharType new typeName: 'character varying'].
 ]

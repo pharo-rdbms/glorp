@@ -2,12 +2,14 @@
 Pragma mapping for SQLite3
 "
 Class {
-	#name : #SQLite3PragmaMapping,
-	#superclass : #ToManyMapping,
-	#category : #'Glorp-Mappings'
+	#name : 'SQLite3PragmaMapping',
+	#superclass : 'ToManyMapping',
+	#category : 'Glorp-Mappings',
+	#package : 'Glorp',
+	#tag : 'Mappings'
 }
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 SQLite3PragmaMapping >> buildQuery [
 	| toMany |
 	toMany := self attribute isCollectionAttribute.
@@ -23,7 +25,7 @@ SQLite3PragmaMapping >> buildQuery [
 	^query
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SQLite3PragmaMapping >> initialize [
 	"Initialize a newly created instance. This method must answer the receiver."
 
@@ -32,7 +34,7 @@ SQLite3PragmaMapping >> initialize [
 	^self
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 SQLite3PragmaMapping >> setValueIn: anObject to: aValue [
 	"This method serves as a hook to do special work for the collection objects, #fields and #foreignKeysData.
 	It connects the objects to their owning tables (a SQLite3DatabaseTable object), and also resets the field

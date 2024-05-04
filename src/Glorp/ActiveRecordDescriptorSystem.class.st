@@ -2,18 +2,20 @@
 I am a Glorp DescriptorSystem that infers and builds the class hierarchy and descriptor mappings from the database schema.  I expect the database schema to conform to Rails ActiveRecord naming conventions.
 "
 Class {
-	#name : #ActiveRecordDescriptorSystem,
-	#superclass : #DynamicDescriptorSystem,
+	#name : 'ActiveRecordDescriptorSystem',
+	#superclass : 'DynamicDescriptorSystem',
 	#instVars : [
 		'rootClass',
 		'inflector',
 		'classesWereModified',
 		'sortingFieldNames'
 	],
-	#category : #'Glorp-ActiveRecord'
+	#category : 'Glorp-ActiveRecord',
+	#package : 'Glorp',
+	#tag : 'ActiveRecord'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ActiveRecordDescriptorSystem class >> sessionForAccessor: aDatabaseAccesor [
 	"Create a session associated with the given accesseor, and using us as a descriptor system.
 	This is the easiest way to get a full blown session going."
@@ -23,7 +25,7 @@ ActiveRecordDescriptorSystem class >> sessionForAccessor: aDatabaseAccesor [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ActiveRecordDescriptorSystem class >> sessionForLogin: aGlorpLogin [
 	"Create a session associated with the given login, and using us as a descriptor system. This is the easiest way to get a full blown session going."
 
@@ -35,7 +37,7 @@ ActiveRecordDescriptorSystem class >> sessionForLogin: aGlorpLogin [
 	^ session
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ActiveRecordDescriptorSystem >> addToManyRelationshipNamed: aName inDescriptor: aDescriptor toClass: aClass [
 
 	| ivars realFromClass package |
@@ -71,7 +73,7 @@ ActiveRecordDescriptorSystem >> addToManyRelationshipNamed: aName inDescriptor: 
 						mapping orderBy: (inflector accessor: f name asSymbol); writeTheOrderField ] ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ActiveRecordDescriptorSystem >> addToManyRelationshipNamed: aName inDescriptor: aDescriptor toClass: aClass join: aJoin [
 	| ivars realFromClass package |
 	package := ((Array with: self rootClass package name), self rootClass tags) joinUsing: '-'.
@@ -104,7 +106,7 @@ ActiveRecordDescriptorSystem >> addToManyRelationshipNamed: aName inDescriptor: 
 					ifFound: [ :f | mapping orderBy: (inflector accessor: f name asSymbol); writeTheOrderField ] ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 ActiveRecordDescriptorSystem >> addToOneRelationshipNamed: aName inDescriptor: aDescriptor toClass: aClass [
 	| ivars realFromClass package |
 	package := ((Array with: self rootClass package name), self rootClass tags) joinUsing: '-'.
@@ -138,14 +140,14 @@ ActiveRecordDescriptorSystem >> addToOneRelationshipNamed: aName inDescriptor: a
 		
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ActiveRecordDescriptorSystem >> allClasses [ 
 	^allClasses 
 		ifEmpty: [ self constructAllClasses ] 
 		ifNotEmpty: [ allClasses ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordDescriptorSystem >> allDescriptors [
 	descriptors ifEmpty: [ 
 		classesWereModified := false.
@@ -160,7 +162,7 @@ ActiveRecordDescriptorSystem >> allDescriptors [
 	^super allDescriptors.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ActiveRecordDescriptorSystem >> classCommentForClass: aClass table: aTable [ 
 	| fields |
 	fields := ((String streamContents: 
@@ -183,7 +185,7 @@ ActiveRecordDescriptorSystem >> classCommentForClass: aClass table: aTable [
 		fields do: [ :f | s nextPutAll: '    '; nextPutAll: f; cr] ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ActiveRecordDescriptorSystem >> constructAllClasses [
 	"Subclasses can override this method to add classes. But by default we also look for all descriptor methods in our system, and add them to the class list, so if the methods are written there, then we don't need to do anything further. If the descriptor methods are defined on the classes themselves, then we'll still have to construct the class list manually."
 	| package |
@@ -250,12 +252,12 @@ ActiveRecordDescriptorSystem >> constructAllClasses [
 	^ allClasses
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ActiveRecordDescriptorSystem >> constructAllDescriptors [
 	self postInitializeAllDescriptors
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ActiveRecordDescriptorSystem >> constructAllTables [
 	| tableNames accessor |
 	accessor := self session accessor.
@@ -266,7 +268,7 @@ ActiveRecordDescriptorSystem >> constructAllTables [
 	self constructTableForeignKeys
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ActiveRecordDescriptorSystem >> constructTableForeignKeys [
 	tables keysAndValuesDo: [ :key :table | 
 		| foreignKeys |
@@ -287,17 +289,17 @@ ActiveRecordDescriptorSystem >> constructTableForeignKeys [
 	 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordDescriptorSystem >> inflector [
 	^ inflector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordDescriptorSystem >> inflector: anObject [
 	inflector := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ActiveRecordDescriptorSystem >> initialize [ 
 	super initialize.
 	inflector := ActiveRecordInflector new.
@@ -307,7 +309,7 @@ ActiveRecordDescriptorSystem >> initialize [
 	Query delegateTo: ActiveRecordQuery
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ActiveRecordDescriptorSystem >> initializeDescriptor: aDescriptor [
 	| table directFields foreignKeys typeField |
 
@@ -339,7 +341,7 @@ ActiveRecordDescriptorSystem >> initializeDescriptor: aDescriptor [
 	^ aDescriptor
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ActiveRecordDescriptorSystem >> initializeTable: newTable [
 	"fill in the definition from the database
 	          name           |       type        | length | nullable |     default_value     | pk | optional
@@ -374,7 +376,7 @@ ActiveRecordDescriptorSystem >> initializeTable: newTable [
 	self deferentialSetSchema: newTable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordDescriptorSystem >> isLinkTable: aTable [
 	"Assumption is link tables have compound primary keys of foreign keys or is composed of only foreign keys, timestamps, 
 	and maybe a primary key, and maybe a single integer field used for ordering."
@@ -401,7 +403,7 @@ ActiveRecordDescriptorSystem >> isLinkTable: aTable [
 								and: [ self isSortingField: other first ] ] ] ]
 ]
 
-{ #category : #naming }
+{ #category : 'naming' }
 ActiveRecordDescriptorSystem >> isSortingField: aFieldOrName [
 	| realName |
 	realName := aFieldOrName isString 
@@ -411,7 +413,7 @@ ActiveRecordDescriptorSystem >> isSortingField: aFieldOrName [
 	^sortingFieldNames includes: realName
 ]
 
-{ #category : #naming }
+{ #category : 'naming' }
 ActiveRecordDescriptorSystem >> isTimestampField: aFieldOrName [
 	| realName |
 	realName := aFieldOrName isString 
@@ -421,7 +423,7 @@ ActiveRecordDescriptorSystem >> isTimestampField: aFieldOrName [
 	^#(created_at updated_at deleted_at) includes: realName
 ]
 
-{ #category : #naming }
+{ #category : 'naming' }
 ActiveRecordDescriptorSystem >> likelyClassForForeignKeyNamed: aKey [
 	| parts key cls |
 	parts := (aKey substrings: '_').
@@ -437,7 +439,7 @@ ActiveRecordDescriptorSystem >> likelyClassForForeignKeyNamed: aKey [
 	
 ]
 
-{ #category : #naming }
+{ #category : 'naming' }
 ActiveRecordDescriptorSystem >> likelyTableForForeignKeyNamed: aKey [
 	| key table |
 	key := aKey asUppercase copyUpToLast: $_.
@@ -459,21 +461,21 @@ ActiveRecordDescriptorSystem >> likelyTableForForeignKeyNamed: aKey [
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordDescriptorSystem >> linkTables [
 	"Assumption is link tables have compound primary keys of foreign keys or is composed of only foreign keys, timestamps, 
 	and maybe a primary key, and maybe a single integer field used for ordering."
 	^self allTables values select: [ :table | self isLinkTable: table ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordDescriptorSystem >> mappedTables [
 	"Assumption is link tables have compound primary keys of foreign keys or is composed of only foreign keys, timestamps, 
 	and maybe a primary key, and maybe a single integer field used for ordering."
 	^self allTables values reject: [ :table | self isLinkTable: table ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ActiveRecordDescriptorSystem >> postInitializeAllDescriptors [
 	super allDescriptors do: [ :ea | self postInitializeDescriptor: ea ].
 	self linkTables do: [ :linkTable |
@@ -496,7 +498,7 @@ ActiveRecordDescriptorSystem >> postInitializeAllDescriptors [
 		 ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ActiveRecordDescriptorSystem >> postInitializeDescriptor: aDescriptor [
 	| table foreignKeys reverseRelationshipName |
 
@@ -552,27 +554,27 @@ ActiveRecordDescriptorSystem >> postInitializeDescriptor: aDescriptor [
 	^ aDescriptor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordDescriptorSystem >> prefix [
 	^inflector prefix
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordDescriptorSystem >> prefix: aString [
 	inflector prefix: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordDescriptorSystem >> rootClass [
 	^rootClass ifNil: [ ActiveRecordModel ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordDescriptorSystem >> rootClass: anObject [
 	rootClass := anObject
 ]
 
-{ #category : #'session creation' }
+{ #category : 'session creation' }
 ActiveRecordDescriptorSystem >> sessionForAccessor: aDatabaseAccesor [
 	"Create a session associated with the given accesseor, and using us as a descriptor system. 
 	This is the easiest way to get a full blown session going."
@@ -583,7 +585,7 @@ ActiveRecordDescriptorSystem >> sessionForAccessor: aDatabaseAccesor [
 
 ]
 
-{ #category : #'session creation' }
+{ #category : 'session creation' }
 ActiveRecordDescriptorSystem >> sessionForLogin: aGlorpLogin [
 	"Create a session associated with the given login, and using us as a descriptor system. This is the easiest way to get a full blown session going."
 
@@ -601,17 +603,17 @@ ActiveRecordDescriptorSystem >> sessionForLogin: aGlorpLogin [
 	^ newSession
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordDescriptorSystem >> sortingFieldNames [
 	^ sortingFieldNames
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordDescriptorSystem >> sortingFieldNames: anObject [
 	sortingFieldNames := anObject
 ]
 
-{ #category : #naming }
+{ #category : 'naming' }
 ActiveRecordDescriptorSystem >> tableClassForClass: aClass [ 
 	| className |
 	className := (inflector classify: (self tableForClass: aClass) name) asSymbol.
@@ -620,7 +622,7 @@ ActiveRecordDescriptorSystem >> tableClassForClass: aClass [
 	
 ]
 
-{ #category : #naming }
+{ #category : 'naming' }
 ActiveRecordDescriptorSystem >> tableForClass: aClass [ 
 	| table tableClass |
 	table := nil.

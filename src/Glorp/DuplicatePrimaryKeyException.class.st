@@ -3,16 +3,18 @@ This is an exception we raise when we detect two different objects with the same
 
 "
 Class {
-	#name : #DuplicatePrimaryKeyException,
-	#superclass : #GlorpError,
+	#name : 'DuplicatePrimaryKeyException',
+	#superclass : 'GlorpError',
 	#instVars : [
 		'existingObject',
 		'newObject'
 	],
-	#category : #'Glorp-Exceptions'
+	#category : 'Glorp-Exceptions',
+	#package : 'Glorp',
+	#tag : 'Exceptions'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DuplicatePrimaryKeyException class >> new: newObject existing: existingObject [
 	^self new
 		newObject: newObject;
@@ -20,31 +22,31 @@ DuplicatePrimaryKeyException class >> new: newObject existing: existingObject [
 		yourself.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DuplicatePrimaryKeyException >> defaultMessageText [
 
 	^ 'Duplicate objects with same primary key'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DuplicatePrimaryKeyException >> existingObject [
 
 	^ existingObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DuplicatePrimaryKeyException >> existingObject: anObject [
 
 	existingObject := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DuplicatePrimaryKeyException >> newObject [
 
 	^ newObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DuplicatePrimaryKeyException >> newObject: anObject [
 
 	newObject := anObject

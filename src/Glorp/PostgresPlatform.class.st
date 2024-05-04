@@ -7,58 +7,60 @@ In either case check already-assigned values of any existing platform instances 
 
 "
 Class {
-	#name : #PostgresPlatform,
-	#superclass : #DatabasePlatform,
+	#name : 'PostgresPlatform',
+	#superclass : 'DatabasePlatform',
 	#instVars : [
 		'charactersThatNeedEscaping'
 	],
-	#category : #'Glorp-Platforms'
+	#category : 'Glorp-Platforms',
+	#package : 'Glorp',
+	#tag : 'Platforms'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PostgresPlatform class >> reservedWords [
 	^#('all' 'analyse' 'analyze' 'and' 'any' 'array' 'as' 'asc' 'asymmetric' 'both' 'case' 'cast' 'check' 'collate' 'column' 'constraint' 'create' 'current_catalog' 'current_date' 'current_role' 'current_time' 'current_timestamp' 'current_user' 'default' 'deferrable' 'desc' 'distinct' 'do' 'else' 'end' 'except' 'false' 'fetch' 'for' 'foreign' 'from' 'grant' 'group' 'having' 'in' 'initially' 'intersect' 'into' 'leading' 'limit' 'localtime' 'localtimestamp' 'not' 'null' 'offset' 'on' 'only' 'or' 'order' 'placing' 'primary' 'references' 'returning' 'select' 'session_user' 'some' 'symmetric' 'table' 'then' 'to' 'trailing' 'true' 'union' 'unique' 'user' 'using' 'variadic' 'when' 'where' 'window' 'with')
 		asSet
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PostgresPlatform class >> useBindingByDefault [
 	^false
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 PostgresPlatform >> areSequencesExplicitlyCreated [
 	^true.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> array [ 
 	^self typeNamed: #ARRAY ifAbsentPut: [GlorpPGArrayType new typeString: 'ARRAY'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> bigint [
 	^self typeNamed: #bigint ifAbsentPut: [GlorpIntegerType new typeString: 'bigint'].
 ]
 
-{ #category : #binding }
+{ #category : 'binding' }
 PostgresPlatform >> bindingsForGroupWritingFor: aCommand [
 	"Return the bindings array for a group write. This can be in different formats, depending on the database and perhaps the mechanism in place."
 	^aCommand batchStatementBindings.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> blob [
 
 	^self typeNamed: #blob ifAbsentPut: [GlorpBlobType new typeString: 'bytea'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> boolean [
 	^self typeNamed: #boolean ifAbsentPut: [GlorpBooleanType new typeString: 'boolean'].
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 PostgresPlatform >> byteArrayToSQLStringConverter [
 
 	^DelegatingDatabaseConverter
@@ -68,60 +70,60 @@ PostgresPlatform >> byteArrayToSQLStringConverter [
 		fromDbToSt: #convertSQLStringToByteArray:for:.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> bytea [
 	^self typeNamed: #bytea ifAbsentPut: [GlorpBinaryType new typeString: 'bytea'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> char [
 	^self typeNamed: #char ifAbsentPut: [GlorpCharType new typeName: 'character'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> character [
 	^self char.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> character: width [
 	^self char: width.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> characterVarying [
 	^self varchar
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> characterVarying: length [
 	^self varchar: length
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 PostgresPlatform >> charactersThatNeedEscaping [
 	^charactersThatNeedEscaping ifNil: [#($')]
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 PostgresPlatform >> charactersThatNeedEscaping: aCollectionOfChars [
 	"Call this if you know the database servers setting for standard-conforming_strings and so can save the postLoginInitializeFrom: call."
 
 	charactersThatNeedEscaping := aCollectionOfChars
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> clob [
 
 	^self typeNamed: #clob ifAbsentPut: [GlorpClobType new typeString: 'text'].
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 PostgresPlatform >> convertJSONObjectToSQLString: anObject for: aType [
 	^anObject ifNotNil: [ NeoJSONWriter toString: anObject ]
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 PostgresPlatform >> convertSQLStringToByteArray: aString for: aType [
 
 	| aStream str | 
@@ -140,39 +142,39 @@ PostgresPlatform >> convertSQLStringToByteArray: aString for: aType [
 	^aStream contents
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 PostgresPlatform >> convertSQLStringToJSONObject: anObject for: aType [
 	^anObject isString 
 		ifTrue: [ NeoJSONReader fromString: anObject ] 
 		ifFalse: [ anObject ]
 ]
 
-{ #category : #sequences }
+{ #category : 'sequences' }
 PostgresPlatform >> databaseSequenceClass [
 	^PGSequence.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> date [
 	^self typeNamed: #date ifAbsentPut: [GlorpDateType new typeString: 'date'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> decimal [
 	^self typeNamed: #decimal ifAbsentPut: [GlorpDecimalType new].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> double [
 	^self float8
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> doublePrecision [
 	^self double
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 PostgresPlatform >> encodeAsBase64String: aByteArray [
 	"Pure inline of Base64FastCoder's method."
 
@@ -227,22 +229,22 @@ PostgresPlatform >> encodeAsBase64String: aByteArray [
 	^output
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> float [
 	^self float4.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> float4 [
 	^self typeNamed: #float4 ifAbsentPut: [GlorpFloatType new].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> float8 [
 	^self typeNamed: #float8 ifAbsentPut: [GlorpDoubleType new].
 ]
 
-{ #category : #functions }
+{ #category : 'functions' }
 PostgresPlatform >> initializeFunctions [
 	"Postgres supports standard regex and also the ANSI SQL 'SIMILAR TO' form of regex, in which the % and _ of SQL's LIKE predicate replace the corresponding * and ? of regex."
 
@@ -251,42 +253,42 @@ PostgresPlatform >> initializeFunctions [
 	functions at: #regexMatches: put: (InfixFunction named: '~').
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 PostgresPlatform >> initializeReservedWords [
 	super initializeReservedWords.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> int [
 	^self int4
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> int2 [
 	^self typeNamed: #int2 ifAbsentPut: [GlorpIntegerType new typeString: 'int2'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> int4 [
 	^self typeNamed: #int4 ifAbsentPut: [GlorpIntegerType new typeString: 'int4'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> int8 [
 	^self typeNamed: #int8 ifAbsentPut: [GlorpIntegerType new typeString: 'int8'].
 ]
 
-{ #category : #SQL }
+{ #category : 'SQL' }
 PostgresPlatform >> isPostgreSQLPlatform [
 	^true.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> json [
 	^self typeNamed: #json ifAbsentPut: [GlorpJSONType new]
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 PostgresPlatform >> jsonToStringConverter [
 
 	^DelegatingDatabaseConverter
@@ -296,37 +298,37 @@ PostgresPlatform >> jsonToStringConverter [
 		fromDbToSt: #convertSQLStringToJSONObject:for:.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> jsonb [
 	^self typeNamed: #jsonb ifAbsentPut: [GlorpJSONType new]
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 PostgresPlatform >> maximumLengthOfColumnName [
 	"^<Integer> I return the maximum length of a column name.  (I am not sent at present;  I am here so that if I and #maximumLengthOfTableName (which is sent) should ever differ on some database platform, I can be used in revised truncation logic.)"
 
 	^31
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 PostgresPlatform >> maximumLengthOfTableName [
 	"^<Integer> I return the max. length of a table name"
 
 	^31
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PostgresPlatform >> measuresStringFieldWidthsInBytes [
 	"Return true if we measure the width of a string in bytes rather than characters. So, a 255-character field can hold 255 bytes worth of string, not 255 characters. This is important with encodings"
 	^true.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> numeric [
 	^self typeNamed: #numeric ifAbsentPut: [GlorpNumericType new].
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 PostgresPlatform >> postLoginInitializeFromAccessor: aDatabaseAccessor [
 	"If we cannot get the standard_conforming_strings state, assume the database is too old to understand it."
 
@@ -344,14 +346,14 @@ PostgresPlatform >> postLoginInitializeFromAccessor: aDatabaseAccessor [
 		ifFalse: [charactersThatNeedEscaping := #($' $\)].
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 PostgresPlatform >> printBlob: aByteArray on: aStream for: aType [
 	aByteArray isNil ifTrue: [^aStream nextPutAll: 'NULL'].
 	Dialect isSqueak ifTrue: [^self squeakPrintBlob: aByteArray on: aStream for: aType].
 	aStream nextPutAll: (self encodeAsBase64String: aByteArray) printString
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 PostgresPlatform >> printDate: aDate for: aType [
 	"Print a date (or timestamp) as yyyy-mm-dd"
 	| stream |
@@ -365,21 +367,21 @@ PostgresPlatform >> printDate: aDate for: aType [
 	^stream contents.
 ]
 
-{ #category : #'database - specific' }
+{ #category : 'database - specific' }
 PostgresPlatform >> printOffset: anInteger on: aCommand [
 	aCommand
 		nextPutAll: ' OFFSET '.
 	anInteger printOn: aCommand.
 ]
 
-{ #category : #'database - specific' }
+{ #category : 'database - specific' }
 PostgresPlatform >> printPostLimit: anInteger on: aCommand [
 	aCommand
 		nextPutAll: ' LIMIT '.
 	anInteger printOn: aCommand.
 ]
 
-{ #category : #'services tables' }
+{ #category : 'services tables' }
 PostgresPlatform >> printSqlStatementToListColumnsInTable: aDatabaseTable inSchema: schemaString on: aStream [
 	" Format:
 	       name           |       type        | length | nullable |     default_value     | pk 
@@ -390,7 +392,7 @@ PostgresPlatform >> printSqlStatementToListColumnsInTable: aDatabaseTable inSche
 		nextPutAll: ('SELECT column_name as name, data_type as type, character_maximum_length as length, (is_nullable=''YES'')::int as nullable, column_default as default_value, (SELECT count(*) FROM pg_attribute a LEFT OUTER JOIN  pg_index i  ON a.attrelid = i.indrelid AND a.attnum = ANY(i.indkey) WHERE  i.indrelid = ''{1}''::regclass AND i.indisprimary AND a.attname=column_name) as pk  FROM information_schema.columns where table_name=''{1}''' format: {aDatabaseTable. schemaString })
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 PostgresPlatform >> printTime: aTime for: aType [
 	"Print a time (or timestamp) as hh:mm:ss.fff"
 	| stream |
@@ -404,7 +406,7 @@ PostgresPlatform >> printTime: aTime for: aType [
 	^stream contents.
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 PostgresPlatform >> printTimestamp: aTimestamp on: stream for: aType [
 	aTimestamp isNil ifTrue: [stream nextPutAll: 'NULL'. ^self].
 	stream nextPut: $'.
@@ -418,81 +420,81 @@ PostgresPlatform >> printTimestamp: aTimestamp on: stream for: aType [
 	stream nextPut: $'.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> real [
 	^self float4
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PostgresPlatform >> requiresCastsForNullsInUnions [
 	"If we have explicit nulls in a query which is unioned, do we need to cast them to the appropriate type in order to keep the database happy."
 	^true.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 PostgresPlatform >> requiresTransactionForTableOperations [
 	"Return true if we need a transaction in order to do table creation, deletion, and so forth. Some databases require it. Others don't like it"
 	^false.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> sequence [
 
 	^self serial
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> serial [
 	"For postgresql, we use sequences, and explicitly get the values ourselves, so just tell the database that they're integers."
 	^self typeNamed: #serial ifAbsentPut: [GlorpSerialType new typeString: 'integer'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> smallint [
 	^self int2
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 PostgresPlatform >> sqlTextCurrentServerUTCTimestamp [
 
 	^'SELECT CURRENT_TIMESTAMP AT TIME ZONE ''UTC'' '
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PostgresPlatform >> supportsANSIJoins [
 	"Do we support the JOIN <tableName> USING <criteria> syntax."
 	^true.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PostgresPlatform >> supportsCaseInsensitiveLike [
 	^true.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PostgresPlatform >> supportsGroupWritingFor: aCommand [
 	^aCommand supportsGroupWriting
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PostgresPlatform >> supportsLimit [
 	"Do we support anything analogous to the postgresql LIMIT, returning only the first N rows"
 	^true.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 PostgresPlatform >> supportsMillisecondsInTimes [
 	"I think this depends on settings, but it's easier right now to just turn it off"
 	^false.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PostgresPlatform >> supportsOffset [
 	"Do we support anything analogous to the postgresql OFFSET, skipping the first N rows"
 	^true.
 ]
 
-{ #category : #'services tables' }
+{ #category : 'services tables' }
 PostgresPlatform >> tableNameFor: aStringRepresentingATableName [
 	"Return the table name, as modified to be used in a database statement."
 	
@@ -503,42 +505,42 @@ PostgresPlatform >> tableNameFor: aStringRepresentingATableName [
 	ifFalse: ['"' , aStringRepresentingATableName , '"'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> time [
 	^self typeNamed: #time ifAbsentPut: [GlorpTimeType new typeString: 'time'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> timeStampTypeString [
 	^'timestamp'.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> timestamp [
 	^self typeNamed: #timestamp ifAbsentPut: [GlorpTimeStampType new typeString: 'timestamp without time zone'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> timestampWithTimeZone [
 	^self timestamptz
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> timestampWithoutTimeZone [
 	^self typeNamed: #timestamp ifAbsentPut: [GlorpTimeStampType new typeString: 'timestamp without time zone'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> timestamptz [
 	^self typeNamed: #timestamptz ifAbsentPut: [GlorpPGTimestampWithTimeZoneType new]
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> timetz [
 	^self typeNamed: #timetz ifAbsentPut: [GlorpPGTimeWithTimeZoneType new].
 ]
 
-{ #category : #'type helpers' }
+{ #category : 'type helpers' }
 PostgresPlatform >> typesWithValues [
 	super typesWithValues.
 	self boolean.
@@ -561,29 +563,29 @@ PostgresPlatform >> typesWithValues [
 	^self types.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PostgresPlatform >> usesArrayBindingRatherThanGroupWriting [
 	"Return true if we use array binding for grouped writes rather than printing the sql multiple times. Only applies if we support grouped writes"
 	^false.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PostgresPlatform >> usesInformationSchema [
 
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PostgresPlatform >> usesLengthNotEndPosInSubstring [
 	^true
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> uuid [
 	^self typeNamed: #uuid ifAbsentPut: [GlorpUUIDType new].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 PostgresPlatform >> varchar [
 	^self typeNamed: #varchar ifAbsentPut: [GlorpVarCharType new typeName: 'character varying'].
 ]

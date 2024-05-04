@@ -2,25 +2,27 @@
 A command to delete our set of rows.
 "
 Class {
-	#name : #DeleteCommand,
-	#superclass : #RowBasedCommand,
-	#category : #'Glorp-Database'
+	#name : 'DeleteCommand',
+	#superclass : 'RowBasedCommand',
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DeleteCommand >> arrayBoundFields [
 	"For a delete, it makes no difference, we only ever include the primary key fields"
 
 	^ self singleRowBoundFields
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DeleteCommand >> blockFactor [
 
 	^ 1
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DeleteCommand >> printSQL [
 
 	self nextPutAll: 'DELETE FROM '.
@@ -29,7 +31,7 @@ DeleteCommand >> printSQL [
 	row printPrimaryKeyTemplateOn: self
 ]
 
-{ #category : #'bound values' }
+{ #category : 'bound values' }
 DeleteCommand >> singleRowBoundFields [
 
 	| fields |

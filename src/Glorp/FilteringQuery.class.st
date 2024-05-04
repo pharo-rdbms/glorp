@@ -10,50 +10,52 @@ Instance Variables:
 
 "
 Class {
-	#name : #FilteringQuery,
-	#superclass : #Query,
+	#name : 'FilteringQuery',
+	#superclass : 'Query',
 	#instVars : [
 		'collection',
 		'filter',
 		'collectBlock'
 	],
-	#category : 'Glorp-Queries'
+	#category : 'Glorp-Queries',
+	#package : 'Glorp',
+	#tag : 'Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FilteringQuery class >> on: aCollection filter: aBlock [
 	^(self new)
 		collection: aCollection;
  		filter: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FilteringQuery >> collectBlock [
 	^collectBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FilteringQuery >> collectBlock: aBlock [
 	collectBlock:= aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FilteringQuery >> collection [
 	^collection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FilteringQuery >> collection: aCollection [
 	aCollection class == GlorpVirtualCollection ifTrue: [collectionType := aCollection getQuery collectionType].
 	collection := aCollection
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 FilteringQuery >> collectionTypesAgree: aCollection [
 	^self collectionType new class == aCollection class
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 FilteringQuery >> executeWithParameters: parameterArray in: aSession [
 	| filtered result |
 	session := aSession.
@@ -72,17 +74,17 @@ FilteringQuery >> executeWithParameters: parameterArray in: aSession [
 		ifFalse: [result]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FilteringQuery >> filter [
 	^filter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FilteringQuery >> filter: aBlock [
 	filter := aBlock
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 FilteringQuery >> filterResultsForParameters: parameterArray [
 	| passing seen |
 	seen := Dialect newIdentitySet.
@@ -100,23 +102,23 @@ FilteringQuery >> filterResultsForParameters: parameterArray [
 	^passing
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FilteringQuery >> resultClass [
 	collection class == GlorpVirtualCollection ifTrue: [^collection getQuery resultClass].
 	^(collection detect: [:each | true] ifNone: [nil]) class
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FilteringQuery >> shortCircuitEmptyReturn: parameters [
 	^false
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 FilteringQuery >> transformsValues [
 	^collectBlock notNil
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 FilteringQuery >> valueFor: anObject [
 	collectBlock isNil ifTrue: [^anObject].
 	^collectBlock value: anObject

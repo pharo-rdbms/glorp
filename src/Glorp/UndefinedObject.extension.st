@@ -1,6 +1,6 @@
-Extension { #name : #UndefinedObject }
+Extension { #name : 'UndefinedObject' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 UndefinedObject >> glorpPrintSQLOn: aCommand [
 
 	aCommand nextPutAll: 'NULL'.

@@ -1,6 +1,6 @@
-Extension { #name : #GlorpWriteFailure }
+Extension { #name : 'GlorpWriteFailure' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 GlorpWriteFailure class >> mayResume [
 
 	^ true

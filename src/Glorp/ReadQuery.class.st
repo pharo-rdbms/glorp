@@ -2,12 +2,14 @@
 This represents a general read query. By general we mean that it might require more than one trip to the database. It computes a ""tracing"" indicating which groups of objects can be read simultaneously, then constructs a group of corresponding SimpleQuery instances and executes them.
 "
 Class {
-	#name : #ReadQuery,
-	#superclass : #AbstractReadQuery,
-	#category : #'Glorp-Queries'
+	#name : 'ReadQuery',
+	#superclass : 'AbstractReadQuery',
+	#category : 'Glorp-Queries',
+	#package : 'Glorp',
+	#tag : 'Queries'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 ReadQuery >> asQueryWithNullsForOtherClasses: aClass [
 	"Construct a specialized form of the query that's set up to retrieve instances of aClass, but with a bunch of empty fields that get populated with nulls, so we can retrieve several different classes at the same go."
 
@@ -59,7 +61,7 @@ ReadQuery >> asQueryWithNullsForOtherClasses: aClass [
 	^newQuery
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ReadQuery >> asSimpleQueryFor: aClass [
 	| newQuery newCriteria newBase |
 	"Rebuild the expression, because this means a full query is being split into multiple sub-queries, e.g. for an inheritance read. The expression may get prepared differently in each case (e.g. table aliases), so we can't share"
@@ -79,14 +81,14 @@ ReadQuery >> asSimpleQueryFor: aClass [
 	^newQuery.
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 ReadQuery >> executeSubQueries: subQueries withParameters: anArray [
 	^self shouldUseSingleQuery
 		ifTrue: [self executeSubQueriesCombined: subQueries withParameters: anArray]
 		ifFalse: [self executeSubQueriesIndividually: subQueries withParameters: anArray]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 ReadQuery >> executeSubQueriesCombined: subQueries withParameters: anArray [
 	"Execute out sub queries as a single query with a UNION ALL between the sub-queries. Then select from the results the one which has a value for that row. Used for horizontal inheritance queries."
 	| combinedQuery |
@@ -98,7 +100,7 @@ ReadQuery >> executeSubQueriesCombined: subQueries withParameters: anArray [
 	^combinedQuery executeWithParameters: anArray in: session
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 ReadQuery >> executeSubQueriesIndividually: subQueries withParameters: anArray [
 	| result |
 	result := OrderedCollection new.
@@ -113,7 +115,7 @@ ReadQuery >> executeSubQueriesIndividually: subQueries withParameters: anArray [
 		ifFalse: [result].
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ReadQuery >> nullFieldFor: eachField [
 	self platform requiresCastsForNullsInUnions ifFalse: [^(ConstantExpression for: nil) alias: eachField table name, 'nullField', eachField position printString].
 	^FunctionExpression
@@ -122,7 +124,7 @@ ReadQuery >> nullFieldFor: eachField [
 		basedOn: (ConstantExpression for: nil)
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 ReadQuery >> readFromDatabaseWithParameters: anArray [
 
 	| subQueries |
@@ -138,7 +140,7 @@ ReadQuery >> readFromDatabaseWithParameters: anArray [
 	^self executeSubQueries: subQueries withParameters: anArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReadQuery >> shouldUseSingleQuery [
 	^self descriptor typeResolver shouldUseSingleQuery
 ]

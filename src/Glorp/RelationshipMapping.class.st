@@ -17,8 +17,8 @@ Instance Variables:
 
 "
 Class {
-	#name : #RelationshipMapping,
-	#superclass : #Mapping,
+	#name : 'RelationshipMapping',
+	#superclass : 'Mapping',
 	#instVars : [
 		'query',
 		'join',
@@ -34,10 +34,12 @@ Class {
 		'linkFields',
 		'proxyAction'
 	],
-	#category : #'Glorp-Mappings'
+	#category : 'Glorp-Mappings',
+	#package : 'Glorp',
+	#tag : 'Mappings'
 }
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 RelationshipMapping >> addPhantomMappingExpressionOn: base [ 
 	| phantomMapping phantomMappingName phantomExpression |
 	phantomMapping := self reverseMapping.
@@ -49,30 +51,30 @@ RelationshipMapping >> addPhantomMappingExpressionOn: base [
 	^phantomExpression
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationshipMapping >> allTables [
 
 	(self join) isNil ifTrue: [^#()].
 	^(self join) allTables.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationshipMapping >> basicReferenceClass [
 	^self attribute type.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationshipMapping >> basicReferenceDescriptor [
 	^self system descriptorFor: self basicReferenceClass.
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RelationshipMapping >> beExclusive [
 	"Make this an exclusive relationship - so that when the parent object is deleted, the child or children will also be deleted"
 	isExclusive := true.
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 RelationshipMapping >> buildGeneralQueryIn: anObjectBuilder [
 	"For filtered queries. We need to build this in terms of the parent query"
 
@@ -93,7 +95,7 @@ RelationshipMapping >> buildGeneralQueryIn: anObjectBuilder [
 	^newQuery.
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 RelationshipMapping >> buildQuery [
 	| toMany |
 	toMany := self attribute isCollectionAttribute.
@@ -108,19 +110,19 @@ RelationshipMapping >> buildQuery [
 	^query.
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 RelationshipMapping >> buildRowMapKeyForSource: source target: target index: index [
 	^(RowMapKey new)
 		key1: target yourSelf;
 		key2: source yourSelf.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationshipMapping >> collectionType [
 	^nil.
 ]
 
-{ #category : #'private/expressions' }
+{ #category : 'private/expressions' }
 RelationshipMapping >> constraints [
 	"Return a list of the constraints from our link table. If the linkField is set, filter the constraints to those that include that field. "
 	| referenceKeys linkTable referenceTables allConstraints relevantConstraints |
@@ -142,32 +144,32 @@ RelationshipMapping >> constraints [
 	^relevantConstraints.
 ]
 
-{ #category : #initializing }
+{ #category : 'initializing' }
 RelationshipMapping >> constraintsFrom: oneTableSet to: anotherTableSet [
 	^(self oneWayConstraintsFrom: oneTableSet to: anotherTableSet), 
 		(self oneWayConstraintsFrom: anotherTableSet to: oneTableSet)
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RelationshipMapping >> constructRowMapKeyAs: aBlock [
 	"Give us the opportunity to construct a custom row map key. This is useful if you need to force two relationships to share a link table entry"
 	rowMapKeyConstructorBlock := aBlock.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RelationshipMapping >> controlsTables [
 	"Return true if this type of method 'owns' the tables it's associated with, and expression nodes using this mapping should alias those tables where necessary"
 
 	^controlsTables
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationshipMapping >> controlsTables: aBoolean [
 	"We can indicate that this relationship does not actually control its tables. This is going to be true if the parent controls the same tables and coexists with us. Think StoreVersionlessPundle and Pundle"
 	controlsTables := aBoolean.
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 RelationshipMapping >> createDeleteRowFor: anObject in: aRowMap [
 	"This is like firing the mapping, but instead of creating the data, we just need to check if there are link table entries, and if so, make sure they are deleted"
 	| target mementoizedTarget|
@@ -180,7 +182,7 @@ RelationshipMapping >> createDeleteRowFor: anObject in: aRowMap [
 		self createDeleteRowForLinkFrom: anObject toTarget: mementoizedTarget in: aRowMap].
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 RelationshipMapping >> createDeleteRowForLinkFrom: anObject toTarget: target in: aRowMap [
 	| linkTable |
 	self usesLinkTable ifFalse: [^false].
@@ -201,7 +203,7 @@ RelationshipMapping >> createDeleteRowForLinkFrom: anObject toTarget: target in:
 					[:linkRow | linkRow isEmpty ifFalse: [linkRow forDeletion: true]]].
 ]
 
-{ #category : #'private/expressions' }
+{ #category : 'private/expressions' }
 RelationshipMapping >> expressionFromLinkToReferenceTableWithBase: base [
 
 	| reverse |
@@ -209,7 +211,7 @@ RelationshipMapping >> expressionFromLinkToReferenceTableWithBase: base [
 	^reverse asGeneralGlorpExpressionWithFields.
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 RelationshipMapping >> extendedJoin [
 	"In order to do a many-to-many read we need more information than just the write, we need to know 
 	the relationship to the other table. Construct that based on the table information"
@@ -221,7 +223,7 @@ RelationshipMapping >> extendedJoin [
 	^(self expressionFromLinkToReferenceTableWithBase: base) AND: generalMappingCriteria.
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 RelationshipMapping >> extendedJoinFromSource: sourceExpression toTarget: targetExpression [
 	"In order to do a many-to-many read we need more information than just the write, we need to know 
 	the relationship to the other table. Construct that based on the table information"
@@ -234,12 +236,12 @@ RelationshipMapping >> extendedJoinFromSource: sourceExpression toTarget: target
 	^(self expressionFromLinkToReferenceTableWithBase: targetExpression) AND: generalMappingCriteria.
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RelationshipMapping >> field [
 	^self join targetKeys first
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RelationshipMapping >> hasValueThatCanProvideField: aField from: anObject [
 	"Return true if we have enough information in ourselves to populate our fields. The only time this won't be true is if we're either holding an uninstantiated proxy or have a to-many relationship mapping with an empty collection. Assumes that aField is one that we map."
 	| value |
@@ -249,7 +251,7 @@ RelationshipMapping >> hasValueThatCanProvideField: aField from: anObject [
 	^value parameters includesKey: aField.
 ]
 
-{ #category : #initializing }
+{ #category : 'initializing' }
 RelationshipMapping >> initialize [
 
 	super initialize.
@@ -260,14 +262,14 @@ RelationshipMapping >> initialize [
 	isExclusive := false.
 ]
 
-{ #category : #initializing }
+{ #category : 'initializing' }
 RelationshipMapping >> initializeJoin [
 	"We haven't been given a join. There might be a compound one, or else see if we can make an educated guess at one"
 	linkTableJoin notNil ifTrue: [join := linkTableJoin, targetTableJoin. ^self].
 	self initializeJoinTo: self relatedTables.
 ]
 
-{ #category : #initializing }
+{ #category : 'initializing' }
 RelationshipMapping >> initializeJoinTo: otherTables [
 	"We haven't been giving a join. See if we can make an educated guess at one by looking for tables with constraints to us. If linkFields is set, it tells us the source field for the relationship between the link table and the target, so in looking for our own relationship to the link table, we exclude that."
 	| toConstraints fromConstraints |
@@ -281,37 +283,37 @@ RelationshipMapping >> initializeJoinTo: otherTables [
 	self join: (self system joinFor: self toTables: otherTables fromConstraints: fromConstraints toConstraints: toConstraints).
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RelationshipMapping >> isExclusive [
 	"Return whether this an exclusive relationship - so that when the parent object is deleted, the child or children will also be deleted"
 	^isExclusive.
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RelationshipMapping >> isExclusive: aBoolean [
 	"Set whether this an exclusive relationship - so that when the parent object is deleted, the child or children will also be deleted"
 	isExclusive := aBoolean.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RelationshipMapping >> isRelationship [
 	"True when the mapping associates different persistent classes."
 
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RelationshipMapping >> isStoredInSameTable [
 	"Normally, a relationship mapping isn't stored in the same table, but if we're part of a dictionary mapping and the table is mapped to an association, then we want to be treated that way. The test is a horrible hack"
 	^self classModel describedClass == Association.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RelationshipMapping >> isToManyRelationship [
 	^self attribute isCollectionAttribute.
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 RelationshipMapping >> isValidTarget: anObject [
 
 	^anObject isGlorpProxy
@@ -319,13 +321,13 @@ RelationshipMapping >> isValidTarget: anObject [
 		ifFalse: [true].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationshipMapping >> join [
 	join isNil ifTrue: [self initializeJoin].
 	^join.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationshipMapping >> join: aJoin [
 	"We allow the join to be specified either as a Join (the normal case) or as an expression. We expect an expression specifying the relationship in terms of other relationships. So, e.g. to specify the join from InsurancePlan to PolicyHolder we might specify
 [:eachPolicyHolder | eachPolicyHolder employer availablePlans].  Note that the relationship is described from the point of view of the target, and is just a list of mappings. Then we take this internally and transform it into an equality expression we can use to define the relationship."
@@ -344,7 +346,7 @@ RelationshipMapping >> join: aJoin [
 	[join owningMapping: self] on: MessageNotUnderstood do: [:ex | ex | ex return].
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 RelationshipMapping >> joinExpressionFor: targetExpression [
 	"We're looking for the object represented by this mapping, and we know the object represented by its source. Use our mapping criteria to construct a join that traverses that instance of this relationship"
 
@@ -354,7 +356,7 @@ RelationshipMapping >> joinExpressionFor: targetExpression [
 	^self extendedJoinFromSource: sourceExpression toTarget: targetExpression.
 ]
 
-{ #category : #'private/expressions' }
+{ #category : 'private/expressions' }
 RelationshipMapping >> joinFromLinkToReferenceTable [
 	"Generate the inverse mapping expression, i.e. the one connecting the link table to the reference table, using the foreign key constraints. We assume that if there's a general part, it applies only to the original join, and not to the reverse join that we're generating."
 
@@ -368,42 +370,42 @@ RelationshipMapping >> joinFromLinkToReferenceTable [
 	^generalPart isNil ifTrue: [expression] ifFalse: [generalPart AND: expression].
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 RelationshipMapping >> knitFromBuilder: sourceBuilder toBuilder: targetBuilder [ 
 	self canRead ifFalse: [^self].
 	self attribute knit: sourceBuilder instance to: targetBuilder instance
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RelationshipMapping >> linkField: aDatabaseField [
 	linkFields := Array with: aDatabaseField.
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RelationshipMapping >> linkFields [
 	^linkFields.
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RelationshipMapping >> linkFields: aCollection [
 	"Set the fields that are foreign keys *from* the link table (this is only used if we have one) to the *target* table. This is used as a hint in the case where the link table is ambiguous, and is easier than specifying the full join."
 	linkFields := aCollection.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationshipMapping >> linkTableJoin [
 	linkTableJoin isNil ifTrue: [^self join].
 	^linkTableJoin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationshipMapping >> linkTableJoin: aJoin [
 	"Set the join from the link table to the target table. Normally this is calculated automatically (see reverseJoin), but it can be set manually if that's not possible (for example, because you want to include a constant value in the join, that won't be included in the foreign key constraints). See also relevantLinkTableFields if you need to give a hint."
 	linkTableJoin := aJoin.
 	[aJoin owningMapping: self] on: MessageNotUnderstood do: [:ex | ex | ex return].
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 RelationshipMapping >> mapFromObject: anObject intoRowsIn: aRowMap [ 
 	"Our target is a collection. The tricky bit is that if we're building rows into a RowMapForMementos, then the collection we contain isn't the one we want to use. We want the old version. Ask the row map to give it to us. If it's a normal row map, we'll just get the same thing back" 
 	| target mementoizedTarget|
@@ -415,7 +417,7 @@ RelationshipMapping >> mapFromObject: anObject intoRowsIn: aRowMap [
 		self mapFromObject: anObject toTarget: mementoizedTarget puttingRowsIn: aRowMap].
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 RelationshipMapping >> mapFromObject: anObject toTarget: target puttingRowsIn: aRowMap [
 	self attribute
 		loopOver: target
@@ -434,7 +436,7 @@ RelationshipMapping >> mapFromObject: anObject toTarget: target puttingRowsIn: a
 				puttingRowsIn: aRowMap].
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 RelationshipMapping >> mapObject: anObject inElementBuilder: anElementBuilder [
 	| value session parameters |
 	session := descriptor session.
@@ -458,7 +460,7 @@ RelationshipMapping >> mapObject: anObject inElementBuilder: anElementBuilder [
 	self setValueIn: anObject to: value.
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 RelationshipMapping >> mapOneFromObject: sourceObject toTarget: targetObject intermediate: aRowMapKey atPosition: index puttingRowsIn: aRowMap [
 	self linkTableJoin
 		mapFromSource: sourceObject
@@ -484,43 +486,43 @@ RelationshipMapping >> mapOneFromObject: sourceObject toTarget: targetObject int
 		atIndex: index.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RelationshipMapping >> mappedFields [
 	"Return a collection of fields that this mapping will write into any of the containing object's rows"
 
 	^self join allSourceFields select: [:each | each isMappable and: [(each isGlorpExpression not or: [each isConstantExpression not])]].
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RelationshipMapping >> mappedFieldsCount [
 	"Return a collection of fields that this mapping will write into any of the containing object's rows"
 
 	^self mappedFields size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationshipMapping >> mappingCriteria [
 	^self join.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationshipMapping >> mappingCriteria: aJoin [
 	self join: aJoin.
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 RelationshipMapping >> multipleTableExpressionsFor: anExpression [
 	^self referenceDescriptor multipleTableJoin
 		collect: [:each | each asExpressionJoiningSource: anExpression toTarget: anExpression]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RelationshipMapping >> needsSpecialRowMapKey [
 	"Return true if we have to use a special key object for the row map, rather than just our target"
 	^self usesLinkTable.
 ]
 
-{ #category : #initializing }
+{ #category : 'initializing' }
 RelationshipMapping >> oneWayConstraintsFrom: oneTableSet to: anotherTableSet [
 	| matches |
 	matches := OrderedCollection new: 3.
@@ -531,7 +533,7 @@ RelationshipMapping >> oneWayConstraintsFrom: oneTableSet to: anotherTableSet [
 	^matches.
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 RelationshipMapping >> parametersIn: anElementBuilder [
 	| parameters |
 	self shouldUseFilteredRead ifTrue: [^anElementBuilder command parameters].
@@ -542,28 +544,28 @@ RelationshipMapping >> parametersIn: anElementBuilder [
 	^parameters.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationshipMapping >> proxyAction [
 	"Return an action each proxy should take when it's instantiated. This is a two-argument block
 		[:owner :target | "
 	^proxyAction.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationshipMapping >> proxyAction: aBlock [
 	"Set an action each proxy should take when it's instantiated. This is a two-argument block
 		[:owner :target | "
 	proxyAction := aBlock.
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 RelationshipMapping >> query [
 
 	query isNil ifTrue: [self buildQuery].
 	^query.
 ]
 
-{ #category : #proxies }
+{ #category : 'proxies' }
 RelationshipMapping >> queryFor: anObjectBuilder [ 
 	"If we have a specific query we should use in this case, rather than our general one, construct it. Right now that only applies if we're using filtered reads"
 	| basicQuery collection primaryKey newQuery cachedQuery filterBlock |
@@ -593,25 +595,25 @@ RelationshipMapping >> queryFor: anObjectBuilder [
 	^newQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationshipMapping >> referenceClass: aClass [
 	self attribute type: aClass.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationshipMapping >> referenceDescriptor [
 
 	^self system descriptorFor: self referenceClass.
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 RelationshipMapping >> referenceTableFieldFor: aField [
 	^self usesLinkTable
 		ifTrue: [nil]
 		ifFalse: [self join targetForSource: aField].
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RelationshipMapping >> referencedIndependentObjectsFrom: anObject [
 
 	| value |
@@ -621,7 +623,7 @@ RelationshipMapping >> referencedIndependentObjectsFrom: anObject [
 	^Array with: value.
 ]
 
-{ #category : #initializing }
+{ #category : 'initializing' }
 RelationshipMapping >> relatedTables [
 	| otherTables possibleLinkTables |
 	otherTables := self basicReferenceDescriptor tables.
@@ -640,31 +642,31 @@ RelationshipMapping >> relatedTables [
 	^possibleLinkTables.
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RelationshipMapping >> relevantLinkTableFields [
 	^linkFields.
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RelationshipMapping >> relevantLinkTableFields: aCollection [
 	linkFields := aCollection.
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 RelationshipMapping >> reverseJoin [
 
 	reverseJoin isNil ifTrue: [reverseJoin := self joinFromLinkToReferenceTable].
 	^reverseJoin.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationshipMapping >> reverseJoin: aJoin [
 	"Set the reverse join - the join from the link table to the target table. Normally this will be calculated based on the foreign key constraints, but in rare cases (e.g. a foreign key that may be to more than one table) you may want to set it explicitly"
 
 	reverseJoin := aJoin.
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 RelationshipMapping >> reverseMapping [
 	"Construct the backwards mapping that corresponds to us. If it's using a link table, then we are at least potentially a toMany mapping. Otherwise, we can point backwards only to a single object."
 	| mapping |
@@ -684,7 +686,7 @@ RelationshipMapping >> reverseMapping [
 				descriptor: self descriptor]
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 RelationshipMapping >> rowMapKeyForSource: source target: target index: index [
 	"Create the row map key. Make sure we're holding onto the real objects, so proxies don't time out on us"
 
@@ -700,36 +702,36 @@ RelationshipMapping >> rowMapKeyForSource: source target: target index: index [
 			[rowMapKeyConstructorBlock value: source yourSelf value: target yourSelf].
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 RelationshipMapping >> setGeneralQueryRetrievalIn: newQuery basedOn: base phantom: phantomExpression [
 	self descriptor keyFields
 		do: [:eachField | newQuery retrieve: (phantomExpression getField: eachField)].
 	newQuery retrieve: base.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationshipMapping >> shouldProxy [
 
 	^shouldProxy.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationshipMapping >> shouldProxy: aBoolean [
 
 	shouldProxy := aBoolean.
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RelationshipMapping >> shouldUseFilteredRead [
 	^shouldUseFilteredRead.
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RelationshipMapping >> shouldUseFilteredRead: aBoolean [
 	shouldUseFilteredRead := aBoolean.
 ]
 
-{ #category : #'private/expressions' }
+{ #category : 'private/expressions' }
 RelationshipMapping >> singleJoinFromLinkToReferenceTableForConstraints: constraints [
 	"Generate the inverse mapping expression, i.e. the one connecting the link table to the reference table, using the foreign key constraints. We assume that if there's a general part, it applies only to the original join, and not to the reverse join that we're generating."
 
@@ -743,24 +745,24 @@ RelationshipMapping >> singleJoinFromLinkToReferenceTableForConstraints: constra
 	^generalPart isNil ifTrue: [expression] ifFalse: [generalPart AND: expression].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationshipMapping >> targetTableJoin [
 	^targetTableJoin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationshipMapping >> targetTableJoin: aJoin [
 	"Set the join from the source table to the target table. Note that is is only required if you are using a link table, and in addition to the link table join need to connect from the source table directly to the target table as well.  This is *NOT* supposed to be a join from the link table to the target table. That's reverseJoin, and is calculated automatically. See relevantLinkTableFields if you need to give a hint, or linkTableJoin: if you want to set it explicitly."
 	targetTableJoin := aJoin.
 	aJoin owningMapping: self.
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 RelationshipMapping >> targetTables [
 	^((self usesLinkTable ifTrue: [self reverseJoin] ifFalse: [self join]) allTargetFields collect: [:each | each table]) asSet.
 ]
 
-{ #category : #processing }
+{ #category : 'processing' }
 RelationshipMapping >> trace: aTracing context: anExpression [
 	"Currently we don't trace relationships across tables, so all we do here
 is accumulate the list of embedded mappings"
@@ -771,27 +773,27 @@ is accumulate the list of embedded mappings"
 	self referenceDescriptor trace: aTracing context: newContext.
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RelationshipMapping >> useFilteredRead [
 	shouldUseFilteredRead := true.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationshipMapping >> useLinkTable [
 	usesLinkTable := true.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationshipMapping >> usesLinkTable [
 	^usesLinkTable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationshipMapping >> usesLinkTable: anObject [
 	usesLinkTable := anObject
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 RelationshipMapping >> validate [
 	| targetJoinSourceFields targetJoinTargetTables |
 	super validate.
@@ -819,12 +821,12 @@ RelationshipMapping >> validate [
 	(self isExclusive and: [self canWrite not]) ifTrue: [self error: 'It is not meaningful to have an exclusive relationship that is read-only.'].
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 RelationshipMapping >> valueOfField: aField fromObject: anObject [
 	^self valueOfField: aField fromObject: anObject ifNone: [self error: 'Cannot find value'].
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 RelationshipMapping >> valueOfField: aField fromObject: anObject ifNone: aBlock [
 	"Return the value of a given field in our target object. Used in extracting primary keys when they are mapped via relationships"
 	| targetField target |
@@ -846,6 +848,6 @@ RelationshipMapping >> valueOfField: aField fromObject: anObject ifNone: aBlock 
 	^aBlock value.
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 RelationshipMapping >> writeExtraInformationInto: aRowMap atKey: rowMapKey forSourceObject: sourceObject targetObject: targetObject  atIndex: index [
 ]

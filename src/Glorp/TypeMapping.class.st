@@ -8,100 +8,102 @@ Subclasses must implement the following messages:
 
 "
 Class {
-	#name : #TypeMapping,
-	#superclass : #Mapping,
-	#category : 'Glorp-Mappings'
+	#name : 'TypeMapping',
+	#superclass : 'Mapping',
+	#category : 'Glorp-Mappings',
+	#package : 'Glorp',
+	#tag : 'Mappings'
 }
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 TypeMapping >> addTypeMappingCriteriaTo: collection in: expression [
 	^self
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 TypeMapping >> allDescribedConcreteClasses [
 
 	^Array with: (self describedClass)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TypeMapping >> canBeTypeMappingParent [
 	^true
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 TypeMapping >> describedClass [
 	^self descriptor describedClass
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 TypeMapping >> describedConcreteClassFor: aRow withBuilder: builder [
 
 	^self mappedClass
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 TypeMapping >> descriptorForSuperclass [
 	^self system descriptorFor: self mappedClass superclass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TypeMapping >> hasAttribute [
 	"Return true if this maps an attribute, which is normally true"
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TypeMapping >> isAbstract [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TypeMapping >> isRelationship [
 
 	^false.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TypeMapping >> isTypeMapping [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TypeMapping >> isTypeMappingRoot [
 	| superClassDescriptor |
 	superClassDescriptor := self descriptorForSuperclass.
 	^superClassDescriptor isNil or: [ superClassDescriptor typeMapping canBeTypeMappingParent not ]
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 TypeMapping >> mapFromObject: anObject intoRowsIn: aRowMap [
 	"do  nothing"
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 TypeMapping >> mapObject: anObject inElementBuilder: anElementBuilder [
 	"do  nothing"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TypeMapping >> mappedClass [
 	^self descriptor describedClass
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 TypeMapping >> referencedIndependentObjectsFrom: anObject [
 	^#().
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 TypeMapping >> typeMappingRoot [
 	^self isTypeMappingRoot 
 		ifTrue: [self mappedClass]
 		ifFalse: [self descriptorForSuperclass typeMapping typeMappingRoot]
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 TypeMapping >> validateAttribute [
 	" TypeMapping doesn't use the attribute, validation would therefore fail. Probably should introduce AttributeMapping as sibling to TypeMapping "
 ]

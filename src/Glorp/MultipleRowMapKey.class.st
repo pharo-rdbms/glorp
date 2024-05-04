@@ -2,15 +2,17 @@
 This is a special (and rarely needed) form of row map key that allows an arbitrary number of objects to participate in it.
 "
 Class {
-	#name : #MultipleRowMapKey,
-	#superclass : #Object,
+	#name : 'MultipleRowMapKey',
+	#superclass : 'Object',
 	#instVars : [
 		'keys'
 	],
-	#category : #'Glorp-UnitOfWork'
+	#category : 'Glorp-UnitOfWork',
+	#package : 'Glorp',
+	#tag : 'UnitOfWork'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MultipleRowMapKey class >> with: key1 with: key2 with: key3 [
 	(key1 isNil or: [key2 isNil or: [key3 isNil]]) ifTrue: [self error: 'Nil key in row map, probably indicates an invalid object structure'].
 	^self new 
@@ -20,7 +22,7 @@ MultipleRowMapKey class >> with: key1 with: key2 with: key3 [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MultipleRowMapKey class >> withAll: aCollection [
 	
 	^self new 
@@ -28,7 +30,7 @@ MultipleRowMapKey class >> withAll: aCollection [
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MultipleRowMapKey >> = aRowMapKey [
 
 	aRowMapKey class == self class ifFalse: [^false].
@@ -39,17 +41,17 @@ MultipleRowMapKey >> = aRowMapKey [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MultipleRowMapKey >> addAllKeys: aKeyCollection [
 	keys addAll: aKeyCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MultipleRowMapKey >> addKey: aKey [
 	keys add: aKey
 ]
 
-{ #category : #adjusting }
+{ #category : 'adjusting' }
 MultipleRowMapKey >> adjustIn: aCorrespondenceMap [
 	"Adjust ourselves to refer to the copies rather than the originals"
 	| adjusted |
@@ -58,7 +60,7 @@ MultipleRowMapKey >> adjustIn: aCorrespondenceMap [
 	^adjusted
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MultipleRowMapKey >> hash [
 	"Note: the two things with the same identity hash problem is OK here because if they do then the hashes are (by definition) the same, and the order doesn't matter"
 	| increment hash |
@@ -69,22 +71,22 @@ MultipleRowMapKey >> hash [
 	^hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MultipleRowMapKey >> initialize [
 	keys := (SortedCollection new: 4) sortBlock: self sortBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MultipleRowMapKey >> keys [
 	^keys
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MultipleRowMapKey >> keys: aCollection [
 	keys := (aCollection asSortedCollection: self sortBlock)
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MultipleRowMapKey >> printOn: aStream [
 	aStream nextPutAll: 'KEY('.
 	self hash printOn: aStream.
@@ -92,7 +94,7 @@ MultipleRowMapKey >> printOn: aStream [
 	keys printOn: aStream
 ]
 
-{ #category : #adjusting }
+{ #category : 'adjusting' }
 MultipleRowMapKey >> reverseAdjustIn: aRowMapForMementos [
 	"Adjust ourselves to refer to the originals rather than the copies"
 	| adjusted |
@@ -102,7 +104,7 @@ MultipleRowMapKey >> reverseAdjustIn: aRowMapForMementos [
 	^adjusted
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MultipleRowMapKey >> sortBlock [
 	^[:a :b | a identityHash <= b identityHash]
 ]

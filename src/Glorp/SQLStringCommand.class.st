@@ -2,41 +2,43 @@
 This represents a command that executes arbitrary SQL and is not a select. For selects use SQLStringSelectCommand.
 "
 Class {
-	#name : #SQLStringCommand,
-	#superclass : #DatabaseCommand,
+	#name : 'SQLStringCommand',
+	#superclass : 'DatabaseCommand',
 	#instVars : [
 		'parameters',
 		'maximumBlobSizeToRetrieveDirectly'
 	],
-	#category : #'Glorp-Database'
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 SQLStringCommand class >> for: aString [
 
 	^ self new setSQLString: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SQLStringCommand >> arrayBoundFields [
 	"Don't have enough information to do this, I don't think"
 
 	^ #(  )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SQLStringCommand >> bindingTypes [
 
 	^ #(  )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SQLStringCommand >> bindings [
 
 	^ parameters
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SQLStringCommand >> initialize [
 
 	super initialize.
@@ -44,37 +46,37 @@ SQLStringCommand >> initialize [
 	parameters := #(  )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SQLStringCommand >> maximumLobSizeToRetrieveDirectly [
 
 	^ maximumBlobSizeToRetrieveDirectly
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SQLStringCommand >> maximumLobSizeToRetrieveDirectly: anInteger [
 
 	maximumBlobSizeToRetrieveDirectly := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SQLStringCommand >> parameterTypeSignature [
 
 	^ ''
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SQLStringCommand >> parameters [
 
 	^ parameters
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SQLStringCommand >> parameters: anArray [
 
 	parameters := anArray
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SQLStringCommand >> printSQL [
 	" *** This method was defined by Glorp.DatabaseCommand as a subclass responsibility.
 	Replace its body with a proper implementation. *** "
@@ -82,13 +84,13 @@ SQLStringCommand >> printSQL [
 	self error: 'Subclass responsibility stub not reimplemented'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SQLStringCommand >> setSQLString: aString [
 
 	sqlString := aString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SQLStringCommand >> succeeded [
 	" *** This method was defined by Glorp.DatabaseCommand as a subclass responsibility.
 	Replace its body with a proper implementation. *** "

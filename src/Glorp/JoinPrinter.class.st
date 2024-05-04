@@ -9,34 +9,36 @@ Instance Variables:
 
 "
 Class {
-	#name : #JoinPrinter,
-	#superclass : #Object,
+	#name : 'JoinPrinter',
+	#superclass : 'Object',
 	#instVars : [
 		'joinsToProcess',
 		'availableTables',
 		'query'
 	],
-	#category : #'Glorp-Queries'
+	#category : 'Glorp-Queries',
+	#package : 'Glorp',
+	#tag : 'Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 JoinPrinter class >> for: aQuery [
 	^self new query: aQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinPrinter >> allTables [
 	^query tablesToPrint
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 JoinPrinter >> nextJoin [
 	^joinsToProcess detect: [:eachJoinExpression |
 		eachJoinExpression tablesForANSIJoin anySatisfy: [:eachTable |
 			availableTables includes: eachTable]]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 JoinPrinter >> printJoinsOn: aCommand [
 	"This is pretty hideous. Figure out an order in which to print these stupid joins. As a bonus, they may be circular, so we may have to collapse joins together. And if we collapse, we can't print as we go because we don't know how many parentheses to add, so store them up and print them all at the end"
 	| allJoins |
@@ -61,7 +63,7 @@ JoinPrinter >> printJoinsOn: aCommand [
 	self printLeftoverTablesOn: aCommand
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 JoinPrinter >> printLeftoverTablesOn: aCommand [
 	"Now there might be leftover tables whose joins were implied directly by the where clause"
 	| leftOverTables |
@@ -75,19 +77,19 @@ JoinPrinter >> printLeftoverTablesOn: aCommand [
 		separatedBy: ', '
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinPrinter >> query: aQuery [
 	query := aQuery.	
 	self setUp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JoinPrinter >> rootTable [
 	"Pick a table to start with"
 	^self allTables first
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 JoinPrinter >> setUp [
 	availableTables := Set new
 ]

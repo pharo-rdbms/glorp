@@ -2,17 +2,19 @@
 Data type that is used to store JSON (JavaScript Object Notation) data 
 "
 Class {
-	#name : #GlorpJSONType,
-	#superclass : #GlorpAbstractStringType,
-	#category : #'Glorp-Types'
+	#name : 'GlorpJSONType',
+	#superclass : 'GlorpAbstractStringType',
+	#category : 'Glorp-Types',
+	#package : 'Glorp',
+	#tag : 'Types'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 GlorpJSONType >> converterForStType: aClass [
 	 ^self platform converterNamed: #jsonToString.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GlorpJSONType >> initialize [
 	super initialize.
 	typeString := 'json'.

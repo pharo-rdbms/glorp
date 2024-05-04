@@ -13,8 +13,8 @@ isInTransaction
 
 "
 Class {
-	#name : #PharoDatabaseAccessor,
-	#superclass : #DatabaseAccessor,
+	#name : 'PharoDatabaseAccessor',
+	#superclass : 'DatabaseAccessor',
 	#instVars : [
 		'isInTransaction',
 		'databaseDriver'
@@ -22,32 +22,34 @@ Class {
 	#classVars : [
 		'DefaultDriver'
 	],
-	#category : #'Glorp-Core'
+	#category : 'Glorp-Core',
+	#package : 'Glorp',
+	#tag : 'Core'
 }
 
-{ #category : #'settings - configuration' }
+{ #category : 'settings - configuration' }
 PharoDatabaseAccessor class >> DefaultDriver [
 
 	^ DefaultDriver
 ]
 
-{ #category : #'settings - configuration' }
+{ #category : 'settings - configuration' }
 PharoDatabaseAccessor class >> DefaultDriver: aDriver [
 
 	DefaultDriver := aDriver
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 PharoDatabaseAccessor >> basicExecuteSQLString: aString [
 	^self databaseDriver basicExecuteSQLString: aString  
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 PharoDatabaseAccessor >> basicExecuteSQLString: aString binding: aBindingArray [
 	^self databaseDriver basicExecuteSQLString: aString binding: aBindingArray 
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 PharoDatabaseAccessor >> basicExecuteSQLStringNoResult: aString doing: aBlock [
 
 	| a |
@@ -56,7 +58,7 @@ PharoDatabaseAccessor >> basicExecuteSQLStringNoResult: aString doing: aBlock [
 	^a
 ]
 
-{ #category : #transactions }
+{ #category : 'transactions' }
 PharoDatabaseAccessor >> beginTransaction [
 
 	self log: 'Begin Transaction'.
@@ -64,7 +66,7 @@ PharoDatabaseAccessor >> beginTransaction [
 	self databaseDriver beginTransaction
 ]
 
-{ #category : #transactions }
+{ #category : 'transactions' }
 PharoDatabaseAccessor >> commitTransaction [
 
 	self log: 'Commit Transaction'.
@@ -72,14 +74,14 @@ PharoDatabaseAccessor >> commitTransaction [
 	self databaseDriver commitTransaction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoDatabaseAccessor >> connection [
 
 	self databaseDriver ifNil: [ ^ nil ].
 	^ self databaseDriver connection
 ]
 
-{ #category : #login }
+{ #category : 'login' }
 PharoDatabaseAccessor >> connectionArgsFromCurrentLogin [
 
 	"connect string looks like  hostname:portNumber_db-name. :portNumber is optional"
@@ -96,7 +98,7 @@ PharoDatabaseAccessor >> connectionArgsFromCurrentLogin [
 		password: self currentLogin password
 ]
 
-{ #category : #login }
+{ #category : 'login' }
 PharoDatabaseAccessor >> connectionClassForLogin: aLogin [ 
 
 	self class DefaultDriver ifNotNil: [ ^ self class DefaultDriver ].
@@ -109,31 +111,31 @@ PharoDatabaseAccessor >> connectionClassForLogin: aLogin [
 	self error: 'A driver is not installed for platform: ' , aLogin database class name
 ]
 
-{ #category : #login }
+{ #category : 'login' }
 PharoDatabaseAccessor >> databaseDriver [
 
 	^ databaseDriver
 ]
 
-{ #category : #login }
+{ #category : 'login' }
 PharoDatabaseAccessor >> databaseDriver: aDriver [
 
 	databaseDriver := aDriver
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 PharoDatabaseAccessor >> disconnect [
 
 	^ self connection disconnect
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PharoDatabaseAccessor >> encoding [
 
 	^ self connection queryEncoding
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 PharoDatabaseAccessor >> executeCommandBound: aCommand [
 
 	| answerStream |
@@ -147,7 +149,7 @@ PharoDatabaseAccessor >> executeCommandBound: aCommand [
 	^ self cursorFor: answerStream command: aCommand
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 PharoDatabaseAccessor >> executeCommandUnbound: aCommand [
 
 	| answerStream |
@@ -156,13 +158,13 @@ PharoDatabaseAccessor >> executeCommandUnbound: aCommand [
 	^ self cursorFor: answerStream command: aCommand
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 PharoDatabaseAccessor >> externalDatabaseErrorSignal [
 
 	^ Dialect error
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PharoDatabaseAccessor >> initialize [
 
 	super initialize.
@@ -171,27 +173,27 @@ PharoDatabaseAccessor >> initialize [
 	logging := false "Set to true to see Glorp's SQL transcript."
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 PharoDatabaseAccessor >> innerExceptionFor: exception [
 	"I don't know how to get the inner error in Squeak"
 
 	^ exception messageText
 ]
 
-{ #category : #transactions }
+{ #category : 'transactions' }
 PharoDatabaseAccessor >> isInTransaction [
 
 	^ isInTransaction
 ]
 
-{ #category : #login }
+{ #category : 'login' }
 PharoDatabaseAccessor >> isLoggedIn [
 
 	self databaseDriver ifNil: [ ^ false ].
 	^ self databaseDriver isConnected
 ]
 
-{ #category : #login }
+{ #category : 'login' }
 PharoDatabaseAccessor >> loginIfError: aBlock [
 	self log: 'Login'.
 	self databaseDriver: self connectionClass new.
@@ -205,7 +207,7 @@ PharoDatabaseAccessor >> loginIfError: aBlock [
 	self log: 'Login finished'
 ]
 
-{ #category : #login }
+{ #category : 'login' }
 PharoDatabaseAccessor >> logout [
 
 	self isLoggedIn ifFalse: [ ^ self ].
@@ -214,7 +216,7 @@ PharoDatabaseAccessor >> logout [
 	self log: 'Logout finished'
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 PharoDatabaseAccessor >> releaseCursor: aCursor in: aPreparedStatement [
 	"Release the cursor. We're trapping exceptions, so return true or false to indicate success/failure"
 
@@ -226,7 +228,7 @@ PharoDatabaseAccessor >> releaseCursor: aCursor in: aPreparedStatement [
 		  do: [ :ex | ex return: false ]
 ]
 
-{ #category : #transactions }
+{ #category : 'transactions' }
 PharoDatabaseAccessor >> rollbackTransaction [
 
 	self log: 'Rollback Transaction'.
@@ -234,13 +236,13 @@ PharoDatabaseAccessor >> rollbackTransaction [
 	self databaseDriver rollbackTransaction
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 PharoDatabaseAccessor >> rowCount [
 
 	^ self databaseDriver rowCount
 ]
 
-{ #category : #login }
+{ #category : 'login' }
 PharoDatabaseAccessor >> showDialog: aString [
 
 	UIManager default inform: aString

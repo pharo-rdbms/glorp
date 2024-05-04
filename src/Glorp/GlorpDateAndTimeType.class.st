@@ -2,23 +2,25 @@
 Date and time type
 "
 Class {
-	#name : #GlorpDateAndTimeType,
-	#superclass : #GlorpDatabaseType,
-	#category : #'Glorp-Types'
+	#name : 'GlorpDateAndTimeType',
+	#superclass : 'GlorpDatabaseType',
+	#category : 'Glorp-Types',
+	#package : 'Glorp',
+	#tag : 'Types'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 GlorpDateAndTimeType >> converterForStType: aClass [
 
 	^self platform converterNamed: #dateAndTime.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpDateAndTimeType >> impliedSmalltalkType [
 	^Dialect dateAndTimeClass
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 GlorpDateAndTimeType >> print: aValue on: aStream [
 
 	aValue isNil

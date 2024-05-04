@@ -7,27 +7,29 @@ Instance Variables:
 
 "
 Class {
-	#name : #AdHocProxy,
-	#superclass : #AbstractProxy,
+	#name : 'AdHocProxy',
+	#superclass : 'AbstractProxy',
 	#instVars : [
 		'readBlock'
 	],
-	#category : #'Glorp-Queries'
+	#category : 'Glorp-Queries',
+	#package : 'Glorp',
+	#tag : 'Queries'
 }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 AdHocProxy class >> readBlock: aZeroArgumentBlock [
 
 	^self new glorpReadBlock: aZeroArgumentBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AdHocProxy >> class [
 
 	^AdHocProxy
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 AdHocProxy >> getValue [
 
 	self isInstantiated ifTrue: [^value].
@@ -35,12 +37,12 @@ AdHocProxy >> getValue [
 	^value
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 AdHocProxy >> glorpReadBlock: aZeroArgumentBlock [
 	readBlock := aZeroArgumentBlock
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 AdHocProxy >> printOn: aStream [ 
 	aStream nextPut: ${.
 	isInstantiated 
@@ -49,7 +51,7 @@ AdHocProxy >> printOn: aStream [
 	aStream nextPut: $}
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AdHocProxy >> proxyInitialize [
 
 	super proxyInitialize.

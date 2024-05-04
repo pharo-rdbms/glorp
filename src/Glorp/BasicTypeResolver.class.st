@@ -10,83 +10,85 @@ Instance Variables:
 
 "
 Class {
-	#name : #BasicTypeResolver,
-	#superclass : #TypeResolver,
+	#name : 'BasicTypeResolver',
+	#superclass : 'TypeResolver',
 	#instVars : [
 		'concreteMembers',
 		'subclassDescriptorsBuilt',
 		'rootDescriptor',
 		'rootClass'
 	],
-	#category : 'Glorp-Mappings'
+	#category : 'Glorp-Mappings',
+	#package : 'Glorp',
+	#tag : 'Mappings'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 BasicTypeResolver >> allDescribedConcreteClasses [
 	self subclassDescriptorsBuilt ifFalse: [self forceSubclassDescriptorLoads].
 	^self concreteMembers collect: [ :each | each describedClass ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BasicTypeResolver >> concreteMembers [
 	^concreteMembers isNil 
 		ifTrue: [ concreteMembers := OrderedCollection new ]
 		ifFalse: [ concreteMembers]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 BasicTypeResolver >> forceSubclassDescriptorLoads [
 	self rootClass allSubclassesDo: [ :each | self system descriptorFor: each ].
 	subclassDescriptorsBuilt := true
 ]
 
-{ #category : #registering }
+{ #category : 'registering' }
 BasicTypeResolver >> register: aDescriptor abstract: abstract [
 
 	super register: aDescriptor abstract: abstract.
 	abstract ifFalse: [ self concreteMembers add: aDescriptor ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BasicTypeResolver >> rootClass [
 	^rootClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BasicTypeResolver >> rootClass: anObject [
 	rootClass := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BasicTypeResolver >> rootDescriptor [
 	^rootDescriptor isNil
 		ifTrue: [ rootDescriptor := self system descriptorFor: self rootClass ]
 		ifFalse: [ rootDescriptor ]
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 BasicTypeResolver >> rootDescriptor: anObject [
 	rootDescriptor := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BasicTypeResolver >> subclassDescriptorsBuilt [
 	^subclassDescriptorsBuilt isNil
 		ifTrue: [ subclassDescriptorsBuilt := false ]
 		ifFalse: [ subclassDescriptorsBuilt ]
 ]
 
-{ #category : #'type resolution' }
+{ #category : 'type resolution' }
 BasicTypeResolver >> typeMappingRootDescriptor [
 	^self rootDescriptor
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BasicTypeResolver >> usesInheritance [
 	^true
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 BasicTypeResolver >> validate [
 	| tables sequences |
 	super validate.

@@ -12,8 +12,8 @@ Instance Variables:
 
 "
 Class {
-	#name : #Tracing,
-	#superclass : #Object,
+	#name : 'Tracing',
+	#superclass : 'Object',
 	#instVars : [
 		'base',
 		'allTracings',
@@ -21,20 +21,22 @@ Class {
 		'alsoFetchExpressions',
 		'query'
 	],
-	#category : #'Glorp-Queries'
+	#category : 'Glorp-Queries',
+	#package : 'Glorp',
+	#tag : 'Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Tracing class >> for: aQuery [
 	^self new base: aQuery whereClause ultimateBaseExpression
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Tracing >> addExpression: anExpression [
 	self addExpression: anExpression andDo: [:ignore |]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Tracing >> addExpression: anExpression andDo: aBlock [
 	| exp |
 	exp := anExpression asGlorpExpressionOn: self base in: query.
@@ -43,7 +45,7 @@ Tracing >> addExpression: anExpression andDo: aBlock [
 		aBlock value: exp]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Tracing >> additionalExpressions [
 	| all |
 	alsoFetchExpressions isEmpty ifTrue: [^retrievalExpressions].
@@ -53,13 +55,13 @@ Tracing >> additionalExpressions [
 	^all.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Tracing >> allTracings [
 
 	^allTracings
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 Tracing >> alsoFetch: anExpression [ 
 	"Add the expression as something which will be explicitly retrieved and knit together with other results, but NOT included in the result list"
 
@@ -67,27 +69,27 @@ Tracing >> alsoFetch: anExpression [
 		alsoFetchExpressions add: exp]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Tracing >> alsoFetchExpressions [
 	^alsoFetchExpressions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Tracing >> base [
 	^query isNil ifTrue: [base] ifFalse: [query baseExpression]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Tracing >> base: anExpression [ 
 	base := anExpression
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Tracing >> copy [
 	^self shallowCopy postCopy
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Tracing >> initialize [
 
 	base := BaseExpression new.
@@ -96,26 +98,26 @@ Tracing >> initialize [
 	alsoFetchExpressions := Set new: 3
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Tracing >> postCopy [
 	allTracings := allTracings copy.
 	retrievalExpressions := retrievalExpressions copy.
 	alsoFetchExpressions := alsoFetchExpressions copy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Tracing >> retrievalExpressions [
 	^retrievalExpressions
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 Tracing >> retrieve: anExpression [ 
 	"Add the expression as something which will be explicitly retrieved and knit together with other results, and included in the result list"
 	self addExpression: anExpression andDo: [:exp |
 		retrievalExpressions add: exp]
 ]
 
-{ #category : #setup }
+{ #category : 'setup' }
 Tracing >> setup [
 	"We have been put into a query. If we aren't to trace anything else, trace the base"
 	retrievalExpressions isEmpty ifTrue: [
@@ -123,13 +125,13 @@ Tracing >> setup [
 		retrievalExpressions add: base].
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 Tracing >> tracesThrough: aMapping [
 
 	^aMapping isStoredInSameTable
 ]
 
-{ #category : #setup }
+{ #category : 'setup' }
 Tracing >> updateBase: aBaseExpression [
 	"Make sure we have the same base as the query"
 	| transformed |

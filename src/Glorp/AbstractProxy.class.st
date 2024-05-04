@@ -8,34 +8,36 @@ Instance Variables:
 
 "
 Class {
-	#name : #AbstractProxy,
-	#superclass : #ProtoObject,
+	#name : 'AbstractProxy',
+	#superclass : 'ProtoObject',
 	#instVars : [
 		'value',
 		'isInstantiated'
 	],
-	#category : #'Glorp-Queries'
+	#category : 'Glorp-Queries',
+	#package : 'Glorp',
+	#tag : 'Queries'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractProxy class >> isAbstract [
 
 	^ self == AbstractProxy
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AbstractProxy class >> new [
 
 	^super new proxyInitialize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractProxy >> = anObject [
 	"In VA we inherit this as identity. Need to override"
 	^self getValue = anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 AbstractProxy >> basicPrintOn: aStream [ 
 	aStream nextPut: ${.
 	isInstantiated 
@@ -44,7 +46,7 @@ AbstractProxy >> basicPrintOn: aStream [
 	aStream nextPut: $}
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 AbstractProxy >> basicPrintString [
 	| aStream |
 	aStream := WriteStream on: String new.
@@ -52,48 +54,48 @@ AbstractProxy >> basicPrintString [
 	^aStream contents
 ]
 
-{ #category : #overrides }
+{ #category : 'overrides' }
 AbstractProxy >> basicSize [
 	^self getValue basicSize
 ]
 
-{ #category : #'dnu handling' }
+{ #category : 'dnu handling' }
 AbstractProxy >> doesNotUnderstand: aMessage [
 
 	^self getValue perform: aMessage selector withArguments: aMessage arguments
 ]
 
-{ #category : #'dnu handling' }
+{ #category : 'dnu handling' }
 AbstractProxy >> doesNotUnderstand: sel args: args [ 
 	"This is the variant for ObjectStudio"
 	^self getValue perform: sel withArguments: args
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 AbstractProxy >> getValue [
 
 	self subclassesMustImplement
 ]
 
-{ #category : #notification }
+{ #category : 'notification' }
 AbstractProxy >> glorpPostFetch: aSession [
 ]
 
-{ #category : #notification }
+{ #category : 'notification' }
 AbstractProxy >> glorpPostFetchValidate: aSession [
 ]
 
-{ #category : #overrides }
+{ #category : 'overrides' }
 AbstractProxy >> hash [
 	^self getValue hash
 ]
 
-{ #category : #overrides }
+{ #category : 'overrides' }
 AbstractProxy >> inspect [
 	^self getValue inspect
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AbstractProxy >> instVarAt: index [ 
 	"Primitive. Answer a fixed variable in an object. The numbering of the 
 	variables corresponds to the named instance variables. Fail if the index 
@@ -105,46 +107,46 @@ AbstractProxy >> instVarAt: index [
 	^self basicAt: index - self class instSize		
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractProxy >> isGlorpProxy [
 	^true
 ]
 
-{ #category : #overrides }
+{ #category : 'overrides' }
 AbstractProxy >> isImmutable [
 	^self getValue isImmutable
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractProxy >> isInstantiated [
 	isInstantiated isNil ifTrue: [isInstantiated := false].
 	^isInstantiated
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractProxy >> isKindOf: aClass [
 	self isInstantiated ifTrue: [^value isKindOf: aClass].
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractProxy >> isNumber [
 
 	^false
 ]
 
-{ #category : #overrides }
+{ #category : 'overrides' }
 AbstractProxy >> isSelfEvaluating [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractProxy >> isString [
 
 	^false
 ]
 
-{ #category : #overrides }
+{ #category : 'overrides' }
 AbstractProxy >> longPrintOn: aStream limitedTo: sizeLimit indent: indent [
 	"Append to the argument, aStream, the names and values of all of the receiver's instance variables.  Limit is the length limit for each inst var."
 
@@ -160,7 +162,7 @@ AbstractProxy >> longPrintOn: aStream limitedTo: sizeLimit indent: indent [
 		 cr]
 ]
 
-{ #category : #overrides }
+{ #category : 'overrides' }
 AbstractProxy >> longPrintStringLimitedTo: aLimitValue [
 	"Answer a String whose characters are a description of the receiver."
 	
@@ -170,7 +172,7 @@ AbstractProxy >> longPrintStringLimitedTo: aLimitValue [
 	^ str isEmpty ifTrue: [self printString, String cr] ifFalse: [str]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 AbstractProxy >> printOn: aStream [ 
 	aStream nextPut: ${.
 	isInstantiated 
@@ -179,7 +181,7 @@ AbstractProxy >> printOn: aStream [
 	aStream nextPut: $}
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 AbstractProxy >> printString [
 
 	| aStream |
@@ -188,7 +190,7 @@ AbstractProxy >> printString [
 	^aStream contents
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 AbstractProxy >> printStringLimitedTo: limit [
 	"Answer a String whose characters are a description of the receiver.
 	If you want to print without a character limit, use fullPrintString."
@@ -198,32 +200,32 @@ AbstractProxy >> printStringLimitedTo: limit [
 	^ limitedString , '...etc...'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AbstractProxy >> proxyInitialize [
 
 	isInstantiated := false
 ]
 
-{ #category : #overrides }
+{ #category : 'overrides' }
 AbstractProxy >> shouldBePrintedAsLiteral [
 
 	^false
 ]
 
-{ #category : #overrides }
+{ #category : 'overrides' }
 AbstractProxy >> store [
 	"For Object Studio compatibility"
 	^self inspectorString.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractProxy >> uninstantiate [
 
 	value := nil.
 	isInstantiated := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractProxy >> ~= anObject [ 
 
 	^(self = anObject) not

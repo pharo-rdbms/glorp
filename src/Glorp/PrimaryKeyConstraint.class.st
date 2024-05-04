@@ -2,29 +2,31 @@
 This is a class representing non-foreign key database constraints. It's not actually used for very much, but is mostly so we can model the metadata in the database's information_schema to get information we need about primary keys and other information that may be represented as constraints rather than field attributes.
 "
 Class {
-	#name : #PrimaryKeyConstraint,
-	#superclass : #DatabaseTableConstraint,
+	#name : 'PrimaryKeyConstraint',
+	#superclass : 'DatabaseTableConstraint',
 	#instVars : [
 		'tableName',
 		'type'
 	],
-	#category : #'Glorp-Database'
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 PrimaryKeyConstraint class >> forTable: aDatabaseTable fields: collDatabaseFields [
 	^self new
 		forTable: aDatabaseTable  fields: collDatabaseFields;
 		yourself
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 PrimaryKeyConstraint >> creationStringFor: aPlatform [
 
 	^ aPlatform createPrimaryKeyConstraintAddStatement: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrimaryKeyConstraint >> forTable: aTable [
 
 	super forTable: aTable.
@@ -32,26 +34,26 @@ PrimaryKeyConstraint >> forTable: aTable [
 	self primaryKeyFields:  table primaryKeyFields
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PrimaryKeyConstraint >> forTable: aDatabaseTable fields: collDatabaseFields [
 
 	self forTable: aDatabaseTable.
 	self primaryKeyFields: collDatabaseFields
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrimaryKeyConstraint >> generateName [
 
 	^ self table name, '_PK'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PrimaryKeyConstraint >> isPrimaryKeyConstraint [
 
 	^ true
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 PrimaryKeyConstraint >> isTheSameAs: aPrimaryKeyConstraint [
 	"Validate that two constraints are exactly the same. Most useful for testing purposes, rather than normal usage, which is why we don't just use the #= method."
 
@@ -62,7 +64,7 @@ PrimaryKeyConstraint >> isTheSameAs: aPrimaryKeyConstraint [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PrimaryKeyConstraint >> matchesPrimaryKeyConstraint: aConstraint [
 
 	name = aConstraint name ifFalse: [^false].
@@ -72,19 +74,19 @@ PrimaryKeyConstraint >> matchesPrimaryKeyConstraint: aConstraint [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrimaryKeyConstraint >> primaryKeyConstraintName [
 
 	^ self table name, '_PK'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrimaryKeyConstraint >> primaryKeyFields [
 
 	^ fields
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrimaryKeyConstraint >> primaryKeyFields: aCollection [
 
 	fields := aCollection

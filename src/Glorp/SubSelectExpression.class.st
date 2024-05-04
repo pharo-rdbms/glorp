@@ -8,33 +8,35 @@ Instance Variables:
 
 "
 Class {
-	#name : #SubSelectExpression,
-	#superclass : #RelationExpression,
+	#name : 'SubSelectExpression',
+	#superclass : 'RelationExpression',
 	#instVars : [
 		'query',
 		'localBase'
 	],
-	#category : 'Glorp-Expressions'
+	#category : 'Glorp-Expressions',
+	#package : 'Glorp',
+	#tag : 'Expressions'
 }
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 SubSelectExpression >> addBoundExpressionsIn: aCommand to: boundExpressions [
 	self query prepare.
 	self query addBoundExpressionsIn: aCommand to: boundExpressions.
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 SubSelectExpression >> condensePrimaryKeyComparison [
 	"Relies on this having been called after the children are condensed. If the child has had its reference to our base condensed away, then we aren't necessary, the comparison is at the same level and no longer needs a subselect"
 	^leftChild queryLevelBaseExpression == rightChild queryLevelBaseExpression ifTrue: [rightChild] ifFalse: [self].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SubSelectExpression >> descriptor [
 	^self leftChild descriptor.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SubSelectExpression >> initializeQuery [
 	query := Query
 		read: localBase descriptor describedClass
@@ -46,7 +48,7 @@ SubSelectExpression >> initializeQuery [
 		eachTable primaryKeyFields do: [:each | query retrieve: [:base | base getField: each]]].
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 SubSelectExpression >> named: aSymbol basedOn: anExpression withArguments: anArray [
 
 	| right |
@@ -59,7 +61,7 @@ SubSelectExpression >> named: aSymbol basedOn: anExpression withArguments: anArr
 	rightChild := right rebuildOn: localBase startingFrom: anExpression.
 ]
 
-{ #category : #'printing SQL' }
+{ #category : 'printing SQL' }
 SubSelectExpression >> printSQLOn: aStream withParameters: aDictionary [ 
 	| command toPrint |
 	toPrint := relation = #noneSatisfy: ifTrue: ['NOT EXISTS ('] ifFalse: [' EXISTS ('].
@@ -69,13 +71,13 @@ SubSelectExpression >> printSQLOn: aStream withParameters: aDictionary [
 	aStream nextPutAll: ')'.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SubSelectExpression >> query [
 	query isNil ifTrue: [self initializeQuery].
 	^query.
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 SubSelectExpression >> rebuildOn: aBaseExpression startingFrom: anExpression withOuterScopeBase: ultimateBaseExpression [
 	| expression left |
 	self == anExpression ifTrue: [^aBaseExpression].

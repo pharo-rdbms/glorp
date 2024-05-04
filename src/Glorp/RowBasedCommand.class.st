@@ -15,18 +15,20 @@ Instance Variables:
 
 "
 Class {
-	#name : #RowBasedCommand,
-	#superclass : #DatabaseCommand,
+	#name : 'RowBasedCommand',
+	#superclass : 'DatabaseCommand',
 	#instVars : [
 		'row',
 		'allRows',
 		'rowCount',
 		'failed'
 	],
-	#category : #'Glorp-Database'
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 RowBasedCommand class >> forRow: aDatabaseRow useBinding: aBoolean session: aSession [
 
 	^ self new
@@ -36,7 +38,7 @@ RowBasedCommand class >> forRow: aDatabaseRow useBinding: aBoolean session: aSes
 		  yourself
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 RowBasedCommand class >> forRows: aCollectionOfDatabaseRows useBinding: aBoolean session: aSession [
 
 	^ self new
@@ -47,25 +49,25 @@ RowBasedCommand class >> forRows: aCollectionOfDatabaseRows useBinding: aBoolean
 		  yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RowBasedCommand class >> isAbstract [
 
 	^ self == RowBasedCommand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RowBasedCommand >> allRows [
 
 	^ allRows
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RowBasedCommand >> allRows: aCollectionOfDatabaseRows [
 
 	allRows := aCollectionOfDatabaseRows
 ]
 
-{ #category : #'bound values' }
+{ #category : 'bound values' }
 RowBasedCommand >> arrayBindings [
 	"Return bindings in a form suitable for Oracle array binding, i.e. a list of arguments, but each argument is itself a list of multiple values"
 	| allBindings fields |
@@ -88,7 +90,7 @@ RowBasedCommand >> arrayBindings [
 	^allBindings asArray
 ]
 
-{ #category : #'bound values' }
+{ #category : 'bound values' }
 RowBasedCommand >> batchStatementBindings [
 	"Return our bindings, which we assume are for multiple rows, as one big array, one statement after the other"
 
@@ -103,7 +105,7 @@ RowBasedCommand >> batchStatementBindings [
 	^bound asArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RowBasedCommand >> bindingTypes [
 	| all basic size |
 	^(self shouldUseGroupWriting)
@@ -119,7 +121,7 @@ RowBasedCommand >> bindingTypes [
 		ifFalse: [self singleRowBoundFields collect: [:each | each type]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RowBasedCommand >> bindings [
 
 	^ self shouldUseGroupWriting
@@ -127,7 +129,7 @@ RowBasedCommand >> bindings [
 		  ifFalse: [ self singleRowBindings ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RowBasedCommand >> executeBoundIn: anAccessor [
 
 	| result |
@@ -150,7 +152,7 @@ RowBasedCommand >> executeBoundIn: anAccessor [
 	^ anAccessor cursorFor: #() readStream
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RowBasedCommand >> executeUnboundIn: anAccessor [
 
 	anAccessor returnRowCount: self needsRowCount.
@@ -181,7 +183,7 @@ RowBasedCommand >> executeUnboundIn: anAccessor [
 	^#() readStream
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RowBasedCommand >> expectedNumberOfModifiedRows [
 
 	^ self hasMultipleRows
@@ -189,27 +191,27 @@ RowBasedCommand >> expectedNumberOfModifiedRows [
 		  ifFalse: [ 1 ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RowBasedCommand >> hasMultipleRows [
 
 	^ allRows notNil and: [ allRows size > 1 ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RowBasedCommand >> initialize [
 
 	super initialize.
 	failed := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RowBasedCommand >> maximumSingleWriteSize [
 	"How many values will write at once. This is only really applicable when not doing binding and concatenating many statements together for one trip to the DB"
 
 	^ 1000
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RowBasedCommand >> parameterTypeSignature [
 	"Return a string indicating the parameter types. Complicated by the possibility of multiple rows, and of null values"
 
@@ -231,20 +233,20 @@ RowBasedCommand >> parameterTypeSignature [
 	^ result contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RowBasedCommand >> row [
 
 	^ row
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RowBasedCommand >> row: anObject [
 
 	row := anObject.
 	sqlString := nil
 ]
 
-{ #category : #'bound values' }
+{ #category : 'bound values' }
 RowBasedCommand >> rowAtATimeBindings [
 	"Return multiple sets of bindings in a form suitable for iterating over"
 
@@ -261,19 +263,19 @@ RowBasedCommand >> rowAtATimeBindings [
 	^allBindings asArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RowBasedCommand >> rowCount [
 
 	^ rowCount
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RowBasedCommand >> rowCount: anInteger [
 
 	rowCount := anInteger
 ]
 
-{ #category : #'bound values' }
+{ #category : 'bound values' }
 RowBasedCommand >> singleRowBindings [
 
 	| bound |
@@ -286,14 +288,14 @@ RowBasedCommand >> singleRowBindings [
 	^ bound asArray
 ]
 
-{ #category : #'bound values' }
+{ #category : 'bound values' }
 RowBasedCommand >> singleRowBoundFields [
 	"Return the list of fields to be bound in the SQL string we will use for a single operation. We only need to include those fields that actually have values in the particular row we're operating on"
 
 	self subclassResponsibility
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 RowBasedCommand >> subCommands [
 
 	| startPosition commands endPosition subRows newCommand |
@@ -312,26 +314,26 @@ RowBasedCommand >> subCommands [
 	^ commands
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RowBasedCommand >> succeeded [
 
 	^ failed not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RowBasedCommand >> supportsGroupWriting [
 	"Return true if array binding or a similar mechanism can be used to execute us with multiple commands at once. I think in general this can only ever make sense for inserts (and possibly selects under some circumstances). Updates may want to update only part of the fields."
 
 	^ false
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 RowBasedCommand >> tables [
 
 	^ Array with: self row table
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RowBasedCommand >> tooBigForSingleWrite [
 
 	^ self hasMultipleRows and: [

@@ -1,6 +1,6 @@
-Extension { #name : #SQLStringCommand }
+Extension { #name : 'SQLStringCommand' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 SQLStringCommand class >> for: aString [
 
 	^ self new setSQLString: aString

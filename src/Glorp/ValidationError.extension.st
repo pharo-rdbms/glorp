@@ -1,6 +1,6 @@
-Extension { #name : #ValidationError }
+Extension { #name : 'ValidationError' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 ValidationError class >> mayResume [
 
 	^ true

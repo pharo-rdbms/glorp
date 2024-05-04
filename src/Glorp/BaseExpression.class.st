@@ -8,16 +8,18 @@ Instance Variables:
 
 "
 Class {
-	#name : #BaseExpression,
-	#superclass : #ObjectExpression,
+	#name : 'BaseExpression',
+	#superclass : 'ObjectExpression',
 	#instVars : [
 		'descriptor',
 		'availableSubSelectNumber'
 	],
-	#category : #'Glorp-Expressions'
+	#category : 'Glorp-Expressions',
+	#package : 'Glorp',
+	#tag : 'Expressions'
 }
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 BaseExpression >> additionalExpressions [
 
 	| expressions |
@@ -29,13 +31,13 @@ BaseExpression >> additionalExpressions [
 	^ expressions
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 BaseExpression >> additionalExpressionsOn: anExpression [
 
 	^ #(  )
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 BaseExpression >> asExpressionJoiningSource: source toTarget: target [
 	"Create a general expression which represents this relationship where the values of the targets (which are normally parameters) are supplied out of the context provided by 'target' and the source fields are referencing things out of the context of source. Produces something suitable for ANDing into an expression when doing a join
    Example: If we had CUSTOMER.ADDRESS_ID = ADDRESS.ID as a parameter, and we want to AND this into an expression [:customer | customer address street = 'Main'] then we have customer as a base, and we get 
@@ -45,7 +47,7 @@ BaseExpression >> asExpressionJoiningSource: source toTarget: target [
 	^ source
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 BaseExpression >> availableSubSelectNumber [
 
 	availableSubSelectNumber := availableSubSelectNumber isNil
@@ -54,89 +56,89 @@ BaseExpression >> availableSubSelectNumber [
 	^ availableSubSelectNumber
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 BaseExpression >> base [
 
 	^ nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BaseExpression >> canBeUsedForRetrieve [
 	"Return true if this is a valid argument for a retrieve: clause"
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BaseExpression >> canHaveBase [
 	"Return true if this type of expression can have a base expression on which other things can be built. We don't have a base, but we *are* a base, so return true"
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BaseExpression >> canPrint [
 	"Return true if we can print into a where clause"
 
 	^ false
 ]
 
-{ #category : #introspection }
+{ #category : 'introspection' }
 BaseExpression >> className [
 
 	^ 'Base'
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 BaseExpression >> controlsTables [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaseExpression >> descriptor [
 
 	^ descriptor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaseExpression >> descriptor: aDescriptor [
 
 	descriptor := aDescriptor
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 BaseExpression >> fieldsForSelectStatement [
 
 	^ self descriptor mappedFields
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 BaseExpression >> getParameter: aDatabaseField [
 
 	^ ParameterExpression forField: aDatabaseField basedOn: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaseExpression >> hasDescriptor [
 
 	^ self descriptor notNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaseExpression >> mappedFieldCount [
 
 	^ self descriptor mappedFields size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaseExpression >> mappedFields [
 
 	^ self descriptor mappedFields collect: [ :each |
 		  self translateField: each ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 BaseExpression >> mapsSimpleObject [
 	"Try to do a fast test for this, to look for the pseudo-descriptors that direct to-many mappings use."
 
@@ -144,14 +146,14 @@ BaseExpression >> mapsSimpleObject [
 		  (self descriptor mappingForAttributeNamed: #myValue) notNil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaseExpression >> multipleTableExpressions [
 
 	^ self descriptor multipleTableJoin collect: [ :each |
 		  each asExpressionJoiningSource: self toTarget: self ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 BaseExpression >> printOn: aStream [
 
 	aStream
@@ -161,7 +163,7 @@ BaseExpression >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 BaseExpression >> printOnlySelfOn: aStream [
 
 	self descriptor isNil ifTrue: [
@@ -171,56 +173,56 @@ BaseExpression >> printOnlySelfOn: aStream [
 	self printTableAliasesOn: aStream
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 BaseExpression >> printSQLOn: aStream withParameters: aDictionary [ 
 	"Do nothing. We're not printable"
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 BaseExpression >> printSelectSQLOn: aStream withParameters: aDictionary [ 
 	"Normally, we're not printable, but we might be if we're inverting a direct to-many mapping. In that case, there should only be one mapped field"
 	self descriptor mappedFields do: [:each | (self translateField: each) printSQLOn: aStream withParameters: aDictionary].
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 BaseExpression >> printTreeOn: aStream [ 
 	aStream 
 		print: (self descriptor isNil ifTrue: [nil] ifFalse: [self descriptor describedClass])
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 BaseExpression >> queryLevelBaseExpression [
 
 	^self
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 BaseExpression >> rebuildOn: aBaseExpression startingFrom: anExpression withOuterScopeBase: ultimateBaseExpression [
 	anExpression isNil ifTrue: [^aBaseExpression].
 	anExpression == self ifTrue: [^aBaseExpression].
 	^ultimateBaseExpression isNil ifTrue: [self] ifFalse: [ultimateBaseExpression].
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 BaseExpression >> referenceClass [
 	"Return the class that our mapping refers to, if we have a mapping. If we're a base expression, just return our class, and if we're a table expression, just return nil."
 	^self descriptor describedClass.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaseExpression >> system [
 
 	self descriptor isNil ifTrue: [ ^ nil ].
 	^ self descriptor system
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaseExpression >> table [
 
 	^ self descriptor primaryTable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaseExpression >> tables [
 
 	^ self descriptor isNil
@@ -228,7 +230,7 @@ BaseExpression >> tables [
 		  ifFalse: [ self descriptor tables ]
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 BaseExpression >> tablesToPrint [
 	"We derive the base's tables from the fields that are being selected, but make sure that at least the primary table is listed."
 
@@ -236,24 +238,24 @@ BaseExpression >> tablesToPrint [
 	^ Array with: (self aliasedTableFor: self descriptor primaryTable)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaseExpression >> targetDescriptor [
 	self halt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaseExpression >> trueBase [
 
 	^ self
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 BaseExpression >> ultimateBaseExpression [
 
 	^ self
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 BaseExpression >> valueInBuilder: anElementBuilder [
 	"If we ever get here, this is because we're being used as the reverse of a direct to-many mapping, so we expect to have a descriptor with only one mapping, named #myValue"
 

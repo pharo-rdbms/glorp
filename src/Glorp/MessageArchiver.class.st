@@ -10,24 +10,26 @@ Instance Variables:
 
 "
 Class {
-	#name : #MessageArchiver,
-	#superclass : #ProtoObject,
+	#name : 'MessageArchiver',
+	#superclass : 'ProtoObject',
 	#instVars : [
 		'mySelector',
 		'myArguments',
 		'myReceiver',
 		'query'
 	],
-	#category : #'Glorp-Queries'
+	#category : 'Glorp-Queries',
+	#package : 'Glorp',
+	#tag : 'Queries'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 MessageArchiver class >> inspectorClass [
 
 	^EyeProtoInspector 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MessageArchiver class >> receiver: aMessageCollector selector: aSymbol arguments: aCollection [
 
 	^self new
@@ -36,7 +38,7 @@ MessageArchiver class >> receiver: aMessageCollector selector: aSymbol arguments
 		arguments: aCollection
 ]
 
-{ #category : #doesNotUnderstand }
+{ #category : 'doesNotUnderstand' }
 MessageArchiver >> = anObject [
 	"Needed because VA's abtObservableWrapper implements =. Should be portable."
 	^MessageArchiver 
@@ -45,12 +47,12 @@ MessageArchiver >> = anObject [
 		arguments: (Array with: anObject)
 ]
 
-{ #category : #'expression creation' }
+{ #category : 'expression creation' }
 MessageArchiver >> asGlorpExpression [
 	^self asGlorpExpressionOn: BaseExpression new
 ]
 
-{ #category : #'expression creation' }
+{ #category : 'expression creation' }
 MessageArchiver >> asGlorpExpressionOn: aBaseExpression [ 
 	| arguments |
 	myReceiver == nil ifTrue: [^query isNil ifTrue: [aBaseExpression] ifFalse: [query baseExpression]].
@@ -58,7 +60,7 @@ MessageArchiver >> asGlorpExpressionOn: aBaseExpression [
 	^self sendMessageTo: (myReceiver asGlorpExpressionOn: aBaseExpression) withArguments: arguments
 ]
 
-{ #category : #'expression creation' }
+{ #category : 'expression creation' }
 MessageArchiver >> asGlorpExpressionOn: aBaseExpression basedOn: aMessageArchiver withUltimateBase: ultimateBaseExpression [
 	"We know we are built from aMessageArchiver, but parts of us may refer to an outer scope. Those parts should be built on ultimateBaseExpression rather than aBaseExpression. e.g. consider 
  [:each | each amount amount = ((Query readManyOf: GlorpBankTransaction
@@ -83,12 +85,12 @@ MessageArchiver >> asGlorpExpressionOn: aBaseExpression basedOn: aMessageArchive
 		withArguments: arguments
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 MessageArchiver >> asText [
 	^self basicPrintString asText
 ]
 
-{ #category : #doesNotUnderstand }
+{ #category : 'doesNotUnderstand' }
 MessageArchiver >> basicDoesNotUnderstand: aMessage [ 
 	"Invoke this to avoid infinite recursion in the case of internal errors. We want a dialect-independent way of getting a walkback window, so we'll invoke it against a different object"
 
@@ -96,25 +98,25 @@ MessageArchiver >> basicDoesNotUnderstand: aMessage [
 	(Array with: self) doesNotUnderstand: aMessage
 ]
 
-{ #category : #doesNotUnderstand }
+{ #category : 'doesNotUnderstand' }
 MessageArchiver >> basicDoesNotUnderstand: sel args: args [ 
 	"Invoke this to avoid infinite recursion in the case of internal errors. We want a dialect-independent way of getting a walkback window, so we'll invoke it against a different object"
 
 	(Array with: self) doesNotUnderstand: sel args: args
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 MessageArchiver >> basicPrintString [
 
 	^self printString
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 MessageArchiver >> class [
 	^MessageArchiver
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 MessageArchiver >> displayString [
 	"For use in by-hand debugging.  For more general use if the dialect has a #displayString implementation in Object that returns printString.  (If everything else is nil, we assume the receiver is too and we're the result of a
 	MessageArchiver new
@@ -137,7 +139,7 @@ call at the base of the expression, but we print the receiver uppercase, both to
 	^str contents
 ]
 
-{ #category : #doesNotUnderstand }
+{ #category : 'doesNotUnderstand' }
 MessageArchiver >> doesNotUnderstand: aMessage [ 
 	| sel |
 	sel := aMessage selector.
@@ -149,7 +151,7 @@ MessageArchiver >> doesNotUnderstand: aMessage [
 	^self get: sel withArguments: aMessage arguments
 ]
 
-{ #category : #doesNotUnderstand }
+{ #category : 'doesNotUnderstand' }
 MessageArchiver >> doesNotUnderstand: sel args: args [ 
 	"This is the variant for ObjectStudio"
 	sel == #doesNotUnderstand: ifTrue: [self basicDoesNotUnderstand: sel args: args].
@@ -160,14 +162,14 @@ MessageArchiver >> doesNotUnderstand: sel args: args [
 	^self get: sel withArguments: args
 ]
 
-{ #category : #'expression protocol' }
+{ #category : 'expression protocol' }
 MessageArchiver >> get: aSymbol [ 
 	^MessageArchiver receiver: self
 		selector: aSymbol
 		arguments: #()
 ]
 
-{ #category : #'expression protocol' }
+{ #category : 'expression protocol' }
 MessageArchiver >> get: aSymbol withArguments: anArray [ 
 	| arguments |
 	arguments := anArray collect: [:each | each glorpIsBlock 
@@ -180,7 +182,7 @@ MessageArchiver >> get: aSymbol withArguments: anArray [
 		arguments: arguments
 ]
 
-{ #category : #'expression protocol' }
+{ #category : 'expression protocol' }
 MessageArchiver >> getMapping: aMapping named: aString [
 	"In this case, the name may actually be a string rather than a symbol."
 	^MessageArchiverForGetMapping
@@ -189,94 +191,94 @@ MessageArchiver >> getMapping: aMapping named: aString [
 		arguments: (Array with: aMapping with: aString)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MessageArchiver >> glorpIsBlock [
 	^false
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 MessageArchiver >> halt [
 	"Support this so that we can debug inside query blocks. For portability, send it to a different object so that we don't have to care how halt is implemented"
 
 	(Array with: self) halt
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 MessageArchiver >> hash [
 	^(myReceiver hash bitXor: mySelector hash) bitXor: myArguments hash
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 MessageArchiver >> inspect [
 	"Not exactly the intended semantics, but should be portable"
 	
 	(Array with: self) inspect
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 MessageArchiver >> inspectorSize [
   ^2
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 MessageArchiver >> isBehavior [
 	"Return true if the receiver is a behavior.
 	Note: Do not override in any class except behavior."
 	^false
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 MessageArchiver >> mustBeBoolean [
 	nil error: 'mustBeBoolean - this probably indicates you are trying to use an optimized message like and: or ifTrue: inside a Glorp expression block. Use AND: or & instead.'
 ]
 
-{ #category : #doesNotUnderstand }
+{ #category : 'doesNotUnderstand' }
 MessageArchiver >> os_Equal: anObject [
 	^self = anObject
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 MessageArchiver >> printOn: aStream [
 
 	aStream nextPutAll: self printString
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 MessageArchiver >> printString [
 
 	"Hard-code this for maximum dialect portability"
 	^'a MessageArchiver'
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 MessageArchiver >> printStringLimitedTo: anInteger [
 
 	^self printString
 ]
 
-{ #category : #'private/accessing' }
+{ #category : 'private/accessing' }
 MessageArchiver >> privateGlorpQuery [
 	^query
 ]
 
-{ #category : #'private/accessing' }
+{ #category : 'private/accessing' }
 MessageArchiver >> privateGlorpQuery: aQuery [
 	query := aQuery
 ]
 
-{ #category : #'private/accessing' }
+{ #category : 'private/accessing' }
 MessageArchiver >> privateGlorpReceiver [
 
 	^myReceiver
 ]
 
-{ #category : #'private/accessing' }
+{ #category : 'private/accessing' }
 MessageArchiver >> privateGlorpSelector [
 
 	^mySelector
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MessageArchiver >> receiver: aMessageCollector selector: aSymbol arguments: aCollection [
 
 	myReceiver := aMessageCollector.
@@ -284,7 +286,7 @@ MessageArchiver >> receiver: aMessageCollector selector: aSymbol arguments: aCol
 	myArguments := aCollection
 ]
 
-{ #category : #'expression creation' }
+{ #category : 'expression creation' }
 MessageArchiver >> sendMessageTo: anExpression withArguments: arguments [
 	"Build our node by sending our message to anExpression"
 

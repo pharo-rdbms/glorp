@@ -1,6 +1,6 @@
-Extension { #name : #ElementBuilder }
+Extension { #name : 'ElementBuilder' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 ElementBuilder class >> basicClassFor: anExpression in: aQuery [
 
 	^(anExpression hasDescriptor and: [anExpression mapsSimpleObject not])
@@ -8,7 +8,7 @@ ElementBuilder class >> basicClassFor: anExpression in: aQuery [
 		ifFalse: [DataElementBuilder].
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 ElementBuilder class >> classFor: anExpression in: aQuery [
 	
 	((aQuery returnsDictionary and: [anExpression == aQuery baseExpression])

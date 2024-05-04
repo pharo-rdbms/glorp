@@ -7,12 +7,14 @@ Instance Variables:
 
 "
 Class {
-	#name : #UniqueConstraint,
-	#superclass : #DatabaseTableConstraint,
-	#category : #'Glorp-Database'
+	#name : 'UniqueConstraint',
+	#superclass : 'DatabaseTableConstraint',
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 UniqueConstraint class >> forTable: aTable fields: aCollectionOfFields [
 
 	| instance |
@@ -21,20 +23,20 @@ UniqueConstraint class >> forTable: aTable fields: aCollectionOfFields [
 	^instance
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 UniqueConstraint >> creationStringFor: aPlatform [
 
 	^ aPlatform createUniqueConstraintAddStatement: self
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 UniqueConstraint >> forTable: aTable fields: aCollectionOfFields [
 
 	self table: aTable.
 	self fields: aCollectionOfFields
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UniqueConstraint >> generateName [
 	| stream maxLength tableLength roomToBeVerbose shortTableLength longTableLength |
 	(self fields isNil or: [self fields isEmpty]) ifTrue: [^'INVALID CONSTRAINT'].
@@ -51,13 +53,13 @@ UniqueConstraint >> generateName [
 	^stream contents
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 UniqueConstraint >> isUniqueConstraint [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 UniqueConstraint >> matchesUniqueConstraint: aConstraint [
 
 	name asUppercase = aConstraint name asUppercase ifFalse: [^false].
@@ -66,7 +68,7 @@ UniqueConstraint >> matchesUniqueConstraint: aConstraint [
 	^ true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 UniqueConstraint >> printForConstraintNames: aCollection on: aStream maxLength: maxLength [
 
 	| constraintName |

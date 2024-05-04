@@ -9,41 +9,43 @@ Instance Variables:
 
 "
 Class {
-	#name : #GlorpPreparedStatement,
-	#superclass : #Object,
+	#name : 'GlorpPreparedStatement',
+	#superclass : 'Object',
 	#instVars : [
 		'signature',
 		'statement',
 		'busy'
 	],
-	#category : #'Glorp-Database'
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpPreparedStatement >> busy [
 
 	^ busy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpPreparedStatement >> busy: aBoolean [
 
 	busy := aBoolean
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GlorpPreparedStatement >> glorpNoticeOfExpiryIn: aSession [
 
 	self release
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GlorpPreparedStatement >> initialize [
 	super initialize.
 	busy := false
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 GlorpPreparedStatement >> release [
 
 	super release.
@@ -54,25 +56,25 @@ GlorpPreparedStatement >> release [
 		stmt disconnect ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpPreparedStatement >> signature [
 
 	^ signature
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpPreparedStatement >> signature: aString [
 
 	signature := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpPreparedStatement >> statement [
 
 	^ statement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpPreparedStatement >> statement: aStatementHandle [
 
 	statement := aStatementHandle

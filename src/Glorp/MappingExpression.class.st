@@ -11,8 +11,8 @@ Instance Variables:
 
 "
 Class {
-	#name : #MappingExpression,
-	#superclass : #ObjectExpression,
+	#name : 'MappingExpression',
+	#superclass : 'ObjectExpression',
 	#instVars : [
 		'name',
 		'base',
@@ -20,10 +20,12 @@ Class {
 		'mapping',
 		'phantom'
 	],
-	#category : #'Glorp-Expressions'
+	#category : 'Glorp-Expressions',
+	#package : 'Glorp',
+	#tag : 'Expressions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MappingExpression class >> named: aSymbol basedOn: anExpression [
 
 	^self new
@@ -31,13 +33,13 @@ MappingExpression class >> named: aSymbol basedOn: anExpression [
 		basedOn: anExpression
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 MappingExpression >> additionalExpressions [
 
 	^ self additionalExpressionsOn: self
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 MappingExpression >> additionalExpressionsOn: anExpression [
 	"We can get hijacked, so pass in the expression to use rather than just using self"
 	| exp |
@@ -47,7 +49,7 @@ MappingExpression >> additionalExpressionsOn: anExpression [
 	^(self multipleTableExpressionsOn: anExpression), (exp isNil ifTrue: [#()] ifFalse: [Array with: exp]).
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 MappingExpression >> aliasedTableFor: aDatabaseTable [
 
 	^ self controlsTables
@@ -55,7 +57,7 @@ MappingExpression >> aliasedTableFor: aDatabaseTable [
 		  ifFalse: [ base aliasedTableFor: (self mapping translateTable: aDatabaseTable) ]
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 MappingExpression >> aliasedTableFor: aDatabaseTable ifAbsent: aBlock [
 
 	^ self controlsTables
@@ -63,7 +65,7 @@ MappingExpression >> aliasedTableFor: aDatabaseTable ifAbsent: aBlock [
 		  ifFalse: [ base aliasedTableFor: aDatabaseTable ifAbsent: aBlock ]
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 MappingExpression >> allControlledTables [
 	"Return all the tables that we control, directly or indirectly. Basically, if we are a mapping expression with a link table, return the link table as well as any tables of ours."
 	| all join |
@@ -78,13 +80,13 @@ MappingExpression >> allControlledTables [
 	^all.
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 MappingExpression >> allRelationsFor: rootExpression [
 
 	^ self mapping allRelationsFor: rootExpression
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 MappingExpression >> allRelationsFor: rootExpression do: aBlock andBetweenDo: anotherBlock [
 	"We might have multiple clauses to print, depending on our mapping"
 
@@ -94,7 +96,7 @@ MappingExpression >> allRelationsFor: rootExpression do: aBlock andBetweenDo: an
 		andBetweenDo: anotherBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MappingExpression >> allSourceFields [
 	"If we are sending this, then we're treating the expression as a join, for a complex (and probably read-only) relationship. So in that case we want to treat the source fields as the parameters that this expression takes, and specifically the parameters that are based on fields."
 
@@ -103,14 +105,14 @@ MappingExpression >> allSourceFields [
 		  sum ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MappingExpression >> allTargetFields [
 	"If we are sending this, then we're treating the expression as a join, for a complex (and probably read-only) relationship. So in that case we want to treat the target fields as being the source fields of the bottom-most mapping. That is, the fields we'll use to connect to the thing we want are the things that our expression's base (which represents the thing we want) would use to connect to the first level mapping arising from it."
 
 	^ self penultimateBaseExpression join allSourceFields
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 MappingExpression >> asExpressionJoiningSource: source toTarget: target [
 	"Create a general expression which represents this relationship where the values of the targets (which are normally parameters) are supplied out of the context provided by 'target' and the source fields are referencing things out of the context of source. Produces something suitable for ANDing into an expression when doing a join
    Example: If we had CUSTOMER.ADDRESS_ID = ADDRESS.ID as a parameter, and we want to AND this into an expression [:customer | customer address street = 'Main'] then we have customer as a base, and we get 
@@ -122,53 +124,53 @@ MappingExpression >> asExpressionJoiningSource: source toTarget: target [
 	^ newBase getMapping: self mapping named: name
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MappingExpression >> asOuterJoin [
 
 	outerJoin := true
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MappingExpression >> base [
 
 	^ base
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MappingExpression >> bePhantom [
 
 	phantom := true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MappingExpression >> canBeUsedForRetrieve [
 	"Return true if this is a valid argument for a retrieve: clause"
 
 	^ self mapping canBeUsedForRetrieve
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MappingExpression >> canHaveBase [
 	"Return true if this type of expression can have a base expression on which other things can be built. Doesn't say whether we actually have a valid one or not."
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MappingExpression >> canKnit [
 	"Return true if, when building objects, we can knit the object corresponding to this expression to a related object. Roughly speaking, is this a mapping expression"
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MappingExpression >> canPrint [
 	"Return true if we can print into a where clause"
 
 	^ self hasField
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 MappingExpression >> controlsTables [
 
 	| theMapping |
@@ -177,19 +179,19 @@ MappingExpression >> controlsTables [
 	^ theMapping controlsTables
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 MappingExpression >> convertedDbValueOf: anObject [
 
 	^ self mapping convertedDbValueOf: anObject
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 MappingExpression >> convertedStValueOf: anObject [
 
 	^ self mapping convertedStValueOf: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MappingExpression >> descriptor [
 
 	| system theMapping |
@@ -200,7 +202,7 @@ MappingExpression >> descriptor [
 	^ system descriptorFor: theMapping referenceClass
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 MappingExpression >> do: aBlock skipping: aSet [
 	"Iterate over the expression tree"
 
@@ -213,7 +215,7 @@ MappingExpression >> do: aBlock skipping: aSet [
 		ifTrue: [myField do: aBlock skipping: aSet].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MappingExpression >> field [
 
 	self mapping isNil ifTrue: [self error: '"', name, '" is not a mapped property name in ', base descriptor describedClass name].
@@ -227,7 +229,7 @@ MappingExpression >> field [
 	^base translateField: self mapping field.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MappingExpression >> fieldFromMeOrSubclasses [
 	"Return the field for this mapping, but if the field is not mapped here, and the class uses inheritance, check for subclasses, and use the first subclass mapping we find."
 
@@ -238,13 +240,13 @@ MappingExpression >> fieldFromMeOrSubclasses [
 		ifFalse: [base translateField: subMapping field]
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 MappingExpression >> fieldsForSelectStatement [
 	
 	^self mapping fieldsForSelectStatement.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MappingExpression >> hasDescriptor [
 	"Does the object that we describe have its own descriptor"
 
@@ -253,7 +255,7 @@ MappingExpression >> hasDescriptor [
 	^ myMapping notNil and: [ myMapping isRelationship ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MappingExpression >> hasField [
 
 	self mapping isNil ifTrue: [ ^ false ].
@@ -262,34 +264,34 @@ MappingExpression >> hasField [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MappingExpression >> hasImpliedClauses [
 
 	^ self mapping notNil and: [ self mapping hasImpliedClauses ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MappingExpression >> initialize [
 
 	super initialize.
 	phantom := false
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MappingExpression >> isEmpty [
 	"Only useful for mappings that represent collections. This checks to see if the collection has elements by building a not exists subselect."
 
 	^ self base existenceCheck: self as: #notExists:
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MappingExpression >> join [
 
 	self mapping isNil ifTrue: [ ^ nil ].
 	^ self mapping join
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 MappingExpression >> mappableFieldsDo: aBlock [
 	"Used when we are emulating a Join"
 
@@ -299,7 +301,7 @@ MappingExpression >> mappableFieldsDo: aBlock [
 			source isMappable ifTrue: [ aBlock value: source value: target ] ]
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 MappingExpression >> mappableSourceFieldsDo: aBlock [
 	"Used when we are emulating a Join"
 
@@ -307,7 +309,7 @@ MappingExpression >> mappableSourceFieldsDo: aBlock [
 		source isMappable ifTrue: [ aBlock value: source ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MappingExpression >> mappedFields [
 
 	self mapping isNil ifTrue: [ ^ #(  ) ].
@@ -320,7 +322,7 @@ MappingExpression >> mappedFields [
 		  base translateField: each ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MappingExpression >> mappedFieldsCount [
 
 	self mapping isNil ifTrue: [ ^ #(  ) ].
@@ -332,7 +334,7 @@ MappingExpression >> mappedFieldsCount [
 	^ self mapping mappedFields size
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 MappingExpression >> mapping [
 
 	mapping isNil ifTrue: [
@@ -343,13 +345,13 @@ MappingExpression >> mapping [
 	^ mapping
 ]
 
-{ #category : #'private/initialization' }
+{ #category : 'private/initialization' }
 MappingExpression >> mapping: aMapping [
 
 	mapping := aMapping
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MappingExpression >> mappingFromMeOrSubclasses [
 	"Return the mapping for me, but if the field is not mapped here, and the class uses inheritance, check for subclasses, and use a random one of the subclass mappings."
 
@@ -365,25 +367,25 @@ MappingExpression >> mappingFromMeOrSubclasses [
 	^self mapping
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MappingExpression >> mapsSimpleObject [
 
 	^ self mapping mapsSimpleObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MappingExpression >> multipleTableExpressions [
 
 	^ self multipleTableExpressionsOn: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MappingExpression >> multipleTableExpressionsOn: anExpression [
 
 	^ self mapping multipleTableExpressionsFor: anExpression
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 MappingExpression >> mustReGetMappingIfRebuildingOn: newBase [
 	"Return true if we need to do a full get: when rebuilding, rather than being able to preserve the mapping that we had before."
 
@@ -397,13 +399,13 @@ MappingExpression >> mustReGetMappingIfRebuildingOn: newBase [
 	^ self base descriptor ~= newBase descriptor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MappingExpression >> name [
 
 	^ name
 ]
 
-{ #category : #'private/initialization' }
+{ #category : 'private/initialization' }
 MappingExpression >> named: aSymbol basedOn: anExpression [
 
 	name := aSymbol.
@@ -411,14 +413,14 @@ MappingExpression >> named: aSymbol basedOn: anExpression [
 	outerJoin := false
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MappingExpression >> notEmpty [
 	"Only useful for mappings that represent collections. This checks to see if the collection has elements by building a not exists subselect."
 	
 	^self base existenceCheck: self as: #exists:
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 MappingExpression >> penultimateBaseExpression [
 	"Return the one from the last base expression in our tree. Useful if we want to find the first mapping involved in the expression"
 
@@ -426,33 +428,33 @@ MappingExpression >> penultimateBaseExpression [
 	^ self base penultimateBaseExpression
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MappingExpression >> phantom [
 
 	^ phantom
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MappingExpression >> phantom: aBoolean [
 
 	phantom := aBoolean
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MappingExpression >> printOnlySelfOn: aStream [
 
 	aStream nextPutAll: name.
 	self printTableAliasesOn: aStream
 ]
 
-{ #category : #'printing SQL' }
+{ #category : 'printing SQL' }
 MappingExpression >> printSQLOn: aStream withParameters: aDictionary [
 
 	self hasField ifFalse: [ ^ self ].
 	self field asField printSQLOn: aStream withParameters: aDictionary
 ]
 
-{ #category : #'printing SQL' }
+{ #category : 'printing SQL' }
 MappingExpression >> printSelectSQLOn: aStream withParameters: aDictionary [
 
 	self hasField ifFalse: [ ^ self ].
@@ -461,7 +463,7 @@ MappingExpression >> printSelectSQLOn: aStream withParameters: aDictionary [
 		withParameters: aDictionary
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MappingExpression >> printTreeOn: aStream [
 
 	aStream
@@ -472,7 +474,7 @@ MappingExpression >> printTreeOn: aStream [
 				 ifFalse: [ name printString ])
 ]
 
-{ #category : #'printing SQL' }
+{ #category : 'printing SQL' }
 MappingExpression >> printUnqualifiedSQLOn: aStream withParameters: aDictionary [
 
 	self field asField
@@ -480,13 +482,13 @@ MappingExpression >> printUnqualifiedSQLOn: aStream withParameters: aDictionary 
 		withParameters: aDictionary
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 MappingExpression >> queryLevelBaseExpression [
 
 	^ base queryLevelBaseExpression
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 MappingExpression >> rebuildOn: aBaseExpression startingFrom: anExpression withOuterScopeBase: ultimateBaseExpression [
 
 	| expression newBase |
@@ -502,27 +504,27 @@ MappingExpression >> rebuildOn: aBaseExpression startingFrom: anExpression withO
 	^ expression
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MappingExpression >> referenceClass [
 	"Return the class that our mapping refers to, if we have a mapping. If we're a base expression, just return our class, and if we're a table expression, just return nil."
 
 	^ self mapping referenceClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MappingExpression >> representsDerivedObject [
 
 	^ self mapping isRelationship
 ]
 
-{ #category : #'private/accessing' }
+{ #category : 'private/accessing' }
 MappingExpression >> requiresDistinct: aBoolean [
 
 	super requiresDistinct: aBoolean.
 	base requiresDistinct: aBoolean
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MappingExpression >> returnsDictionary [
 	"Return true if we representa  ampping to a dictionary"
 
@@ -530,7 +532,7 @@ MappingExpression >> returnsDictionary [
 		  self mapping collectionType == Dictionary ]
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 MappingExpression >> rewriteBooleanEquality: relation [
 	"If we are a boolean that doesn't have a comparison relation on top of us, replace us with an ' = true'"
 
@@ -545,13 +547,13 @@ MappingExpression >> rewriteBooleanEquality: relation [
 	^self get: #= withArguments: (Array with: true asGlorpExpression).
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MappingExpression >> sourceDescriptor [
 
 	^ base descriptor
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 MappingExpression >> sqlSelect: anExpression [
 	"Only useful for mappings that represent collections. This restricts the range of values in a variable. Most useful as part of an aggregation. e.g.
     read: SomeClass where: [:each | (each collection select: [:eachItem | eachItem attribute = someValue]) sqlCount > 10]"
@@ -573,27 +575,27 @@ MappingExpression >> sqlSelect: anExpression [
 	^objectExpression base getMapping: newMapping named: ( 'a temporary restricted mapping for #select: based on ', self mapping attributeName)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MappingExpression >> system [
 
 	^ base system
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MappingExpression >> table [
 
 	self hasDescriptor ifTrue: [ ^ self descriptor primaryTable ].
 	^ self field table
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 MappingExpression >> tables [
 
 	self controlsTables ifFalse: [ ^ #(  ) ].
 	^ self tablesContainingMe
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MappingExpression >> tablesContainingMe [
 	"Return a list of tables that contain this object, whether or not we control them. This is mostly the same as tables, but will differ for embedded mappings."
 
@@ -603,14 +605,14 @@ MappingExpression >> tablesContainingMe [
 	^ set
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 MappingExpression >> tablesToPrint [
 
 	self hasDescriptor ifFalse: [ ^ #(  ) ].
 	^ self tables collect: [ :each | self aliasedTableFor: each ]
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 MappingExpression >> translateField: aDatabaseField [
 
 	| translatedField |
@@ -621,7 +623,7 @@ MappingExpression >> translateField: aDatabaseField [
 			   ifFalse: [ translatedField ])
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 MappingExpression >> translateFields: anOrderedCollection [
 	"Ugh. Unify these mechnisms"
 
@@ -629,32 +631,32 @@ MappingExpression >> translateFields: anOrderedCollection [
 		  (self mapping translateFields: anOrderedCollection)
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 MappingExpression >> ultimateBaseExpression [
 
 	^ base ultimateBaseExpression
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 MappingExpression >> validate [
 
 	self mappingFromMeOrSubclasses isNil ifTrue: [
 		self error: 'no mapping for ' , self printString ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 MappingExpression >> valueInBuilder: anElementBuilder [
 
 	^ self valueInBuilder: anElementBuilder as: self base
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 MappingExpression >> valueInBuilder: anElementBuilder as: anExpression [
 
 	^ self mapping valueIn: anElementBuilder as: anExpression
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MappingExpression >> willPrintAsWhereClause [
 
 	^ self hasField

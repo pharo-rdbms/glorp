@@ -8,67 +8,69 @@ Instance Variables:
 
 "
 Class {
-	#name : #VersionType,
-	#superclass : #GlorpDatabaseType,
+	#name : 'VersionType',
+	#superclass : 'GlorpDatabaseType',
 	#instVars : [
 		'underlyingType',
 		'generator',
 		'generatesOverExistingValues'
 	],
-	#category : #'Glorp-Database'
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 VersionType class >> underlyingType: aDatabaseType [
 
 	^ self new underlyingType: aDatabaseType
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 VersionType class >> underlyingType: aDatabaseType generator: aGenerator [
 
 	^ self new underlyingType: aDatabaseType generator: aGenerator
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 VersionType >> converterForStType: aClass [
 
 	^ underlyingType converterForStType: aClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 VersionType >> generateOverExistingValues [
 
 	generatesOverExistingValues := true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 VersionType >> generatesOverExistingValues [
 	"Do we generate our value even if there's alread one present in the field"
 
 	^ generatesOverExistingValues
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 VersionType >> generatesOverExistingValues: aBoolean [
 	"Do we generate our value even if there's alread one present in the field"
 
 	generatesOverExistingValues := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VersionType >> generator [
 
 	^ generator
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VersionType >> generator: aDatabaseValueGenerator [
 
 	generator := aDatabaseValueGenerator
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 VersionType >> generatorFor: aDatabaseType [
 
 	aDatabaseType impliedSmalltalkType == Integer ifTrue: [ ^ VersionNumberVersionGenerator new ].
@@ -76,33 +78,33 @@ VersionType >> generatorFor: aDatabaseType [
 	self error: 'unknown version type'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 VersionType >> hasParameters [
 	"Instances of this class are not cached, so this implementor is less often than others.  However the method is also used by regenerators to determine bracketting."
 
 	^ true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 VersionType >> initialize [
 
 	super initialize.
 	generatesOverExistingValues := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 VersionType >> isGenerated [
 
 	^ true
 ]
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 VersionType >> postWriteAssignSequenceValueFor: aDatabaseField in: aDatabaseRow using: anAccessor [
 
 	^ self
 ]
 
-{ #category : #SQL }
+{ #category : 'SQL' }
 VersionType >> preWriteAssignSequenceValueFor: aDatabaseField in: aDatabaseRow using: anAccessor [
 
 	^ generator
@@ -111,25 +113,25 @@ VersionType >> preWriteAssignSequenceValueFor: aDatabaseField in: aDatabaseRow u
 		  using: anAccessor
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 VersionType >> print: aValue on: aStream [
 
 	self underlyingType print: aValue on: aStream
 ]
 
-{ #category : #SQL }
+{ #category : 'SQL' }
 VersionType >> typeString [
 
 	^ underlyingType typeString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VersionType >> underlyingType [
 
 	^ underlyingType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VersionType >> underlyingType: aDatabaseType [
 
 	underlyingType := aDatabaseType.
@@ -137,7 +139,7 @@ VersionType >> underlyingType: aDatabaseType [
 	generator := self generatorFor: aDatabaseType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VersionType >> underlyingType: aDatabaseType generator: aGenerator [
 
 	underlyingType := aDatabaseType.
@@ -145,7 +147,7 @@ VersionType >> underlyingType: aDatabaseType generator: aGenerator [
 	generator := aGenerator
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 VersionType >> width [
 
 	^ self underlyingType width

@@ -9,18 +9,20 @@ Instance Variables:
 
 "
 Class {
-	#name : #Cache,
-	#superclass : #Object,
+	#name : 'Cache',
+	#superclass : 'Object',
 	#instVars : [
 		'items',
 		'policy',
 		'mainCache',
 		'extraReferences'
 	],
-	#category : #'Glorp-Core'
+	#category : 'Glorp-Core',
+	#package : 'Glorp',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Cache class >> newFor: aClass in: aCacheManager [
 
 	| newCache descriptor |
@@ -34,7 +36,7 @@ Cache class >> newFor: aClass in: aCacheManager [
 	^ newCache
 ]
 
-{ #category : #lookup }
+{ #category : 'lookup' }
 Cache >> at: key ifAbsent: aBlock [
 
 	| item value |
@@ -46,7 +48,7 @@ Cache >> at: key ifAbsent: aBlock [
 	^ value
 ]
 
-{ #category : #lookup }
+{ #category : 'lookup' }
 Cache >> at: key ifAbsentPut: aBlock [
 
 	| item |
@@ -62,38 +64,38 @@ Cache >> at: key ifAbsentPut: aBlock [
 			  item ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Cache >> basicAt: anObject ifAbsent: aBlock [
 
 	^ items at: anObject ifAbsent: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Cache >> cachePolicy [
 
 	^ policy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Cache >> cachePolicy: aCachePolicy [
 
 	policy := aCachePolicy.
 	self initializeCache
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Cache >> do: aBlock [
 
 	items do: aBlock
 ]
 
-{ #category : #lookup }
+{ #category : 'lookup' }
 Cache >> expireAll [
 
 	items do: [ :each | policy expire: each ]
 ]
 
-{ #category : #lookup }
+{ #category : 'lookup' }
 Cache >> expireKey: key ifAbsent: aBlock [
 
 	| item |
@@ -101,7 +103,7 @@ Cache >> expireKey: key ifAbsent: aBlock [
 	policy expire: item
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Cache >> expiredInstanceFor: key [
 	"Return the expired instance. Used for refreshing so that we don't recursively try and refresh when we get the instance to be refreshed"
 
@@ -115,7 +117,7 @@ Cache >> expiredInstanceFor: key [
 	^ value
 ]
 
-{ #category : #lookup }
+{ #category : 'lookup' }
 Cache >> hasExpired: key [
 
 	| item |
@@ -123,14 +125,14 @@ Cache >> hasExpired: key [
 	^ self hasItemExpired: item
 ]
 
-{ #category : #lookup }
+{ #category : 'lookup' }
 Cache >> hasItemExpired: anItem [
 
 	^ (policy hasExpired: anItem) and: [
 		  (mainCache session isRegistered: (policy contentsOf: anItem)) not ]
 ]
 
-{ #category : #lookup }
+{ #category : 'lookup' }
 Cache >> includesKey: key [
 	"Return true if we include the object. Don't listen to any expiry policy"
 
@@ -138,7 +140,7 @@ Cache >> includesKey: key [
 	^ true
 ]
 
-{ #category : #lookup }
+{ #category : 'lookup' }
 Cache >> includesKey: key as: anObject [
 	"Return true if we include the object, and it matches the given object. If we include a different object with the same key, raise an exception. Don't listen to any expiry policy"
 
@@ -150,7 +152,7 @@ Cache >> includesKey: key as: anObject [
 	^ true
 ]
 
-{ #category : #lookup }
+{ #category : 'lookup' }
 Cache >> includesKey: key withClass: aClass [
 	"Return true if we include the object, and it matches our class. Don't listen to any expiry policy"
 
@@ -160,32 +162,32 @@ Cache >> includesKey: key withClass: aClass [
 	^ value isKindOf: aClass
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Cache >> initialize [
 
 	
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Cache >> initializeCache [
 
 	items := policy newItemsIn: self.
 	extraReferences := policy collectionForExtraReferences
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Cache >> mainCache [
 
 	^ mainCache
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Cache >> mainCache: aCacheManager [
 
 	mainCache := aCacheManager
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Cache >> markAsCurrentAtKey: key [
 
 	| item |
@@ -193,14 +195,14 @@ Cache >> markAsCurrentAtKey: key [
 	^ policy markEntryAsCurrent: item in: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Cache >> markEntryAsCurrent: anItem [
 	"The policy has told us to mark an item as current. This is only really useful for weak policies, which tell us to keep an additional pointer to the object in a (presumably) fixed-size collection"
 
 	extraReferences ifNotNil: [ extraReferences add: anItem ]
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 Cache >> mournKeyOf: anEphemeron [
 
 	policy
@@ -209,32 +211,32 @@ Cache >> mournKeyOf: anEphemeron [
 		in: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Cache >> numberOfElements [
 
 	^ items size
 ]
 
-{ #category : #dependencies }
+{ #category : 'dependencies' }
 Cache >> release [
 
 	policy release: self.
 	extraReferences := nil
 ]
 
-{ #category : #lookup }
+{ #category : 'lookup' }
 Cache >> removeKey: key ifAbsent: aBlock [
 
 	^ items removeKey: key ifAbsent: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Cache >> session [
 
 	^ mainCache session
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Cache >> willRemoveItems [
 
 	^ policy willRemoveItems

@@ -1,6 +1,6 @@
-Extension { #name : #Integer }
+Extension { #name : 'Integer' }
 
-{ #category : #'*Glorp-Core' }
+{ #category : '*Glorp-Core' }
 Integer >> printOn: aStream paddedWith: aCharacter to: anInteger base: aRadix [
         "Append a string representation of the receiver in base <aRadix>
         digits to <aStream>, padded on the left with <aCharacter> to be at least

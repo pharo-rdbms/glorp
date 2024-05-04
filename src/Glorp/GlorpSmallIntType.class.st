@@ -2,12 +2,14 @@
 Small int type 
 "
 Class {
-	#name : #GlorpSmallIntType,
-	#superclass : #GlorpAbstractIntegerType,
-	#category : #'Glorp-Types'
+	#name : 'GlorpSmallIntType',
+	#superclass : 'GlorpAbstractIntegerType',
+	#category : 'Glorp-Types',
+	#package : 'Glorp',
+	#tag : 'Types'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GlorpSmallIntType >> initialize [
 	super initialize.
 	typeString := 'smallint'.

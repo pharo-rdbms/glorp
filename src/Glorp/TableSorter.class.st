@@ -9,17 +9,19 @@ Instance Variables:
 
 "
 Class {
-	#name : #TableSorter,
-	#superclass : #Object,
+	#name : 'TableSorter',
+	#superclass : 'Object',
 	#instVars : [
 		'orderedTables',
 		'tables',
 		'visitedTables'
 	],
-	#category : #'Glorp-UnitOfWork'
+	#category : 'Glorp-UnitOfWork',
+	#package : 'Glorp',
+	#tag : 'UnitOfWork'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TableSorter class >> for: tables [
 
 	| sorter |
@@ -29,37 +31,37 @@ TableSorter class >> for: tables [
 	^sorter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TableSorter >> addTable: aTable [ 
 	tables add: aTable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TableSorter >> hasBeenVisited: aTable [
 
 	^visitedTables includes: aTable
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TableSorter >> initialize [
 	tables := OrderedCollection new: 100.
 	visitedTables := IdentitySet new: 100
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TableSorter >> markVisited: aTable [
 
 	visitedTables add: aTable
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 TableSorter >> sort [
 	orderedTables := OrderedCollection new: tables size.
 	tables do: [:each | self visit: each].
 	^orderedTables select: [:each | tables includes: each]
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 TableSorter >> visit: aTable [ 
 	"The essential bit of topological sort. Visit each node in post-order, traversing dependencies, based on foreign key constraints to database-generated fields. "
 
@@ -69,7 +71,7 @@ TableSorter >> visit: aTable [
 	orderedTables add: aTable
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 TableSorter >> visitDependentTablesFor: aTable [ 
 	aTable foreignKeyConstraints do: [:eachConstraint | 
           self visit: eachConstraint targetTable ]

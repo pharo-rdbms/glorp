@@ -2,29 +2,31 @@
 Date type
 "
 Class {
-	#name : #GlorpDateType,
-	#superclass : #GlorpDatabaseType,
-	#category : 'Glorp-Types'
+	#name : 'GlorpDateType',
+	#superclass : 'GlorpDatabaseType',
+	#category : 'Glorp-Types',
+	#package : 'Glorp',
+	#tag : 'Types'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 GlorpDateType >> converterForStType: aClass [
 
 	^self platform converterNamed: #date.
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GlorpDateType >> impliedSmalltalkType [
 	^Date.
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 GlorpDateType >> initialize [
 	super initialize.
 	typeString := 'date'
 ]
 
-{ #category : #SQL }
+{ #category : 'SQL' }
 GlorpDateType >> print: aValue on: aStream [
 	"SQL in Postgres and other databases supports adding an integer to a date, meaning incrementing the date by that number of days, so we can be presented with an integer value."
 

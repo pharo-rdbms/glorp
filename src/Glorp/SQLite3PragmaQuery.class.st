@@ -3,18 +3,20 @@ This is a query intended to execute a SQLite3 PRAGMA command. The command behave
 
 "
 Class {
-	#name : #SQLite3PragmaQuery,
-	#superclass : #SimpleQuery,
-	#category : 'Glorp-Queries'
+	#name : 'SQLite3PragmaQuery',
+	#superclass : 'SimpleQuery',
+	#category : 'Glorp-Queries',
+	#package : 'Glorp',
+	#tag : 'Queries'
 }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 SQLite3PragmaQuery class >> newQuery [
 	^SQLite3PragmaQuery new
 	"^super newQuery"
 ]
 
-{ #category : #'sql generation' }
+{ #category : 'sql generation' }
 SQLite3PragmaQuery >> printWhereClauseOn: aCommand [
 
 	self hasEmptyWhereClause
@@ -22,7 +24,7 @@ SQLite3PragmaQuery >> printWhereClauseOn: aCommand [
 			[whereClause rightChild printSQLOn: aCommand withParameters: aCommand parameters]
 ]
 
-{ #category : #'sql generation' }
+{ #category : 'sql generation' }
 SQLite3PragmaQuery >> sqlWith: aDictionary [
 	| result |
 	self prepare.

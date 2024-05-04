@@ -5,15 +5,17 @@ Instance Variables:
 	commands	<(Collection of: DatabaseCommand)>	The commands we are to print.
 "
 Class {
-	#name : #CompoundSelectCommand,
-	#superclass : #QuerySelectCommand,
+	#name : 'CompoundSelectCommand',
+	#superclass : 'QuerySelectCommand',
 	#instVars : [
 		'commands'
 	],
-	#category : #'Glorp-Core'
+	#category : 'Glorp-Core',
+	#package : 'Glorp',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompoundSelectCommand >> arrayBoundFields [
 	" *** This method was defined by Glorp.DatabaseCommand as a subclass responsibility.
 	Replace its body with a proper implementation. *** "
@@ -21,7 +23,7 @@ CompoundSelectCommand >> arrayBoundFields [
 	self error: 'Subclass responsibility stub not reimplemented'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompoundSelectCommand >> bindingTypes [
 
 	^ self commands
@@ -29,13 +31,13 @@ CompoundSelectCommand >> bindingTypes [
 		  into: [ :sum :each | sum , each bindingTypes ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompoundSelectCommand >> bindings [
 
 	^ commands inject: #(  ) into: [ :sum :each | sum , each bindings ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompoundSelectCommand >> commands [
 
 	commands isNil ifTrue: [
@@ -44,37 +46,37 @@ CompoundSelectCommand >> commands [
 	^ commands
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompoundSelectCommand >> hasGrouping [
 	^self query hasGrouping
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompoundSelectCommand >> hasLimit [
 
 	^self query hasLimit
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompoundSelectCommand >> hasOffset [
 
 	^self query hasOffset
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompoundSelectCommand >> hasOrdering [
 
 	^self query hasOrdering
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompoundSelectCommand >> parameters: aDictionary [
 
 	parameters := aDictionary.
 	commands := nil
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CompoundSelectCommand >> printSQL [
 	"Access doesn't like parenthesies around the first in a group of compound commands."
 
@@ -109,12 +111,12 @@ CompoundSelectCommand >> printSQL [
 	query printOffsetOn: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompoundSelectCommand >> requiresDistinct [
 	^self query requiresDistinct.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompoundSelectCommand >> requiresWrapperQuery [
     ^ self requiresDistinct
 		or: [ self hasOrdering

@@ -12,12 +12,14 @@ Instance Variables
 
 "
 Class {
-	#name : #DB2Sequence,
-	#superclass : #OracleSequence,
-	#category : #'Glorp-Database'
+	#name : 'DB2Sequence',
+	#superclass : 'OracleSequence',
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 DB2Sequence >> backupReserveCommand: anInteger in: aSession [
 	"syscat.tables is a public view of all the tables.
 	Don't bind the number in the fetch first nn clause."
@@ -37,25 +39,25 @@ DB2Sequence >> backupReserveCommand: anInteger in: aSession [
 	^ command
 ]
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 DB2Sequence >> creationString [
 
 	^ 'create sequence ', self qualifiedName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DB2Sequence >> name: aString [
 	name := aString copyFrom: 1 to: (aString size min: DB2Platform new maximumLengthOfTableName).
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DB2Sequence >> nextSequenceNumberSelectString [
 	"Using SYSIBM is not ideal because it's supposed to be internal, but it seems to be accepted."
 
 	^ 'SELECT NEXT VALUE FOR ', self qualifiedName, ' FROM SYSIBM.SYSDUMMY1'
 ]
 
-{ #category : #SQL }
+{ #category : 'SQL' }
 DB2Sequence >> tableSelectCommandFor: aTable in: aSession reserving: anInteger [
 	"Don't bind the number in the fetch first nn clause."
 

@@ -2,12 +2,14 @@
 This is a function subclass specifically for substring functions. It needs its own separate subclass because it has to be written out differently for different databases, particularly if applied to LOB types. 
 "
 Class {
-	#name : #SubstringFunction,
-	#superclass : #PrefixFunction,
-	#category : #'Glorp-Expressions'
+	#name : 'SubstringFunction',
+	#superclass : 'PrefixFunction',
+	#category : 'Glorp-Expressions',
+	#package : 'Glorp',
+	#tag : 'Expressions'
 }
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 SubstringFunction >> _rewriteFunctionArguments [
 	"SUBSTR wants arguments position and length rather than (start) position and end position in Postgres, Oracle (not OracleODBC), MySQL, SQL Server and DB2."
 
@@ -16,7 +18,7 @@ SubstringFunction >> _rewriteFunctionArguments [
 		ifTrue: [arguments last value: arguments last value - arguments first value + 1]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SubstringFunction >> printBasicSQLOn: aStream withParameters: aDictionary forSelect: aBoolean [
 
 	^self ultimateBaseExpression system platform isPostgreSQLPlatform
@@ -44,7 +46,7 @@ SubstringFunction >> printBasicSQLOn: aStream withParameters: aDictionary forSel
 				nextPutAll: alias]]
 ]
 
-{ #category : #rewriting }
+{ #category : 'rewriting' }
 SubstringFunction >> rewriteForOracleBlobsWith: mainArgument [
 	"For Oracle blobs, we can't query with a normal substring function, but rather have to use the DBMS_LOB function, whose arguments are backwards. Further, we don't seem to be able to compare to byte-arrays, so turn it into a string."
 
@@ -60,7 +62,7 @@ SubstringFunction >> rewriteForOracleBlobsWith: mainArgument [
 	base := template createFor: (Array with: length asGlorpExpression with: startPosition asGlorpExpression) withBase: oldBase symbol: #dbmsLobSubstr
 ]
 
-{ #category : #rewriting }
+{ #category : 'rewriting' }
 SubstringFunction >> rewriteForPostgresqlBase64BlobsWith: mainArgument [
 	"This is pretty awful. We expect our main argument to be a string, and we're a substring function, but we know that for some types, the string representation comes out differently in the database. In particular, the Postgresql driver stores strings into lobs in Base64. So, if our previous argument = the string size, rewrite it to the database size. This makes it work if we do
     (someObject blob copyFrom: 1 to: 3) = 'abc'
@@ -75,7 +77,7 @@ when in fact, the length of that string in the blob will be 4."
 	mainArgument value: mainArgument value asByteArray
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 SubstringFunction >> rewriteFunctionArgumentsWith: mainArgument [
 	"This is pretty awful. We expect our main argument to be a string, and we're a substring function, but we know that for some types, the string representation comes out differently in the database. In particular, the Postgresql driver stores strings into lobs in Base64. So, if our previous argument = the string size, rewrite it to the database size. This makes it work if we do
     (someObject blob copyFrom: 1 to: 3) = 'abc'
@@ -88,7 +90,7 @@ when in fact, the length of that string in the blob will be 4."
 	(platform isMySQLPlatform or: [platform isSQLServerPlatform]) ifTrue: [arguments last value: (arguments last value - arguments first value + 1)]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SubstringFunction >> type [
 
 	^ self ultimateBaseExpression system platform varchar: 255

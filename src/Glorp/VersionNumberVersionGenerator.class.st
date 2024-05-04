@@ -2,12 +2,14 @@
 This generates version numbers by adding one to the previous value of the designated field.
 "
 Class {
-	#name : #VersionNumberVersionGenerator,
-	#superclass : #VersionGenerator,
-	#category : #'Glorp-Database'
+	#name : 'VersionNumberVersionGenerator',
+	#superclass : 'VersionGenerator',
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 VersionNumberVersionGenerator >> nextValueFor: aField in: aRow [
 
 	| oldValue |

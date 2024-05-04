@@ -12,17 +12,19 @@ Instance Variables:
 
 "
 Class {
-	#name : #SelectCommand,
-	#superclass : #DatabaseCommand,
+	#name : 'SelectCommand',
+	#superclass : 'DatabaseCommand',
 	#instVars : [
 		'parameters',
 		'blockFactor',
 		'query'
 	],
-	#category : #'Glorp-Database'
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 SelectCommand class >> forQuery: aQuery parameters: aDictionary [
 
 	^ self new
@@ -31,7 +33,7 @@ SelectCommand class >> forQuery: aQuery parameters: aDictionary [
 		  yourself
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 SelectCommand class >> forQuery: aQuery parameters: aDictionary useBinding: aBoolean session: aSession [
 
 	^ self new
@@ -42,26 +44,26 @@ SelectCommand class >> forQuery: aQuery parameters: aDictionary useBinding: aBoo
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SelectCommand >> blockFactor: anInteger [
 
 	blockFactor := anInteger
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SelectCommand >> canBind: aValue to: aType [
 
 	aValue ifNil: [ ^ false ].
 	^ super canBind: aValue to: aType
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SelectCommand >> isReadCommand [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SelectCommand >> parameterTypeSignature [
 
 	| result |
@@ -70,25 +72,25 @@ SelectCommand >> parameterTypeSignature [
 	^ result contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SelectCommand >> parameters [
 
 	^ parameters
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SelectCommand >> parameters: aDictionary [
 
 	parameters := aDictionary
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SelectCommand >> printSQL [
 
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SelectCommand >> succeeded [
 
 	^ true

@@ -16,12 +16,14 @@ The above copyright notice and license terms shall be included in all copies of 
 The intent of this license is not to change the meaning of the prior license but to provide a self-contained and clear license that imposes the intended conditions. The previous license referenced another license but had negations and redefinitions of its conditions, and became particularly confusing as that license changed in subsequent versions.
 "
 Class {
-	#name : #GlorpLicense,
-	#superclass : #Object,
-	#category : 'Glorp-Core'
+	#name : 'GlorpLicense',
+	#superclass : 'Object',
+	#category : 'Glorp-Core',
+	#package : 'Glorp',
+	#tag : 'Core'
 }
 
-{ #category : #license }
+{ #category : 'license' }
 GlorpLicense class >> LICENSE [
 "Copyright 2000-2015  Alan Knight
 

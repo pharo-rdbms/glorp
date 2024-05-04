@@ -11,8 +11,8 @@ Instance Variables:
 
 "
 Class {
-	#name : #SimpleQuery,
-	#superclass : #AbstractReadQuery,
+	#name : 'SimpleQuery',
+	#superclass : 'AbstractReadQuery',
 	#instVars : [
 		'builders',
 		'fields',
@@ -21,10 +21,12 @@ Class {
 		'customCommand',
 		'tablesToPrint'
 	],
-	#category : #'Glorp-Queries'
+	#category : 'Glorp-Queries',
+	#package : 'Glorp',
+	#tag : 'Queries'
 }
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 SimpleQuery >> addAllOrderingsForBuilder: aBuilder [
 	
 	| expression fieldExpressions |
@@ -33,7 +35,7 @@ SimpleQuery >> addAllOrderingsForBuilder: aBuilder [
 	fieldExpressions do: [:each | self addSingleOrderingForBuilder: each]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleQuery >> addBoundExpressionsIn: aCommand to: aCollection [
 	self joins , self fields, (Array with: self whereClause)
 		do:
@@ -46,7 +48,7 @@ SimpleQuery >> addBoundExpressionsIn: aCommand to: aCollection [
 						to: aCollection]]]
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 SimpleQuery >> addFields: aliasedFields returningTranslationForFields: originalFields distinct: isDistinct [
 	"The query has computed a set of fields the way the mappings see them, which are then transformed to account for field aliasing in embedded mappings. Add those to our collection, and set up the translation which knows which fields are at which index in the resulting row. If necessary, note that those fields are selected as distinct"
 
@@ -67,12 +69,12 @@ SimpleQuery >> addFields: aliasedFields returningTranslationForFields: originalF
 	^translation
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 SimpleQuery >> addJoin: anExpression [
 	joins addAll: anExpression asIndependentJoins
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 SimpleQuery >> addOrderingForToManyJoins [
 	"If we have a join to a to-many relation, then we need for all the joined bits to be grouped together in order in the result set."
 
@@ -95,7 +97,7 @@ SimpleQuery >> addOrderingForToManyJoins [
 				self addSingleOrderingForBuilder: (orderExp asGlorpExpressionOn: alsoFetchExp)]]].
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 SimpleQuery >> addSingleOrderingForBuilder: aFieldExpression [
 	"Add the ordering to the query, as long as we don't already have an equivalent ordering there."	
 
@@ -107,7 +109,7 @@ SimpleQuery >> addSingleOrderingForBuilder: aFieldExpression [
 		ifNone: [self orderBy: aFieldExpression]
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 SimpleQuery >> adjustWhereClause [
 	"Make any adjustments to the where clause. This includes adjusting direct object equality expressions to be primary key comparisons, removing primary key comparisons where we can compare a foreign key, and condensing boolean constants out of expressions."
 
@@ -125,7 +127,7 @@ SimpleQuery >> adjustWhereClause [
 	whereClause do: [:each | each rewriteFunctionArguments]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 SimpleQuery >> asFullQuery [
 	| newQuery |
 	newQuery := ReadQuery new
@@ -136,12 +138,12 @@ SimpleQuery >> asFullQuery [
 	^newQuery.
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 SimpleQuery >> asGlorpExpression [
 	^self asGlorpExpressionOn: BaseExpression new
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 SimpleQuery >> asGlorpExpressionOn: anExpression [
 	"If we're being converted into an expression, that means we're a subselect inside an expression block. We don't actually have any relationship to anExpression, so create our own base and make a pseudo-mapping with no join to describe the relationship. Don't even give it a string-name, just use ourselves as the key"
 	
@@ -161,12 +163,12 @@ SimpleQuery >> asGlorpExpressionOn: anExpression [
 	^expression
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 SimpleQuery >> asGlorpExpressionOn: anExpression basedOn: aMessageArchiver withUltimateBase: aBaseExpression [
 	^self asGlorpExpressionOn: anExpression
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 SimpleQuery >> assignTableAliases [
 	| tableNumber allExpressions |
 	whereClause isJoin ifTrue: [^self].
@@ -183,7 +185,7 @@ SimpleQuery >> assignTableAliases [
 	joins := joins inject: OrderedCollection new into: [:sum :each | (sum addAll: each asIndependentJoins). sum].
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 SimpleQuery >> basicRebuildOn: aBaseExpression startingFrom: anExpression withOuterScopeBase: ultimateBaseExpression [
 	"Rebuild the query, which is part of a subselect expression, into the new context. The only thing that really matters here is that we get correlated subselect pieces inside the query right. The rest is independent of our main expression"
 	prepared := false.
@@ -199,25 +201,25 @@ SimpleQuery >> basicRebuildOn: aBaseExpression startingFrom: anExpression withOu
 	fields := OrderedCollection new.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleQuery >> builders [
 
 	^builders
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleQuery >> command: aDatabaseCommand [
 	"Explicitly set the database command we will use. This is normally used in order to provide a SQLStringSelectCommand, and specify the sql for the query."
 	customCommand := aDatabaseCommand
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 SimpleQuery >> computeFields [
 	builders 
 		do: [:each | self computeFieldsFor: each]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 SimpleQuery >> computeFieldsFor: anElementBuilder [ 
 	| translatedFields |
 	translatedFields := self 
@@ -227,7 +229,7 @@ SimpleQuery >> computeFieldsFor: anElementBuilder [
 	anElementBuilder fieldTranslations: translatedFields
 ]
 
-{ #category : #'sql generation' }
+{ #category : 'sql generation' }
 SimpleQuery >> computeTablesToPrint [
 	| allTables stoppingPoint |
 	allTables := Set new.
@@ -257,7 +259,7 @@ SimpleQuery >> computeTablesToPrint [
 	^allTables asSortedCollection
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 SimpleQuery >> copyOfBuilders [ 
 	"Copy the builders, but make sure that subBuilders also get matched up"
 	| newBuilders |
@@ -266,7 +268,7 @@ SimpleQuery >> copyOfBuilders [
 	^newBuilders
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : 'As yet unclassified' }
 SimpleQuery >> deleteSqlWith: aDictionary [
 	| result |
 	self prepare.
@@ -290,18 +292,18 @@ SimpleQuery >> deleteSqlWith: aDictionary [
 				session: session]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleQuery >> elementBuilderFor: anExpression [ 
 	^builders detect: [:each | each expression == anExpression] ifNone: [nil]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleQuery >> fields [
 	fields isNil ifTrue: [self prepare].
 	^fields
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 SimpleQuery >> findPositionofAliasedField: aField [
 	1 to: fields size do: [:i |
 		| existingField |
@@ -315,7 +317,7 @@ SimpleQuery >> findPositionofAliasedField: aField [
 	^0.
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 SimpleQuery >> fixJoins [
 	| pseudoJoins realJoins |
 	pseudoJoins := joins select: [:each | each tablesForANSIJoin size < 2].
@@ -324,7 +326,7 @@ SimpleQuery >> fixJoins [
 	joins := realJoins.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SimpleQuery >> hasEmptyWhereClause [
 	"If we have regular where clause entries, or if we have joins that aren't going to be printed in the tables portion, then we're not empty"
 	whereClause willPrintAsWhereClause ifTrue: [^false].
@@ -332,13 +334,13 @@ SimpleQuery >> hasEmptyWhereClause [
 	^joins isEmpty.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SimpleQuery >> hasTracing [
 	"Return true if we've given this query a tracing already"
 	^builders notNil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SimpleQuery >> initResultClass: aClass whereClause: anExpression singleObject: aBoolean [ 
 	super 
 		initResultClass: aClass
@@ -349,23 +351,23 @@ SimpleQuery >> initResultClass: aClass whereClause: anExpression singleObject: a
 	joins := OrderedCollection new
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 SimpleQuery >> isPrepared [
 	^prepared
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleQuery >> joins [
 	^joins
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SimpleQuery >> mightHaveDuplicateRows [
 
 	^builders anySatisfy: [:each | each canCauseDuplicateRows]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 SimpleQuery >> postCopy [
 	super postCopy.
 	fields := OrderedCollection new.
@@ -374,7 +376,7 @@ SimpleQuery >> postCopy [
 	tablesToPrint := nil.
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 SimpleQuery >> prepare [
 	prepared ifTrue: [^self].
 	self setupTracing.
@@ -385,7 +387,7 @@ SimpleQuery >> prepare [
 	prepared := true.
 ]
 
-{ #category : #'sql generation' }
+{ #category : 'sql generation' }
 SimpleQuery >> printANSITablesOn: aCommand [
 	"Print ourselves using the JOIN... USING syntax. Note that we have to put the joins in the right order because we're not allowed to refer to tables not mentioned yet. Great syntax. Reminds me of Pascal. And so easy to deal with."
 
@@ -394,7 +396,7 @@ SimpleQuery >> printANSITablesOn: aCommand [
 	printer printJoinsOn: aCommand
 ]
 
-{ #category : #'sql generation' }
+{ #category : 'sql generation' }
 SimpleQuery >> printJoinsOn: aCommand [
 	| noLeadIn|
 	self platform supportsANSIJoins ifTrue: [^self].
@@ -408,12 +410,12 @@ SimpleQuery >> printJoinsOn: aCommand [
 	noLeadIn ifFalse: [aCommand nextPut: $)]
 ]
 
-{ #category : #'sql generation' }
+{ #category : 'sql generation' }
 SimpleQuery >> printNormalTablesOn: aCommand [
 	self printNormalTablesOn: aCommand excluding: #()
 ]
 
-{ #category : #'sql generation' }
+{ #category : 'sql generation' }
 SimpleQuery >> printNormalTablesOn: aCommand excluding: aCollection [
 	aCollection do: [:each | self tablesToPrint remove: each].
 	GlorpHelper
@@ -424,32 +426,32 @@ SimpleQuery >> printNormalTablesOn: aCommand excluding: aCollection [
 	^self tablesToPrint
 ]
 
-{ #category : #'sql generation' }
+{ #category : 'sql generation' }
 SimpleQuery >> printOffsetOn: aCommand [
 	self hasOffset ifFalse: [^self].
 	self platform printOffset: self offset on: aCommand
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SimpleQuery >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPutAll: ' for '.
 	aStream nextPutAll: (resultClass isNil ifTrue: ['nil'] ifFalse: [resultClass name])
 ]
 
-{ #category : #'sql generation' }
+{ #category : 'sql generation' }
 SimpleQuery >> printPostLimitOn: aCommand [
 	self hasLimit ifFalse: [^self].
 	self platform printPostLimit: self limit on: aCommand
 ]
 
-{ #category : #'sql generation' }
+{ #category : 'sql generation' }
 SimpleQuery >> printPreLimitOn: aCommand [
 	self hasLimit ifFalse: [^self].
 	self platform printPreLimit: self limit on: aCommand
 ]
 
-{ #category : #'sql generation' }
+{ #category : 'sql generation' }
 SimpleQuery >> printSelectFields: aCollection on: stream [ 
 	| fieldsToPrint |
 	(aCollection anySatisfy: [:each | each isDistinct]) 
@@ -467,12 +469,12 @@ SimpleQuery >> printSelectFields: aCollection on: stream [
 		separatedBy: [stream nextPutAll: ', ']
 ]
 
-{ #category : #'sql generation' }
+{ #category : 'sql generation' }
 SimpleQuery >> printSelectFieldsOn: stream [ 
      self printSelectFields: fields on: stream
 ]
 
-{ #category : #'sql generation' }
+{ #category : 'sql generation' }
 SimpleQuery >> printTablesOn: aCommand [
 	aCommand
 		cr;
@@ -482,12 +484,12 @@ SimpleQuery >> printTablesOn: aCommand [
 		ifFalse: [self printNormalTablesOn: aCommand]
 ]
 
-{ #category : #'sql generation' }
+{ #category : 'sql generation' }
 SimpleQuery >> printUnqualifiedNormalTablesOn: aCommand [
 	self printUnqualifiedNormalTablesOn: aCommand excluding: #().
 ]
 
-{ #category : #'sql generation' }
+{ #category : 'sql generation' }
 SimpleQuery >> printUnqualifiedNormalTablesOn: aCommand excluding: aCollection [
 	aCollection do: [:each | self tablesToPrint remove: each].
 	GlorpHelper
@@ -498,7 +500,7 @@ SimpleQuery >> printUnqualifiedNormalTablesOn: aCommand excluding: aCollection [
 	^self tablesToPrint.
 ]
 
-{ #category : #'sql generation' }
+{ #category : 'sql generation' }
 SimpleQuery >> printUnqualifiedTablesOn: aCommand [
 	aCommand
 		cr;
@@ -506,7 +508,7 @@ SimpleQuery >> printUnqualifiedTablesOn: aCommand [
 	self printUnqualifiedNormalTablesOn: aCommand.
 ]
 
-{ #category : #'sql generation' }
+{ #category : 'sql generation' }
 SimpleQuery >> printUnqualifiedWhereClauseOn: aCommand [
 	self hasEmptyWhereClause
 		ifFalse:
@@ -516,7 +518,7 @@ SimpleQuery >> printUnqualifiedWhereClauseOn: aCommand [
 			whereClause printUnqualifiedSQLOn: aCommand withParameters: aCommand parameters].
 ]
 
-{ #category : #'sql generation' }
+{ #category : 'sql generation' }
 SimpleQuery >> printWhereClauseOn: aCommand [
 	self hasEmptyWhereClause
 		ifFalse:
@@ -526,13 +528,13 @@ SimpleQuery >> printWhereClauseOn: aCommand [
 			whereClause printSQLOn: aCommand withParameters: aCommand parameters]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SimpleQuery >> privateAddBuilder: anElementBuilder [
 
 	builders := builders copyWith: anElementBuilder
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SimpleQuery >> privateReplaceBuilderWith: anElementBuilder [
 
 	| oldBuilder |
@@ -541,18 +543,18 @@ SimpleQuery >> privateReplaceBuilderWith: anElementBuilder [
 	builders at: (builders indexOf: oldBuilder) put: anElementBuilder
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SimpleQuery >> privateSetFields: aCollection [
 	fields := aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleQuery >> queries [
 	"A hack so you can write things that manipulate both this and compound queries the same way"
 	^Array with: self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 SimpleQuery >> rebuildOn: aBaseExpression startingFrom: anExpression withOuterScopeBase: ultimateBaseExpression [
 	"Rebuild the query, which is part of a subselect expression, into the new context. Don't do it if it's not necessary. But if it is necessary, also the copy the query. Otherwise two mappings using the same subselect query will mess each other up."
 	self == anExpression ifTrue: [^aBaseExpression].
@@ -560,7 +562,7 @@ SimpleQuery >> rebuildOn: aBaseExpression startingFrom: anExpression withOuterSc
 	^self shallowCopy basicRebuildOn: aBaseExpression startingFrom: anExpression withOuterScopeBase: ultimateBaseExpression
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SimpleQuery >> requiresFullQuery [
 	| descriptor independent |
 	descriptor := self descriptor.
@@ -570,7 +572,7 @@ SimpleQuery >> requiresFullQuery [
 	^(independent size ~= 1) or: [(independent at: 1) ~= descriptor describedClass]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 SimpleQuery >> rowsFromDatabaseWithParameters: anArray [
 
 	| alreadyTriedAction command |
@@ -590,13 +592,13 @@ SimpleQuery >> rowsFromDatabaseWithParameters: anArray [
 				ex retry]]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 SimpleQuery >> setUpExpressions [
 	super setUpExpressions.
 	self validateWhereClause.
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 SimpleQuery >> setupTracing [
 	| |
 	builders isNil ifFalse: [^self].	"Already been done"
@@ -608,25 +610,25 @@ SimpleQuery >> setupTracing [
 	self addOrderingForToManyJoins
 ]
 
-{ #category : #'sql generation' }
+{ #category : 'sql generation' }
 SimpleQuery >> signature [
 	session useBinding ifFalse: [^''].
 	^self sqlWith: Dictionary new.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleQuery >> sql: aString [
 	"Specify the sql string to use for this query, instead of having it be generated. Note that doing this will override the normal sql generation mechanisms."
 	self command: (SQLStringSelectCommand new setSQLString: aString)
 ]
 
-{ #category : #'sql generation' }
+{ #category : 'sql generation' }
 SimpleQuery >> sqlString [
 	"Mostly for debugging"
 	^(self sqlWith: #()) sqlString
 ]
 
-{ #category : #'sql generation' }
+{ #category : 'sql generation' }
 SimpleQuery >> sqlWith: aDictionary [
 	| result |
 	self prepare.
@@ -641,38 +643,38 @@ SimpleQuery >> sqlWith: aDictionary [
 		session: session
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleQuery >> tablePrefix [
 	^tablePrefix
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleQuery >> tablePrefix: aString [
 	tablePrefix := aString
 ]
 
-{ #category : #'sql generation' }
+{ #category : 'sql generation' }
 SimpleQuery >> tablesToPrint [
 	tablesToPrint isNil ifTrue: [tablesToPrint := self computeTablesToPrint].
 	^tablesToPrint.
 ]
 
-{ #category : #'sql generation' }
+{ #category : 'sql generation' }
 SimpleQuery >> tablesToPrint: aCollection [
 	tablesToPrint := aCollection
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 SimpleQuery >> traceExpressionInContextFor: anExpression [
 	^anExpression rebuildOn: base
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SimpleQuery >> useANSIJoins [
 	^self session platform supportsANSIJoins
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleQuery >> where: anExpression [
 	whereClause := anExpression.
 	self setUpBase

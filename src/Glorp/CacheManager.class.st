@@ -9,22 +9,24 @@ Instance Variables:
 
 "
 Class {
-	#name : #CacheManager,
-	#superclass : #Object,
+	#name : 'CacheManager',
+	#superclass : 'Object',
 	#instVars : [
 		'subCaches',
 		'session'
 	],
-	#category : #'Glorp-Core'
+	#category : 'Glorp-Core',
+	#package : 'Glorp',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CacheManager class >> forSession: aSession [
 
 	^ self new session: aSession
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 CacheManager >> at: aKey insert: anObject [
 
 	| subCache |
@@ -32,7 +34,7 @@ CacheManager >> at: aKey insert: anObject [
 	subCache at: aKey ifAbsentPut: [ anObject ]
 ]
 
-{ #category : #'private/caching' }
+{ #category : 'private/caching' }
 CacheManager >> cacheFor: anObject [
 	"Get the cache for a particular object. Since this could conceivably be passed a proxy, check for that. The cache for an uninstantiated proxy is kind of ambiguous, treat it as nil.  This could also be a class"
 
@@ -43,7 +45,7 @@ CacheManager >> cacheFor: anObject [
 		ifFalse: [self cacheForClass: nonMetaClass]
 ]
 
-{ #category : #'private/caching' }
+{ #category : 'private/caching' }
 CacheManager >> cacheForClass: aClass [
 	| resolver cacheClass |
 
@@ -56,7 +58,7 @@ CacheManager >> cacheForClass: aClass [
 		ifAbsentPut: [ self makeCacheFor: cacheClass ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 CacheManager >> containsObject: anObject key: aKey [
 
 	| cache |
@@ -64,7 +66,7 @@ CacheManager >> containsObject: anObject key: aKey [
 	^ cache includesKey: aKey as: anObject
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 CacheManager >> containsObjectForClass: aClass key: aKey [
 
 	| cache |
@@ -72,13 +74,13 @@ CacheManager >> containsObjectForClass: aClass key: aKey [
 	^ cache includesKey: aKey
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 CacheManager >> expireAll [
 
 	subCaches do: [ :each | each expireAll ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 CacheManager >> expireClass: aClass key: aKey [
 
 	^ self
@@ -87,7 +89,7 @@ CacheManager >> expireClass: aClass key: aKey [
 		  ifAbsent: [ self error: 'Object not in cache' ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 CacheManager >> expireClass: aClass key: aKey ifAbsent: failBlock [
 
 	| cache |
@@ -97,13 +99,13 @@ CacheManager >> expireClass: aClass key: aKey ifAbsent: failBlock [
 	cache expireKey: aKey ifAbsent: [ failBlock value ]
 ]
 
-{ #category : #'private/caching' }
+{ #category : 'private/caching' }
 CacheManager >> expiredInstanceOf: aClass key: aKey [
 
 	^ (self cacheForClass: aClass) expiredInstanceFor: aKey
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 CacheManager >> hasExpired: anObject [
 
 	| key cache |
@@ -113,7 +115,7 @@ CacheManager >> hasExpired: anObject [
 	^ cache hasExpired: key
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 CacheManager >> hasExpired: aClass key: key [
 
 	| cache |
@@ -121,7 +123,7 @@ CacheManager >> hasExpired: aClass key: key [
 	^ cache hasExpired: key
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 CacheManager >> hasObjectExpiredOfClass: aClass withKey: key [
 
 	| cache |
@@ -129,7 +131,7 @@ CacheManager >> hasObjectExpiredOfClass: aClass withKey: key [
 	^ cache hasExpired: key
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CacheManager >> initialize [
 
 	super initialize.
@@ -137,7 +139,7 @@ CacheManager >> initialize [
 	subCaches := IdentityDictionary new: 100
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 CacheManager >> lookupClass: aClass key: aKey [
 
 	^ self
@@ -146,7 +148,7 @@ CacheManager >> lookupClass: aClass key: aKey [
 		  ifAbsent: [ self error: 'cache miss' ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 CacheManager >> lookupClass: aClass key: aKey ifAbsent: failBlock [
 
 	| object |
@@ -156,13 +158,13 @@ CacheManager >> lookupClass: aClass key: aKey ifAbsent: failBlock [
 		  ifFalse: [ failBlock value ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 CacheManager >> lookupClass: aClass key: aKey ifAbsentPut: failBlock [
 
 	^ (self cacheForClass: aClass) at: aKey ifAbsentPut: failBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CacheManager >> makeCacheFor: aClass [
 
 	| rootClass cache |
@@ -176,7 +178,7 @@ CacheManager >> makeCacheFor: aClass [
 	^ cache
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 CacheManager >> markAsCurrentOfClass: aClass key: key [
 
 	| cache |
@@ -185,7 +187,7 @@ CacheManager >> markAsCurrentOfClass: aClass key: key [
 	cache markAsCurrentAtKey: key
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CacheManager >> numberOfElements [
 
 	^ subCaches
@@ -193,13 +195,13 @@ CacheManager >> numberOfElements [
 		  into: [ :sum :each | sum + each numberOfElements ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CacheManager >> release [
 
 	subCaches do: [ :each | each release ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 CacheManager >> removeClass: aClass key: aKey [
 
 	^ self
@@ -208,7 +210,7 @@ CacheManager >> removeClass: aClass key: aKey [
 		  ifAbsent: [ self error: 'Object not in cache' ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 CacheManager >> removeClass: aClass key: aKey ifAbsent: failBlock [
 
 	| cache |
@@ -218,19 +220,19 @@ CacheManager >> removeClass: aClass key: aKey ifAbsent: failBlock [
 	cache removeKey: aKey ifAbsent: [ failBlock value ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CacheManager >> session [
 
 	^ session
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CacheManager >> session: aSession [
 
 	session := aSession
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CacheManager >> system [
 
 	^ self session system

@@ -1,13 +1,13 @@
-Extension { #name : #DelegatingDatabaseConverter }
+Extension { #name : 'DelegatingDatabaseConverter' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 DelegatingDatabaseConverter class >> hostedBy: anObject fromStToDb: stDbSelector fromDbToSt: dbStSelector [
 
 	^super new
 		hostedBy: anObject fromStToDb: stDbSelector fromDbToSt: dbStSelector
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 DelegatingDatabaseConverter class >> named: aSymbol hostedBy: anObject fromStToDb: stDbSelector fromDbToSt: dbStSelector [
 	^super new
 		named: aSymbol

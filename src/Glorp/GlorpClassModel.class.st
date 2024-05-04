@@ -10,35 +10,37 @@ Instance Variables:
 
 "
 Class {
-	#name : #GlorpClassModel,
-	#superclass : #Object,
+	#name : 'GlorpClassModel',
+	#superclass : 'Object',
 	#instVars : [
 		'system',
 		'describedClass',
 		'subclasses',
 		'attributes'
 	],
-	#category : #'Glorp-Mappings'
+	#category : 'Glorp-Mappings',
+	#package : 'Glorp',
+	#tag : 'Mappings'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GlorpClassModel class >> for: aClass [
 	^self new describedClass: aClass.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpClassModel >> addAttribute: anAttributeDescription [
 	attributes add: anAttributeDescription.
 	anAttributeDescription classModel: self.
 	^anAttributeDescription
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpClassModel >> attributeNamed: aSymbol [
 	^attributes detect: [:each | each name = aSymbol] ifNone: [self newAttributeNamed: aSymbol]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpClassModel >> attributeNamed: aSymbol type: aClass [
 	^attributes
 		detect:
@@ -46,7 +48,7 @@ GlorpClassModel >> attributeNamed: aSymbol type: aClass [
 		ifNone: [self newAttributeNamed: aSymbol type: aClass]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpClassModel >> attributeNamed: aSymbol type: aClass collectionType: collectionClass [
 	^attributes
 		detect:
@@ -60,40 +62,40 @@ GlorpClassModel >> attributeNamed: aSymbol type: aClass collectionType: collecti
 		ifNone: [self newAttributeNamed: aSymbol type: aClass]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpClassModel >> attributes [
 	^attributes
 ]
 
-{ #category : #attributes }
+{ #category : 'attributes' }
 GlorpClassModel >> attributesDo: aBlock [
 	attributes do: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpClassModel >> describedClass [
 	^describedClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpClassModel >> describedClass: aClass [
 	describedClass := aClass.
 	subclasses := aClass allSubclasses isEmpty ifTrue: [nil] ifFalse: [aClass allSubclasses asArray]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpClassModel >> hasAttributeNamed: aSymbol [
 
 	attributes do: [:attribute | attribute name = aSymbol ifTrue: [^true]].
 	^false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GlorpClassModel >> initialize [
 	attributes := OrderedCollection new
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 GlorpClassModel >> matches: anObject [
 	"Try to optimize this check as much as possible. We cache the list of subclasses, and inline the check for isKindOf:"
 	| theClass |
@@ -105,49 +107,49 @@ GlorpClassModel >> matches: anObject [
 	^false
 ]
 
-{ #category : #attributes }
+{ #category : 'attributes' }
 GlorpClassModel >> newAttributeNamed: aSymbol [
 	^self addAttribute: (GlorpAttributeModel named: aSymbol)
 ]
 
-{ #category : #attributes }
+{ #category : 'attributes' }
 GlorpClassModel >> newAttributeNamed: aSymbol collection: collectionClass of: aClass [
 	^self addAttribute: (GlorpAttributeModel named: aSymbol collection: collectionClass of: aClass)
 ]
 
-{ #category : #attributes }
+{ #category : 'attributes' }
 GlorpClassModel >> newAttributeNamed: aSymbol collectionOf: aClass [
 	^self addAttribute: (GlorpAttributeModel named: aSymbol collectionOf: aClass)
 ]
 
-{ #category : #attributes }
+{ #category : 'attributes' }
 GlorpClassModel >> newAttributeNamed: aSymbol dictionaryFrom: keyClass to: valueClass [
 	^self addAttribute: (GlorpAttributeModel named: aSymbol dictionaryFrom: keyClass to: valueClass)
 ]
 
-{ #category : #attributes }
+{ #category : 'attributes' }
 GlorpClassModel >> newAttributeNamed: aSymbol type: aClass [
 	^self addAttribute: (GlorpAttributeModel named: aSymbol type: aClass)
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 GlorpClassModel >> printOn: aStream [
 	aStream nextPutAll: '~~'.
 	self describedClass isNil ifFalse: [aStream nextPutAll: self describedClass name].
 	aStream nextPutAll: '~~'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpClassModel >> system [
 	^system
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpClassModel >> system: aDescriptorSystem [
 	system := aDescriptorSystem
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 GlorpClassModel >> validateIn: aDescriptorSystem [ 
 	attributes do: [:each | each validate]
 ]

@@ -1,12 +1,12 @@
-Extension { #name : #TimedProxyReaper }
+Extension { #name : 'TimedProxyReaper' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 TimedProxyReaper class >> delay: seconds [
 
 	^ self new delay: seconds
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 TimedProxyReaper class >> delay: seconds maximumWork: milliseconds [
 
 	^ self new

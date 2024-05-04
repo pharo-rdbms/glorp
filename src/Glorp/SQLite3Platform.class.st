@@ -30,43 +30,45 @@ My int* and float*/double type methods that define Glorp types for SQLite confor
 
 "
 Class {
-	#name : #SQLite3Platform,
-	#superclass : #DatabasePlatform,
-	#category : #'Glorp-Platforms'
+	#name : 'SQLite3Platform',
+	#superclass : 'DatabasePlatform',
+	#category : 'Glorp-Platforms',
+	#package : 'Glorp',
+	#tag : 'Platforms'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 SQLite3Platform class >> reservedWords [
 
 	^#('abort' 'action' 'add' 'after' 'all' 'alter' 'analyze' 'and' 'as' 'asc' 'attach' 'autoincrement' 'before' 'begin' 'between' 'by' 'cascade' 'case' 'cast' 'check' 'collate' 'column' 'commit' 'conflict' 'constraint' 'create' 'cross' 'current_date' 'current_time' 'current_timestamp' 'database' 'default' 'deferrable' 'deferred' 'delete' 'desc' 'detach' 'distinct' 'drop' 'each' 'else' 'end' 'escape' 'except' 'exclusive' 'exists' 'explain' 'fail' 'for' 'foreign' 'from' 'full' 'glob' 'group' 'having' 'if' 'ignore' 'immediate' 'in' 'index' 'indexed' 'initially' 'inner' 'insert' 'instead' 'intersect' 'into' 'is' 'isnull' 'join' 'key' 'left' 'like' 'limit' 'match' 'natural' 'no' 'not' 'notnull' 'null' 'of' 'offset' 'on' 'or' 'order' 'outer' 'plan' 'pragma' 'primary' 'query' 'raise' 'references' 'regexp' 'reindex' 'release' 'rename' 'replace' 'restrict' 'right' 'rollback' 'row' 'savepoint' 'select' 'set' 'table' 'temp' 'temporary' 'then' 'to' 'transaction' 'trigger' 'union' 'unique' 'update' 'using' 'vacuum' 'values' 'view' 'virtual' 'when' 'where')
 		asSet
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 SQLite3Platform >> areSequencesExplicitlyCreated [
 	^false
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 SQLite3Platform >> autoTrimsStringsLongerThanColumnSize [
 	"It doesn't actually trim them - but it will not complain about them either.  It just takes them."
 	^true
 ]
 
-{ #category : #binding }
+{ #category : 'binding' }
 SQLite3Platform >> bindingsForGroupWritingFor: aCommand [
 	"Return the bindings array for a group write. This can be in different formats, depending on the database and perhaps the mechanism in place."
 
 	^aCommand batchStatementBindings
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 SQLite3Platform >> clob [
 
 	^self typeNamed: #clob ifAbsentPut: [GlorpClobType new typeString: 'text'].
 ]
 
-{ #category : #'conversion - boolean' }
+{ #category : 'conversion - boolean' }
 SQLite3Platform >> convertIntegerToBoolean: anInteger for: aType [
 	"This method accomodates an error in earlier SQLite 3 dlls. For the table_info() PRAGMA, 99 means True."
 
@@ -76,7 +78,7 @@ SQLite3Platform >> convertIntegerToBoolean: anInteger for: aType [
 	self error: 'invalid boolean conversion'
 ]
 
-{ #category : #'services tables' }
+{ #category : 'services tables' }
 SQLite3Platform >> createTableStatementStringFor: aGLORPDatabaseTable [ 
 	"^<String> This method returns a string which can be used to create a database table ..."
 
@@ -112,25 +114,25 @@ SQLite3Platform >> createTableStatementStringFor: aGLORPDatabaseTable [
 	^sqlStatementStream contents
 ]
 
-{ #category : #sequences }
+{ #category : 'sequences' }
 SQLite3Platform >> databaseSequenceClass [
 	^SQLite3Sequence
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 SQLite3Platform >> date [
 	"SQLite does not support any time-related types;  use text as the type and convert in readDate.../toDate..."
 
 	^self typeNamed: #date ifAbsentPut: [GlorpDateType new typeString: 'date']
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 SQLite3Platform >> decimal [
 
 	^self decimal: nil scale: 4
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 SQLite3Platform >> decimal: precision scale: scale [
 
 	^self typeNamed: #numeric ifAbsentPut:
@@ -141,31 +143,31 @@ SQLite3Platform >> decimal: precision scale: scale [
 				yourself].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 SQLite3Platform >> defaultPort [
 	^ ''.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 SQLite3Platform >> double [
 	^self typeNamed: #double ifAbsentPut: [GlorpDoubleType new typeString: 'double' ].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 SQLite3Platform >> float4 [
 	"The only kind of REAL that SQLite supports is an 8-byte IEEE floating point number, so we just map float4 to float8."
 
 	^self double
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 SQLite3Platform >> float8 [
 	"The only kind of REAL that SQLite supports is an 8-byte IEEE floating point number."
 
 	^self double
 ]
 
-{ #category : #functions }
+{ #category : 'functions' }
 SQLite3Platform >> initializeFunctions [
 	"The REGEXP operator is a special syntax for the regexp() user function in SQLite. No regexp() user function is defined by default and so use of the REGEXP operator will normally result in an error message. If a application-defined SQL function named 'regexp' is added at run-time, that function will be called in order to implement the REGEXP operator.  (See sqlite.org/lang_expr.html#regexp for details.)"
 
@@ -173,62 +175,62 @@ SQLite3Platform >> initializeFunctions [
 	functions at: #regexMatches: put: (InfixFunction named: 'REGEXP').
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 SQLite3Platform >> initializeReservedWords [
 	super initializeReservedWords.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 SQLite3Platform >> int2 [
 	^self smallint.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 SQLite3Platform >> int4 [
 	^self typeNamed: #int4 ifAbsentPut: [GlorpIntegerType new typeString: 'int'].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 SQLite3Platform >> int8 [
 	^self int4.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SQLite3Platform >> isSQLite3Platform [
 	^true
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 SQLite3Platform >> maximumLengthOfTableName [
 	"It is the boast of SQLite that their limits are only for stability purposes:  if it fits in 32 bits then they will handle it.  Since the maximum length of an SQL statement is limited to SQLITE_MAX_LENGTH (defaults to 1000000, cannot be higher than 1073741824), table names had better be shorter and in normal use should be much shorter.  I chose the number below at random;  change it if it causes you any inconvenience."
 
 	^128
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SQLite3Platform >> maximumQueryValueSize [
 	"If there's a limit on how big a bound input parameter can be for a query, return it here. By default, no maximum. "
 	"https://sqlite.org/limits.html : The pattern matching algorithm used in the default LIKE and GLOB implementation of SQLite can exhibit O(N²) performance (where N is the number of characters in the pattern) for certain pathological cases. To avoid denial-of-service attacks from miscreants who are able to specify their own LIKE or GLOB patterns, the length of the LIKE or GLOB pattern is limited to SQLITE_MAX_LIKE_PATTERN_LENGTH bytes. The default value of this limit is 50000. A modern workstation can evaluate even a pathological LIKE or GLOB pattern of 50000 bytes relatively quickly. The denial of service problem only comes into play when the pattern length gets into millions of bytes. Nevertheless, since most useful LIKE or GLOB patterns are at most a few dozen bytes in length, paranoid application developers may want to reduce this parameter to something in the range of a few hundred if they know that external users are able to generate arbitrary patterns."
 	^50000 
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 SQLite3Platform >> numeric [
 
 	^self typeNamed: #numeric ifAbsentPut: [GlorpNumericType new].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 SQLite3Platform >> nvarchar [
 	^self text
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 SQLite3Platform >> parenthesizeCommandsInCompoundQuery [
 	^false
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 SQLite3Platform >> printDate: aDateString for: aType [
 	"SQLite does not suppport any time-related types.  We convert them all to strings via the to... methods, so parameters to this method should be Strings of the form '1959-09-30'."
 
@@ -238,7 +240,7 @@ SQLite3Platform >> printDate: aDateString for: aType [
 	^aDateString printString
 ]
 
-{ #category : #'database - specific' }
+{ #category : 'database - specific' }
 SQLite3Platform >> printOffset: anInteger on: aCommand [
 	"SQLite cannot have an offset without a limit.  A negative limit is treated as an infinite limit.  We cannot set it as an actual limit value;  that would hit limitMakesSense optimisation and abort the trip to the database.  So we add it here."
 
@@ -248,14 +250,14 @@ SQLite3Platform >> printOffset: anInteger on: aCommand [
 	anInteger printOn: aCommand.
 ]
 
-{ #category : #'database - specific' }
+{ #category : 'database - specific' }
 SQLite3Platform >> printPostLimit: anInteger on: aCommand [
 	aCommand
 		nextPutAll: ' LIMIT '.
 	anInteger printOn: aCommand.
 ]
 
-{ #category : #'services tables' }
+{ #category : 'services tables' }
 SQLite3Platform >> printSqlStatementToListColumnsInTable: aDatabaseTable inSchema: schemaString on: aStream [
 
 	" Format:
@@ -277,7 +279,7 @@ LEFT OUTER JOIN pragma_table_info((m.name)) p
 WHERE m.type = ''table'' AND m.name=''{1}''' format:{aDatabaseTable. schemaString})
 ]
 
-{ #category : #'services tables' }
+{ #category : 'services tables' }
 SQLite3Platform >> printSqlStatementToListTablesInSchema: schemaString on: aStream [
 	"SQLite3 uses a readonly system table "
 
@@ -290,7 +292,7 @@ SQLite3Platform >> printSqlStatementToListTablesInSchema: schemaString on: aStre
 		nextPut: $;
 ]
 
-{ #category : #'services tables' }
+{ #category : 'services tables' }
 SQLite3Platform >> printSqlStatementToTestExistenceOfTable: tableName inSchema: schemaString on: aStream [
 	"SQLite3 uses a readonly system table and doesn't support schemas, as far as I know"
 
@@ -309,7 +311,7 @@ SQLite3Platform >> printSqlStatementToTestExistenceOfTable: tableName inSchema: 
 		nextPut: $;
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 SQLite3Platform >> printTime: aTimeString for: aType [
 	"SQLite does not suppport any time-related types.  We convert them all to strings via the to... methods, so parameters to this method should be Strings of the form 10:20:23."
 
@@ -319,7 +321,7 @@ SQLite3Platform >> printTime: aTimeString for: aType [
 	^aTimeString printString
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 SQLite3Platform >> printTimestamp: aTimestampString on: stream for: aType [
 	"SQLite does not suppport any time-related types.  We convert them all to strings via the to... methods, so parameters to this method should be Strings of the form '1959-03-27 10:20:23'."
 
@@ -331,7 +333,7 @@ SQLite3Platform >> printTimestamp: aTimestampString on: stream for: aType [
 	stream nextPut: $'.
 ]
 
-{ #category : #'database - specific' }
+{ #category : 'database - specific' }
 SQLite3Platform >> queryWithUnsupportedOperationsEliminatedFrom: aQuery do: aBlock [
 	"SQLite3 does not allow LIMIT{OFFSET} in subqueries.  As far as is known at time of writing (2011jun07), Glorp will only generate such queries in the case of a readOneOf: on a superclass which is mapped by horizontal inheritance to its subclasses' tables:  if shouldUseSingleQuery is true, it will present a series of UNION ALLed subselects on each subclass table where only one is expected to match.
 
@@ -348,60 +350,60 @@ In the general case, there is no algorithmic way to convert subselect limits and
 				[:index | (subQueries at: index) limit: nil; offset: nil]].
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SQLite3Platform >> requiresTransactionForTableOperations [
 	^false
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 SQLite3Platform >> sequence [
 	^self serial
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 SQLite3Platform >> serial [
 	"In SQLLite, the column declared as INTEGER PRIMARY KEY will default to ROWID, unless the inserted value is not null. But in Sqlite3 a declaration like: INTEGER PRIMARY KEY AUTOINCREMENT will cause ROWID to be fetched from the sqlite_sequence table, which provides always increasing values."
 
 	^self typeNamed: #serial ifAbsentPut: [GlorpSerialType new typeString: 'INTEGER PRIMARY KEY AUTOINCREMENT'].
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 SQLite3Platform >> sqlTextCurrentServerUTCTimestamp [
 	"Not sure if we should stick a Z at the end for Zulu time"
 	^'SELECT strftime(''%Y-%m-%d %H:%M:%f'', datetime(''now'',''utc''))'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SQLite3Platform >> supportsANSIJoins [
 	"Do we support the JOIN <tableName> USING <criteria> syntax."
 	^true.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SQLite3Platform >> supportsAlterTableForConstraints [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SQLite3Platform >> supportsArithmeticOperatorsOnDates [
 	^false
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 SQLite3Platform >> supportsAuthentication [
 	"SQLite does not support authentication:  anyone can login with any username and password.  The only security is that provided by the OS for the file being used as the database."
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SQLite3Platform >> supportsBinding [
 	"Return true if this platform supports binding parameters rather than printing them as strings into the SQL statement"
 	^false.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 SQLite3Platform >> supportsConstraints [
 	"Return false, because this platform does not support constraint add or drop statements.
 	However, foreign key constraints can be created as part of the create table statement.
@@ -411,66 +413,66 @@ SQLite3Platform >> supportsConstraints [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SQLite3Platform >> supportsLimit [
 	"Do we support LIMIT ... (or something analogous to it), returning only the first N rows."
 
 	^true
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 SQLite3Platform >> supportsMillisecondsInTimes [
 	"The only time-type-related functions in SQLite are CURRENT_TIME format HH:MM:SS and CURRENT_TIMESTAMP format YYYY-MM-DD HH:MM:SS, neither of which support milliseconds.  As against that, since we map to and from strings, we can easily include milliseconds in these strings.  For now, I go with the SQLite function choice and say no, but I have verified that tests work fine when I set this to true."
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SQLite3Platform >> supportsOffset [
 	"Do we support OFFSET ... (or something analogous to it), skipping the first N rows"
 
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SQLite3Platform >> supportsSchemas [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SQLite3Platform >> supportsStringQueryOnBlobs [
 	"This is something of a guess but I see no evidence that SQLite does and the relevant test certainly fails."
 
 	^false
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 SQLite3Platform >> supportsVariableSizedNumerics [
 	"SQLite supports a single 8-byte IEEE floating point type:  e.g. give it 321.12s and it will return 321.12d.  Perhaps clever Glorp converters could arrange for Glorp to know which fields are really FixedPoint numbers, as we do for Date, Time and Timestamp (which SQLite also does not support) but I'll leave that until there's demand for it (ee also #canBind:to:)."
 
 	^false
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 SQLite3Platform >> text [
 	^self typeNamed: #nvarchar ifAbsentPut: [GlorpTextType new typeString: 'text']
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 SQLite3Platform >> time [
 	"SQLite does not support any time-related types;  use text as the type and convert in readTime.../toTime..."
 
 	^self typeNamed: #time ifAbsentPut: [GlorpTimeType new typeString: 'time']
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 SQLite3Platform >> timestamp [
 	"SQLite does not support any time-related types;  use text as the type and convert in readTimestamp.../toTimestamp..."
 
 	^self typeNamed: #timestamp ifAbsentPut: [GlorpTimeStampType new typeString: 'timestamp']
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 SQLite3Platform >> toDate: anObject for: aType [
 	"SQLite does not handle timestamps;  all such must be treated as strings and the to... and read... formats must agree.  SQLite does use column-default-value UTC functions:
 	CURRENT_DATE format YYYY-MM-DD
@@ -487,7 +489,7 @@ so our string conversions must agree with these formats."
 	^stream contents
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 SQLite3Platform >> toTime: anObject for: aType [
 	"SQLite does not handle timestamps;  all such must be treated as strings and the to... and read... formats must agree.  SQLite does use column-default-value UTC functions:
 	CURRENT_DATE format YYYY-MM-DD
@@ -504,7 +506,7 @@ so our string conversions must agree with these formats."
 	^stream contents
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 SQLite3Platform >> toTimestamp: anObject for: aType [
 	"SQLite does not handle timestamps;  all such must be treated as strings and the to... and read... formats must agree.  SQLite does use column-default-value UTC functions:
 	CURRENT_DATE format YYYY-MM-DD
@@ -526,7 +528,7 @@ so our string conversions must agree with these formats."
 	^stream contents
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 SQLite3Platform >> typeWithDatabaseName: aString characterWidth: aNumber [
 	"Since this is SQLite, let the type names be more flexible."
 
@@ -551,27 +553,27 @@ SQLite3Platform >> typeWithDatabaseName: aString characterWidth: aNumber [
 	^super typeWithDatabaseName: aTypeName characterWidth: aNumber
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SQLite3Platform >> usesArrayBindingRatherThanGroupWriting [
 	^false.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SQLite3Platform >> usesArrayBindingRatherThanGrouping [
 	^false.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SQLite3Platform >> usesIdentityColumns [
 	^true.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 SQLite3Platform >> usesNullForEmptyStrings [
 	^ true
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 SQLite3Platform >> varbinary [
 	" *** This method was defined by Glorp.DatabasePlatform as a subclass responsibility.
 	Replace its body with a proper implementation. *** "
@@ -579,7 +581,7 @@ SQLite3Platform >> varbinary [
 	self error: 'Subclass responsibility stub not reimplemented'
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 SQLite3Platform >> varchar [
 	^self text.
 ]

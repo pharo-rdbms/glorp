@@ -4,7 +4,9 @@ This represents a mapping from one object to a collection of others. This class 
 
 "
 Class {
-	#name : #OneToManyMapping,
-	#superclass : #ToManyMapping,
-	#category : 'Glorp-Mappings'
+	#name : 'OneToManyMapping',
+	#superclass : 'ToManyMapping',
+	#category : 'Glorp-Mappings',
+	#package : 'Glorp',
+	#tag : 'Mappings'
 }

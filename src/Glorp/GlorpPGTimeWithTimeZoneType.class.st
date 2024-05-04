@@ -2,30 +2,32 @@
 Time with TimeZone type for Postgress
 "
 Class {
-	#name : #GlorpPGTimeWithTimeZoneType,
-	#superclass : #GlorpDatabaseType,
-	#category : #'Glorp-Types'
+	#name : 'GlorpPGTimeWithTimeZoneType',
+	#superclass : 'GlorpDatabaseType',
+	#category : 'Glorp-Types',
+	#package : 'Glorp',
+	#tag : 'Types'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 GlorpPGTimeWithTimeZoneType >> converterForStType: aClass [
 	"Convert as though we were a regular time field, since our Smalltalk object has no time zone information."
 
 	^self platform converterNamed: #time.
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GlorpPGTimeWithTimeZoneType >> impliedSmalltalkType [
 	^Time
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 GlorpPGTimeWithTimeZoneType >> initialize [
 	super initialize.
 	typeString := 'TIME WITH TIME ZONE'.
 ]
 
-{ #category : #SQL }
+{ #category : 'SQL' }
 GlorpPGTimeWithTimeZoneType >> print: aValue on: aStream [
 	"Print as though we were a regular time field, since our Smalltalk object has no time zone information."
 

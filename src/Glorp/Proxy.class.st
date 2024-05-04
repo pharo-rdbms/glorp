@@ -9,42 +9,44 @@ Instance Variables:
 
 "
 Class {
-	#name : #Proxy,
-	#superclass : #AbstractProxy,
+	#name : 'Proxy',
+	#superclass : 'AbstractProxy',
 	#instVars : [
 		'session',
 		'query',
 		'parameters',
 		'action'
 	],
-	#category : #'Glorp-Queries'
+	#category : 'Glorp-Queries',
+	#package : 'Glorp',
+	#tag : 'Queries'
 }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 Proxy class >> read: aClass where: aBlock [
 	^self new query: (Query read: aClass where: aBlock)
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 Proxy class >> read: aClass where: aBlock in: aSession [
 	^self new
 		query: (Query read: aClass where: aBlock);
 		session: aSession
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 Proxy class >> readOneOf: aClass where: aBlock [
 	^self new query: (Query readOneOf: aClass where: aBlock)
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 Proxy class >> readOneOf: aClass where: aBlock in: aSession [
 	^self new
 		query: (Query readOneOf: aClass where: aBlock);
 		session: aSession.
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 Proxy class >> returningManyOf: aClass where: aBlock [
 	"readManyOf: and returningManyOf: are synonyms of read:. This now seems more natural to me, to be consistent with session API."
 
@@ -52,7 +54,7 @@ Proxy class >> returningManyOf: aClass where: aBlock [
 	^self read: aClass where: aBlock
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 Proxy class >> returningManyOf: aClass where: aBlock in: aSession [
 	"readManyOf: and returningManyOf: are synonyms of read:. This now seems more natural to me, to be consistent with session API."
 
@@ -60,7 +62,7 @@ Proxy class >> returningManyOf: aClass where: aBlock in: aSession [
 	^self read: aClass where: aBlock in: aSession
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 Proxy class >> returningOneOf: aClass where: aBlock [
 	"returningOneOf: is a synonyms of readOneOf:. This now seems more natural to me, to be consistent with session API."
 
@@ -68,7 +70,7 @@ Proxy class >> returningOneOf: aClass where: aBlock [
 	^self readOneOf: aClass where: aBlock
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 Proxy class >> returningOneOf: aClass where: aBlock in: aSession [
 	"returningOneOf: is a synonyms of readOneOf:. This now seems more natural to me, to be consistent with session API."
 
@@ -76,7 +78,7 @@ Proxy class >> returningOneOf: aClass where: aBlock in: aSession [
 	^self readOneOf: aClass where: aBlock in: aSession
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Proxy >> = anObject [
 	"In VA we inherit this as identity. Need to override"
 	^self isGlorpProxy & anObject isGlorpProxy
@@ -84,7 +86,7 @@ Proxy >> = anObject [
 		ifFalse: [ super = anObject ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Proxy >> class [
 
 	^Proxy
@@ -94,7 +96,7 @@ Proxy >> class [
 	^query resultClass."
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 Proxy >> getValue [
 	self isInstantiated ifTrue: [^value].
 	parameters isNil ifTrue: [parameters := Dictionary new: 0].
@@ -106,20 +108,20 @@ Proxy >> getValue [
 	^value.
 ]
 
-{ #category : #'proxy actions' }
+{ #category : 'proxy actions' }
 Proxy >> glorpArmProxy [
 	value ifNil: [ isInstantiated := false ].
 	^self
 ]
 
-{ #category : #'proxy actions' }
+{ #category : 'proxy actions' }
 Proxy >> glorpOwner [
 	"Return the object for which this proxy was created. Note that this is not kept track of unless we have a proxy action."
 	action isNil ifTrue: [^nil].
 	^action key.
 ]
 
-{ #category : #'proxy actions' }
+{ #category : 'proxy actions' }
 Proxy >> glorpOwner: anObject [
 	"If we don't have an action, the owner is unnecessary. Ignore it. If we do have one, put it in as the key of an association with the action block following it."
 	action isNil ifTrue: [^self].
@@ -127,21 +129,21 @@ Proxy >> glorpOwner: anObject [
 	isInstantiated := false.
 ]
 
-{ #category : #'proxy actions' }
+{ #category : 'proxy actions' }
 Proxy >> glorpProxyAction [
 	"Return the block we expect to evaluate when the proxy is fired."
 	action isNil ifTrue: [^nil].
 	^action value.
 ]
 
-{ #category : #'proxy actions' }
+{ #category : 'proxy actions' }
 Proxy >> glorpProxyAction: aTwoArgumentBlock [
 	"Set the action we'll take when the proxy fires. This is a two argument block that takes the owning object and the value of the proxy as arguments."
 	aTwoArgumentBlock isNil ifTrue: [^action := nil].
 	action := nil -> aTwoArgumentBlock
 ]
 
-{ #category : #'proxy actions' }
+{ #category : 'proxy actions' }
 Proxy >> glorpTriggerProxyAction: target [
 	"Evaluate our action with the owner and the newly retrieved target."
 	| owner block |
@@ -151,7 +153,7 @@ Proxy >> glorpTriggerProxyAction: target [
 	block value: owner value: target
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Proxy >> isKindOf: aClass [
 	self isInstantiated ifTrue: [^value isKindOf: aClass].
 	query isNil ifTrue: [^false].
@@ -160,18 +162,18 @@ Proxy >> isKindOf: aClass [
 	^query resultClass includesBehavior: aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Proxy >> parameters [
 	^parameters
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Proxy >> parameters: aDictionary [
 	parameters := aDictionary.
 	isInstantiated := false.
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Proxy >> printOn: aStream [ 
 	aStream nextPut: ${.
 	isInstantiated 
@@ -186,27 +188,27 @@ Proxy >> printOn: aStream [
 	aStream nextPut: $}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Proxy >> query [
 	^query
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Proxy >> query: aQuery [ 
 	query := aQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Proxy >> session [
 	^session
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Proxy >> session: aSession [ 
 	session := aSession
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Proxy >> species [
 
 	self isInstantiated ifTrue: [^value species].

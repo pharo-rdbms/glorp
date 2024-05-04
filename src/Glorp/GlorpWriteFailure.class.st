@@ -8,52 +8,54 @@ Instance Variables:
 
 "
 Class {
-	#name : #GlorpWriteFailure,
-	#superclass : #GlorpError,
+	#name : 'GlorpWriteFailure',
+	#superclass : 'GlorpError',
 	#instVars : [
 		'command',
 		'object'
 	],
-	#category : #'Glorp-Exceptions'
+	#category : 'Glorp-Exceptions',
+	#package : 'Glorp',
+	#tag : 'Exceptions'
 }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 GlorpWriteFailure class >> mayResume [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpWriteFailure >> command [
 
 	^ command
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpWriteFailure >> command: anObject [
 
 	command := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpWriteFailure >> defaultMessageText [
 
 	^ 'Database write failed'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpWriteFailure >> object [
 
 	^ object
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpWriteFailure >> object: anObject [
 
 	object := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpWriteFailure >> session [
 
 	^ self command session

@@ -8,61 +8,63 @@ Instance Variables:
 
 "
 Class {
-	#name : #EmptyExpression,
-	#superclass : #GlorpExpression,
+	#name : 'EmptyExpression',
+	#superclass : 'GlorpExpression',
 	#instVars : [
 		'base',
 		'value'
 	],
-	#category : #'Glorp-Expressions'
+	#category : 'Glorp-Expressions',
+	#package : 'Glorp',
+	#tag : 'Expressions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EmptyExpression class >> on: aValue [
 
 	^ self new value: aValue
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 EmptyExpression >> AND: anExpression [
 
 	anExpression isNil ifTrue: [ ^ self ].
 	^ anExpression asGlorpExpression
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 EmptyExpression >> OR: anExpression [
 
 	anExpression isNil ifTrue: [ ^ self ].
 	^ anExpression
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EmptyExpression >> base [
 
 	^ base
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EmptyExpression >> base: aBaseExpression [
 
 	base := aBaseExpression
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EmptyExpression >> canHaveBase [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EmptyExpression >> canPrint [
 	"Return true if we can print into a where clause"
 
 	^ false
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 EmptyExpression >> do: aBlock skipping: aSet [
 	"Iterate over the expression tree"
 
@@ -72,44 +74,44 @@ EmptyExpression >> do: aBlock skipping: aSet [
 	aBlock value: self
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 EmptyExpression >> initialize [
 
 	super initialize.
 	value := true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EmptyExpression >> isEmptyExpression [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EmptyExpression >> isFalse [
 
 	^ value not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EmptyExpression >> isTrue [
 
 	^ value
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : 'As yet unclassified' }
 EmptyExpression >> printSQLOn: aCommand withParameters: aDictionary [
 
 	^ self
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 EmptyExpression >> printTreeOn: aStream [
 
 	aStream nextPutAll: 'empty expression'
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 EmptyExpression >> rebuildOn: aBaseExpression startingFrom: anExpression withOuterScopeBase: ultimateBaseExpression [
 
 	| copy |
@@ -120,27 +122,27 @@ EmptyExpression >> rebuildOn: aBaseExpression startingFrom: anExpression withOut
 	^ copy
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : 'As yet unclassified' }
 EmptyExpression >> tablesForANSIJoin [
 
 	^#()
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 EmptyExpression >> ultimateBaseExpression [
 
 	base isNil ifTrue: [ base := BaseExpression new ].
 	^ base ultimateBaseExpression
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EmptyExpression >> value: aValue [
 	"a value is expected to be nil, true, or false. we treat nil as true"
 	
 	value := aValue isNil ifTrue: [true] ifFalse: [aValue]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EmptyExpression >> willPrintAsWhereClause [
 
 	^ false

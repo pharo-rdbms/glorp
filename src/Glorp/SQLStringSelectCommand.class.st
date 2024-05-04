@@ -4,12 +4,14 @@ This is a select command whose SQL is given, rather than being generated from a 
 
 "
 Class {
-	#name : #SQLStringSelectCommand,
-	#superclass : #QuerySelectCommand,
-	#category : #'Glorp-Database'
+	#name : 'SQLStringSelectCommand',
+	#superclass : 'QuerySelectCommand',
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 SQLStringSelectCommand class >> sqlString: aString parameters: aDictionaryOrArray useBinding: aBoolean session: aSession [
 
 	^ self new
@@ -19,13 +21,13 @@ SQLStringSelectCommand class >> sqlString: aString parameters: aDictionaryOrArra
 		  session: aSession
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SQLStringSelectCommand >> bindingTypes [
 
 	^ query ifNil: [ #(  ) ] ifNotNil: [ super bindingTypes ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SQLStringSelectCommand >> bindings [
 	"We're not actually sure if we're part of a query with a where clause, or being used in a more ad hoc way. So if we have a query, use either our pre-set parameters, or the query's bindings, whichever produces more. In a tie, pick the query's bindings."
 
@@ -37,7 +39,7 @@ SQLStringSelectCommand >> bindings [
 		  ifFalse: [ parameters ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SQLStringSelectCommand >> blockFactor [
 
 	blockFactor ifNil: [
@@ -45,20 +47,20 @@ SQLStringSelectCommand >> blockFactor [
 	^ blockFactor
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SQLStringSelectCommand >> printSQL [
 	"We assume the SQL is provided."
 
 	^ self
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SQLStringSelectCommand >> setSQLString: aString [
 
 	sqlString := aString
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 SQLStringSelectCommand >> tables [
 
 	^ query ifNil: [ Array with: #Unknown ] ifNotNil: [ super tables ]

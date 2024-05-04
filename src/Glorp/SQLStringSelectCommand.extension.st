@@ -1,6 +1,6 @@
-Extension { #name : #SQLStringSelectCommand }
+Extension { #name : 'SQLStringSelectCommand' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 SQLStringSelectCommand class >> sqlString: aString parameters: aDictionaryOrArray useBinding: aBoolean session: aSession [
 
 	^ self new

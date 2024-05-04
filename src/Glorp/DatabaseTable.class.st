@@ -16,8 +16,8 @@ Instance Variables
 
 "
 Class {
-	#name : #DatabaseTable,
-	#superclass : #Object,
+	#name : 'DatabaseTable',
+	#superclass : 'Object',
 	#instVars : [
 		'name',
 		'schema',
@@ -31,28 +31,30 @@ Class {
 		'replacementSubSelect',
 		'uniqueConstraints'
 	],
-	#category : #'Glorp-Database'
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 DatabaseTable class >> named: aString [
 
 	^ self new name: aString
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 DatabaseTable >> <= aTable [
 
 	^ self qualifiedName <= aTable qualifiedName
 ]
 
-{ #category : #'private/fields' }
+{ #category : 'private/fields' }
 DatabaseTable >> addAsLockKeyField: aField [
 
 	lockKeyFields add: aField
 ]
 
-{ #category : #'private/fields' }
+{ #category : 'private/fields' }
 DatabaseTable >> addAsPrimaryKeyField: aField [
 
 	(fields includes: aField) ifFalse: [
@@ -67,7 +69,7 @@ DatabaseTable >> addAsPrimaryKeyField: aField [
 		                    primaryKeyFields , (Array with: aField) ]
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 DatabaseTable >> addField: aField [
 
 	fields add: aField.
@@ -77,7 +79,7 @@ DatabaseTable >> addField: aField [
 	^ aField
 ]
 
-{ #category : #obsolete }
+{ #category : 'obsolete' }
 DatabaseTable >> addFields: aCollection fromAccessor: aDatabaseAccessor [
 
 	| stream |
@@ -98,7 +100,7 @@ DatabaseTable >> addFields: aCollection fromAccessor: aDatabaseAccessor [
 				ifError: [:ex | ex pass]]
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 DatabaseTable >> addForeignKeyFrom: sourceField to: targetField [
 
 	^ self
@@ -107,7 +109,7 @@ DatabaseTable >> addForeignKeyFrom: sourceField to: targetField [
 		  suffixExpression: nil
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 DatabaseTable >> addForeignKeyFrom: sourceField to: targetField from: sourceField2 to: targetField2 [
 
 	^ self
@@ -116,7 +118,7 @@ DatabaseTable >> addForeignKeyFrom: sourceField to: targetField from: sourceFiel
 		  suffixExpression: nil
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 DatabaseTable >> addForeignKeyFrom: sourceField to: targetField from: sourceField2 to: targetField2 from: sourceField3 to: targetField3 [
 
 	^ self
@@ -127,7 +129,7 @@ DatabaseTable >> addForeignKeyFrom: sourceField to: targetField from: sourceFiel
 		  suffixExpression: nil
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 DatabaseTable >> addForeignKeyFrom: sourceField to: targetField suffixExpression: suffixExpression [
 
 	| newFK |
@@ -140,14 +142,14 @@ DatabaseTable >> addForeignKeyFrom: sourceField to: targetField suffixExpression
 	^ newFK
 ]
 
-{ #category : #deprecated }
+{ #category : 'deprecated' }
 DatabaseTable >> addForeignKeyFrom: sourceField toField: targetField [
 
 	self deprecated: 'Use #addForeignKeyFrom:to: instead'.
 	^ self addForeignKeyFrom: sourceField to: targetField
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 DatabaseTable >> addForeignKeyFrom: sourceField toTable: targetTable [
 
 	^ self
@@ -155,7 +157,7 @@ DatabaseTable >> addForeignKeyFrom: sourceField toTable: targetTable [
 		  to: (targetTable fieldNamed: 'ID' ifAbsent: [ ^ nil ])
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 DatabaseTable >> addForeignKeyFromAll: sourceFields toAll: targetFields [
 
 	^ self
@@ -164,7 +166,7 @@ DatabaseTable >> addForeignKeyFromAll: sourceFields toAll: targetFields [
 		  suffixExpression: nil
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 DatabaseTable >> addForeignKeyFromAll: sourceFields toAll: targetFields suffixExpression: suffixExpression [
 
 	| newFK |
@@ -176,38 +178,38 @@ DatabaseTable >> addForeignKeyFromAll: sourceFields toAll: targetFields suffixEx
 	^ foreignKeyConstraints add: newFK
 ]
 
-{ #category : #indexes }
+{ #category : 'indexes' }
 DatabaseTable >> addIndex: aDatabaseIndex [
 
 	^ indexes add: aDatabaseIndex
 ]
 
-{ #category : #indexes }
+{ #category : 'indexes' }
 DatabaseTable >> addIndexForField: aField [
 
 	^ indexes add: (DatabaseIndex forField: aField)
 ]
 
-{ #category : #indexes }
+{ #category : 'indexes' }
 DatabaseTable >> addIndexForField: aField and: anotherField [
 
 	^ self addIndexForFields: (Array with: aField with: anotherField)
 ]
 
-{ #category : #indexes }
+{ #category : 'indexes' }
 DatabaseTable >> addIndexForField: aField and: anotherField and: thirdField [
 
 	^ self addIndexForFields:
 		  (Array with: aField with: anotherField with: thirdField)
 ]
 
-{ #category : #indexes }
+{ #category : 'indexes' }
 DatabaseTable >> addIndexForFields: aFieldCollection [
 
 	^ indexes add: (DatabaseIndex forFields: aFieldCollection)
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 DatabaseTable >> addUniqueConstraintFor: sourceFields [
 
 	| newConstraint |
@@ -215,7 +217,7 @@ DatabaseTable >> addUniqueConstraintFor: sourceFields [
 	^ uniqueConstraints add: newConstraint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseTable >> allSequences [
 	"Return a dictionary of all the sequences associated with this table, indexed by name."
 
@@ -229,7 +231,7 @@ DatabaseTable >> allSequences [
 	^ result
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 DatabaseTable >> createFieldNamed: aString type: dbType [
 
 	| existingField |
@@ -241,20 +243,20 @@ DatabaseTable >> createFieldNamed: aString type: dbType [
 	^ self addField: (DatabaseField named: aString type: dbType)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseTable >> creator [
 
 	^ self schema
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseTable >> creator: aString [
 	"For backward-compatibility. Use schema: instead."
 
 	self schema: aString
 ]
 
-{ #category : #obsolete }
+{ #category : 'obsolete' }
 DatabaseTable >> dropFields: aCollection fromAccessor: aDatabaseAccessor [
 
 	aCollection do: [ :each |
@@ -265,14 +267,14 @@ DatabaseTable >> dropFields: aCollection fromAccessor: aDatabaseAccessor [
 			ifError: [ :ex | ex pass ] ]
 ]
 
-{ #category : #obsolete }
+{ #category : 'obsolete' }
 DatabaseTable >> dropForeignKeyConstraintsFromAccessor: aDatabaseAccessor [
 
 	self foreignKeyConstraints do: [ :each |
 		aDatabaseAccessor dropConstraint: each ]
 ]
 
-{ #category : #'create/delete in db' }
+{ #category : 'create/delete in db' }
 DatabaseTable >> dropFromAccessor: aDatabaseAccessor [
 
 	aDatabaseAccessor platform supportsConstraints ifTrue: [
@@ -280,7 +282,7 @@ DatabaseTable >> dropFromAccessor: aDatabaseAccessor [
 	aDatabaseAccessor dropTableNamed: self name
 ]
 
-{ #category : #obsolete }
+{ #category : 'obsolete' }
 DatabaseTable >> dropPrimaryKeyConstraintsFromAccessor: aDatabaseAccessor [
 
 	(self primaryKeyFields isEmpty not and: [self platform usesPrimaryKeyUniqueConstraintNames])
@@ -305,7 +307,7 @@ DatabaseTable >> dropPrimaryKeyConstraintsFromAccessor: aDatabaseAccessor [
 				ex return: nil]]
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 DatabaseTable >> fieldNamed: aString [
 
 	^ self
@@ -313,13 +315,13 @@ DatabaseTable >> fieldNamed: aString [
 		  ifAbsent: [ self error: 'No field ' , aString , ' in ' , self name ]
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 DatabaseTable >> fieldNamed: aString ifAbsent: aBlock [
 
 	^ self fieldNamed: aString ifAbsent: aBlock caseSensitive: false
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 DatabaseTable >> fieldNamed: aString ifAbsent: aBlock caseSensitive: aBoolean [
 
 	| fieldName |
@@ -334,20 +336,20 @@ DatabaseTable >> fieldNamed: aString ifAbsent: aBlock caseSensitive: aBoolean [
 		  ifNone: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseTable >> fields [
 
 	^ fields
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseTable >> foreignKeyConstraints [
 	"Private - Answer the value of the receiver's ''foreignKeyConstraints'' instance variable."
 
 	^ foreignKeyConstraints
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseTable >> foreignKeyConstraintsForCreation [
 	"Return the foreign key constraints that should actually be created in the database. Omit those that refer to imaginary tables"
 
@@ -355,14 +357,14 @@ DatabaseTable >> foreignKeyConstraintsForCreation [
 		  each isImaginary not and: [ each shouldCreateInDatabase ] ]
 ]
 
-{ #category : #constraints }
+{ #category : 'constraints' }
 DatabaseTable >> foreignKeyConstraintsForField: aField [
 
 	^ self foreignKeyConstraints select: [ :each |
 		  each sourceFields includes: aField ]
 ]
 
-{ #category : #'private/fields' }
+{ #category : 'private/fields' }
 DatabaseTable >> foreignKeyFields [
 	"Answer the receiver's fields which are part of any foreign key constraints.  (This was called by DatabaseRow>>canUpdateRow:, now discarded as a needless check for a never-naturally-occurring condition, but is left as a utility method.)"
 
@@ -373,20 +375,20 @@ DatabaseTable >> foreignKeyFields [
 			  sum ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseTable >> hasCompositePrimaryKey [
 
 	^ primaryKeyFields size > 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseTable >> hasConstraints [
 
 	^ self hasForeignKeyConstraints or: [
 		  self hasPrimaryKeyConstraints or: [ self hasUniqueConstraints ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseTable >> hasConstraintsTo: aTable [
 
 	self foreignKeyConstraints do: [ :each |
@@ -394,7 +396,7 @@ DatabaseTable >> hasConstraintsTo: aTable [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseTable >> hasConstraintsToAnyOf: aCollectionOfTables [
 
 	aCollectionOfTables do: [ :each |
@@ -402,48 +404,48 @@ DatabaseTable >> hasConstraintsToAnyOf: aCollectionOfTables [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseTable >> hasFieldNamed: aString [
 
 	^ (self fieldNamed: aString ifAbsent: [ nil ] caseSensitive: false)
 		  notNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseTable >> hasForeignKeyConstraintMatching: aConstraint [
 
 	^ self foreignKeyConstraints anySatisfy: [ :each |
 		  each matchesForeignKeyConstraint: aConstraint ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseTable >> hasForeignKeyConstraintTheSameAs: aConstraint [
 
 	^ self foreignKeyConstraints anySatisfy: [ :each |
 		  each isTheSameAs: aConstraint ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseTable >> hasForeignKeyConstraints [
 
 	^ foreignKeyConstraints isNotEmpty
 ]
 
-{ #category : #constraints }
+{ #category : 'constraints' }
 DatabaseTable >> hasForeignKeyConstraintsForField: aField [
 
 	^ self foreignKeyConstraints anySatisfy: [ :each |
 		  each sourceFields includes: aField ]
 ]
 
-{ #category : #constraints }
+{ #category : 'constraints' }
 DatabaseTable >> hasForeignKeyConstraintsForTargetField: aField [
 
 	^ self foreignKeyConstraints anySatisfy: [ :each |
 		  each targetFields includes: aField ]
 ]
 
-{ #category : #indexes }
+{ #category : 'indexes' }
 DatabaseTable >> hasIndexForField: aField [
 
 	^ (indexes
@@ -451,32 +453,32 @@ DatabaseTable >> hasIndexForField: aField [
 		   ifNone: [ nil ]) notNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseTable >> hasIndexNamed: aString [
 
 	^ indexes contains: [ :each | each name = aString ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseTable >> hasPrimaryKeyConstraints [
 
 	^ self primaryKeyFields isNotEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseTable >> hasUniqueConstraintMatching: aConstraint [
 
 	^ self uniqueConstraints anySatisfy: [ :each |
 		  each matchesUniqueConstraint: aConstraint ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseTable >> hasUniqueConstraints [
 
 	^ uniqueConstraints isNotEmpty
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DatabaseTable >> imaginaryReplacementName [
 
 	| stream |
@@ -487,13 +489,13 @@ DatabaseTable >> imaginaryReplacementName [
 	^ stream contents
 ]
 
-{ #category : #indexes }
+{ #category : 'indexes' }
 DatabaseTable >> indexes [
 
 	^ indexes
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DatabaseTable >> initialize [
 
 	schema := ''.
@@ -505,31 +507,31 @@ DatabaseTable >> initialize [
 	isImaginary := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseTable >> isAliased [
 
 	^ parent notNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseTable >> isEmpty [
 
 	^ fields isEmpty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseTable >> isImaginary [
 
 	^ isImaginary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseTable >> isImaginary: aBoolean [
 
 	isImaginary := aBoolean
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 DatabaseTable >> isTheSameAs: aDatabaseTable [
 	"Validate that two tables are exactly the same. Most useful for testing purposes, rather than normal usage, which is why we don't just use the #= method."
 
@@ -549,56 +551,56 @@ DatabaseTable >> isTheSameAs: aDatabaseTable [
 	"Note, we ignore parent and replacementSubselect"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseTable >> lockKeyFields [
 
 	^ lockKeyFields
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseTable >> name [
 
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseTable >> name: anObject [
 
 	name := anObject
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 DatabaseTable >> newFieldNamed: aString [
 
 	^ self error: 'use #createFieldNamed:type:'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseTable >> nonPrimaryKeyFields [
 
 	^ self fields reject: [ :each | each isPrimaryKey ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseTable >> parent [
 
 	^ parent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseTable >> parent: aDatabaseTable [
 
 	parent := aDatabaseTable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseTable >> platform [
 
 	fields do: [ :each | ^ each type platform ].
 	^ nil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DatabaseTable >> postInitializeIn: aDescriptorSystem [
 	"Any initialization that happens after all the fields have been added"
 
@@ -611,13 +613,13 @@ DatabaseTable >> postInitializeIn: aDescriptorSystem [
 		each postInitializeIn: aDescriptorSystem]
 ]
 
-{ #category : #obsolete }
+{ #category : 'obsolete' }
 DatabaseTable >> primaryKeyConstraintName [
 
 	^ self name , '_PK'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseTable >> primaryKeyConstraints [
 	"Answer the value of the receiver's ''PrimaryKeyConstraints'' instance variable."
 
@@ -626,7 +628,7 @@ DatabaseTable >> primaryKeyConstraints [
 		  ifFalse: [ nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseTable >> primaryKeyFields [
 
 	primaryKeyFields ifNil: [
@@ -635,7 +637,7 @@ DatabaseTable >> primaryKeyFields [
 	^ primaryKeyFields
 ]
 
-{ #category : #obsolete }
+{ #category : 'obsolete' }
 DatabaseTable >> primaryKeyUniqueConstraintName [
 
 	^ self platform usesPrimaryKeyUniqueConstraintNames
@@ -643,7 +645,7 @@ DatabaseTable >> primaryKeyUniqueConstraintName [
 		  ifFalse: [ '' ]
 ]
 
-{ #category : #obsolete }
+{ #category : 'obsolete' }
 DatabaseTable >> printAddPrimaryKeyConstraintsOn: aStream for: aDatabaseAccessor [
 
 	self primaryKeyFields isEmpty ifTrue: [^self].
@@ -673,7 +675,7 @@ DatabaseTable >> printAddPrimaryKeyConstraintsOn: aStream for: aDatabaseAccessor
 	aStream nextPut: $)
 ]
 
-{ #category : #obsolete }
+{ #category : 'obsolete' }
 DatabaseTable >> printDelimiterOn: aStream [
 
 	aStream
@@ -681,7 +683,7 @@ DatabaseTable >> printDelimiterOn: aStream [
 		cr
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DatabaseTable >> printOn: aStream [
 
 	super printOn: aStream.
@@ -694,7 +696,7 @@ DatabaseTable >> printOn: aStream [
 		nextPutAll: ')'
 ]
 
-{ #category : #obsolete }
+{ #category : 'obsolete' }
 DatabaseTable >> printPrimaryKeyConstraintsOn: aStream for: aDatabaseAccessor [
 
 	self primaryKeyFields isEmpty ifTrue: [^self].
@@ -723,51 +725,51 @@ DatabaseTable >> printPrimaryKeyConstraintsOn: aStream for: aDatabaseAccessor [
 	aStream nextPut: $)
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DatabaseTable >> printSQLOn: aWriteStream withParameters: aDictionary [
 
 	aWriteStream nextPutAll: self qualifiedName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseTable >> qualifiedName [
 
 	^ (schema isNil or: [schema isEmpty]) ifTrue: [name] ifFalse: [schema, '.', name]
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 DatabaseTable >> removeFieldNamed: aString [
 
 	^ self removeFieldNamed: aString ifAbsent: [self error: 'No such field']
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 DatabaseTable >> removeFieldNamed: aString ifAbsent: aBlock [
 
 	fields remove: (self fieldNamed: aString ifAbsent: aBlock).
 	1 to: fields size do: [:i | (fields at: i) position: i]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseTable >> replacementSubSelect: aQuery [
 
 	replacementSubSelect := aQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseTable >> schema [
 
 	^ schema
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseTable >> schema: aString [
 
 	schema := aString.
 	parent ifNil: [ self sequences do: [ :each | each schema: aString ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseTable >> sequences [
 	"Return a collection (which is likely either empty or of size 1) of all the sequences we use."
 
@@ -778,19 +780,19 @@ DatabaseTable >> sequences [
 	^ sequences
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseTable >> shouldBeWritten [
 
 	^ isImaginary not
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DatabaseTable >> sqlString [
 
 	^ name
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DatabaseTable >> sqlTableName [
 	"Our name, as appropriate for the list of tables in a SQL statement. Take into account aliasing"
 
@@ -802,14 +804,14 @@ DatabaseTable >> sqlTableName [
 		  ifNotNil: [ parent sqlTableName , ' ' , self qualifiedName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseTable >> uniqueConstraints [
 	"Private - Answer the value of the receiver's ''uniqueConstraints'' instance variable."
 
 	^ uniqueConstraints
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DatabaseTable >> unqualifiedSqlTableName [
 	"Our name, as appropriate for the list of tables in a SQL statement. Take into account aliasing"
 
@@ -821,7 +823,7 @@ DatabaseTable >> unqualifiedSqlTableName [
 		  ifNotNil: [ parent sqlTableName ]
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 DatabaseTable >> validateIn: aDescriptorSystem [
 	"Do any tests we can to make sure that this definition makes sense in this context"
 ]

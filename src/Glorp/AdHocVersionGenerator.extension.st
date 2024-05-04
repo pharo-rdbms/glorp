@@ -1,6 +1,6 @@
-Extension { #name : #AdHocVersionGenerator }
+Extension { #name : 'AdHocVersionGenerator' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 AdHocVersionGenerator class >> block: aBlock [
 	^self new block: aBlock.
 ]

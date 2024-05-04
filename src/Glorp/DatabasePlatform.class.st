@@ -32,8 +32,8 @@ Instance Variables:
 
 "
 Class {
-	#name : #DatabasePlatform,
-	#superclass : #Object,
+	#name : 'DatabasePlatform',
+	#superclass : 'Object',
 	#instVars : [
 		'types',
 		'converters',
@@ -48,10 +48,12 @@ Class {
 	#classInstVars : [
 		'converterRepository'
 	],
-	#category : #'Glorp-Platforms'
+	#category : 'Glorp-Platforms',
+	#package : 'Glorp',
+	#tag : 'Platforms'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DatabasePlatform class >> allReservedWords [
 
 	| words |
@@ -60,12 +62,12 @@ DatabasePlatform class >> allReservedWords [
 	^words
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DatabasePlatform class >> createLoginFromConnectionDictionary: aDict [ 
 	self subclassResponsibility
 ]
 
-{ #category : #eoglorp }
+{ #category : 'eoglorp' }
 DatabasePlatform class >> loginWithConnectionDictionary: aDict [ 
 	| platformClass |
 	platformClass := self allSubclasses
@@ -74,24 +76,24 @@ DatabasePlatform class >> loginWithConnectionDictionary: aDict [
 		ifFalse: [platformClass createLoginFromConnectionDictionary: aDict] ifTrue: [nil]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DatabasePlatform class >> reservedWords [
 	
 	^Set new.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DatabasePlatform class >> understandsConnectionDictionary: aDict [
 
 	^false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DatabasePlatform class >> useBindingByDefault [
 	^true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DatabasePlatform class >> useBindingIfSupported [
 	"If I am nil (the default), each platform that supportsBinding lazily initializes to its defaultUseBinding value.  If I have a value, I force lazy initialization of each platform that supportsBinding to my value.  Normally, a value is set only for specific testing purposes."
 
@@ -99,20 +101,20 @@ DatabasePlatform class >> useBindingIfSupported [
 	^UseBindingIfSupported
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 DatabasePlatform class >> useBindingIfSupported: aBooleanOrNil [
 	"If I am nil (the default), each platform that supportsBinding lazily initializes to its defaultUseBinding value.  If I have a value, I force lazy initialization of each platform that supportsBinding to my value.  Normally, a value is set only for specific testing purposes."
 
 	UseBindingIfSupported := aBooleanOrNil.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> areSequencesExplicitlyCreated [
 
 	self subclassResponsibility.
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 DatabasePlatform >> asTimestamp: anObject for: aType [
 	anObject isNil ifTrue: [^nil].
 	^anObject class = Time
@@ -120,7 +122,7 @@ DatabasePlatform >> asTimestamp: anObject for: aType [
 		ifFalse: [anObject asDateAndTime].
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> autoTrimsStringsLongerThanColumnSize [
 	"Answer true if the platform trims an string longer that the column size without triggering any error.
 	E.g. the string 'abcde' is trimmed to 'abcd' during if the column is a CHAR(4)."
@@ -128,36 +130,36 @@ DatabasePlatform >> autoTrimsStringsLongerThanColumnSize [
 	^false
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> batchWriteStatementTerminatorString [
 	"^<String> This statement return the string to be used to devide several statement during batch write ..."
 
 	^';'
 ]
 
-{ #category : #binding }
+{ #category : 'binding' }
 DatabasePlatform >> bindingsForGroupWritingFor: aCommand [
 	"Return the bindings array for a group write. This can be in different formats, depending on the database and perhaps the mechanism in place."
 	self subclassResponsibility.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> blob [
 	^self typeNamed: #blob ifAbsentPut: [GlorpBlobType new].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> boolean [
 	"By default, we represent booleans as small integers."
 	^self smallint.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> booleanFalse [
 ^ 0.
 ]
 
-{ #category : #'conversion - boolean' }
+{ #category : 'conversion - boolean' }
 DatabasePlatform >> booleanToBooleanConverter [
 	^DelegatingDatabaseConverter
 		named: #booleanToBoolean
@@ -166,7 +168,7 @@ DatabasePlatform >> booleanToBooleanConverter [
 		fromDbToSt: #convertDBBooleanToBoolean:for:.
 ]
 
-{ #category : #'conversion - boolean' }
+{ #category : 'conversion - boolean' }
 DatabasePlatform >> booleanToIntegerConverter [
 	^DelegatingDatabaseConverter
 		named: #booleanToInteger
@@ -175,7 +177,7 @@ DatabasePlatform >> booleanToIntegerConverter [
 		fromDbToSt: #convertIntegerToBoolean:for:.
 ]
 
-{ #category : #'conversion - boolean' }
+{ #category : 'conversion - boolean' }
 DatabasePlatform >> booleanToStringTFConverter [
 	^DelegatingDatabaseConverter
 		named: #booleanToString
@@ -184,7 +186,7 @@ DatabasePlatform >> booleanToStringTFConverter [
 		fromDbToSt: #convertTFToBoolean:for:.
 ]
 
-{ #category : #'conversion - boolean' }
+{ #category : 'conversion - boolean' }
 DatabasePlatform >> booleanToStringYNConverter [
 	^DelegatingDatabaseConverter
 		named: #booleanToString
@@ -193,7 +195,7 @@ DatabasePlatform >> booleanToStringYNConverter [
 		fromDbToSt: #convertYNToBoolean:for:.
 ]
 
-{ #category : #'conversion - boolean' }
+{ #category : 'conversion - boolean' }
 DatabasePlatform >> booleanToStringYesNoConverter [
 	^DelegatingDatabaseConverter
 		named: #booleanToString
@@ -202,12 +204,12 @@ DatabasePlatform >> booleanToStringYesNoConverter [
 		fromDbToSt: #convertYesNoToBoolean:for:.
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 DatabasePlatform >> byteArrayToString: aByteArray for: aType [
 	^aByteArray isNil ifTrue: [nil] ifFalse: [Dialect convert: aByteArray toStringWithEncoding: self characterEncoding].
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 DatabasePlatform >> byteArrayToStringConverter [
 	^DelegatingDatabaseConverter
 		named: #byteArrayToString
@@ -216,7 +218,7 @@ DatabasePlatform >> byteArrayToStringConverter [
 		fromDbToSt: #convertByteArrayToString:for:.
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 DatabasePlatform >> byteaConverter [
 	^DelegatingDatabaseConverter
 		named: #bytea
@@ -225,19 +227,19 @@ DatabasePlatform >> byteaConverter [
 		fromDbToSt: #nullConverter:for: "P3 converts on the way in"
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> canBind: aValue to: aType [
 	(Dialect unbindableClassNames includes: aValue class name) ifTrue: [^false].
 	^true.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> canUseInWhereClause: aValue type: aType [
 	(Dialect isFloatingPoint: aValue) ifTrue: [^false].
 	^true.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> capitalWritingOfColumnName [
 	"^<Boolean> This method returns true, if the dbms wants to have column 
 	names written in capital letters"
@@ -245,7 +247,7 @@ DatabasePlatform >> capitalWritingOfColumnName [
 	^false
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> capitalWritingOfCreatorName [
 	"^<Boolean> This method returns true, if the dbms wants to have column 
 	names written in capital letters"
@@ -253,108 +255,108 @@ DatabasePlatform >> capitalWritingOfCreatorName [
 	^true
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> capitalWritingOfDatabaseName [
 	"^<Boolean>"
 
 	^true
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> capitalWritingOfSQLCommands [
 	"^<Boolean>"
 
 	^true
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> capitalWritingOfTableName [
 	"^<Boolean>"
 
 	^true
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> char [
 	^self typeNamed: #char ifAbsentPut: [GlorpCharType new].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> char: anInteger [
 	^self char width: anInteger asInteger.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> character [
 	^self char
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabasePlatform >> characterEncoding [
 	"We hope that this will be set appropriately for the connection, but make sure the default is fairly harmless, and will in most cases complain rather than write characters incorrectly"
 	characterEncoding isNil ifTrue: [characterEncoding := #ascii].
 	^characterEncoding
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabasePlatform >> characterEncoding: anEncodingName [
 	characterEncoding := anEncodingName.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> charactersThatNeedEscaping [
 	^#($' )
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> clob [
 	^self typeNamed: #blob ifAbsentPut: [GlorpClobType new].
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> columnNameSeparatorString [
 	"^<String> This statement return the string to be used to devide several columns ..."
 
 	^','
 ]
 
-{ #category : #'database - specific' }
+{ #category : 'database - specific' }
 DatabasePlatform >> compoundOperationFor: aSymbol [
 	"Return the platform specific version of a compound statement symbol"
 	^aSymbol.
 ]
 
-{ #category : #'conversion - boolean' }
+{ #category : 'conversion - boolean' }
 DatabasePlatform >> convertBooleanToDBBoolean: aBoolean for: aType [
 	(self usesNullForFalse and: [aBoolean isNil]) ifTrue: [^false].
 	^aBoolean.
 ]
 
-{ #category : #'conversion - boolean' }
+{ #category : 'conversion - boolean' }
 DatabasePlatform >> convertBooleanToInteger: aBoolean for: aType [
 	aBoolean isNil ifTrue: [^nil].
 	^aBoolean ifTrue: [1] ifFalse: [0].
 ]
 
-{ #category : #'conversion - boolean' }
+{ #category : 'conversion - boolean' }
 DatabasePlatform >> convertBooleanToTF: aBoolean for: aType [
 	aBoolean isNil ifTrue: [^aBoolean].
 	^aBoolean ifTrue: ['T'] ifFalse: ['F'].
 ]
 
-{ #category : #'conversion - boolean' }
+{ #category : 'conversion - boolean' }
 DatabasePlatform >> convertBooleanToYN: aBoolean for: aType [
 	aBoolean isNil ifTrue: [^aBoolean].
 	^aBoolean ifTrue: ['Y'] ifFalse: ['N'].
 ]
 
-{ #category : #'conversion - boolean' }
+{ #category : 'conversion - boolean' }
 DatabasePlatform >> convertBooleanToYesNo: aBoolean for: aType [
 	aBoolean isNil ifTrue: [^aBoolean].
 	^aBoolean ifTrue: ['YES'] ifFalse: ['NO'].
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 DatabasePlatform >> convertByteArrayToSQLString: aByteArray for: aType [
 	"This is a slightly misleading name. Really what we want is conversion to a Blob-type of field. So if it's a bytearray, we can just let the driver take care of that conversion, but if we're given a string, we should convert it."
 
@@ -366,18 +368,18 @@ DatabasePlatform >> convertByteArrayToSQLString: aByteArray for: aType [
 		ifFalse: [aByteArray].
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 DatabasePlatform >> convertByteArrayToString: aByteArray for: aType [
 	
 	^aByteArray ifNotNil: [ aByteArray asString ]
 ]
 
-{ #category : #'conversion - boolean' }
+{ #category : 'conversion - boolean' }
 DatabasePlatform >> convertDBBooleanToBoolean: aBoolean for: aType [
 	^aBoolean.
 ]
 
-{ #category : #'conversion - boolean' }
+{ #category : 'conversion - boolean' }
 DatabasePlatform >> convertIntegerToBoolean: anInteger for: aType [
 	anInteger isNil ifTrue: [^anInteger].
 	anInteger = 1 ifTrue: [^true].
@@ -385,12 +387,12 @@ DatabasePlatform >> convertIntegerToBoolean: anInteger for: aType [
 	self error: 'invalid boolean conversion'.
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 DatabasePlatform >> convertStringToByteArray: aString for: aType [
 	^aString ifNotNil:  [aString asByteArray]
 ]
 
-{ #category : #'conversion - boolean' }
+{ #category : 'conversion - boolean' }
 DatabasePlatform >> convertTFToBoolean: aString for: aType [
 	aString isNil ifTrue: [^aString].
 	aString = 'T' ifTrue: [^true].
@@ -398,32 +400,32 @@ DatabasePlatform >> convertTFToBoolean: aString for: aType [
 	self error: 'invalid boolean conversion'.
 ]
 
-{ #category : #'conversion - numbers' }
+{ #category : 'conversion - numbers' }
 DatabasePlatform >> convertToDecimal: aNumber for: type [
 
  	aNumber isNil ifTrue: [^nil].
 	^ScaledDecimal newFromNumber: aNumber scale: type scale.
 ]
 
-{ #category : #'conversion - numbers' }
+{ #category : 'conversion - numbers' }
 DatabasePlatform >> convertToDouble: aNumber for: type [ 
 
 	aNumber isNil ifTrue: [^nil].
 	^Dialect coerceToDoublePrecisionFloat: aNumber
 ]
 
-{ #category : #'conversion - numbers' }
+{ #category : 'conversion - numbers' }
 DatabasePlatform >> convertToFloat: aNumber for: aType [ 
 	aNumber isNil ifTrue: [^nil].
 	^aNumber asFloat.
 ]
 
-{ #category : #'conversion - numbers' }
+{ #category : 'conversion - numbers' }
 DatabasePlatform >> convertToInteger: aNumber for: aType [ 
 	^aNumber isNil ifTrue: [aNumber] ifFalse: [aNumber asNumber asInteger].
 ]
 
-{ #category : #'conversion - numbers' }
+{ #category : 'conversion - numbers' }
 DatabasePlatform >> convertToNumber: aNumber for: aType [
 	"Convert to an arbitrary numeric type. Make sure our precision matches. *Hate* floating point"
 
@@ -437,7 +439,7 @@ DatabasePlatform >> convertToNumber: aNumber for: aType [
 	^aNumber isInteger ifTrue: [result rounded] ifFalse: [result].
 ]
 
-{ #category : #'conversion - boolean' }
+{ #category : 'conversion - boolean' }
 DatabasePlatform >> convertYNToBoolean: aString for: aType [
 	aString isNil ifTrue: [^aString].
 	aString = 'Y' ifTrue: [^true].
@@ -445,7 +447,7 @@ DatabasePlatform >> convertYNToBoolean: aString for: aType [
 	self error: 'invalid boolean conversion'.
 ]
 
-{ #category : #'conversion - boolean' }
+{ #category : 'conversion - boolean' }
 DatabasePlatform >> convertYesNoToBoolean: aString for: aType [
 	aString isNil ifTrue: [^aString].
 	aString asUppercase = 'YES' ifTrue: [^true].
@@ -453,7 +455,7 @@ DatabasePlatform >> convertYesNoToBoolean: aString for: aType [
 	self error: 'invalid boolean conversion'.
 ]
 
-{ #category : #'type converters' }
+{ #category : 'type converters' }
 DatabasePlatform >> converterNamed: aSymbol [
 
 	^self converters at: aSymbol ifAbsentPut: [
@@ -462,13 +464,13 @@ DatabasePlatform >> converterNamed: aSymbol [
 		converter name: aSymbol]
 ]
 
-{ #category : #'type converters' }
+{ #category : 'type converters' }
 DatabasePlatform >> converters [
 	converters isNil ifTrue: [converters := IdentityDictionary new].
 	^converters.
 ]
 
-{ #category : #'services columns' }
+{ #category : 'services columns' }
 DatabasePlatform >> createAddColumnStatementFor: aField [
 	| stream |
 	stream := WriteStream on: String new.
@@ -486,13 +488,13 @@ DatabasePlatform >> createAddColumnStatementFor: aField [
 	^stream contents
 ]
 
-{ #category : #'services columns' }
+{ #category : 'services columns' }
 DatabasePlatform >> createAlterColumnStatement: aField newType: aType [
 
 	^self createAlterColumnStatement: aField newType: aType usingExpression: nil
 ]
 
-{ #category : #'services columns' }
+{ #category : 'services columns' }
 DatabasePlatform >> createAlterColumnStatement: aField newType: aType usingExpression: expression [
 
 	| sqlStatementStream |
@@ -514,7 +516,7 @@ DatabasePlatform >> createAlterColumnStatement: aField newType: aType usingExpre
 	^sqlStatementStream contents
 ]
 
-{ #category : #'services columns' }
+{ #category : 'services columns' }
 DatabasePlatform >> createAlterColumnStatement: aField setDefault: anObject [
 	| sqlStatementStream |
 	sqlStatementStream := WriteStream on: String new.
@@ -535,7 +537,7 @@ DatabasePlatform >> createAlterColumnStatement: aField setDefault: anObject [
 	^sqlStatementStream contents
 ]
 
-{ #category : #'services columns' }
+{ #category : 'services columns' }
 DatabasePlatform >> createAlterColumnStatementDropDefault: aField [
 	| sqlStatementStream |
 	sqlStatementStream := WriteStream on: String new.
@@ -554,7 +556,7 @@ DatabasePlatform >> createAlterColumnStatementDropDefault: aField [
 	^sqlStatementStream contents
 ]
 
-{ #category : #'services columns' }
+{ #category : 'services columns' }
 DatabasePlatform >> createAlterColumnStatementDropNotNull: aField [
 	| sqlStatementStream |
 	sqlStatementStream := WriteStream on: String new.
@@ -576,7 +578,7 @@ DatabasePlatform >> createAlterColumnStatementDropNotNull: aField [
 	^sqlStatementStream contents
 ]
 
-{ #category : #'services columns' }
+{ #category : 'services columns' }
 DatabasePlatform >> createAlterColumnStatementSetNotNull: aField [
 	| sqlStatementStream |
 	sqlStatementStream := WriteStream on: String new.
@@ -598,7 +600,7 @@ DatabasePlatform >> createAlterColumnStatementSetNotNull: aField [
 	^sqlStatementStream contents
 ]
 
-{ #category : #'services constraints' }
+{ #category : 'services constraints' }
 DatabasePlatform >> createConstraintAddStatement:  aConstraint [
 	| sqlStatementStream |
 	self supportsAlterTableForConstraints ifFalse: [^''].
@@ -616,7 +618,7 @@ DatabasePlatform >> createConstraintAddStatement:  aConstraint [
 	^String new
 ]
 
-{ #category : #'services constraints' }
+{ #category : 'services constraints' }
 DatabasePlatform >> createConstraintDropStatement: aConstraint [
 	| aStream |
 	self supportsAlterTableForConstraints ifFalse: [^''].
@@ -629,7 +631,7 @@ DatabasePlatform >> createConstraintDropStatement: aConstraint [
 	^aStream contents.
 ]
 
-{ #category : #'services columns' }
+{ #category : 'services columns' }
 DatabasePlatform >> createDropColumnStatementFor: aField [
 	| stream |
 	stream := WriteStream on: String new.
@@ -646,7 +648,7 @@ DatabasePlatform >> createDropColumnStatementFor: aField [
 	^stream contents
 ]
 
-{ #category : #'services tables' }
+{ #category : 'services tables' }
 DatabasePlatform >> createDropTableStatementFor: aTableNameString [
 	"^<String> This method returns a string which can be used to drop a database table ..."
 
@@ -660,7 +662,7 @@ DatabasePlatform >> createDropTableStatementFor: aTableNameString [
 	^sqlStatementStream contents
 ]
 
-{ #category : #'services constraints' }
+{ #category : 'services constraints' }
 DatabasePlatform >> createForeignKeyConstraintAddStatement: aForeignKeyConstraint [
 	"Callback from the ForeignKeyConstraint. Returns collection of statements "
 	| ws |
@@ -685,7 +687,7 @@ DatabasePlatform >> createForeignKeyConstraintAddStatement: aForeignKeyConstrain
 	^OrderedCollection with: ws contents.
 ]
 
-{ #category : #'services constraints' }
+{ #category : 'services constraints' }
 DatabasePlatform >> createPrimaryKeyConstraintAddStatement: aPrimaryKeyConstraint [
 	"Callback from the PrimaryKeyConstraint. Returns collection of statements "
 	| aStream statements |
@@ -721,14 +723,14 @@ DatabasePlatform >> createPrimaryKeyConstraintAddStatement: aPrimaryKeyConstrain
 	^statements
 ]
 
-{ #category : #obsolete }
+{ #category : 'obsolete' }
 DatabasePlatform >> createTableFKContraintsStatementStringsFor: aGLORPDatabaseTable [
 
 	^aGLORPDatabaseTable foreignKeyConstraintsForCreation
 		collect: [:each |	self createConstraintAddStatement: each ]
 ]
 
-{ #category : #'services tables' }
+{ #category : 'services tables' }
 DatabasePlatform >> createTableIndexStatementStringFor: aGLORPDatabaseTable index: aGlorpDatabaseIndex [
 
 	| sqlStatementStream |
@@ -741,7 +743,7 @@ DatabasePlatform >> createTableIndexStatementStringFor: aGLORPDatabaseTable inde
 	^sqlStatementStream contents
 ]
 
-{ #category : #'services tables' }
+{ #category : 'services tables' }
 DatabasePlatform >> createTableIndexStatementStringsFor: aGLORPDatabaseTable [
 	^aGLORPDatabaseTable indexes
 		collect:
@@ -756,7 +758,7 @@ DatabasePlatform >> createTableIndexStatementStringsFor: aGLORPDatabaseTable [
 			sqlStatementStream contents].
 ]
 
-{ #category : #'services tables' }
+{ #category : 'services tables' }
 DatabasePlatform >> createTableStatementStringFor: aGLORPDatabaseTable [ 
 	"^<String> This method returns a string which can be used to create a database table ..."
 
@@ -792,7 +794,7 @@ DatabasePlatform >> createTableStatementStringFor: aGLORPDatabaseTable [
 	^sqlStatementStream contents
 ]
 
-{ #category : #'services constraints' }
+{ #category : 'services constraints' }
 DatabasePlatform >> createUniqueConstraintAddStatement: aUniqueConstraint [
 	"Callback from the UniqueConstraint. Returns collection of statements "
 	
@@ -812,7 +814,7 @@ DatabasePlatform >> createUniqueConstraintAddStatement: aUniqueConstraint [
 	^OrderedCollection with: stream contents
 ]
 
-{ #category : #sequences }
+{ #category : 'sequences' }
 DatabasePlatform >> databaseIdentitySequenceClass [
 	"This method applies only to classes that have both types--database sequences and identity columns.
 	Currently, only DB2 has both types. The sequence is prefered, and the identity type has minimal support."
@@ -820,18 +822,18 @@ DatabasePlatform >> databaseIdentitySequenceClass [
 	self databaseSequenceClass
 ]
 
-{ #category : #sequences }
+{ #category : 'sequences' }
 DatabasePlatform >> databaseSequenceClass [
 	self subclassResponsibility.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> date [
 	"Return the type we use to represent dates. By default, we use the same type as for timestamps."
 	^self timestamp.
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 DatabasePlatform >> dateConverter [
 	^DelegatingDatabaseConverter
 		named: #date
@@ -840,12 +842,12 @@ DatabasePlatform >> dateConverter [
 		fromDbToSt: #readDate:for:.	"#printDate:for:"
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> datetime [
 	^self timestamp
 ]
 
-{ #category : #'services tables' }
+{ #category : 'services tables' }
 DatabasePlatform >> ddlTableNameFor: aTableOrString [
 	"
 	Either a databaseTable or a string can be passed in the argument.
@@ -858,7 +860,7 @@ DatabasePlatform >> ddlTableNameFor: aTableOrString [
 		ifFalse: [ self ddlTableNameFor: aTableOrString qualifiedName ]
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> defaultOptimalINClauseLimit [
 	"Databases have limits on the number if values allowed in an IN clause. 
 	However, if you research their user forums, you'll find that there is quite a difference between the
@@ -870,55 +872,55 @@ DatabasePlatform >> defaultOptimalINClauseLimit [
 	^500
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabasePlatform >> defaultPort [
 	"self subclassResponsibility.
 	for this instance i'll return 5432, but all platforms must be return you own port"
 	^ '5432'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> deleteViewWithTableSyntax [
 
 	^false
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> double [
 	^self subclassResponsibility.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> endColumnAddString [
 	"The string we use as a suffix when adding a colum"
 	^''.
 ]
 
-{ #category : #'services columns' }
+{ #category : 'services columns' }
 DatabasePlatform >> endColumnQuote [
 	"Return the character used to stop quoting the name of a column so that we can avoid conflicts with reserved names. ANSI says to use double quotes, so that's the default."
 	^'"'.
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 DatabasePlatform >> escapeFor: aCharacter [
 	aCharacter = $' ifTrue: [^''''''].
 	^String with: $\ with: aCharacter.
 ]
 
-{ #category : #functions }
+{ #category : 'functions' }
 DatabasePlatform >> functions [
 	functions isNil ifTrue: [self initializeFunctions].
 	^functions.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> generatorFor: aType withBlock: aBlock [
 	"Don't cache this, because we want to return different instances depending on aType"
 	^VersionType underlyingType: aType generator: (AdHocVersionGenerator block: aBlock).
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> hasSubtransaction [
 	"^<Boolean> This method returns true, if the used dbms is able to execute multiple sql-statements
 	transferred via a command line transmitted from client to server - otherwise I return false"
@@ -926,64 +928,64 @@ DatabasePlatform >> hasSubtransaction [
 	^true
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> inMemorySequence [
 	^self typeNamed: #inMemorySequence ifAbsentPut: [
 		GlorpInMemorySequenceDatabaseType representedBy: self int4].
 ]
 
-{ #category : #functions }
+{ #category : 'functions' }
 DatabasePlatform >> initializeFunctions [
 	"Subclasses should override to add database-specific functions"
 
 	functions := FunctionExpression createBasicFunctionsFor: self.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> initializeReservedWords [
 	reservedWords := Set new.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> initializeTypes [
 	types := nil.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> int [
 	^self integer.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> int2 [
 
 	^self subclassResponsibility
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> int4 [
 
 	^self subclassResponsibility
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> int8 [
 
 	^self subclassResponsibility
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> integer [
 	^self typeNamed: #integer ifAbsentPut: [GlorpIntegerType new].
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 DatabasePlatform >> integerToString: anInteger for: aType [
 	anInteger isNil ifTrue: [^nil].
 	^self padString: anInteger printString for: aType.
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 DatabasePlatform >> integerToStringConverter [
 	^DelegatingDatabaseConverter
 		named: #integerToString
@@ -992,110 +994,110 @@ DatabasePlatform >> integerToStringConverter [
 		fromDbToSt: #stringToInteger:for:.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> isAccessPlatform [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> isDB2Platform [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> isMySQLPlatform [
 	^false.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> isNBSQLite3Platform [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> isODBCPlatform [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> isOcelotPlatform [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> isOraclePlatform [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> isPostgreSQLPlatform [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> isSQLServerPlatform [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> isSQLite3Platform [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> isUDBCSQLite3Platform [
 	^false
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> maxSQLBufferLength [
 	"^<Integer> I return the maximum length of a sql command stream"
 
 	^8192
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> maximumLengthOfColumnName [
 	"^<Integer> I return the maximum length of a column name.  (I am not sent at present;  I am here so that if I and #maximumLengthOfTableName (which is sent) should ever differ on some database platform, I can be used in revised truncation logic.)"
 
 	^18
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> maximumLengthOfTableName [
 	"^<Integer> I return the max. length of a table name"
 
 	^18
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> maximumQueryValueSize [
 	"If there's a limit on how big a bound input parameter can be for a query, return it here. By default, no maximum. "
 	^536870911 "VisualWorks SmallInteger maxVal. Lacking infinity, this will do as a default."
 ]
 
-{ #category : #binding }
+{ #category : 'binding' }
 DatabasePlatform >> maximumSizeToGroupWriteFor: aCollectionOfDatabaseRows [
 	"If we are going to group write, how many rows of this collection should we do it for at once"
 	^aCollectionOfDatabaseRows size.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> measuresStringFieldWidthsInBytes [
 	"Return true if we measure the width of a string in bytes rather than characters. So, a 255-character field can hold 255 bytes worth of string, not 255 characters. This is important with encodings"
 	^false.
 ]
 
-{ #category : #'services columns' }
+{ #category : 'services columns' }
 DatabasePlatform >> nameForColumn: aColumnString [
 	| upper |
 	upper := self capitalWritingOfColumnName ifTrue: [aColumnString asUppercase] ifFalse: [aColumnString].
@@ -1103,13 +1105,13 @@ DatabasePlatform >> nameForColumn: aColumnString [
 	^self startColumnQuote, upper, self endColumnQuote.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> nameForPrimaryKeyConstraintsWhenDropping [
 	"Return the name we use to describe a constraint when dropping them. This is required because MySQL wants you to use 'DROP PRIMARY KEY' rather than the ANSI 'DROP CONSTRAINT'."
 	^'CONSTRAINT'.
 ]
 
-{ #category : #sequences }
+{ #category : 'sequences' }
 DatabasePlatform >> newDatabaseIdentitySequenceNamed: aString [
 	"Return an identity sequence, with the given name. This method is useful for platforms
 	which provide regular sequence objects as well as identity column objects. Glorp uses
@@ -1119,30 +1121,30 @@ DatabasePlatform >> newDatabaseIdentitySequenceNamed: aString [
 	^self databaseIdentitySequenceClass named: aString
 ]
 
-{ #category : #sequences }
+{ #category : 'sequences' }
 DatabasePlatform >> newDatabaseSequenceNamed: aString [
 	"Return a sequence of the type we use, with the given name"
 	^self databaseSequenceClass named: aString.
 ]
 
-{ #category : #'conversion - null' }
+{ #category : 'conversion - null' }
 DatabasePlatform >> nullConversion: anObject for: aType [
 	^anObject.
 ]
 
-{ #category : #'conversion - null' }
+{ #category : 'conversion - null' }
 DatabasePlatform >> nullConverter [
 	^NullConverter new
 		name: #null.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> number [
 
 	^self typeNamed: #number ifAbsentPut: [GlorpNumericType new].
 ]
 
-{ #category : #'conversion - numbers' }
+{ #category : 'conversion - numbers' }
 DatabasePlatform >> numberToDecimalConverter [
 
 	^DelegatingDatabaseConverter
@@ -1152,7 +1154,7 @@ DatabasePlatform >> numberToDecimalConverter [
 		fromDbToSt: #convertToDecimal:for:.
 ]
 
-{ #category : #'conversion - numbers' }
+{ #category : 'conversion - numbers' }
 DatabasePlatform >> numberToDoubleConverter [
 	^DelegatingDatabaseConverter
 		named: #numberToDouble
@@ -1161,7 +1163,7 @@ DatabasePlatform >> numberToDoubleConverter [
 		fromDbToSt: #convertToDouble:for:.
 ]
 
-{ #category : #'conversion - numbers' }
+{ #category : 'conversion - numbers' }
 DatabasePlatform >> numberToFloatConverter [
 	^DelegatingDatabaseConverter
 		named: #numberToFloat
@@ -1170,7 +1172,7 @@ DatabasePlatform >> numberToFloatConverter [
 		fromDbToSt: #convertToFloat:for:.
 ]
 
-{ #category : #'conversion - numbers' }
+{ #category : 'conversion - numbers' }
 DatabasePlatform >> numberToIntegerConverter [
 	^DelegatingDatabaseConverter
 		named: #numberToInteger
@@ -1179,7 +1181,7 @@ DatabasePlatform >> numberToIntegerConverter [
 		fromDbToSt: #convertToInteger:for:.
 ]
 
-{ #category : #'conversion - numbers' }
+{ #category : 'conversion - numbers' }
 DatabasePlatform >> numberToNumberConverter [
 	^DelegatingDatabaseConverter
 		named: #numberToNumber
@@ -1188,17 +1190,17 @@ DatabasePlatform >> numberToNumberConverter [
 		fromDbToSt: #convertToNumber:for:.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> numeric [
 	^self number.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> nvarchar [
 	^self subclassResponsibility.
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 DatabasePlatform >> padString: aString for: aType [
 	"Between 0.3.140.1 and 7.10 inclusive, Glorp trimmed strings that were too long for fixed-length fields.  This is no longer done, so such strings (sometimes too long only because the database platform measuresStringFieldWidthsInBytes and the string has multi-byte characters) will normally cause database errors (intentionally:  overlong strings should not be submitted to such fields)."
 
@@ -1212,7 +1214,7 @@ DatabasePlatform >> padString: aString for: aType [
 	^aString , padding
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 DatabasePlatform >> padTrimmedString: aString for: aType [
 	| padding trimmed |
 	aString isNil ifTrue: [^nil].
@@ -1226,34 +1228,34 @@ DatabasePlatform >> padTrimmedString: aString for: aType [
 	^aString , padding
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 DatabasePlatform >> paddingCharacter [
 	^1 asCharacter.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> parenthesizeAllButFirstCommandInCompoundQuery [
 	"Access wants parenthesies around all but the first SELECT in a UNION query."
 	^false
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> parenthesizeCommandsInCompoundQuery [
 	^true
 ]
 
-{ #category : #login }
+{ #category : 'login' }
 DatabasePlatform >> postLoginInitializeFromAccessor: aDatabaseAccessor [
 	"Database servers and clients have configuration parameters.  We may need to read or set them."
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> postfixTableNameBeforeDeleting [
 
 	^false
 ]
 
-{ #category : #'general services' }
+{ #category : 'general services' }
 DatabasePlatform >> predefinedKeywords [
 	"
 		^<OrderdCollection of: String> This method returns a list of preserved keyword, which should
@@ -1263,33 +1265,33 @@ DatabasePlatform >> predefinedKeywords [
 	^OrderedCollection new
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> prefixQualifierBeforeCreatingAndDeleting [
 
 	^true
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> prefixQualifierSeparatorString [
 	"^<String> This statement return the string to be used to separate the qualifier and the table/column name"
 
 	^'.'
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> prefixTableNameBeforeDeleting [
 
 	^false
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> primaryKeysAreAutomaticallyUnique [
 	"Return false if, in addition to specifying something as a primary key, we must separately specify it as unique"
 
 	^false.
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 DatabasePlatform >> printBlob: aByteArray on: aStream for: aType [
 	aByteArray isNil ifTrue: [^aStream nextPutAll: 'NULL'].
 	aStream nextPutAll: 'X'''.
@@ -1298,7 +1300,7 @@ DatabasePlatform >> printBlob: aByteArray on: aStream for: aType [
 	aStream nextPut: $'.
 ]
 
-{ #category : #'conversion - boolean' }
+{ #category : 'conversion - boolean' }
 DatabasePlatform >> printBoolean: aBoolean for: aType [
 	"If the platform is MS SQL Server, a boolean object in a SELECT needs to be converted to  BIT type, since T, Y, or true make SQLServer complain. "
 	| stream |
@@ -1307,7 +1309,7 @@ DatabasePlatform >> printBoolean: aBoolean for: aType [
 	^stream contents.
 ]
 
-{ #category : #'services columns' }
+{ #category : 'services columns' }
 DatabasePlatform >> printColumn: eachGlorpDatabaseField on: sqlStatementStream [
 	"Print the column specification for the CREATE TABLE statement.
 	Don't show a default value for serial columns, since their semanitics are different."
@@ -1333,7 +1335,7 @@ DatabasePlatform >> printColumn: eachGlorpDatabaseField on: sqlStatementStream [
 						ifFalse: [self sqlTextForNOTUNIQUEAttributeConstraint]).
 ]
 
-{ #category : #'services columns' }
+{ #category : 'services columns' }
 DatabasePlatform >> printColumnsSpecificationFor: aGlorpDatabaseTable on: sqlStatementStream [
 	aGlorpDatabaseTable fields isEmpty not
 		ifTrue:
@@ -1352,7 +1354,7 @@ DatabasePlatform >> printColumnsSpecificationFor: aGlorpDatabaseTable on: sqlSta
 					sepFlag := true]].
 ]
 
-{ #category : #'services tables' }
+{ #category : 'services tables' }
 DatabasePlatform >> printDDLTableNameFor: aGLORPDatabaseTable on: sqlStatementStream [
 	"This method just writes the name of a table to a stream, in a way appropriate for DDL statements."
 	
@@ -1362,7 +1364,7 @@ DatabasePlatform >> printDDLTableNameFor: aGLORPDatabaseTable on: sqlStatementSt
 			ifFalse: [aGLORPDatabaseTable qualifiedName]).
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 DatabasePlatform >> printDate: aTimestamp isoFormatOn: stream [
 	"Print the date as yyyy-mm-dd"
 	| monthNumber dayOfMonth |
@@ -1376,7 +1378,7 @@ DatabasePlatform >> printDate: aTimestamp isoFormatOn: stream [
 	stream nextPutAll: (GlorpDatabaseType padToTwoDigits: dayOfMonth).
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 DatabasePlatform >> printEscapedString: aString on: aCommand [
 	"In this method, aCommand only needs its polymorphic stream protocol, but the parameter is sure to be a command, not a stream, if this method is called."
 
@@ -1389,27 +1391,27 @@ DatabasePlatform >> printEscapedString: aString on: aCommand [
 			ifFalse: [aCommand nextPut: char]].
 ]
 
-{ #category : #'database - specific' }
+{ #category : 'database - specific' }
 DatabasePlatform >> printOffset: anInteger on: aCommand [
 	"By default, do nothing"
 ]
 
-{ #category : #'database - specific' }
+{ #category : 'database - specific' }
 DatabasePlatform >> printOffset: anInteger on: aCommand withLimit: aBoolean [
 	self printOffset: anInteger  on: aCommand. 
 ]
 
-{ #category : #'database - specific' }
+{ #category : 'database - specific' }
 DatabasePlatform >> printPostLimit: anInteger on: aCommand [
 	"By default, do nothing"
 ]
 
-{ #category : #'database - specific' }
+{ #category : 'database - specific' }
 DatabasePlatform >> printPreLimit: anInteger on: aCommand [
 	"By default, do nothing"
 ]
 
-{ #category : #obsolete }
+{ #category : 'obsolete' }
 DatabasePlatform >> printPrimaryKeyConstraintsOn: sqlStatementStream for: aTable [ 
 	"This method print the constraint specification on sqlStatementStream"
 
@@ -1418,7 +1420,7 @@ DatabasePlatform >> printPrimaryKeyConstraintsOn: sqlStatementStream for: aTable
 		do: [ :each | sqlStatementStream nextPutAll: each].
 ]
 
-{ #category : #'services columns' }
+{ #category : 'services columns' }
 DatabasePlatform >> printSqlStatementToCopyDataFromColumn: fromColumn to: toColumn on: aStream [
 	"
 	Example:
@@ -1444,7 +1446,7 @@ DatabasePlatform >> printSqlStatementToCopyDataFromColumn: fromColumn to: toColu
 		nextPutAll: fromColumnName
 ]
 
-{ #category : #'services columns' }
+{ #category : 'services columns' }
 DatabasePlatform >> printSqlStatementToCopyDataFromTable: fromTable to: toTable on: aStream [
 
 	aStream
@@ -1474,14 +1476,14 @@ DatabasePlatform >> printSqlStatementToCopyDataFromTable: fromTable to: toTable 
 		nextPutAll: (self ddlTableNameFor: fromTable)
 ]
 
-{ #category : #'services tables' }
+{ #category : 'services tables' }
 DatabasePlatform >> printSqlStatementToListColumnsInTable: aDatabaseTable inSchema: schemaString on: aStream [
 	" The default SQL statement is
 	"
 	self subclassResponsibility 
 ]
 
-{ #category : #'services tables' }
+{ #category : 'services tables' }
 DatabasePlatform >> printSqlStatementToListTablesInSchema: schemaString on: aStream [
 	" Not standardized, although SQL Server, MySQL and PostgreSQL use the INFORMATION_SCHEMA "
 
@@ -1508,7 +1510,7 @@ DatabasePlatform >> printSqlStatementToListTablesInSchema: schemaString on: aStr
 	aStream nextPut: $;
 ]
 
-{ #category : #'services columns' }
+{ #category : 'services columns' }
 DatabasePlatform >> printSqlStatementToPopulateColumn: aDatabaseField with: aValue on: aStream [
 
 	| converter dbValue |
@@ -1534,7 +1536,7 @@ DatabasePlatform >> printSqlStatementToPopulateColumn: aDatabaseField with: aVal
 		nextPutAll: ')'
 ]
 
-{ #category : #'services columns' }
+{ #category : 'services columns' }
 DatabasePlatform >> printSqlStatementToRenameColumn: oldColumn to: newColumnName on: aStream [
 
 	aStream
@@ -1546,7 +1548,7 @@ DatabasePlatform >> printSqlStatementToRenameColumn: oldColumn to: newColumnName
 		nextPutAll:  (self nameForColumn: newColumnName).
 ]
 
-{ #category : #'services tables' }
+{ #category : 'services tables' }
 DatabasePlatform >> printSqlStatementToRenameTable: aDatabaseTable to: newTableName on: aStream [
 	" Tje default SQL statement is
 	ALTER TABLE <oldTableName> RENAME TO <newTableName>.
@@ -1560,7 +1562,7 @@ DatabasePlatform >> printSqlStatementToRenameTable: aDatabaseTable to: newTableN
 		nextPutAll: newTableName
 ]
 
-{ #category : #'services tables' }
+{ #category : 'services tables' }
 DatabasePlatform >> printSqlStatementToTestExistenceOfTable: tableName inSchema: schemaString on: aStream [
 	" Not standardized, although SQL Server, MySQL and PostgreSQL use the INFORMATION_SCHEMA "
 
@@ -1593,7 +1595,7 @@ DatabasePlatform >> printSqlStatementToTestExistenceOfTable: tableName inSchema:
 		nextPut: $;
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 DatabasePlatform >> printTime: aTime isoFormatOn: aStream [ 
 
 	self
@@ -1603,7 +1605,7 @@ DatabasePlatform >> printTime: aTime isoFormatOn: aStream [
 	^self
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 DatabasePlatform >> printTime: aTimestamp isoFormatOn: stream milliseconds: aBoolean [
 	"Print the time as hh:mm:ss.mmm"
 	| ms |
@@ -1621,25 +1623,25 @@ DatabasePlatform >> printTime: aTimestamp isoFormatOn: stream milliseconds: aBoo
 	stream nextPutAll: (GlorpDatabaseType padToThreeDigits: ms).
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 DatabasePlatform >> printTimestamp: aTimestamp on: aStream for: aType [
 	aTimestamp isNil ifTrue: [aTimestamp glorpPrintSQLOn: aStream. ^self].
 
 	aStream nextPut: $'; nextPutAll: aTimestamp printString; nextPut: $'.
 ]
 
-{ #category : #'database - specific' }
+{ #category : 'database - specific' }
 DatabasePlatform >> queryWithUnsupportedOperationsEliminatedFrom: aQuery do: aBlock [
 	"If aQuery has operations that we don't support, rewrite it to do them in terms of lower level operations. In particular, rewrite INTERSECT/EXCEPT operations into EXISTS clauses in a single query. Pass the new query to aBlock."
 	^self.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> raw [
 	^self blob.
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 DatabasePlatform >> readDate: anObject for: aType [
 	"format '2003-03-13"
 	anObject isNil ifTrue: [^nil].
@@ -1649,7 +1651,7 @@ DatabasePlatform >> readDate: anObject for: aType [
 	^anObject asDate.
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 DatabasePlatform >> readDateFromStream: aStream for: aType [
 	"Seems like we get to do this ourselves, in a lowest common denominator kind of way. Translate into GMT if we've got a timezone."
 	"assumes ISO format.
@@ -1664,7 +1666,7 @@ DatabasePlatform >> readDateFromStream: aStream for: aType [
 	^Dialect newDateWithYears: years months: months days: days.
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 DatabasePlatform >> readTime: anObject for: aType [
 	"format 15:29:28.337-05  (timezone optional)"
 	anObject isNil ifTrue: [^nil].
@@ -1674,7 +1676,7 @@ DatabasePlatform >> readTime: anObject for: aType [
 	^anObject asTime.
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 DatabasePlatform >> readTimeFromStream: aStream for: aType [
 	"Seems like we get to do this ourselves, in a lowest common denominator kind of way. Ignore timezones right now"
 	"assumes ISO format.
@@ -1700,7 +1702,7 @@ DatabasePlatform >> readTimeFromStream: aStream for: aType [
 	"^Dialect addSeconds: (timeZoneOffset * -1* 60 * 60) to: aTime."
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 DatabasePlatform >> readTimestamp: anObject for: aType [
 	"Seems like we get to do this ourselves, in a lowest common denominator kind of way. Translate into GMT if we've got a timezone."
 
@@ -1718,7 +1720,7 @@ DatabasePlatform >> readTimestamp: anObject for: aType [
 	^anObject asDateAndTime.
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 DatabasePlatform >> readTimestampFromStream: aStream for: aType [
 
 	| years months days hours minutes seconds millisecondAccumulator milliseconds timeZoneOffset |
@@ -1749,59 +1751,59 @@ DatabasePlatform >> readTimestampFromStream: aStream for: aType [
 		offset:timeZoneOffset.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> requiresCastsForNullsInUnions [
 	"If we have explicit nulls in a query which is unioned, do we need to cast them to the appropriate type in order to keep the database happy."
 	^false.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> requiresEscapeFor: aCharacter [
 	^self charactersThatNeedEscaping includes: aCharacter.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> requiresTransactionForTableOperations [
 	"Return true if we need a transaction in order to do table creation, deletion, and so forth. Some databases require it. Others don't like it"
 	^true.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> reservedWords [
 	reservedWords isNil ifTrue: [self initializeReservedWords].
 	^reservedWords.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> reusePreparedStatements [
 	"The ordinary choice is to initialize the accessor to reuse statements whenever binding is being used."
 
 	^true
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> sequence [
 
 	^self subclassResponsibility
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> serial [
 	self subclassResponsibility.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> serial: aNumber [
 	^self serial increment: aNumber asNumber
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> smallint [
 
 	^self typeNamed: #smallint ifAbsentPut: [GlorpSmallIntType new].
 ]
 
-{ #category : #'services columns' }
+{ #category : 'services columns' }
 DatabasePlatform >> sqlStatementToCopyDataFromColumn: fromDatabaseField to: toDatabaseField [
 
 	| stream |
@@ -1816,7 +1818,7 @@ DatabasePlatform >> sqlStatementToCopyDataFromColumn: fromDatabaseField to: toDa
 	^ stream contents
 ]
 
-{ #category : #'services columns' }
+{ #category : 'services columns' }
 DatabasePlatform >> sqlStatementToCopyDataFromTable: fromDatabaseTable to: toDatabaseTable [
 
 	| stream |
@@ -1831,7 +1833,7 @@ DatabasePlatform >> sqlStatementToCopyDataFromTable: fromDatabaseTable to: toDat
 	^ stream contents
 ]
 
-{ #category : #'services tables' }
+{ #category : 'services tables' }
 DatabasePlatform >> sqlStatementToListColumnsForTable: aTableName inSchema: schemaString [
 
 	| stream |
@@ -1840,7 +1842,7 @@ DatabasePlatform >> sqlStatementToListColumnsForTable: aTableName inSchema: sche
 	^stream contents
 ]
 
-{ #category : #'services tables' }
+{ #category : 'services tables' }
 DatabasePlatform >> sqlStatementToListTablesInSchema: schemaString [
 
 	| stream |
@@ -1849,7 +1851,7 @@ DatabasePlatform >> sqlStatementToListTablesInSchema: schemaString [
 	^stream contents
 ]
 
-{ #category : #'services columns' }
+{ #category : 'services columns' }
 DatabasePlatform >> sqlStatementToPopulateColumn: aDatabaseField with: aValue [
 
 	| stream |
@@ -1864,7 +1866,7 @@ DatabasePlatform >> sqlStatementToPopulateColumn: aDatabaseField with: aValue [
 	^ stream contents
 ]
 
-{ #category : #'services columns' }
+{ #category : 'services columns' }
 DatabasePlatform >> sqlStatementToRenameColumn: oldColumn to: newColumnName [
 
 	| stream |
@@ -1879,7 +1881,7 @@ DatabasePlatform >> sqlStatementToRenameColumn: oldColumn to: newColumnName [
 	^ stream contents
 ]
 
-{ #category : #'services tables' }
+{ #category : 'services tables' }
 DatabasePlatform >> sqlStatementToRenameTable: aDatabaseTable to: newTableName [
 
 	| stream |
@@ -1891,7 +1893,7 @@ DatabasePlatform >> sqlStatementToRenameTable: aDatabaseTable to: newTableName [
 	^ stream contents
 ]
 
-{ #category : #'services tables' }
+{ #category : 'services tables' }
 DatabasePlatform >> sqlStatementToTestExistenceOfTable: tableName inSchema: schemaString [
 
 	| stream |
@@ -1900,20 +1902,20 @@ DatabasePlatform >> sqlStatementToTestExistenceOfTable: tableName inSchema: sche
 	^stream contents
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> sqlTextCurrentServerUTCTimestamp [
 
 	self subclassResponsibility
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> sqlTextForBeginTransaction [
 	"comment"
 
 	^'BEGIN'
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> sqlTextForDEFAULT: defaultValue [
 	"^<String>. Answer the column DEFAULT clause as a string with the given value.
 	This is used in CREATE TABLE statements as part of each column specification."
@@ -1928,64 +1930,64 @@ DatabasePlatform >> sqlTextForDEFAULT: defaultValue [
 		ifNil: ['']
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> sqlTextForNOTNULLAttributeConstraint [
 	"^<String>"
 
 	^'NOT NULL'
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> sqlTextForNOTNULLWithDefaultAttributeConstraint [
 	"^<String>"
 
 	^'NOT NULL WITH DEFAULT'
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> sqlTextForNOTUNIQUEAttributeConstraint [
 	^''.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> sqlTextForNULLAttributeConstraint [
 	"^<String>"
 
 	^'NULL'
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> sqlTextForUNIQUEAttributeConstraint [
 	^'UNIQUE'.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> sqlWildcardForMultipleCharacters [
 	"^<String> This method returns the used wildcard string for multiple characters"
 	
 	^'%'
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> sqlWildcardForSingleCharacter [
 	"^<String> This method returns the used wildcard string for single characters"
 	
 	^'_'
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> startColumnAddString [
 	"The string we use as a prefix when adding a colum"
 	^' COLUMN '.
 ]
 
-{ #category : #'services columns' }
+{ #category : 'services columns' }
 DatabasePlatform >> startColumnQuote [
 	"Return the character used to start quoting the name of a column so that we can avoid conflicts with reserved names. ANSI says to use double quotes, so that's the default."
 	^'"'.
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 DatabasePlatform >> stringToByteArray: aString for: aType [
 
 	| string |
@@ -1996,14 +1998,14 @@ DatabasePlatform >> stringToByteArray: aString for: aType [
 			  toByteArrayWithEncoding: self characterEncoding ]
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 DatabasePlatform >> stringToInteger: aString for: aType [
 	| string |
 	string := self unpadString: aString for: aType.
 	^string isNil ifTrue: [nil] ifFalse: [string asNumber truncated].
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 DatabasePlatform >> stringToStringConverter [
 	^DelegatingDatabaseConverter
 		named: #stringToString
@@ -2012,14 +2014,14 @@ DatabasePlatform >> stringToStringConverter [
 		fromDbToSt: #unpadString:for:.
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 DatabasePlatform >> stringToSymbol: aString for: aType [
 	| string |
 	string := self unpadString: aString for: aType.
 	^string isNil ifTrue: [nil] ifFalse: [string asSymbol].
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 DatabasePlatform >> stringToTrimmedStringConverter [
 	"Between 0.3.140.1 and 7.10 inclusive, Glorp routinely trimmed strings that were too long for fixed-length fields in the stringToString converter.  It no longer does this, but if a particular Mapping wants trimming (e.g. StoreProperty has a searchString summary field for its comment's text blob, so the longest initial length of text that can be written to the search field is always OK), then assign this converter to the Mapping in the descriptor."
 
@@ -2030,25 +2032,25 @@ DatabasePlatform >> stringToTrimmedStringConverter [
 		fromDbToSt: #unpadString:for:
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> supportsANSIJoins [
 	"Do we support the JOIN <tableName> USING <criteria> syntax. Currently hard-coded, but may also vary by database version"
 	^false.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> supportsAliasInCompoundQuery [
 	"Return true if, when we have a subselect, we can (and/or must) alias the result with a table name. Access doesn't like the table name"
 	^true.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> supportsAlterTableForConstraints [
 
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> supportsArithmeticOperatorsOnDates [
 	"Answer whether arithmetic operators such as + or - can be used on DATE like columns.
 	Some platforms require the use of specific functions."
@@ -2056,112 +2058,112 @@ DatabasePlatform >> supportsArithmeticOperatorsOnDates [
 	^true
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> supportsAuthentication [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> supportsBinding [
 	"Return true if this platform supports binding parameters rather than printing them as strings into the SQL statement"
 	^false.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> supportsCaseInsensitiveLike [
 	^false.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> supportsConstraints [
 	"Return true if we support integrity constraints. That is, foreign key, primary key or unique constraints."
 	^true.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> supportsCorrelatedSubqueriesInOrderBy [
 	"Return true if this platform supports correlated subqueries in the ORDER BY clause."
 
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> supportsDecimalsOnAllNumerics [
 	"Return true if a general 'numeric' type will allow numbers after the decimal place"
 	^true.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> supportsGroupWritingFor: aCommand [
 	"Return true if this platform can do array binding or an equivalent for this command"
 	^false.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> supportsInformationSchema [
 	^true.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> supportsIntersect [
 	"Do we support the INTERSECT or MINUS operations."
 	^true.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> supportsLimit [
 	"Do we support anything analogous to the postgresql LIMIT, returning only the first N rows"
 	^false.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> supportsMillisecondsInTimes [
 	self subclassResponsibility.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> supportsMultipleOpenCursors [
 	"Can this database support multiple open cursors at once"
 	^true.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> supportsOffset [
 	"Do we support anything analogous to the postgresql OFFSET, skipping the first N rows"
 	^false.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> supportsRowCount [
 	^true.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> supportsSchemas [
 	"Return true if this platform supports schemas. Access and SQLite 3 do not."
 
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> supportsSettingSequenceIncrement [
 	"Return true if this platform can support creating a sequence with an increment other than 1."
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> supportsSingleQueryHorizontalInheritance [
 	"Can this database support a single query for horizontal inheritance."
 	^true.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> supportsStringQueryOnBlobs [
 	^true.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> supportsTableOwners [
 	"Return true if this platform supports table owners, i.e. expects table names of the form Bern.TW_* rather than just TW_* in its SQL."
 "Access, Firebird and PostGreSQL do not, Oracle does, others I know not."
@@ -2169,19 +2171,19 @@ DatabasePlatform >> supportsTableOwners [
 	^false
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> supportsVariableSizedNumerics [
 	"Return true if this platform can support numbers with a varying size and number of decimal places. Access, notably, doesn't seem to be able to"
 	^true.
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 DatabasePlatform >> symbolToString: aSymbol for: aType [
 	aSymbol isNil ifTrue: [^nil].
 	^self padString: aSymbol asString for: aType.
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 DatabasePlatform >> symbolToStringConverter [
 	^DelegatingDatabaseConverter
 		named: #symbolToString
@@ -2190,23 +2192,23 @@ DatabasePlatform >> symbolToStringConverter [
 		fromDbToSt: #stringToSymbol:for:.
 ]
 
-{ #category : #'services tables' }
+{ #category : 'services tables' }
 DatabasePlatform >> tableNameFor: aStringRepresentingATableName [
 	"Return the table name, as modified to be used in a database statement."
 	^aStringRepresentingATableName.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> text [
 	^self clob.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> time [
 	self subclassResponsibility.
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 DatabasePlatform >> timeConverter [
 	^DelegatingDatabaseConverter
 		named: #time
@@ -2215,12 +2217,12 @@ DatabasePlatform >> timeConverter [
 		fromDbToSt: #readTime:for:.	"#printTime:for:"
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> timestamp [
 	self subclassResponsibility.
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 DatabasePlatform >> timestampConverter [
 	^DelegatingDatabaseConverter
 		named: #timestamp
@@ -2229,7 +2231,7 @@ DatabasePlatform >> timestampConverter [
 		fromDbToSt: #readTimestamp:for:.	"#printTimestamp:for:"
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 DatabasePlatform >> timestampToDateConverter [
 	^DelegatingDatabaseConverter
 		named: #timestampToDate
@@ -2238,19 +2240,19 @@ DatabasePlatform >> timestampToDateConverter [
 		fromDbToSt: #readDate:for:.
 ]
 
-{ #category : #'type converters' }
+{ #category : 'type converters' }
 DatabasePlatform >> tinyint [
 	^self number
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 DatabasePlatform >> toByteaSQLString: aByteArray for: aType [
 	^String streamContents: [ :s | 
 		s nextPut: $\. 
 		aByteArray printHexOn: s ]
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 DatabasePlatform >> toDate: anObject for: aType [
 	"SQL supports adding an integer to a date, meaning incrementing the date by that number of days, so we pass integer values here as well as dates."
 
@@ -2260,7 +2262,7 @@ DatabasePlatform >> toDate: anObject for: aType [
 	^anObject asDate
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 DatabasePlatform >> toGlorpType: aGlorpType fromString: aString [
 	"Return a Smalltalk instance of the type indicated by aGlorpType."
 	
@@ -2271,14 +2273,14 @@ DatabasePlatform >> toGlorpType: aGlorpType fromString: aString [
 			aClass readFrom: aString readStream]
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 DatabasePlatform >> toTime: anObject for: aType [
 	anObject isNil ifTrue: [^nil].
 	anObject class = Time ifTrue: [^anObject].
 	^anObject asTime.
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 DatabasePlatform >> toTimestamp: anObject for: aType [
 	"SQL supports adding an integer to a date, meaning incrementing the date by that number of days.  Oracle and SQLServer use Timestamp and Date as synonyms, so we pass integer values here as well as in #toDate:for:."
 
@@ -2288,7 +2290,7 @@ DatabasePlatform >> toTimestamp: anObject for: aType [
 	^anObject asDateAndTime
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 DatabasePlatform >> trimString: aString for: aType [ 
 	| trimmedString length excess |
 	aType width isNil ifTrue: [^aString].
@@ -2309,7 +2311,7 @@ DatabasePlatform >> trimString: aString for: aType [
 	true] whileTrue.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> typeNamed: aSymbol ifAbsentPut: aBlock [
 
 	| type |
@@ -2322,7 +2324,7 @@ DatabasePlatform >> typeNamed: aSymbol ifAbsentPut: aBlock [
 	^type.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> typeWithDatabaseName: aString characterWidth: aNumber [
 	"Return our type which matches the database name for the type. Assumes all variable width fields are strings right now."
 	| baseType matchingTypes simpleTypes |
@@ -2335,13 +2337,13 @@ DatabasePlatform >> typeWithDatabaseName: aString characterWidth: aNumber [
 	^baseType hasWidth ifTrue: [baseType copy width: aNumber] ifFalse: [baseType].
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> typeWithDatabaseName: aString characterWidth: aNumber extraInformation: anythingElse [
 	"Return our type which matches the database name for the type. Assumes all variable width fields are strings right now."
 	^self typeWithDatabaseName: aString characterWidth: aNumber.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> typeWithQueriedDatabaseDescription: row inflector: inflector [
 	| type name dbType parameters isNullable defaultValue isPrimaryKey scale |
 	name := row at: 1.
@@ -2388,13 +2390,13 @@ DatabasePlatform >> typeWithQueriedDatabaseDescription: row inflector: inflector
 	^type
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> types [
 	types == nil ifTrue: [types := IdentityDictionary new].
 	^types.
 ]
 
-{ #category : #'type helpers' }
+{ #category : 'type helpers' }
 DatabasePlatform >> typesWithValues [
 	"Return our types list, but makes sure it has at least basic types in it"
 	self varchar.
@@ -2412,7 +2414,7 @@ DatabasePlatform >> typesWithValues [
 	^self types.
 ]
 
-{ #category : #'conversion - strings' }
+{ #category : 'conversion - strings' }
 DatabasePlatform >> unpadString: aString for: aType [
 	aString isNil ifTrue: [^nil].
 	^aType isVariableWidth 
@@ -2420,7 +2422,7 @@ DatabasePlatform >> unpadString: aString for: aType [
 		ifFalse: [(ReadStream on: aString) upTo: self paddingCharacter]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> useBinding [
 	"Return true if we should use binding"
 
@@ -2429,72 +2431,72 @@ DatabasePlatform >> useBinding [
 	^useBinding
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> useBinding: aBoolean [
 	useBinding := aBoolean.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> useMicrosoftOuterJoins [
 	"Return true if we use the Microsoft x *= y syntax for outer joins"
 	^false.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> useOracleOuterJoins [
 	"Return true if we use the old Oracle x = y (+) syntax for outer joins"
 	^false.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> usesArrayBindingRatherThanGroupWriting [
 	"Return true if we use array binding for grouped writes rather than printing the sql multiple times. Only applies if we support grouped writes"
 	^self subclassResponsibility.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> usesArrayBindingRatherThanGrouping [
 	"Return true if we use array binding for grouped writes rather than printing the sql multiple times. Only applies if we support grouped writes"
 	^self subclassResponsibility.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> usesIdentityColumns [
 	^false.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> usesInformationSchema [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> usesLengthNotEndPosInSubstring [
 	"Glorp provides arguments start position and end position to SUBSTR by default but in some databases this function wants arguments (start) position and length."
 
 	^false
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> usesNullForEmptyStrings [
 	"Return true if this database is likely to use nil as an empty string value"
 	^false.
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 DatabasePlatform >> usesNullForFalse [
 	"Return true if this database is likely to use nil as an empty string value"
 	^false.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabasePlatform >> usesPrimaryKeyUniqueConstraintNames [
 	"When dropping/creating primary key constraints, do they have distinguished names."
 	^true.
 ]
 
-{ #category : #'services tables' }
+{ #category : 'services tables' }
 DatabasePlatform >> validateTableName: tableNameString [
 	" <Boolean> I return true, if the choosen tableNameString is valid for the platform"
 
@@ -2502,52 +2504,52 @@ DatabasePlatform >> validateTableName: tableNameString [
 			and: [ (self predefinedKeywords includes: tableNameString asLowercase) not ]
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> varChar [
 	^self varchar.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> varChar: anInt [
 
 	^self varchar width: anInt asInteger.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> varbinary [
 	^self subclassResponsibility.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> varbinary: anInteger [
 	^self varbinary width: anInteger.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> varchar [
 	^self subclassResponsibility.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> varchar: anInt [
 
 	^self varchar width: anInt.
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 DatabasePlatform >> versionFieldFor: aType [
 	"Don't cache this, because we want to return different instances depending on aType"
 	^(VersionType underlyingType: aType) generatesOverExistingValues: true; platform: self.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabasePlatform >> vwConnectionClass [
 	^self isODBCPlatform 
 			ifTrue: [self vwODBCConnectionClass]
 			ifFalse: [self vwEXDIConnectionClass]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabasePlatform >> vwODBCConnectionClass [
 	"Prefer Threaded over not if nothing is loaded, but use whatever is loaded if there is anything"
 
@@ -2558,7 +2560,7 @@ DatabasePlatform >> vwODBCConnectionClass [
 	^'ODBCThreadedConnection' asQualifiedReference valueIfUndefinedLoadFrom: 'ODBCThapiEXDI'
 ]
 
-{ #category : #'services constraints' }
+{ #category : 'services constraints' }
 DatabasePlatform >> writeConstraintToDrop: aConstraint onStream: aStream [
 	aStream
 		nextPutAll: 'CONSTRAINT ';

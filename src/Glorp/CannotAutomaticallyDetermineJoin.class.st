@@ -9,41 +9,43 @@ Instance Variables:
 
 "
 Class {
-	#name : #CannotAutomaticallyDetermineJoin,
-	#superclass : #GlorpError,
+	#name : 'CannotAutomaticallyDetermineJoin',
+	#superclass : 'GlorpError',
 	#instVars : [
 		'constraints',
 		'tables'
 	],
-	#category : #'Glorp-Exceptions'
+	#category : 'Glorp-Exceptions',
+	#package : 'Glorp',
+	#tag : 'Exceptions'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CannotAutomaticallyDetermineJoin >> constraints [
 
 	constraints ifNil: [ constraints := #(  ) ].
 	^ constraints
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CannotAutomaticallyDetermineJoin >> constraints: aCollection [
 
 	constraints := aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CannotAutomaticallyDetermineJoin >> defaultMessageText [
 
 	^ 'Cannot calculate the join automatically, not enough information.'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CannotAutomaticallyDetermineJoin >> tables [
 
 	^ tables
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CannotAutomaticallyDetermineJoin >> tables: databaseTables [
 
 	tables := databaseTables

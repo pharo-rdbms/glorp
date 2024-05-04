@@ -10,8 +10,8 @@ Instance Variables:
 
 "
 Class {
-	#name : #CompoundQuery,
-	#superclass : #Query,
+	#name : 'CompoundQuery',
+	#superclass : 'Query',
 	#instVars : [
 		'queries',
 		'operation',
@@ -21,130 +21,132 @@ Class {
 		'limit',
 		'offset'
 	],
-	#category : #'Glorp-Queries'
+	#category : 'Glorp-Queries',
+	#package : 'Glorp',
+	#tag : 'Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CompoundQuery class >> newIntersect [
 	^self new operation: #INTERSECT
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CompoundQuery class >> newMinus [
 	^self new operation: #EXCEPT
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CompoundQuery class >> newUnionAll [
 	^self new operation: #'UNION ALL'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompoundQuery >> addQuery: aQuery [
 	queries isEmpty ifTrue: [primaryQuery := aQuery].
 	queries add: aQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompoundQuery >> baseExpression [
 	^queries first baseExpression
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 CompoundQuery >> copyOfBuilders [ 
 	^primaryQuery copyOfBuilders
 ]
 
-{ #category : #'boolean operations' }
+{ #category : 'boolean operations' }
 CompoundQuery >> except: aQuery [
 	^self minus: aQuery
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 CompoundQuery >> executeWithParameters: parameterArray in: aSession [
 	session := aSession.
 	^self 
 		readFromDatabaseWithParameters: parameterArray
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompoundQuery >> hasLimit [
 
 	^ self limit isNotNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompoundQuery >> hasOffset [
 
 	^ self offset isNotNil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CompoundQuery >> initialize [
 	super initialize.
 	requiresDistinct := true.
 	queries := OrderedCollection new: 3.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompoundQuery >> isIntersect [
 	^operation = #INTERSECT.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompoundQuery >> isMinus [
 	^operation = 'EXCEPT'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CompoundQuery >> isUnionAll [
 	^operation = #'UNION ALL'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompoundQuery >> joins [
 	^queries inject: #() into: [:sum :each | sum, each joins]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompoundQuery >> limit [
 	^limit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompoundQuery >> limit: anInteger [
 	"Adding a limit value will wrap the union queries in a SELECT statement"
 	limit := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompoundQuery >> mightHaveDuplicateRows [
 	^primaryQuery mightHaveDuplicateRows
 ]
 
-{ #category : #'boolean operations' }
+{ #category : 'boolean operations' }
 CompoundQuery >> minus: aQuery [
 	aQuery shortCircuitEmptyReturn ifTrue: [^self].
 	^CompoundQuery newMinus addQuery: self; addQuery: aQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompoundQuery >> offset [
 	^ offset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompoundQuery >> offset: anInteger [
 	"Adding an offset value will wrap the union queries in a SELECT statement"
 	offset := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompoundQuery >> operation: aString [
 	operation := aString
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 CompoundQuery >> postCopy [
 
 	super postCopy.
@@ -152,7 +154,7 @@ CompoundQuery >> postCopy [
 	primaryQuery := queries first.
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 CompoundQuery >> prepare [
 	| |
 	queries do: [:each | each session: session].
@@ -163,12 +165,12 @@ CompoundQuery >> prepare [
 	grouping isNil ifFalse: [grouping := (self expressionBlockFor: grouping) asGlorpExpressionOn: queries first baseExpression]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompoundQuery >> primaryQuery: aQuery [
 	primaryQuery := aQuery
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CompoundQuery >> printCompoundSelectAliasesOn: aStream [
 	"We only want one table. This is a somewhat convoluted way of getting 't1' uniformly appended"
 	aStream nextPutAll: ' '.
@@ -176,47 +178,47 @@ CompoundQuery >> printCompoundSelectAliasesOn: aStream [
 		primaryQuery tablesToPrint first printSQLOn: aStream withParameters: nil]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CompoundQuery >> printOffsetOn: aCommand [
 	self hasOffset ifFalse: [^self].
 	self platform printOffset: self offset on: aCommand
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CompoundQuery >> printOperationOn: aCommand [
 	aCommand space.
 	aCommand nextPutAll: (self platform compoundOperationFor: operation).
 	aCommand space
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CompoundQuery >> printPostLimitOn: aCommand [
 	self hasLimit ifFalse: [^self].
 	self platform printPostLimit: self limit on: aCommand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompoundQuery >> proxyType [
 	^primaryQuery proxyType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompoundQuery >> proxyType: aClass [	
 	"We currently ignore proxy types and use the ones from our main query."
 	^self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompoundQuery >> queries [
 	^queries
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompoundQuery >> queries: aCollectionOfQueries [
 	queries := aCollectionOfQueries
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 CompoundQuery >> readFromDatabaseWithParameters: anArray [
 	| answerStream result |
 	answerStream := self rowsFromDatabaseWithParameters: anArray.
@@ -225,22 +227,22 @@ CompoundQuery >> readFromDatabaseWithParameters: anArray [
 		ifFalse: [self resultCollectionFor: answerStream]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompoundQuery >> requiresDistinct [
 	^requiresDistinct
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompoundQuery >> requiresDistinct: aBoolean [
 	requiresDistinct := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompoundQuery >> resultClass [
 	^primaryQuery resultClass
 ]
 
-{ #category : #'sql generation' }
+{ #category : 'sql generation' }
 CompoundQuery >> rewriteExcept [
 	"Rewrite any EXCEPT operation we have into a NOT EXISTS test with a correlated subselect. Only a CompoundQuery would have an EXCEPT"
 	
@@ -250,7 +252,7 @@ CompoundQuery >> rewriteExcept [
 	^self rewriteSetOperationUsing: #notExists:
 ]
 
-{ #category : #'sql generation' }
+{ #category : 'sql generation' }
 CompoundQuery >> rewriteIntersect [
 	"Rewrite any INTERSECT operation we have into an EXISTS test for a correlated subselect. Only a CompoundQuery would have an intersect"
 	
@@ -260,7 +262,7 @@ CompoundQuery >> rewriteIntersect [
 	^self rewriteSetOperationUsing: #exists:
 ]
 
-{ #category : #'sql generation' }
+{ #category : 'sql generation' }
 CompoundQuery >> rewriteSetOperationUsing: aSelector [
 	"Rewrite any INTERSECT OR EXCEPT operation we have into a correlated EXISTS or NOT EXISTS test, respectively. We take the sub-query, and AND into it a constraint that its base expression is equal to the first queries base expression, and then do either an exists: or a notExists:, depending on aSelector."
 	
@@ -275,41 +277,41 @@ CompoundQuery >> rewriteSetOperationUsing: aSelector [
 	^newQuery
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 CompoundQuery >> rowsFromDatabaseWithParameters: anArray [
 	^session accessor
 		executeCommand: (self sqlWith: anArray)
 		returnCursor: true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompoundQuery >> shortCircuitEmptyReturn [
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompoundQuery >> shortCircuitEmptyReturn: parameters [
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompoundQuery >> shouldRefresh [
 	^primaryQuery shouldRefresh
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompoundQuery >> shouldRefresh: aBoolean [
 	"We currently ignore sets of this, and use the value from our primary query."
 	^self
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CompoundQuery >> sqlString [
 	"Mostly for debugging"
 	^(self sqlWith: #()) sqlString
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 CompoundQuery >> sqlWith: aDictionary [
 
 	self prepare.
@@ -324,17 +326,17 @@ CompoundQuery >> sqlWith: aDictionary [
 		session: session
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CompoundQuery >> tablesToPrint [
 	^self queries first tablesToPrint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompoundQuery >> tracing [
 	^primaryQuery tracing
 ]
 
-{ #category : #'boolean operations' }
+{ #category : 'boolean operations' }
 CompoundQuery >> unionAll: aQuery [
 	aQuery shortCircuitEmptyReturn ifTrue: [^self].
 	^self isUnionAll
@@ -347,7 +349,7 @@ CompoundQuery >> unionAll: aQuery [
 				addQuery: aQuery]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CompoundQuery >> whereClause [
 	| allCriteria |
 	allCriteria := queries inject: #() into: [:sum :each | sum, each whereClause].

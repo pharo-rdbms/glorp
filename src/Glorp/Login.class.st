@@ -12,8 +12,8 @@ Instance Variables:
 
 "
 Class {
-	#name : #Login,
-	#superclass : #Object,
+	#name : 'Login',
+	#superclass : 'Object',
 	#instVars : [
 		'encodingStrategy',
 		'database',
@@ -28,10 +28,12 @@ Class {
 		'secure',
 		'settings'
 	],
-	#category : #'Glorp-Core'
+	#category : 'Glorp-Core',
+	#package : 'Glorp',
+	#tag : 'Core'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Login >> = aLogin [
 
 	^ self class == aLogin class and: [
@@ -41,38 +43,38 @@ Login >> = aLogin [
 					  self connectString = aLogin connectString ] ] ] ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Login >> asGlorpLogin [
 	"Polymorph with objects that know how to convert themselves to Logins, e.g. Store ConnectionProfiles."
 
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Login >> connectString [
 
 	^ connectString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Login >> connectString: aString [
 
 	connectString := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Login >> database [
 
 	^ database
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Login >> database: aDatabasePlatform [
 
 	database := aDatabasePlatform
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Login >> databaseName [
 	"connect string looks like hostname:portNumber_db-name.
 	:portNumber is optional"
@@ -88,38 +90,38 @@ Login >> databaseName [
 	^ databaseName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Login >> databaseName: aDatabaseName [
 
 	databaseName := aDatabaseName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Login >> discardPassword [
 
 	password := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Login >> encodingStrategy [
 
 	^ encodingStrategy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Login >> encodingStrategy: anEncodingStrategy [
 
 	encodingStrategy := anEncodingStrategy
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Login >> hash [
 
 	^ self name hash + self database class hash + self username hash
 	  + self connectString hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Login >> host [
 	"connect string looks like hostname:portNumber_db-name.
 	:portNumber is optional"
@@ -135,13 +137,13 @@ Login >> host [
 	^ host
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Login >> host: aHost [
 
 	host := aHost
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Login >> initialize [
 
 	super initialize.
@@ -150,26 +152,26 @@ Login >> initialize [
 	schema := ''
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Login >> isSSL [
 	"Return true if my current connection is SSL encrypted"
 
 	^ settings at: #ssl ifAbsent: [ false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Login >> name [
 
 	name ifNil: [ ^ self connectString ] ifNotNil: [ ^ name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Login >> name: aString [
 
 	name := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Login >> password [
 	"Return the password for this login. If we are in a secure mode, then erase the password as soon as it is accessed."
 
@@ -179,19 +181,19 @@ Login >> password [
 	^ returnValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Login >> password: aString [
 
 	password := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Login >> platform [
 
 	^ self database
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Login >> port [
 	"connect string looks like hostname:portNumber_db-name.
 	:portNumber is optional"
@@ -210,13 +212,13 @@ Login >> port [
 			^ port]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Login >> port: aPort [
 
 	port := aPort
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Login >> printOn: aStream [
 
 	aStream nextPutAll: 'a Login('.
@@ -230,50 +232,50 @@ Login >> printOn: aStream [
 	aStream nextPutAll: ')'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Login >> schema [
 
 	^ schema
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Login >> schema: aString [
 
 	schema := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Login >> secure [
 
 	^ secure
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Login >> secure: aBoolean [
 
 	secure := aBoolean
 ]
 
-{ #category : #'session creation' }
+{ #category : 'session creation' }
 Login >> sessionForDescriptorSystem: aDescriptorSystemClass [
 	"Create a session for this login, using aDescriptorSystemClass for its metadata"
 
 	^ aDescriptorSystemClass sessionForLogin: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Login >> setSSL [
 
 	settings at: #ssl put: true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Login >> username [
 
 	^ username
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Login >> username: aString [
 
 	username := aString

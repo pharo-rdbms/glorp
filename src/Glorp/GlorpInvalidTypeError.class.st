@@ -8,40 +8,42 @@ Instance Variables:
 
 "
 Class {
-	#name : #GlorpInvalidTypeError,
-	#superclass : #GlorpError,
+	#name : 'GlorpInvalidTypeError',
+	#superclass : 'GlorpError',
 	#instVars : [
 		'object',
 		'expectedType'
 	],
-	#category : #'Glorp-Exceptions'
+	#category : 'Glorp-Exceptions',
+	#package : 'Glorp',
+	#tag : 'Exceptions'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpInvalidTypeError >> defaultMessageText [
 
 	^'Object being written does not match the type of the attribute: ''', self object printString,  ''' ~= ''' , self expectedType printString, ''''
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpInvalidTypeError >> expectedType [
 
 	^ expectedType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpInvalidTypeError >> expectedType: aGlorpClassModel [
 
 	expectedType := aGlorpClassModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpInvalidTypeError >> object [
 
 	^ object
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpInvalidTypeError >> object: anObject [
 
 	object := anObject

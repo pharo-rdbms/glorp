@@ -7,27 +7,29 @@ Instance Variables
 
 "
 Class {
-	#name : #QueryDeleteCommand,
-	#superclass : #SelectCommand,
+	#name : 'QueryDeleteCommand',
+	#superclass : 'SelectCommand',
 	#instVars : [
 		'rowCount'
 	],
-	#category : #'Glorp-Database'
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QueryDeleteCommand >> bindingTypes [
 
 	^ #(  )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QueryDeleteCommand >> bindings [
 
 	^ #(  )
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 QueryDeleteCommand >> executeUnboundIn: anAccessor [
 
 	anAccessor returnRowCount: true.
@@ -39,19 +41,19 @@ QueryDeleteCommand >> executeUnboundIn: anAccessor [
 	^#() readStream
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 QueryDeleteCommand >> isDeleteCommand [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 QueryDeleteCommand >> needsRowCount [
 
 	^ true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 QueryDeleteCommand >> printSQL [
 
 	stream nextPutAll: 'DELETE '.
@@ -59,37 +61,37 @@ QueryDeleteCommand >> printSQL [
 	query printUnqualifiedWhereClauseOn: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QueryDeleteCommand >> query [
 
 	^ query
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QueryDeleteCommand >> query: anObject [
 
 	query := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QueryDeleteCommand >> rowCount [
 
 	^ rowCount
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QueryDeleteCommand >> rowCount: anInteger [
 
 	rowCount := anInteger
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 QueryDeleteCommand >> tables [
 
 	^ (self query tablesToPrint collect: [ :each | each parent ]) asSet
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 QueryDeleteCommand >> useBinding [
 	"For simplicity, just don't use binding here to start with"
 

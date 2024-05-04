@@ -1,6 +1,6 @@
-Extension { #name : #TableBasedSequence }
+Extension { #name : 'TableBasedSequence' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 TableBasedSequence class >> default [
 
 	^self new sequenceTableName: 'SEQUENCE'.

@@ -2,12 +2,14 @@
 A command to insert our set of rows.
 "
 Class {
-	#name : #InsertCommand,
-	#superclass : #RowBasedCommand,
-	#category : #'Glorp-Database'
+	#name : 'InsertCommand',
+	#superclass : 'RowBasedCommand',
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InsertCommand >> arrayBoundFields [
 	"For array binding, include all the fields, except if we're inserting into a database with identity columns, where we must omit those columns"
 
@@ -17,7 +19,7 @@ InsertCommand >> arrayBoundFields [
 		  ifFalse: [ row table fields ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InsertCommand >> basicPrintSQLFor: aRow [
 
 	| fields |
@@ -44,7 +46,7 @@ InsertCommand >> basicPrintSQLFor: aRow [
 	self nextPutAll: ')'
 ]
 
-{ #category : #'bound values' }
+{ #category : 'bound values' }
 InsertCommand >> bindingTypes [
 	| all basic size |
 	^(self shouldUseGroupWriting)
@@ -60,7 +62,7 @@ InsertCommand >> bindingTypes [
 		ifFalse: [self singleRowBoundFields collect: [:each | each type]].
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 InsertCommand >> printSQL [
 
 	| iterations |
@@ -79,14 +81,14 @@ InsertCommand >> printSQL [
 		separatedBy: [ self nextPutAll: '; ' ]
 ]
 
-{ #category : #'bound values' }
+{ #category : 'bound values' }
 InsertCommand >> singleRowBoundFields [
 	"Include only the fields that have values in our particular row"
 
 	^ row nonGeneratedFieldsWithValues
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 InsertCommand >> supportsGroupWriting [
 
 	^ true

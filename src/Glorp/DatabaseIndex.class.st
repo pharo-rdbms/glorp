@@ -8,48 +8,50 @@ Instance Variables:
 
 "
 Class {
-	#name : #DatabaseIndex,
-	#superclass : #Object,
+	#name : 'DatabaseIndex',
+	#superclass : 'Object',
 	#instVars : [
 		'name',
 		'fields'
 	],
-	#category : #'Glorp-Database'
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 DatabaseIndex class >> forField: aField [
 	^(self new initialize)
 		addField: aField;
 		yourself
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 DatabaseIndex class >> forFields: aCollection [
 	^(self new)
 		addFields: aCollection;
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DatabaseIndex >> addField: aField [
 
 	^ fields add: aField
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DatabaseIndex >> addFields: aCollection [
 
 	fields addAll: aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseIndex >> fields [
 
 	^ fields
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DatabaseIndex >> generateName [
 	"Generate a name for this index that will fit within the size limits of the database. This only takes into account the first field being used. If there's more than one that has multiple columns and the same first one, then the user will have to manually provide a name"
 
@@ -68,20 +70,20 @@ DatabaseIndex >> generateName [
 	^stream contents
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseIndex >> indexesField: aField [
 
 	^ fields includes: aField
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DatabaseIndex >> initialize [
 
 	super initialize.
 	fields := OrderedCollection new: 2
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 DatabaseIndex >> isTheSameAs: aDatabaseIndex [
 	"Validate that two indexes are exactly the same. Most useful for testing purposes, rather than normal usage, which is why we don't just use the #= method."
 
@@ -90,20 +92,20 @@ DatabaseIndex >> isTheSameAs: aDatabaseIndex [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseIndex >> name [
 
 	name ifNil: [ name := self generateName ].
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseIndex >> name: aString [
 
 	name := aString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DatabaseIndex >> printStatementOn: aStream [
 
 	aStream nextPut: $(.
@@ -111,7 +113,7 @@ DatabaseIndex >> printStatementOn: aStream [
 	aStream skip: -1; nextPut: $)
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DatabaseIndex >> printStatementOn: aStream platform: aPlatform [
 	"Some platforms need to quote some column names."
 

@@ -3,12 +3,14 @@ This represents a function that prints postfix, meaning its name comes after its
 
 "
 Class {
-	#name : #PostfixFunction,
-	#superclass : #FunctionExpression,
-	#category : #'Glorp-Expressions'
+	#name : 'PostfixFunction',
+	#superclass : 'FunctionExpression',
+	#category : 'Glorp-Expressions',
+	#package : 'Glorp',
+	#tag : 'Expressions'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 PostfixFunction >> printSQLOn: aStream withParameters: aDictionary [
 
 	base printSQLOn: aStream withParameters: aDictionary.
@@ -16,7 +18,7 @@ PostfixFunction >> printSQLOn: aStream withParameters: aDictionary [
 	aStream nextPutAll: ' '; nextPutAll: function
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 PostfixFunction >> printUnqualifiedSQLOn: aStream withParameters: aDictionary [
 
 	base printUnqualifiedSQLOn: aStream withParameters: aDictionary.

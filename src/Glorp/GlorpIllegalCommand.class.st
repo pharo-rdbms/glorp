@@ -7,33 +7,35 @@ Instance Variables:
 
 "
 Class {
-	#name : #GlorpIllegalCommand,
-	#superclass : #GlorpError,
+	#name : 'GlorpIllegalCommand',
+	#superclass : 'GlorpError',
 	#instVars : [
 		'command'
 	],
-	#category : #'Glorp-Exceptions'
+	#category : 'Glorp-Exceptions',
+	#package : 'Glorp',
+	#tag : 'Exceptions'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpIllegalCommand >> command [
 
 	^ command
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpIllegalCommand >> command: aDatabaseCommand [
 
 	command := aDatabaseCommand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpIllegalCommand >> defaultMessageText [
 
 	^ 'Illegal Command'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpIllegalCommand >> session [
 
 	^ command session

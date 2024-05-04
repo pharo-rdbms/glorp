@@ -2,12 +2,14 @@
 This is a helper class for methods that I'd like to be able to add as extensions, but don't want to for fear of conflicting with dialects that have them, or people who implement them for their own projects, and any other miscellaneous extensions. One extension is that this class is in the Smalltalk namespace, so is universally accessible, and it provides a way for class extensions that don't have visibility of the Glorp namespace to access the Dialect class.
 "
 Class {
-	#name : #GlorpHelper,
-	#superclass : #Object,
-	#category : #'Glorp-Exceptions'
+	#name : 'GlorpHelper',
+	#superclass : 'Object',
+	#category : 'Glorp-Exceptions',
+	#package : 'Glorp',
+	#tag : 'Exceptions'
 }
 
-{ #category : #classes }
+{ #category : 'classes' }
 GlorpHelper class >> dialect [
 	"Provide a way to refer to the dialect class from an extension or class that doesn't include the Glorp namespace, while still avoiding explicit namespace imports (which confuse other dialects when the 'pool dictionaries' don't exist)."
 
@@ -18,7 +20,7 @@ GlorpHelper class >> dialect [
 		  ifAbsent: [ Smalltalk at: #Dialect ]
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 GlorpHelper class >> do: aBlock for: aCollection separatedBy: separatorBlock [
 
 	| array |
@@ -31,13 +33,13 @@ GlorpHelper class >> do: aBlock for: aCollection separatedBy: separatorBlock [
 			separatorBlock value]]
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 GlorpHelper class >> glorpConstantExpressionClass [
 
 	^ self dialect glorpConstantExpressionClass
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 GlorpHelper class >> print: printBlock on: stream for: aCollection separatedBy: separatorString [
 
 	| array |
@@ -48,7 +50,7 @@ GlorpHelper class >> print: printBlock on: stream for: aCollection separatedBy: 
 			stream nextPutAll: separatorString]]
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 GlorpHelper class >> separate: aCollection by: aOneArgumentBlock [
 
 	^ aCollection inject: Dictionary new into: [ :dict :each |

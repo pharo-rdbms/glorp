@@ -11,8 +11,8 @@ Instance Variables
 
 "
 Class {
-	#name : #FunctionExpression,
-	#superclass : #GlorpExpression,
+	#name : 'FunctionExpression',
+	#superclass : 'GlorpExpression',
 	#instVars : [
 		'function',
 		'base',
@@ -23,16 +23,18 @@ Class {
 	#classInstVars : [
 		'functions'
 	],
-	#category : #'Glorp-Expressions'
+	#category : 'Glorp-Expressions',
+	#package : 'Glorp',
+	#tag : 'Expressions'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FunctionExpression class >> basicFunctions [
 	functions isNil ifTrue: [functions := self createBasicFunctionsFor: nil].
 	^functions.
 ]
 
-{ #category : #setup }
+{ #category : 'setup' }
 FunctionExpression class >> createBasicFunctionsFor: anObject [
 	| exists notExists defaultFunctions |
 	defaultFunctions := IdentityDictionary new.
@@ -88,7 +90,7 @@ FunctionExpression class >> createBasicFunctionsFor: anObject [
 	^defaultFunctions.
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FunctionExpression class >> for: aSymbol withArguments: anArray basedOn: anExpression [
 	| base system |
 	base := anExpression ultimateBaseExpression.
@@ -96,7 +98,7 @@ FunctionExpression class >> for: aSymbol withArguments: anArray basedOn: anExpre
 	^self for: aSymbol withArguments: anArray basedOn: anExpression system: system
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FunctionExpression class >> for: aSymbol withArguments: anArray basedOn: anExpression system: system [
 	| functionTemplate newFunction |
 	functionTemplate := (system isNil
@@ -109,57 +111,57 @@ FunctionExpression class >> for: aSymbol withArguments: anArray basedOn: anExpre
 	^newFunction
 ]
 
-{ #category : #initializing }
+{ #category : 'initializing' }
 FunctionExpression class >> initialize [
 
 	self resetFunctions.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FunctionExpression class >> named: aString [
 	"Used for creating template instances only"
 
 	^self new function: aString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FunctionExpression class >> resetFunctions [
 	"self resetFunctions"
 	functions := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FunctionExpression >> alias [
 
 	^ alias
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FunctionExpression >> alias: aString [
 
 	alias := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FunctionExpression >> arguments [
 
 	^ #(  )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FunctionExpression >> arguments: anArray [
 
 	^ self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FunctionExpression >> asDistinctFieldOn: anExpression [
 
 	self isDistinct ifTrue: [ ^ self asGlorpExpressionOn: anExpression ].
 	^ super asDistinctFieldOn: anExpression
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 FunctionExpression >> asExpressionJoiningSource: source toTarget: target [
 	"Create a general expression which represents this relationship where the values of the targets (which are normally parameters) are supplied out of the context provided by 'target' and the source fields are referencing things out of the context of source. Produces something suitable for ANDing into an expression when doing a join
    Example: If we had CUSTOMER.ADDRESS_ID = ADDRESS.ID as a parameter, and we want to AND this into an expression [:customer | customer address street = 'Main'] then we have customer as a base, and we get
@@ -173,7 +175,7 @@ FunctionExpression >> asExpressionJoiningSource: source toTarget: target [
 		  base: newBase
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FunctionExpression >> asNonDistinctField [
 
 	^ self isDistinct
@@ -181,32 +183,32 @@ FunctionExpression >> asNonDistinctField [
 		  ifFalse: [ self ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 FunctionExpression >> base [
 
 	^ base
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FunctionExpression >> base: anExpression [
 
 	base := anExpression
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FunctionExpression >> canBeUsedForRetrieve [
 	"Return true if this is a valid argument for a retrieve: clause"
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FunctionExpression >> canHaveBase [
 
 	^ true
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 FunctionExpression >> convertValueOf: anObject in: aDictionary [
 
 	| translated |
@@ -217,7 +219,7 @@ FunctionExpression >> convertValueOf: anObject in: aDictionary [
 	^self base convertedDbValueOf: translated
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FunctionExpression >> convertedDbValueOf: anObject [
 	"Not clear what should happen here, but let's just pass it through for the moment"
 
@@ -226,7 +228,7 @@ FunctionExpression >> convertedDbValueOf: anObject [
 		  toDatabaseRepresentationAs: self type
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FunctionExpression >> converterForStType: aClass [
 
 	^ self type notNil
@@ -234,7 +236,7 @@ FunctionExpression >> converterForStType: aClass [
 		  ifFalse: [ self field converterForStType: aClass ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 FunctionExpression >> createFor: arguments [
 
 	| new |
@@ -244,7 +246,7 @@ FunctionExpression >> createFor: arguments [
 	^ new
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 FunctionExpression >> createFor: anArray withBase: anExpression symbol: aSymbol [
 
 	| new |
@@ -256,14 +258,14 @@ FunctionExpression >> createFor: anArray withBase: anExpression symbol: aSymbol 
 	^ new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FunctionExpression >> defaultType [
 	"We don't know our type. Return a basic numeric type as being as good a guess as any."
 
 	^ base system platform numeric
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 FunctionExpression >> do: aBlock skipping: aSet [
 	"Iterate over the expression tree. Keep track of who has already been visited, so we don't get trapped in cycles or visit nodes twice."
 
@@ -273,31 +275,31 @@ FunctionExpression >> do: aBlock skipping: aSet [
 	aBlock value: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FunctionExpression >> field [
 
 	^ base field
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FunctionExpression >> fieldExpression [
 
 	^ base fieldExpression
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FunctionExpression >> function: aString [
 
 	function := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FunctionExpression >> function: aString arguments: anArray [
 
 	self function: aString
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 FunctionExpression >> get: aSymbol withArguments: anArray [
 	| functionExpression |
 	functionExpression := self getFunction: aSymbol withArguments: anArray.
@@ -308,69 +310,69 @@ FunctionExpression >> get: aSymbol withArguments: anArray [
 		withArguments: anArray
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FunctionExpression >> hasField [
 	"If we correspond to a single field, return it. This is a bit of a hack having this only here, because for some functions it doesn't work."
 
 	^ base hasField
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FunctionExpression >> impliedSmalltalkType [
 
 	type isNil ifFalse: [ ^ type impliedSmalltalkType ].
 	^ self field impliedSmalltalkType
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FunctionExpression >> isDistinct [
 
 	^ function = 'DISTINCT'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FunctionExpression >> isGenerated [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FunctionExpression >> isSameAliasedFieldAs: aFieldOrFunction [
 
 	^ self == aFieldOrFunction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FunctionExpression >> mappedFields [
 
 	^ Array with: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FunctionExpression >> mappedFieldsCount [
 
 	^ 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FunctionExpression >> name [
 
 	^ function
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FunctionExpression >> printOnlySelfOn: aStream [
 
 	aStream nextPutAll: function
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FunctionExpression >> printSQLOn: aStream withParameters: aDictionary [
 
 	self subclassResponsibility
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FunctionExpression >> printSelectSQLOn: aStream withParameters: aDictionary [
 
 	self printSQLOn: aStream withParameters: aDictionary.
@@ -380,26 +382,26 @@ FunctionExpression >> printSelectSQLOn: aStream withParameters: aDictionary [
 			nextPutAll: alias ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FunctionExpression >> printTreeOn: aStream [
 
 	aStream nextPutAll: function
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FunctionExpression >> printsIntoJoins [
 	"Certain functions should be printed into joins as well as into select lists (e.g. UPPER). However, there are others that don't (at least I don't think so) make any sense in joins, e.g. DISTINCT. Differentiate the two. Right now the only one I can think of that doesn't make sense is distinct. It's not clear to me that I'm not just hacking my way through this"
 
 	^ self isDistinct not
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 FunctionExpression >> queryLevelBaseExpression [
 
 	^ base queryLevelBaseExpression
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 FunctionExpression >> rebuildOn: aBaseExpression startingFrom: anExpression withOuterScopeBase: ultimateBaseExpression [
 
 	| rebuilt |
@@ -409,25 +411,25 @@ FunctionExpression >> rebuildOn: aBaseExpression startingFrom: anExpression with
 	^rebuilt
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 FunctionExpression >> rewriteBooleanEquality: relation [
 
 	base := base rewriteBooleanEquality: relation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FunctionExpression >> symbol [
 
 	^ symbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FunctionExpression >> symbol: aSymbol [
 
 	symbol := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FunctionExpression >> table [
 
 	(self hasField and: [ self field notNil ]) ifTrue: [
@@ -436,19 +438,19 @@ FunctionExpression >> table [
 	^ self base table
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FunctionExpression >> tablesToPrint [
 
 	^ #(  )
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 FunctionExpression >> translateField: aField [
 
 	^ base translateField: aField
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FunctionExpression >> type [
 
 	| field |
@@ -459,31 +461,31 @@ FunctionExpression >> type [
 		  ifFalse: [ field type ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FunctionExpression >> type: aGlorpDatabaseType [
 
 	type := aGlorpDatabaseType
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 FunctionExpression >> ultimateBaseExpression [
 
 	^ base ultimateBaseExpression
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 FunctionExpression >> valueInBuilder: anElementBuilder [
 
 	^ self base valueInBuilder: anElementBuilder as: self
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 FunctionExpression >> valueInBuilder: anElementBuilder as: anExpression [
 
 	^ self base valueInBuilder: anElementBuilder as: anExpression
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 FunctionExpression >> withTable: aTable [
 	"For a function expression, we shouldn't need to do anything here. It will have already been rebuilt on a base that has aliases"
 

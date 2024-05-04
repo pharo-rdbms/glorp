@@ -13,61 +13,63 @@ Instance Variables:
 
 "
 Class {
-	#name : #ObjectTransaction,
-	#superclass : #Object,
+	#name : 'ObjectTransaction',
+	#superclass : 'Object',
 	#instVars : [
 		'undoMap',
 		'collectionMementos'
 	],
-	#category : #'Glorp-UnitOfWork'
+	#category : 'Glorp-UnitOfWork',
+	#package : 'Glorp',
+	#tag : 'UnitOfWork'
 }
 
-{ #category : #'begin/commit/abort' }
+{ #category : 'begin/commit/abort' }
 ObjectTransaction >> abort [
 	undoMap keysAndValuesDo: [:original :copy | self restoreStateOf: original toThatOf: copy]
 ]
 
-{ #category : #'begin/commit/abort' }
+{ #category : 'begin/commit/abort' }
 ObjectTransaction >> abort: original [
 	| copy |
 	copy := undoMap at: original ifAbsent: [^self].
 	self restoreStateOf: original toThatOf: copy
 ]
 
-{ #category : #'begin/commit/abort' }
+{ #category : 'begin/commit/abort' }
 ObjectTransaction >> begin [
 	self initializeUndoMap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectTransaction >> collectionMementoFor: anObject [
 	anObject isNil ifTrue: [^#()].
 	^collectionMementos at: anObject ifAbsent: [self mementoFor: anObject]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectTransaction >> collectionMementos [
 	^collectionMementos
 ]
 
-{ #category : #'begin/commit/abort' }
+{ #category : 'begin/commit/abort' }
 ObjectTransaction >> commit [
 	self initializeUndoMap
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ObjectTransaction >> initialize [
 	self initializeUndoMap.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ObjectTransaction >> initializeUndoMap [
 
 	undoMap := IdentityDictionary new: 1000.
 	collectionMementos := IdentityDictionary new: 200
 ]
 
-{ #category : #registering }
+{ #category : 'registering' }
 ObjectTransaction >> isRegistered: anObject [ 
 	"Note: We can never have a situation where a proxy is registered but its contents aren't, so we don't have to worry about that ambiguous case."
 	| realObject |
@@ -75,30 +77,30 @@ ObjectTransaction >> isRegistered: anObject [
 	^undoMap includesKey: realObject
 ]
 
-{ #category : #'private/restoring' }
+{ #category : 'private/restoring' }
 ObjectTransaction >> isShapeOf: original differentThanThatOf: copy [
 
 	^original class ~~ copy class or: [original glorpBasicSize ~= copy glorpBasicSize]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectTransaction >> mementoFor: anObject [
 	^undoMap at: anObject
 ]
 
-{ #category : #registering }
+{ #category : 'registering' }
 ObjectTransaction >> needsCollectionMementoFor: aCollection [
 	"We can avoid the need for a collection copy if the collection has no internal structure - that is, if we'll be able to loop over a simple shallow copy. This is dialect and collection class dependent"
 	^Dialect needsCollectionMementoFor: aCollection
 ]
 
-{ #category : #registering }
+{ #category : 'registering' }
 ObjectTransaction >> realObjectFor: anObject [ 
 	"If this is a proxy, return the contents (if available). Otherwise, return nil"
 	^self realObjectFor: anObject ifNone: [nil]
 ]
 
-{ #category : #registering }
+{ #category : 'registering' }
 ObjectTransaction >> realObjectFor: anObject ifNone: aBlock [
 	"If this is a proxy, return the contents (if available). Otherwise, evaluate the block"
 	^anObject isGlorpProxy 
@@ -106,7 +108,7 @@ ObjectTransaction >> realObjectFor: anObject ifNone: aBlock [
 		ifFalse: [anObject]
 ]
 
-{ #category : #registering }
+{ #category : 'registering' }
 ObjectTransaction >> register: anObject [ 
 	"Make anObject be a member of the current transaction. Return the object if registered, or nil otherwise"
 
@@ -119,7 +121,7 @@ ObjectTransaction >> register: anObject [
 	^realObject
 ]
 
-{ #category : #registering }
+{ #category : 'registering' }
 ObjectTransaction >> registerTransientInternalsOfCollection: aCollection [
 	"If this is a collection, then we may need to register any internal structures it has, e.g. an internal array. This is implementation dependent for the collection. We will also explicitly exclude strings"
 
@@ -137,7 +139,7 @@ postCopy call to it explicitly to get the behaviour we need without changing Dic
 in VA, which might have side-effects.  This feature's tests have been altered to check this copy safety."
 ]
 
-{ #category : #registering }
+{ #category : 'registering' }
 ObjectTransaction >> registeredObjectsDo: aBlock [
 	"Iterate over all our objects. Note that this will include objects without descriptors. Be sure we're iterating over a copy of the keys, because `aBlock` may add objects to the undoMap. Allow the block to return a collection which we will then add to the list of things to process, until there's nothing further"
 
@@ -155,7 +157,7 @@ ObjectTransaction >> registeredObjectsDo: aBlock [
 				]
 ]
 
-{ #category : #registering }
+{ #category : 'registering' }
 ObjectTransaction >> requiresRegistrationFor: anObject [
 
 	| realObject |
@@ -163,7 +165,7 @@ ObjectTransaction >> requiresRegistrationFor: anObject [
 	^(self isRegistered: realObject) not
 ]
 
-{ #category : #'private/restoring' }
+{ #category : 'private/restoring' }
 ObjectTransaction >> restoreIndexedInstanceVariablesOf: original toThoseOf: copy [
 
 	copy glorpStartOfIndexedInstVars to: copy glorpEndOfIndexedInstVars do: [:index |
@@ -172,14 +174,14 @@ ObjectTransaction >> restoreIndexedInstanceVariablesOf: original toThoseOf: copy
 			ifFalse: [original basicAt: index put: (copy basicAt: index)]]
 ]
 
-{ #category : #'private/restoring' }
+{ #category : 'private/restoring' }
 ObjectTransaction >> restoreNamedInstanceVariablesOf: original toThoseOf: copy [
 
 	1 to: copy class instSize do: [:index |
 		original instVarAt: index put: (copy instVarAt: index)]
 ]
 
-{ #category : #'private/restoring' }
+{ #category : 'private/restoring' }
 ObjectTransaction >> restoreShapeOf: original toThatOf: copy [
 
 	| newOriginal |
@@ -189,7 +191,7 @@ ObjectTransaction >> restoreShapeOf: original toThatOf: copy [
 	original become: newOriginal
 ]
 
-{ #category : #'private/restoring' }
+{ #category : 'private/restoring' }
 ObjectTransaction >> restoreStateOf: original toThatOf: copy [ 
 
 	(self isShapeOf: original differentThanThatOf: copy) 
@@ -198,7 +200,7 @@ ObjectTransaction >> restoreStateOf: original toThatOf: copy [
 	self restoreIndexedInstanceVariablesOf: original toThoseOf: copy
 ]
 
-{ #category : #'private/registering' }
+{ #category : 'private/registering' }
 ObjectTransaction >> shallowCopyOf: anObject ifNotNeeded: aBlock [
 
 	| copy |
@@ -208,7 +210,7 @@ ObjectTransaction >> shallowCopyOf: anObject ifNotNeeded: aBlock [
 		ifFalse: [copy]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectTransaction >> undoMap [
 	^undoMap
 ]

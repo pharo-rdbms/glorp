@@ -10,18 +10,20 @@ Instance Variables:
 
 "
 Class {
-	#name : #RelationExpression,
-	#superclass : #GlorpExpression,
+	#name : 'RelationExpression',
+	#superclass : 'GlorpExpression',
 	#instVars : [
 		'relation',
 		'leftChild',
 		'rightChild',
 		'outerJoin'
 	],
-	#category : #'Glorp-Expressions'
+	#category : 'Glorp-Expressions',
+	#package : 'Glorp',
+	#tag : 'Expressions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RelationExpression class >> named: aSymbol basedOn: anExpression withArguments: anArray [
 
 	^(self new)
@@ -30,7 +32,7 @@ RelationExpression class >> named: aSymbol basedOn: anExpression withArguments: 
 		withArguments: anArray.
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 RelationExpression >> addBoundExpressionsIn: aCommand to: boundExpressions [
 	"If our right-child can be used for binding, add it to the list. We need to do this at this level because the expressions themselves don't know what type they'll be matched against"
 
@@ -41,13 +43,13 @@ RelationExpression >> addBoundExpressionsIn: aCommand to: boundExpressions [
 	(self useBindingFor: translated to: leftChild type in: aCommand) ifTrue: [boundExpressions add: self].
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 RelationExpression >> additionalExpressions [
 
 	^#().
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : 'As yet unclassified' }
 RelationExpression >> allSourceFields [
 	"If we are sending this, then we're treating the expression as a join, for a complex (and probably read-only) relationship. So in that case we want to treat the source fields as the parameters that this expression takes, and specifically the parameters that are based on fields."
 	^self inject: OrderedCollection new into: [:sum :each |
@@ -55,13 +57,13 @@ RelationExpression >> allSourceFields [
 		sum].
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : 'As yet unclassified' }
 RelationExpression >> allTargetFields [
 	"If we are sending this, then we're treating the expression as a join, for a complex (and probably read-only) relationship. So in that case we want to treat the target fields as being the source fields of the bottom-most mapping. That is, the fields we'll use to connect to the thing we want are the things that our expression's base (which represents the thing we want) would use to connect to the first level mapping arising from it. If we have a relation, that's a bit of a mess, but guess that we want the left child's information."
 	^self leftChild allTargetFields.
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 RelationExpression >> asExpressionJoiningSource: source toTarget: target [
 	"Create a general expression which represents this relationship where the values of the targets (which are normally parameters) are supplied out of the context provided by 'target' and the source fields are referencing things out of the context of source. Produces something suitable for ANDing into an expression when doing a join
    Example: If we had CUSTOMER.ADDRESS_ID = ADDRESS.ID as a parameter, and we want to AND this into an expression [:customer | customer address street = 'Main'] then we have customer as a base, and we get 
@@ -77,13 +79,13 @@ RelationExpression >> asExpressionJoiningSource: source toTarget: target [
 		rightChild: right.
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RelationExpression >> asField [
 
 	^ self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RelationExpression >> asGeneralGlorpExpression [
 	"Convert the result to a general (tree-format) expression, if it's the more limited join expression."
 
@@ -94,7 +96,7 @@ RelationExpression >> asGeneralGlorpExpression [
 	^ result
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RelationExpression >> asGeneralGlorpExpressionWithFields [
 	"Convert the result to a general (tree-format) expression, if it's the more limited join expression."
 
@@ -105,7 +107,7 @@ RelationExpression >> asGeneralGlorpExpressionWithFields [
 	^ result
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RelationExpression >> asIndependentJoins [
 
 	"If this is an ANDed clause, referring to two different tables split it into independent joins"
@@ -120,7 +122,7 @@ RelationExpression >> asIndependentJoins [
 			  sum ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RelationExpression >> asJoin [
 
 	| leftField rightField |
@@ -131,7 +133,7 @@ RelationExpression >> asJoin [
 	^ leftChild asJoin , rightChild asJoin
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : 'As yet unclassified' }
 RelationExpression >> assembleCompositePrimaryKeyFrom: anArray and: anotherArray [
 	"The arrays will be the same size, and if both have non-nil values in a given slot, those values will be the same.  This is caused by the calling method; the array is the size the table's compiosite primary key must be and the values are the values are derived from the field positions."
 
@@ -143,7 +145,7 @@ RelationExpression >> assembleCompositePrimaryKeyFrom: anArray and: anotherArray
 	^ anArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationExpression >> beOuterJoin [
 
 	outerJoin := true.
@@ -151,34 +153,34 @@ RelationExpression >> beOuterJoin [
 	rightChild beOuterJoin
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 RelationExpression >> bindingIn: aCommand [
 
 	^ self convertValueOf: rightChild in: aCommand parameters
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 RelationExpression >> bindingType [
 	"If we're to be used for binding, return the field type to be bound to"
 
 	^ self leftChild bindingType
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RelationExpression >> canHaveBase [
 	"Return true if this type of expression can have a base expression on which other things can be built. Doesn't say whether we actually have a valid one or not."
 
 	^ true
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : 'As yet unclassified' }
 RelationExpression >> canUseBinding [
 	"Return true if we can use binding for our right child's value"
 
 	^ self expectsCollectionArgument not
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 RelationExpression >> condenseBooleanEquality [
 
 	(relation = #AND | (relation = #OR)) ifFalse: [^self].
@@ -198,14 +200,14 @@ RelationExpression >> condenseBooleanEquality [
 	^self
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 RelationExpression >> condenseBooleanEqualityExpressions [
 
 	leftChild := leftChild condenseBooleanEquality.
 	rightChild := rightChild condenseBooleanEquality
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 RelationExpression >> condensePrimaryKeyComparison [
 	"This tries to condense expressions of the form
          something relatedObject id = x
@@ -232,7 +234,7 @@ RelationExpression >> condensePrimaryKeyComparison [
 		ifFalse: [(self leftChild base base getField: sourceField) get: relation withArguments: (Array with: self rightChild)].
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 RelationExpression >> condensePrimaryKeyComparisons [
 	"Because we're replacing the expression, we need to do it at the parent and replace the previous child"
 
@@ -240,7 +242,7 @@ RelationExpression >> condensePrimaryKeyComparisons [
 	rightChild := rightChild condensePrimaryKeyComparison
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 RelationExpression >> convertValueOf: anObject in: aDictionary [
 
 	| translated convertedValue |
@@ -257,14 +259,14 @@ RelationExpression >> convertValueOf: anObject in: aDictionary [
 	^ convertedValue
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : 'As yet unclassified' }
 RelationExpression >> convertedDbValueOf: anObject [
 	"Assume that our types match, so we can ask either child to do the conversion. That isn't guaranteed, but should at least work for the common cases."
 
 	^ leftChild convertedDbValueOf: anObject
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 RelationExpression >> createFor: arguments withBase: anExpression symbol: aSymbol [
 	"Create a copy of our expression with the given parameters. Used in function creation, for 'functions' like isNil that really just turn into relations."
 
@@ -274,7 +276,7 @@ RelationExpression >> createFor: arguments withBase: anExpression symbol: aSymbo
 		  withArguments: (Array with: rightChild)
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 RelationExpression >> do: aBlock skipping: aSet [
 
 	| clauses |
@@ -290,13 +292,13 @@ RelationExpression >> do: aBlock skipping: aSet [
 			aBlock value: self ]
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : 'As yet unclassified' }
 RelationExpression >> expectsCollectionArgument [
 
 	^ self relationsWithCollectionArguments includes: relation
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RelationExpression >> generalExpressionPart [
 
 	| left right |
@@ -308,7 +310,7 @@ RelationExpression >> generalExpressionPart [
 	^ self
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 RelationExpression >> get: aSymbol withArguments: anArray [
 	"We treat NOT as a function, so we have to check for functions here"
 
@@ -321,7 +323,7 @@ RelationExpression >> get: aSymbol withArguments: anArray [
 			self perform: aSymbol withArguments: anArray.]
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 RelationExpression >> hasBindableExpressionsIn: aCommand [
 	"Return true if our right-child can be used for binding. We need to do this at this level because the expressions themselves don't know what type they'll be matched against"
 
@@ -334,26 +336,26 @@ RelationExpression >> hasBindableExpressionsIn: aCommand [
 		  in: aCommand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationExpression >> isOuterJoin [
 
 	outerJoin isNil ifTrue: [ outerJoin := false ].
 	^ outerJoin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationExpression >> leftChild [
 
 	^ leftChild
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationExpression >> leftChild: anExpression [
 
 	leftChild := anExpression
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 RelationExpression >> mappableSourceFieldsDo: aBlock [
 	"Used when we are emulating a Join"
 
@@ -361,19 +363,19 @@ RelationExpression >> mappableSourceFieldsDo: aBlock [
 		source isMappable ifTrue: [ aBlock value: source ] ]
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 RelationExpression >> mappedFields [
 
 	^ Array with: self
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 RelationExpression >> mappedFieldsCount [
 
 	^ 1
 ]
 
-{ #category : #'private/initializing' }
+{ #category : 'private/initializing' }
 RelationExpression >> named: aSymbol basedOn: anExpression withArguments: anArray [
 
 	| base right rightBase |
@@ -399,7 +401,7 @@ RelationExpression >> named: aSymbol basedOn: anExpression withArguments: anArra
 		              ifFalse: [ right ]
 ]
 
-{ #category : #'private/initializing' }
+{ #category : 'private/initializing' }
 RelationExpression >> operationFor: aSymbol [
 	"Simple translation of operators"
 
@@ -416,20 +418,20 @@ RelationExpression >> operationFor: aSymbol [
 	^aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationExpression >> outerJoin [
 
 	outerJoin isNil ifTrue: [ outerJoin := false ].
 	^ outerJoin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationExpression >> outerJoin: aBoolean [
 
 	outerJoin := aBoolean
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : 'As yet unclassified' }
 RelationExpression >> primaryKeyFromDictionary: aDictionary [
 	"Given a set of parameters, return a primary key suitable for retrieving our target. Do this only if the expression is for a primary key, and has no other conditions than the primary key one.  If the table's primary key is composite, return the array that will be needed with the found values in the right position and nils elsewhere.  (If unreferenced primaryKey fields are nillable, this could return a matching key.  A query with other values elsewhere will throw away the primary key, returning nil.  One without will "
 
@@ -465,7 +467,7 @@ RelationExpression >> primaryKeyFromDictionary: aDictionary [
 			"field table may be alias with PK fields of original, so (field table primaryKeyFields indexOf: field) = 0" ]
 ]
 
-{ #category : #'printing SQL' }
+{ #category : 'printing SQL' }
 RelationExpression >> printBasicSQLOn: aCommand withParameters: aDictionary [
 
 	aCommand nextPut: $(.
@@ -478,7 +480,7 @@ RelationExpression >> printBasicSQLOn: aCommand withParameters: aDictionary [
 	aCommand nextPut: $)
 ]
 
-{ #category : #'printing SQL' }
+{ #category : 'printing SQL' }
 RelationExpression >> printBasicUnqualifiedSQLOn: aCommand withParameters: aDictionary [
 
 	aCommand nextPut: $(.
@@ -491,7 +493,7 @@ RelationExpression >> printBasicUnqualifiedSQLOn: aCommand withParameters: aDict
 	aCommand nextPut: $)
 ]
 
-{ #category : #'printing SQL' }
+{ #category : 'printing SQL' }
 RelationExpression >> printComparisonTo: value withParameters: aDictionary on: aStream [
 	"Horribly convoluted logic to handle the cases where the value might be a constant, an expression that results in a value (constant or parameter) or a regular expression, with the caveat that any value that turns out to be null has to be printed with IS NULL rather than = NULL."
 
@@ -511,7 +513,7 @@ RelationExpression >> printComparisonTo: value withParameters: aDictionary on: a
 				on: aStream].
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : 'As yet unclassified' }
 RelationExpression >> printForANSIJoinTo: table on: aCommand [
 	"Print ourselves as table JOIN otherTable USING (criteria). Return the table we joined"
 
@@ -524,7 +526,7 @@ RelationExpression >> printForANSIJoinTo: table on: aCommand [
 	^ table
 ]
 
-{ #category : #'printing SQL' }
+{ #category : 'printing SQL' }
 RelationExpression >> printMicrosoftOuterJoinOn: aCommand [
 
 	self isOuterJoin ifFalse: [ ^ self ].
@@ -532,13 +534,13 @@ RelationExpression >> printMicrosoftOuterJoinOn: aCommand [
 		aCommand nextPutAll: '*' ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RelationExpression >> printOnlySelfOn: aStream [
 
 	aStream nextPutAll: relation
 ]
 
-{ #category : #'printing SQL' }
+{ #category : 'printing SQL' }
 RelationExpression >> printOracleOuterJoinOn: aCommand [
 
 	self isOuterJoin ifFalse: [ ^ self ].
@@ -550,7 +552,7 @@ RelationExpression >> printOracleOuterJoinOn: aCommand [
 		aCommand nextPutAll: ' (+) ' ]
 ]
 
-{ #category : #'printing SQL' }
+{ #category : 'printing SQL' }
 RelationExpression >> printRelationOn: aStream [
 
 	aStream space.
@@ -560,7 +562,7 @@ RelationExpression >> printRelationOn: aStream [
 		space
 ]
 
-{ #category : #'printing SQL' }
+{ #category : 'printing SQL' }
 RelationExpression >> printSQLOn: aStream withParameters: aDictionary [
 
 	self leftChild hasImpliedClauses
@@ -573,13 +575,13 @@ RelationExpression >> printSQLOn: aStream withParameters: aDictionary [
 		self printBasicSQLOn: aStream withParameters: aDictionary ]
 ]
 
-{ #category : #'printing SQL' }
+{ #category : 'printing SQL' }
 RelationExpression >> printSelectSQLOn: aStream withParameters: aDictionary [
 
 	self printSQLOn: aStream withParameters: aDictionary
 ]
 
-{ #category : #'printing SQL' }
+{ #category : 'printing SQL' }
 RelationExpression >> printSimpleValueComparisonTo: value on: aStream [
 
 	value isNil
@@ -589,7 +591,7 @@ RelationExpression >> printSimpleValueComparisonTo: value on: aStream [
 			self printValue: value on: aStream ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RelationExpression >> printTreeOn: aStream [
 
 	aStream
@@ -600,7 +602,7 @@ RelationExpression >> printTreeOn: aStream [
 		print: rightChild
 ]
 
-{ #category : #'printing SQL' }
+{ #category : 'printing SQL' }
 RelationExpression >> printUnqualifiedComparisonTo: value withParameters: aDictionary on: aStream [
 	"Horribly convoluted logic to handle the cases where the value might be a constant, an expression that results in a value (constant or parameter) or a regular expression, with the caveat that any value that turns out to be null has to be printed with IS NULL rather than = NULL."
 
@@ -620,7 +622,7 @@ RelationExpression >> printUnqualifiedComparisonTo: value withParameters: aDicti
 				on: aStream]
 ]
 
-{ #category : #'printing SQL' }
+{ #category : 'printing SQL' }
 RelationExpression >> printUnqualifiedSQLOn: aStream withParameters: aDictionary [
 
 	self leftChild hasImpliedClauses
@@ -637,7 +639,7 @@ RelationExpression >> printUnqualifiedSQLOn: aStream withParameters: aDictionary
 				withParameters: aDictionary]
 ]
 
-{ #category : #'printing SQL' }
+{ #category : 'printing SQL' }
 RelationExpression >> printValue: value on: aCommand [
 	| type |
 	type := [self leftChild type] on: Dialect error do: [:ex | self error: 'Invalid comparison operation: ', self printString].
@@ -653,7 +655,7 @@ RelationExpression >> printValue: value on: aCommand [
 				on: aCommand].
 ]
 
-{ #category : #'printing SQL' }
+{ #category : 'printing SQL' }
 RelationExpression >> printWithNullOn: aStream [
 	aStream nextPutAll: ' IS '.
 	self relation = #<> ifTrue: [
@@ -661,7 +663,7 @@ RelationExpression >> printWithNullOn: aStream [
 	aStream nextPutAll: 'NULL'.
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 RelationExpression >> queryLevelBaseExpression [
 
 	^ leftChild canHaveBase
@@ -669,7 +671,7 @@ RelationExpression >> queryLevelBaseExpression [
 		  ifFalse: [ rightChild queryLevelBaseExpression ]
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 RelationExpression >> rebuildOn: aBaseExpression startingFrom: anExpression withOuterScopeBase: ultimateBaseExpression [
 	| expression |
 	self == anExpression ifTrue: [^aBaseExpression].
@@ -683,25 +685,25 @@ RelationExpression >> rebuildOn: aBaseExpression startingFrom: anExpression with
 	^expression.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationExpression >> relation [
 
 	^ relation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationExpression >> relation: aSymbol [
 
 	relation := aSymbol
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : 'As yet unclassified' }
 RelationExpression >> relationsWithCollectionArguments [
 
 	^ #( #IN #'NOT IN' )
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 RelationExpression >> removeNonJoinParts [
 	"Remove anything that's not an actual join. Only useful if we have something that has mixed joins and general expressions, where we assume we don't want to use the general ones, because they're not field level. Also only meaningful to remove this for ANDs and ORs, not sub-components."
 
@@ -714,14 +716,14 @@ RelationExpression >> removeNonJoinParts [
 		              ifFalse: [ true asGlorpExpression ]
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 RelationExpression >> replaceJoinsWithInverse [
 	"Replace any actual Join objects we have with their inverse. Only useful if we have something that has mixed joins and general expressions, where we assume we don't want to mess with the general ones, because they're not field-level"
 	leftChild isJoin ifTrue: [leftChild := leftChild inverseJoin].
 	rightChild isJoin ifTrue: [rightChild := rightChild inverseJoin].
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 RelationExpression >> rewriteEquality [
 	| keyEquality descriptor describedClass |
 	leftChild := leftChild rewriteBooleanEquality: relation.
@@ -741,34 +743,34 @@ RelationExpression >> rewriteEquality [
 	^keyEquality.
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 RelationExpression >> rewriteEqualityExpressions [
 	leftChild := leftChild rewriteEquality.
 	rightChild := rightChild rewriteEquality.
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 RelationExpression >> rewriteFunctionArguments [
 	"If a function needs to adjust its arguments, do that here. The motivating example is one where a string argument is rewritten into a form that's of a different length, e.g. the Postgresql driver does that to strings in Blobs."
 	leftChild rewriteFunctionArgumentsWith: rightChild.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationExpression >> rightChild [
 	^rightChild
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationExpression >> rightChild: anExpression [
 	rightChild := anExpression
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 RelationExpression >> rightChildToRebuild [
 	^rightChild.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RelationExpression >> shortCircuitOnNullComparison: parameters [
 	"Return true if we represent an expression that compares null to a non-nullable value, so we don't ever need to really evaluate it.This could be more sophisticated and test if any part of an ANDed and not NOTed clause does such a comparison. But this will do for the most important cases"
 
@@ -779,7 +781,7 @@ RelationExpression >> shortCircuitOnNullComparison: parameters [
 		and: [value isNil and: [leftChild field isNullable not]])
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 RelationExpression >> sourceForTarget: aField [
 
 	| left |
@@ -792,7 +794,7 @@ RelationExpression >> sourceForTarget: aField [
 	^nil.
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : 'As yet unclassified' }
 RelationExpression >> tableToJoinFrom: aTableCollection [
 	"Return a table we could legitimately use at this point to write as an ANSI join - meaning that all but one must be  already used and thus available, and one that isn't. aTableCollection lists the used ones"
 	| possibleTables |
@@ -801,7 +803,7 @@ RelationExpression >> tableToJoinFrom: aTableCollection [
 	^possibleTables size = 1 ifTrue: [possibleTables first] ifFalse: [nil].
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : 'As yet unclassified' }
 RelationExpression >> tablesForANSIJoin [
 	"Which tables will we join. Assumes this is a single-level join"
 	^self inject: Set new into: [:sum :each |
@@ -809,7 +811,7 @@ RelationExpression >> tablesForANSIJoin [
 		sum].
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : 'As yet unclassified' }
 RelationExpression >> targetKeys [
 	"Assume that part of us is a join, and the rest doesn't count"
 	^self inject: OrderedCollection new into: [:sum :each |
@@ -817,19 +819,19 @@ RelationExpression >> targetKeys [
 		sum].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RelationExpression >> type [
 	"Assume that we can derive our type from our children's type. Not guaranteed to be true, but seems like it should work for the common cases."
 	^self leftChild type.
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 RelationExpression >> ultimateBaseExpression [
 
 	^leftChild canHaveBase ifTrue: [leftChild ultimateBaseExpression] ifFalse: [rightChild ultimateBaseExpression].
 ]
 
-{ #category : #'As yet unclassified' }
+{ #category : 'As yet unclassified' }
 RelationExpression >> useBindingFor: aValue to: aType in: aCommand [
 	"Return true if we can use binding for our right child's value, in the context of this command"
 	aCommand useBinding ifFalse: [^false].
@@ -837,7 +839,7 @@ RelationExpression >> useBindingFor: aValue to: aType in: aCommand [
 	^aCommand canBind: aValue to: aType.
 ]
 
-{ #category : #mapping }
+{ #category : 'mapping' }
 RelationExpression >> valueInBuilder: anElementBuilder [
 	^self leftChild valueInBuilder: anElementBuilder as: self
 ]

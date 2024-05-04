@@ -9,107 +9,109 @@ Instance Variables
 
 "
 Class {
-	#name : #CachePolicy,
-	#superclass : #Object,
+	#name : 'CachePolicy',
+	#superclass : 'Object',
 	#instVars : [
 		'expiryAction',
 		'numberOfElements'
 	],
-	#category : #'Glorp-Core'
+	#category : 'Glorp-Core',
+	#package : 'Glorp',
+	#tag : 'Core'
 }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 CachePolicy class >> default [
 
 	^ self new
 ]
 
-{ #category : #'wrap/unwrap' }
+{ #category : 'wrap/unwrap' }
 CachePolicy >> cacheEntryFor: anObject [
 
 	^ anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CachePolicy >> collectionForExtraReferences [
 
 	^ nil
 ]
 
-{ #category : #'wrap/unwrap' }
+{ #category : 'wrap/unwrap' }
 CachePolicy >> contentsOf: aCacheEntry [
 
 	^ aCacheEntry
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CachePolicy >> dictionaryClass [
 
 	^ Dictionary
 ]
 
-{ #category : #expiry }
+{ #category : 'expiry' }
 CachePolicy >> expire: anItem [
 	"Force anItem to be expired. This may be ignored if the policy doesn't respect this, and is ignored by default"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CachePolicy >> expiryAction [
 
 	^ expiryAction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CachePolicy >> expiryAction: aSymbol [
 	"See class comment for possible values"
 
 	expiryAction := aSymbol
 ]
 
-{ #category : #'wrap/unwrap' }
+{ #category : 'wrap/unwrap' }
 CachePolicy >> hasExpired: aCacheEntry [
 
 	^ false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CachePolicy >> initialize [
 
 	numberOfElements := 100.
 	expiryAction := #remove
 ]
 
-{ #category : #'wrap/unwrap' }
+{ #category : 'wrap/unwrap' }
 CachePolicy >> markEntryAsCurrent: aCacheEntry in: aCache [
 
 	^ self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CachePolicy >> newItemsIn: aCache [
 
 	^ self dictionaryClass new: 20
 ]
 
-{ #category : #expiry }
+{ #category : 'expiry' }
 CachePolicy >> notifyOfExpiry: anObject in: aCache [
 
 	anObject glorpNoticeOfExpiryIn: aCache session
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CachePolicy >> numberOfElements [
 
 	^ numberOfElements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CachePolicy >> numberOfElements: anInteger [
 
 	numberOfElements := anInteger
 ]
 
-{ #category : #expiry }
+{ #category : 'expiry' }
 CachePolicy >> release: aCache [
 
 	(expiryAction == #notify or: [ expiryAction == #notifyAndRemove ])
@@ -118,7 +120,7 @@ CachePolicy >> release: aCache [
 				(self contentsOf: each) glorpNoticeOfExpiryIn: aCache session ] ]
 ]
 
-{ #category : #expiry }
+{ #category : 'expiry' }
 CachePolicy >> takeExpiryActionForKey: key withValue: anObject in: aCache [
 
 	expiryAction == #refresh ifTrue: [ aCache session refresh: anObject ].
@@ -128,7 +130,7 @@ CachePolicy >> takeExpiryActionForKey: key withValue: anObject in: aCache [
 		aCache removeKey: key ifAbsent: [  ] ]
 ]
 
-{ #category : #expiry }
+{ #category : 'expiry' }
 CachePolicy >> willRemoveItems [
 
 	^ #(notifyAndRemove remove) includes: expiryAction

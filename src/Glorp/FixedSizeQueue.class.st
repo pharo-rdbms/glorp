@@ -6,61 +6,63 @@ Instance Variables:
 	maximumSize	<Integer>	How many items we're allowed
 "
 Class {
-	#name : #FixedSizeQueue,
-	#superclass : #Object,
+	#name : 'FixedSizeQueue',
+	#superclass : 'Object',
 	#instVars : [
 		'maximumSize',
 		'items'
 	],
-	#category : #'Glorp-Core'
+	#category : 'Glorp-Core',
+	#package : 'Glorp',
+	#tag : 'Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 FixedSizeQueue class >> isDeprecated [
 	"Class is unreferenced, we will soon remove it without replacement"
 
 	^ true
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FixedSizeQueue class >> maximumSize: anInteger [
 
 	^ self basicNew maximumSize: anInteger
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FixedSizeQueue class >> new [
 
 	self error: 'must supply a size'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FixedSizeQueue class >> new: anInteger [
 
 	^ self maximumSize: anInteger
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 FixedSizeQueue >> add: anObject [
 
 	items add: anObject.
 	items size > maximumSize ifTrue: [ items removeFirst ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FixedSizeQueue >> maximumSize [
 
 	^ maximumSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FixedSizeQueue >> maximumSize: anInteger [
 
 	maximumSize := anInteger.
 	items := OrderedCollection new: maximumSize + 1
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FixedSizeQueue >> printOn: aStream [
 
 	super printOn: aStream.

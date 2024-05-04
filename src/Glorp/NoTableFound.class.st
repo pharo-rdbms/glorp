@@ -7,27 +7,29 @@ Instance Variables:
 
 "
 Class {
-	#name : #NoTableFound,
-	#superclass : #ValidationError,
+	#name : 'NoTableFound',
+	#superclass : 'ValidationError',
 	#instVars : [
 		'expectedTables'
 	],
-	#category : #'Glorp-Exceptions'
+	#category : 'Glorp-Exceptions',
+	#package : 'Glorp',
+	#tag : 'Exceptions'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NoTableFound >> expectedTables [
 
 	^ expectedTables
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NoTableFound >> expectedTables: aCollection [
 
 	expectedTables := aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NoTableFound >> messageText [
 
 	messageText ifNotNil: [^messageText].
@@ -35,7 +37,7 @@ NoTableFound >> messageText [
 	^'No table found for <1s>, expected to see one of  <2s>' expandMacrosWith: self model name with: self expectedTables printString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 NoTableFound >> printOn: aStream [
 
 	aStream nextPutAll: self messageText

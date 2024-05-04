@@ -2,19 +2,21 @@
 I support Glorp's use of the SQLite database through NBSQLite3, the NativeBoost interface to SQLite for Pharo Smalltalk.
 "
 Class {
-	#name : #UDBCSQLite3Platform,
-	#superclass : #SQLite3Platform,
-	#category : #'Glorp-Platforms'
+	#name : 'UDBCSQLite3Platform',
+	#superclass : 'SQLite3Platform',
+	#category : 'Glorp-Platforms',
+	#package : 'Glorp',
+	#tag : 'Platforms'
 }
 
-{ #category : #types }
+{ #category : 'types' }
 UDBCSQLite3Platform >> boolean [
 	"Booleans are represented as integers within the database, but converted to Booleans by the driver"
 
 	^self typeNamed: #boolean ifAbsentPut: [GlorpBooleanType new typeString: 'boolean'].
 ]
 
-{ #category : #'conversion - boolean' }
+{ #category : 'conversion - boolean' }
 UDBCSQLite3Platform >> convertIntegerToBoolean: anInteger for: aType [
 
 	"UDBC SQLite transparently returns Smalltalk true/false/nil for SQL columns declared as boolean."
@@ -24,12 +26,12 @@ UDBCSQLite3Platform >> convertIntegerToBoolean: anInteger for: aType [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 UDBCSQLite3Platform >> isUDBCSQLite3Platform [
 	^ true
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 UDBCSQLite3Platform >> printDate: aTimestamp isoFormatOn: stream [
 	"Print the date as yyyy-mm-dd"
 
@@ -46,7 +48,7 @@ UDBCSQLite3Platform >> printDate: aTimestamp isoFormatOn: stream [
 	stream nextPut: $"
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 UDBCSQLite3Platform >> printTime: aTimeString for: aType [
 	
 	aTimeString isNil ifTrue: [^'NULL'].
@@ -57,7 +59,7 @@ UDBCSQLite3Platform >> printTime: aTimeString for: aType [
 
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 UDBCSQLite3Platform >> printTime: aTimestamp isoFormatOn: stream milliseconds: aBoolean [
 	"Print the time as hh:mm:ss.mmm"
 	| ms |
@@ -78,7 +80,7 @@ UDBCSQLite3Platform >> printTime: aTimestamp isoFormatOn: stream milliseconds: a
 
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 UDBCSQLite3Platform >> printTimestamp: aTimestampString on: stream for: aType [
 
 	aTimestampString isNil ifTrue: [stream nextPutAll: 'NULL'. ^self].
@@ -87,7 +89,7 @@ UDBCSQLite3Platform >> printTimestamp: aTimestampString on: stream for: aType [
 	stream nextPut: $'.
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 UDBCSQLite3Platform >> readDate: anObject for: aType [
 	"From DatabasePlatform."
 
@@ -98,7 +100,7 @@ UDBCSQLite3Platform >> readDate: anObject for: aType [
 	^anObject asDate.
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 UDBCSQLite3Platform >> readTime: anObject for: aType [
 	"From DatabasePlatform."
 
@@ -109,7 +111,7 @@ UDBCSQLite3Platform >> readTime: anObject for: aType [
 	^anObject asTime.
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 UDBCSQLite3Platform >> readTimestamp: anObject for: aType [
 	"From DatabasePlatform."
 
@@ -123,27 +125,27 @@ UDBCSQLite3Platform >> readTimestamp: anObject for: aType [
 	^anObject asDateAndTime.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 UDBCSQLite3Platform >> supportsArithmeticOperatorsOnDates [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 UDBCSQLite3Platform >> supportsBinding [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 UDBCSQLite3Platform >> supportsMillisecondsInTimes [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 UDBCSQLite3Platform >> supportsRowCount [
 	^ true
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 UDBCSQLite3Platform >> toDate: anObject for: aType [
 	"From DatabasePlatform."
 
@@ -153,7 +155,7 @@ UDBCSQLite3Platform >> toDate: anObject for: aType [
 	^anObject asDate
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 UDBCSQLite3Platform >> toTime: anObject for: aType [
 	"From DatabasePlatform."
 
@@ -162,7 +164,7 @@ UDBCSQLite3Platform >> toTime: anObject for: aType [
 	^anObject asTime.
 ]
 
-{ #category : #'conversion - times' }
+{ #category : 'conversion - times' }
 UDBCSQLite3Platform >> toTimestamp: anObject for: aType [
 	"From DatabasePlatform."
 
@@ -172,7 +174,7 @@ UDBCSQLite3Platform >> toTimestamp: anObject for: aType [
 	^anObject asDateAndTime
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 UDBCSQLite3Platform >> usesNullForEmptyStrings [
 	^ false
 ]

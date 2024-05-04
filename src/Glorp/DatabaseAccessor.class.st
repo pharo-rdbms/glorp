@@ -23,8 +23,8 @@ Instance Variables:
 
 "
 Class {
-	#name : #DatabaseAccessor,
-	#superclass : #Object,
+	#name : 'DatabaseAccessor',
+	#superclass : 'Object',
 	#instVars : [
 		'connection',
 		'currentLogin',
@@ -32,39 +32,40 @@ Class {
 		'reusePreparedStatements',
 		'deniedCommands',
 		'mutex',
-		'dependents',
 		'logOnly',
 		'logger'
 	],
 	#classVars : [
 		'LoggingEnabled'
 	],
-	#category : #'Glorp-Core'
+	#category : 'Glorp-Core',
+	#package : 'Glorp',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DatabaseAccessor class >> classForThisPlatform [
 
 	^PharoDatabaseAccessor
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DatabaseAccessor class >> forLogin: aLogin [ 
 	^self classForThisPlatform new currentLogin: aLogin
 ]
 
-{ #category : #'settings - logging' }
+{ #category : 'settings - logging' }
 DatabaseAccessor class >> loggingEnabled [
 	LoggingEnabled isNil ifTrue: [LoggingEnabled := false].
 	^LoggingEnabled
 ]
 
-{ #category : #'settings - logging' }
+{ #category : 'settings - logging' }
 DatabaseAccessor class >> loggingEnabled: aBoolean [ 
 	LoggingEnabled := aBoolean
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> addConstraint: aConstraint [
 
 	^ self
@@ -76,7 +77,7 @@ DatabaseAccessor >> addConstraint: aConstraint [
 				ex return: nil ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> addConstraint: aConstraint ifError: aBlock [
 
 	| addString |
@@ -87,7 +88,7 @@ DatabaseAccessor >> addConstraint: aConstraint ifError: aBlock [
 		  ifError: aBlock
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> addFields: aCollection [ 
 
 	self 
@@ -99,7 +100,7 @@ DatabaseAccessor >> addFields: aCollection [
 				ex return: nil]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> addFields: aCollection ifError: aBlock [
 
 	aCollection do: [ :aField |
@@ -110,7 +111,7 @@ DatabaseAccessor >> addFields: aCollection ifError: aBlock [
 			ifError: aBlock ]
 ]
 
-{ #category : #permissions }
+{ #category : 'permissions' }
 DatabaseAccessor >> allowCommand: aCommand during: aBlock [
 
 	| oldCommands |
@@ -120,7 +121,7 @@ DatabaseAccessor >> allowCommand: aCommand during: aBlock [
 	aBlock ensure: [ deniedCommands := oldCommands ]
 ]
 
-{ #category : #permissions }
+{ #category : 'permissions' }
 DatabaseAccessor >> alsoDenyCommand: aCommand [
 
 	self deniedCommands
@@ -129,7 +130,7 @@ DatabaseAccessor >> alsoDenyCommand: aCommand [
 		self deniedCommands: self deniedCommands , (Array with: aCommand) ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> alterField: aField newType: aType [ 
 
 	^ self 
@@ -142,7 +143,7 @@ DatabaseAccessor >> alterField: aField newType: aType [
 				ex return: nil]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> alterField: aField newType: aType ifError: aBlock [
 
 	^ self doDDLOperation: [
@@ -155,7 +156,7 @@ DatabaseAccessor >> alterField: aField newType: aType ifError: aBlock [
 			  ifError: aBlock ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> alterField: aField setDefault: aType [
 
 	self
@@ -168,7 +169,7 @@ DatabaseAccessor >> alterField: aField setDefault: aType [
 				ex return: nil]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> alterField: aField setDefault: anObject ifError: aBlock [
 
 	^ self doDDLOperation: [
@@ -181,7 +182,7 @@ DatabaseAccessor >> alterField: aField setDefault: anObject ifError: aBlock [
 			  ifError: aBlock ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> alterFieldDropDefault: aField [
 
 	self
@@ -193,7 +194,7 @@ DatabaseAccessor >> alterFieldDropDefault: aField [
 				ex return: nil]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> alterFieldDropDefault: aField ifError: aBlock [
 
 	^self doDDLOperation: [
@@ -203,7 +204,7 @@ DatabaseAccessor >> alterFieldDropDefault: aField ifError: aBlock [
 			ifError: aBlock ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> alterFieldDropNotNull: aField [
 
 	self
@@ -215,7 +216,7 @@ DatabaseAccessor >> alterFieldDropNotNull: aField [
 				ex return: nil]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> alterFieldDropNotNull: aField ifError: aBlock [
 
 	^self doDDLOperation: [
@@ -225,7 +226,7 @@ DatabaseAccessor >> alterFieldDropNotNull: aField ifError: aBlock [
 			ifError: aBlock ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> alterFieldSetNotNull: aField [
 
 	self
@@ -237,7 +238,7 @@ DatabaseAccessor >> alterFieldSetNotNull: aField [
 				ex return: nil]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> alterFieldSetNotNull: aField ifError: aBlock [
 
 	^ self doDDLOperation: [
@@ -247,25 +248,25 @@ DatabaseAccessor >> alterFieldSetNotNull: aField ifError: aBlock [
 			ifError: aBlock ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> basicExecuteSQLString: aString [
 
 	self subclassResponsibility
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> basicExecuteSQLString: aString bindingArray: aBindingArray [
 
 	self subclassResponsibility
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> basicExecuteSQLString: aString returnResult: returnResult binding: aBindingArray doing: aBlock [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> basicExecuteSQLStringNoResult: aString doing: aBlock [
 
 	^ self
@@ -275,19 +276,19 @@ DatabaseAccessor >> basicExecuteSQLStringNoResult: aString doing: aBlock [
 		  doing: aBlock
 ]
 
-{ #category : #permissions }
+{ #category : 'permissions' }
 DatabaseAccessor >> beReadOnly [
 
 	self denyWrites
 ]
 
-{ #category : #transactions }
+{ #category : 'transactions' }
 DatabaseAccessor >> beginTransaction [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #permissions }
+{ #category : 'permissions' }
 DatabaseAccessor >> checkPermissionFor: command [
 
 	deniedCommands ifNil: [ ^ self ].
@@ -295,44 +296,44 @@ DatabaseAccessor >> checkPermissionFor: command [
 		(GlorpIllegalCommand new command: command) signal ]
 ]
 
-{ #category : #transactions }
+{ #category : 'transactions' }
 DatabaseAccessor >> commitTransaction [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #cursors }
+{ #category : 'cursors' }
 DatabaseAccessor >> completedCommand: aCommand [
 	"Indicate that we've completed the command. Release associated resources."
 
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseAccessor >> connection [
 
 	^ connection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseAccessor >> connection: aPlatformDatabaseConnection [
 
 	connection := aPlatformDatabaseConnection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseAccessor >> connectionClass [
 
 	^ self connectionClassForLogin: currentLogin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseAccessor >> connectionClassForLogin: aLogin [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> copyDataFromField: fromField toField: toField ifError: errorBlock [
 
 	self
@@ -340,7 +341,7 @@ DatabaseAccessor >> copyDataFromField: fromField toField: toField ifError: error
 		ifError: errorBlock
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> copyDataFromTable: fromTable toTable: anotherTable ifError: errorBlock [
 
 	self
@@ -348,13 +349,13 @@ DatabaseAccessor >> copyDataFromTable: fromTable toTable: anotherTable ifError: 
 		ifError: errorBlock
 ]
 
-{ #category : #obsolete }
+{ #category : 'obsolete' }
 DatabaseAccessor >> createConstraint: aConstraint [
 
 	^ self addConstraint: aConstraint
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> createIndex: aGlorpDatabaseIndex forTable: aGlorpDatabaseTable ifError: aBlock [
 
 	self
@@ -366,7 +367,7 @@ DatabaseAccessor >> createIndex: aGlorpDatabaseIndex forTable: aGlorpDatabaseTab
 		ifError: aBlock
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> createSequence: aDatabaseSequence ifError: aBlock [
 
 	self
@@ -374,7 +375,7 @@ DatabaseAccessor >> createSequence: aDatabaseSequence ifError: aBlock [
 		ifError: aBlock
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> createTable: aGlorpDatabaseTable ifError: aBlock [
 	"This method should be used to create a database table from aTable"
 
@@ -386,7 +387,7 @@ DatabaseAccessor >> createTable: aGlorpDatabaseTable ifError: aBlock [
 		ifError: aBlock
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> createTableFKConstraints: aGLORBDatabaseTable ifError: aBlock [
 	"This method should be used to define foreign key constraints for a database table from aTable"
 
@@ -394,7 +395,7 @@ DatabaseAccessor >> createTableFKConstraints: aGLORBDatabaseTable ifError: aBloc
 		do: [ :each | self addConstraint: each ifError: aBlock ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> createTableIndexes: aGlorpDatabaseTable ifError: aBlock [
 	"Create all indexes for this table"
 
@@ -406,25 +407,25 @@ DatabaseAccessor >> createTableIndexes: aGlorpDatabaseTable ifError: aBlock [
 		ifError: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseAccessor >> currentLogin [
 
 	^ currentLogin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseAccessor >> currentLogin: aLogin [
 
 	currentLogin := aLogin
 ]
 
-{ #category : #cursors }
+{ #category : 'cursors' }
 DatabaseAccessor >> cursorFor: aStream [
 
 	^ GlorpCursoredStream on: aStream accessor: self
 ]
 
-{ #category : #cursors }
+{ #category : 'cursors' }
 DatabaseAccessor >> cursorFor: answerStream command: aCommand [
 
 	aCommand needsRowCount ifTrue: [
@@ -437,44 +438,44 @@ DatabaseAccessor >> cursorFor: answerStream command: aCommand [
 		  GlorpCursoredStream on: answerStream for: aCommand accessor: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseAccessor >> deniedCommands [
 
 	^ deniedCommands
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseAccessor >> deniedCommands: aCollection [
 
 	deniedCommands := aCollection
 ]
 
-{ #category : #permissions }
+{ #category : 'permissions' }
 DatabaseAccessor >> denyCommand: aCommand [
 
 	aCommand isBehavior ifFalse: [ self error: 'invalid command type' ].
 	self denyCommands: (Array with: aCommand)
 ]
 
-{ #category : #permissions }
+{ #category : 'permissions' }
 DatabaseAccessor >> denyCommands: aCollection [
 
 	deniedCommands := aCollection asArray
 ]
 
-{ #category : #permissions }
+{ #category : 'permissions' }
 DatabaseAccessor >> denyReads [
 
 	deniedCommands := SelectCommand allSubclasses
 ]
 
-{ #category : #permissions }
+{ #category : 'permissions' }
 DatabaseAccessor >> denyWrites [
 
 	deniedCommands := RowBasedCommand allSubclasses
 ]
 
-{ #category : #transactions }
+{ #category : 'transactions' }
 DatabaseAccessor >> doDDLOperation: aBlock [
 	"Execute DDL SQL - something which creates/drops/modifies tables or other schema information. The main reason for this method is that some databases require a transaction, while others don't require it, and still others don't allow it. Try to do the right thing."
 
@@ -483,7 +484,7 @@ DatabaseAccessor >> doDDLOperation: aBlock [
 		  ifFalse: aBlock
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> dropConstraint: aConstraint [
 
 	^self
@@ -495,7 +496,7 @@ DatabaseAccessor >> dropConstraint: aConstraint [
 				ex return: nil]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> dropConstraint: aConstraint ifError: aBlock [
 	| dropString |
 	self platform supportsConstraints ifFalse: [^self].
@@ -506,7 +507,7 @@ DatabaseAccessor >> dropConstraint: aConstraint ifError: aBlock [
 		ifError:aBlock
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> dropFields: aCollection [
 
 	self
@@ -518,7 +519,7 @@ DatabaseAccessor >> dropFields: aCollection [
 				ex return: nil]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> dropFields: aCollection ifError: aBlock [
 
 	aCollection do: [ :aField |
@@ -529,7 +530,7 @@ DatabaseAccessor >> dropFields: aCollection ifError: aBlock [
 			ifError: aBlock ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> dropForeignKeyConstraintsForTable: aTable ifError: aBlock [
 
 	aTable isImaginary ifTrue: [ ^ self ].
@@ -537,7 +538,7 @@ DatabaseAccessor >> dropForeignKeyConstraintsForTable: aTable ifError: aBlock [
 		self dropConstraint: each ifError: [ :ex | aBlock value: ex ] ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> dropSequence: aDatabaseSequence ifAbsent: aBlock [
 
 	self
@@ -546,7 +547,7 @@ DatabaseAccessor >> dropSequence: aDatabaseSequence ifAbsent: aBlock [
 		ifError: aBlock
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> dropSequences: anArray [
 
 	anArray do: [ :each |
@@ -555,7 +556,7 @@ DatabaseAccessor >> dropSequences: anArray [
 			ex return: nil ] ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> dropTable: aTable ifError: aBlock [
 
 	aTable isImaginary ifTrue: [ ^ self ].
@@ -563,7 +564,7 @@ DatabaseAccessor >> dropTable: aTable ifError: aBlock [
 	self dropTableDefinition: aTable ifError: aBlock
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> dropTableDefinition: aTable ifError: aBlock [
 	"The dropping of the primary key constraints (a singular object not a collection, despite its name) is probably not needed before dropping the table by any database platform.  If 'platform supportsConstraints' is false then it will not be done, since dropConstraint:ifError: assumes it is called on a foreign key constraint (the case in all other callers) and does nothing if the platform does not support them."
 
@@ -572,7 +573,7 @@ DatabaseAccessor >> dropTableDefinition: aTable ifError: aBlock [
 	self dropTableNamed: aTable qualifiedName ifAbsent: aBlock
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> dropTableNamed: aString [
 
 	self dropTableNamed: aString ifAbsent: [ :ex |
@@ -589,7 +590,7 @@ DatabaseAccessor >> dropTableNamed: aString [
 		ex return: nil ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> dropTableNamed: aString ifAbsent: aBlock [
 
 	self doDDLOperation: [
@@ -600,7 +601,7 @@ DatabaseAccessor >> dropTableNamed: aString ifAbsent: aBlock [
 			ifError: aBlock ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> dropTables: anArray [
 	anArray do: [:eachTable |
 				eachTable foreignKeyConstraints
@@ -615,14 +616,14 @@ DatabaseAccessor >> dropTables: anArray [
 							ex return: nil]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseAccessor >> encoding [
 	"The connection is specific to the dialect;  some dialects will need to override this method."
 
 	^ connection encoding
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseAccessor >> encoding: aSymbol [
 	"The platform is a Glorp databasePlatform, so its setter code is generic across all dialects.  The connection is specific to the dialect;  some dialects will need to override how its encoding is set.  In the hope that most dialects will find this works for them, and that coders porting to dialects in which it does not will benefit from seeing the walkback and knowing they have something to do, we attempt to set both at top level."
 
@@ -630,7 +631,7 @@ DatabaseAccessor >> encoding: aSymbol [
 	connection encoding: aSymbol
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 DatabaseAccessor >> endLogging [
 
 	self logger: nil.
@@ -638,19 +639,19 @@ DatabaseAccessor >> endLogging [
 	self logOnly: false
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> errorsToCatch [
 
 	^ Dialect error
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> execute: aBlock [
 
 	^ self execute: aBlock ifError: [ :ex | ex pass ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> execute: aBlock ifError: errorBlock [
 
 	^ aBlock
@@ -658,13 +659,13 @@ DatabaseAccessor >> execute: aBlock ifError: errorBlock [
 		  do: errorBlock
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> executeCommand: command [
 
 	^ self executeCommand: command returnCursor: false
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> executeCommand: command returnCursor: aBoolean [
 
 	^ mutex critical: [
@@ -681,14 +682,14 @@ DatabaseAccessor >> executeCommand: command returnCursor: aBoolean [
 			  ifFalse: [ result upToEnd ] ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> executeCommandBound: command [
 	"By default, we don't handle binding"
 
 	^ command executeUnboundIn: self
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> executeCommandUnbound: aCommand [
 
 	| cursor |
@@ -698,14 +699,14 @@ DatabaseAccessor >> executeCommandUnbound: aCommand [
 	^ cursor
 ]
 
-{ #category : #transactions }
+{ #category : 'transactions' }
 DatabaseAccessor >> executeInDDLOperation: aBlock ifError: errorBlock [
 	"Execute DDL SQL - something which creates/drops/modifies tables or other schema information. The main reason for this method is that some databases require a transaction, while others don't require it, and still others don't allow it. Try to do the right thing."
 
 	^ self doDDLOperation: [ self execute: aBlock ifError: errorBlock ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> executeSQLString: aString [
 
 	| result block time |
@@ -720,7 +721,7 @@ DatabaseAccessor >> executeSQLString: aString [
 	^ result
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> executeSQLString: aString binding: aBindingArray [
 	| result block time |
 	self log: aString.
@@ -735,13 +736,13 @@ DatabaseAccessor >> executeSQLString: aString binding: aBindingArray [
 	^result
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> executeSQLStringNoResult: aString [
 
 	^ self executeSQLStringNoResult: aString doing: [  ] forCommand: nil
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> executeSQLStringNoResult: aString doing: aBlock forCommand: aCommand [
 	"Execute the string and discard the result. Evaluate aBlock before releasing the statement's answer stream"
 
@@ -758,13 +759,13 @@ DatabaseAccessor >> executeSQLStringNoResult: aString doing: aBlock forCommand: 
 	self logTime: time
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> externalDatabaseErrorSignal [
 
 	self subclassResponsibility
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> handleError: exception for: command [
 	| errorClass error |
 	errorClass := command isReadCommand
@@ -783,7 +784,7 @@ DatabaseAccessor >> handleError: exception for: command [
 		ifFalse: [error return: nil]
 ]
 
-{ #category : #transactions }
+{ #category : 'transactions' }
 DatabaseAccessor >> inTransactionDo: aBlock [
 	"Execute aBlock in a database transaction. If one is already in progress, just continue. If not, start a transaction."
 
@@ -798,31 +799,31 @@ DatabaseAccessor >> inTransactionDo: aBlock [
 	^result
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DatabaseAccessor >> initialize [
 
 	super initialize.
 	mutex := Semaphore forMutualExclusion
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> innerExceptionFor: exception [
 	^exception parameter
 ]
 
-{ #category : #permissions }
+{ #category : 'permissions' }
 DatabaseAccessor >> insertOnly [
 	self denyCommands: (Array with: UpdateCommand with: DeleteCommand)
 ]
 
-{ #category : #cursors }
+{ #category : 'cursors' }
 DatabaseAccessor >> isCursorAtEnd: aCursor [
 	"Return true if aCursor is at its end. This implementation may not work for all, but it seems like a reasonable default"
 
 	^aCursor atEnd
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseAccessor >> isExistingTable: tableName inSchema: schemaName [
 
 	| databasePlatform sqlStatement result targetSchemaName |
@@ -839,13 +840,13 @@ DatabaseAccessor >> isExistingTable: tableName inSchema: schemaName [
 		  ifFalse: [ false ]
 ]
 
-{ #category : #transactions }
+{ #category : 'transactions' }
 DatabaseAccessor >> isInTransaction [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #'queries metadata' }
+{ #category : 'queries metadata' }
 DatabaseAccessor >> listColumnsInTableNamed: aTable schemaNamed: schemaString [
 
 	| databasePlatform sqlStatement result |
@@ -859,7 +860,7 @@ DatabaseAccessor >> listColumnsInTableNamed: aTable schemaNamed: schemaString [
 		  ifFalse: [ result ]
 ]
 
-{ #category : #'queries metadata' }
+{ #category : 'queries metadata' }
 DatabaseAccessor >> listTableNamesInSchemaNamed: schemaString [
 
 	| databasePlatform sqlStatement result |
@@ -872,7 +873,7 @@ DatabaseAccessor >> listTableNamesInSchemaNamed: schemaString [
 		  ifFalse: [ result collect: [ :ea | ea at: 1 ] ]
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 DatabaseAccessor >> log: aStringOrBlock [
 
 	| string |
@@ -889,7 +890,7 @@ DatabaseAccessor >> log: aStringOrBlock [
 		flush
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 DatabaseAccessor >> logCommand: aDatabaseCommand bound: aBoolean [
 	"Log the execution of a command"
 
@@ -902,26 +903,26 @@ DatabaseAccessor >> logCommand: aDatabaseCommand bound: aBoolean [
 	self log: string
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 DatabaseAccessor >> logError: anErrorObject [
 
 	self log: anErrorObject printString
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 DatabaseAccessor >> logOnly [
 
 	logOnly ifNil: [ logOnly := false ].
 	^ logOnly and: [ self logging ]
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 DatabaseAccessor >> logOnly: aBoolean [
 
 	logOnly := aBoolean
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 DatabaseAccessor >> logOnlyOn: aTextCollector [
 	"logOnly implies you're logging and that you have a logger, so combine setting them into a single method (inverse is #endLogging)."
 
@@ -931,7 +932,7 @@ DatabaseAccessor >> logOnlyOn: aTextCollector [
 		logOnly: true
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 DatabaseAccessor >> logTime: aTimeOrBlock [
 
 	| time |
@@ -943,32 +944,32 @@ DatabaseAccessor >> logTime: aTimeOrBlock [
 	self log: '(' , (time / 1000.0) printString , ' s)'
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 DatabaseAccessor >> logger [
 
 	^ logger ifNil: [ Transcript ]
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 DatabaseAccessor >> logger: aTextCollector [
 
 	logger := aTextCollector
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 DatabaseAccessor >> logging [
 
 	logging ifNil: [ ^ self class loggingEnabled ].
 	^ logging
 ]
 
-{ #category : #logging }
+{ #category : 'logging' }
 DatabaseAccessor >> logging: aBoolean [
 
 	logging := aBoolean
 ]
 
-{ #category : #login }
+{ #category : 'login' }
 DatabaseAccessor >> login [
 
 	self loginIfError: [ :ex | ex pass ].
@@ -976,50 +977,38 @@ DatabaseAccessor >> login [
 	^ nil
 ]
 
-{ #category : #login }
+{ #category : 'login' }
 DatabaseAccessor >> loginIfError: aBlock [
 
 	self subclassResponsibility
 ]
 
-{ #category : #login }
+{ #category : 'login' }
 DatabaseAccessor >> logout [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #dependencies }
-DatabaseAccessor >> myDependents [
-
-	^ dependents
-]
-
-{ #category : #dependencies }
-DatabaseAccessor >> myDependents: aCollection [
-
-	dependents := aCollection
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseAccessor >> numberOfPreparedStatements [
 
 	^ 0
 ]
 
-{ #category : #permissions }
+{ #category : 'permissions' }
 DatabaseAccessor >> permitEverything [
 	"Note that nil is treated as a flag indicating that all commands are allowed"
 
 	deniedCommands := nil
 ]
 
-{ #category : #permissions }
+{ #category : 'permissions' }
 DatabaseAccessor >> permitNothing [
 
 	deniedCommands := DatabaseCommand allSubclasses asArray
 ]
 
-{ #category : #permissions }
+{ #category : 'permissions' }
 DatabaseAccessor >> permitNothingDuring: aBlock [
 
 	| oldCommands |
@@ -1028,27 +1017,27 @@ DatabaseAccessor >> permitNothingDuring: aBlock [
 	aBlock ensure: [ deniedCommands := oldCommands ]
 ]
 
-{ #category : #permissions }
+{ #category : 'permissions' }
 DatabaseAccessor >> permitsInserts [
 
 	deniedCommands ifNil: [ ^ true ].
 	^ (deniedCommands includes: InsertCommand) not
 ]
 
-{ #category : #permissions }
+{ #category : 'permissions' }
 DatabaseAccessor >> permitsUpdates [
 
 	deniedCommands ifNil: [ ^ true ].
 	^ (deniedCommands includes: UpdateCommand) not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseAccessor >> platform [
 
 	^ currentLogin database
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> populateField: aDatabaseField with: aValue ifError: errorBlock [
 
 	self
@@ -1057,7 +1046,7 @@ DatabaseAccessor >> populateField: aDatabaseField with: aValue ifError: errorBlo
 		ifError: errorBlock
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> renameField: aDatabaseField to: nameString ifError: errorBlock [
 
 	self
@@ -1068,7 +1057,7 @@ DatabaseAccessor >> renameField: aDatabaseField to: nameString ifError: errorBlo
 		ifError: errorBlock
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> renameTable: aDatabaseTable to: newTableName inPlatform: aDatabasePlatform ifError: errorBlock [
 
 	| sqlStatement |
@@ -1081,61 +1070,61 @@ DatabaseAccessor >> renameTable: aDatabaseTable to: newTableName inPlatform: aDa
 		ifError: errorBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DatabaseAccessor >> reset [
 	"Don't reset the permissions, because the replicator wants to reset sessions without changing their characteristics"
 "	self permitEverything."
 ]
 
-{ #category : #permissions }
+{ #category : 'permissions' }
 DatabaseAccessor >> resetPermissions [
 
 	self permitEverything
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseAccessor >> returnRowCount: aBoolean [
 
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseAccessor >> reusePreparedStatements [
 
 	^ reusePreparedStatements and: [ self useBinding ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseAccessor >> reusePreparedStatements: aBoolean [
 
 	reusePreparedStatements := aBoolean
 ]
 
-{ #category : #transactions }
+{ #category : 'transactions' }
 DatabaseAccessor >> rollbackTransaction [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DatabaseAccessor >> rowCount [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseAccessor >> schema [
 
 	^ self currentLogin schema
 ]
 
-{ #category : #login }
+{ #category : 'login' }
 DatabaseAccessor >> showDialog: aString [
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseAccessor >> useBinding [
 
 	^ self platform useBinding

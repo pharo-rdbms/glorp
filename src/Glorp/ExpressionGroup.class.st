@@ -5,42 +5,44 @@ Because it is only used in transient ways, it probably doesn't implement all the
 
 "
 Class {
-	#name : #ExpressionGroup,
-	#superclass : #GlorpExpression,
+	#name : 'ExpressionGroup',
+	#superclass : 'GlorpExpression',
 	#instVars : [
 		'children'
 	],
-	#category : #'Glorp-Expressions'
+	#category : 'Glorp-Expressions',
+	#package : 'Glorp',
+	#tag : 'Expressions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ExpressionGroup class >> with: anExpression [
 
 	^ (self new)
 		add: anExpression
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpressionGroup >> add: anExpression [
 
 	anExpression isNil ifTrue: [^self].
 	children add: anExpression
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpressionGroup >> addAll: anExpressionCollection [
 
 	anExpressionCollection isNil ifTrue: [^self].	
 	children addAll: anExpressionCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpressionGroup >> children [
 
 	^ children
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 ExpressionGroup >> do: aBlock skipping: aSet [
 	"Iterate over the expression tree. Keep track of who has already been visited, so we don't get trapped in cycles or visit nodes twice."
 
@@ -50,20 +52,20 @@ ExpressionGroup >> do: aBlock skipping: aSet [
 	aBlock value: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ExpressionGroup >> initialize [
 
 	super initialize.
 	children := OrderedCollection new.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpressionGroup >> isEmpty [
 
 	^ self size = 0
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ExpressionGroup >> printTreeOn: aStream [
 
 	children do: [ :each |
@@ -73,13 +75,13 @@ ExpressionGroup >> printTreeOn: aStream [
 		aStream cr ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpressionGroup >> queryLevelBaseExpression [
 
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpressionGroup >> size [
 
 	^ children size

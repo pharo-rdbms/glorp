@@ -1,6 +1,6 @@
-Extension { #name : #DatabaseTableConstraint }
+Extension { #name : 'DatabaseTableConstraint' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 DatabaseTableConstraint class >> forTable: aDatabaseTable [
 
 	^ self new

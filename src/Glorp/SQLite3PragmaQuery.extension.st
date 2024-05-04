@@ -1,6 +1,6 @@
-Extension { #name : #SQLite3PragmaQuery }
+Extension { #name : 'SQLite3PragmaQuery' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 SQLite3PragmaQuery class >> newQuery [
 	^SQLite3PragmaQuery new
 	"^super newQuery"

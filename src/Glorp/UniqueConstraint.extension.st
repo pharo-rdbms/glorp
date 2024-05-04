@@ -1,6 +1,6 @@
-Extension { #name : #UniqueConstraint }
+Extension { #name : 'UniqueConstraint' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 UniqueConstraint class >> forTable: aTable fields: aCollectionOfFields [
 
 	| instance |

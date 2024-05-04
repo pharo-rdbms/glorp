@@ -4,12 +4,14 @@ I am a subclass of SimpleQuery and act the same except that I prepend the condit
 
 "
 Class {
-	#name : #ActiveRecordQuery,
-	#superclass : #SimpleQuery,
-	#category : #'Glorp-ActiveRecord'
+	#name : 'ActiveRecordQuery',
+	#superclass : 'SimpleQuery',
+	#category : 'Glorp-ActiveRecord',
+	#package : 'Glorp',
+	#tag : 'ActiveRecord'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ActiveRecordQuery >> session: aSession [
 
 	super session: aSession.

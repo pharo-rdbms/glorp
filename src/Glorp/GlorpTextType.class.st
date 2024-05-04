@@ -2,18 +2,20 @@
 Text type
 "
 Class {
-	#name : #GlorpTextType,
-	#superclass : #GlorpAbstractStringType,
-	#category : #'Glorp-Types'
+	#name : 'GlorpTextType',
+	#superclass : 'GlorpAbstractStringType',
+	#category : 'Glorp-Types',
+	#package : 'Glorp',
+	#tag : 'Types'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GlorpTextType >> initialize [
 	super initialize.
 	typeString := 'text'.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpTextType >> isVariableWidth [
 	^true.
 ]

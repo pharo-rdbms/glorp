@@ -4,26 +4,28 @@ I am a session for use with the ActiveRecord extension.
 I am primarily here to enable soft deletes.
 "
 Class {
-	#name : #ActiveRecordSession,
-	#superclass : #GlorpSession,
-	#category : #'Glorp-ActiveRecord'
+	#name : 'ActiveRecordSession',
+	#superclass : 'GlorpSession',
+	#category : 'Glorp-ActiveRecord',
+	#package : 'Glorp',
+	#tag : 'ActiveRecord'
 }
 
-{ #category : #'api/transactions' }
+{ #category : 'api/transactions' }
 ActiveRecordSession >> commitUnitOfWork [
 
 	self convertDeletedObjectsToSoftDeletes.
 	^ super commitUnitOfWork
 ]
 
-{ #category : #'api/transactions' }
+{ #category : 'api/transactions' }
 ActiveRecordSession >> commitUnitOfWorkAndContinue [
 
 	self convertDeletedObjectsToSoftDeletes.
 	^ super commitUnitOfWorkAndContinue
 ]
 
-{ #category : #'api/transactions' }
+{ #category : 'api/transactions' }
 ActiveRecordSession >> convertDeletedObjectsToSoftDeletes [
 
 	currentUnitOfWork ifNotNil: [

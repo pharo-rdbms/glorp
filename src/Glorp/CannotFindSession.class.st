@@ -3,17 +3,19 @@ This is an error that we raise when trying to determine what session to use for 
 
 "
 Class {
-	#name : #CannotFindSession,
-	#superclass : #GlorpError,
-	#category : #'Glorp-Exceptions'
+	#name : 'CannotFindSession',
+	#superclass : 'GlorpError',
+	#category : 'Glorp-Exceptions',
+	#package : 'Glorp',
+	#tag : 'Exceptions'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 CannotFindSession class >> mayResume [
 	^true.
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CannotFindSession >> defaultMessageText [
 
 	^ 'Cannot find the right session to use - send the #session: message first.'

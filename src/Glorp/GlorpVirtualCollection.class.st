@@ -14,106 +14,108 @@ Handling of ordering is also a little bit funny. The blocks we like for ordering
 
 "
 Class {
-	#name : #GlorpVirtualCollection,
-	#superclass : #Collection,
+	#name : 'GlorpVirtualCollection',
+	#superclass : 'Collection',
 	#instVars : [
 		'query',
 		'session',
 		'realObjects',
 		'parameters'
 	],
-	#category : #'Glorp-Queries'
+	#category : 'Glorp-Queries',
+	#package : 'Glorp',
+	#tag : 'Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GlorpVirtualCollection class >> on: aClass in: aSession [
 	^self new on: aClass in: aSession
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GlorpVirtualCollection >> AND: aBlock [
 	query AND: aBlock
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 GlorpVirtualCollection >> add: newObject [
 	self readOnlyError
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 GlorpVirtualCollection >> collect: aBlock [
 	^self realObjects collect: aBlock
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 GlorpVirtualCollection >> copy [
 	^self shallowCopy postCopy
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 GlorpVirtualCollection >> copyAndGrowBy: anInteger [
 	"For VA compatibility"
 	^super glorpShallowCopy
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 GlorpVirtualCollection >> copyFrom: start to: stop [
 	^self realObjects copyFrom: start to: stop
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 GlorpVirtualCollection >> do: aBlock [
 	self realObjects do: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpVirtualCollection >> first [
 	^self realObjects first
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GlorpVirtualCollection >> getQuery [
 	^query
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpVirtualCollection >> isEmpty [
 	^self realObjects isEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpVirtualCollection >> isInstantiated [
 	^realObjects notNil.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpVirtualCollection >> last [
 	^self realObjects last.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GlorpVirtualCollection >> on: aClass in: aSession [
 	query := aSession queryClass read: aClass.
 	session := aSession.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpVirtualCollection >> orderBy: aBlockOrExpression [
 	query orderBy: aBlockOrExpression.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpVirtualCollection >> parameters: aCollection [
 	parameters := aCollection
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 GlorpVirtualCollection >> postCopy [
 	query := query copy.
 	realObjects := nil
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 GlorpVirtualCollection >> printOn: aStream [
 	self isInstantiated
 		ifTrue: [super printOn: aStream]
@@ -122,45 +124,45 @@ GlorpVirtualCollection >> printOn: aStream [
 			query notNil ifTrue: [aStream nextPutAll: query resultClass name]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GlorpVirtualCollection >> readOnlyError [
 	self error: 'Virtual collections are read-only'.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GlorpVirtualCollection >> realObjects [
 	realObjects isNil ifTrue: [	realObjects := query executeWithParameters: parameters in: session].
 	^realObjects.
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 GlorpVirtualCollection >> reject: aBlock [
 	^self copy AND: [:each | (aBlock value: each) not]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 GlorpVirtualCollection >> remove: oldObject ifAbsent: anExceptionBlock [
 	self readOnlyError
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 GlorpVirtualCollection >> select: aBlock [
 	^self isInstantiated ifTrue: [self realObjects select: aBlock] ifFalse: [self copy AND: aBlock]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpVirtualCollection >> setQuery: aQuery [
 	"Semi-private. Set the internal query"
 	query := aQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpVirtualCollection >> setSession: aSession [
 	"Semi-private. Set the session"
 	session := aSession
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlorpVirtualCollection >> size [
 	^self realObjects size
 ]

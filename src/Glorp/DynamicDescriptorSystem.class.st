@@ -3,15 +3,17 @@ This is a descriptor system whose descriptors and tables are created dynamically
 
 "
 Class {
-	#name : #DynamicDescriptorSystem,
-	#superclass : #DescriptorSystem,
+	#name : 'DynamicDescriptorSystem',
+	#superclass : 'DescriptorSystem',
 	#instVars : [
 		'attributeNameToFieldNameBlock'
 	],
-	#category : 'Glorp-Mappings'
+	#category : 'Glorp-Mappings',
+	#package : 'Glorp',
+	#tag : 'Mappings'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DynamicDescriptorSystem >> addEmptyDescriptorFor: aClass [ 
 	| descriptor |
 	descriptor := Descriptor new.
@@ -21,7 +23,7 @@ DynamicDescriptorSystem >> addEmptyDescriptorFor: aClass [
 	^descriptor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DynamicDescriptorSystem >> addEmptyTableNamed: aString [ 
 	| table |
 	table := self databaseTableClass named: aString.
@@ -29,40 +31,40 @@ DynamicDescriptorSystem >> addEmptyTableNamed: aString [
 	^table
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DynamicDescriptorSystem >> allClasses [
 	^descriptors keys
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DynamicDescriptorSystem >> allTableNames [
 	^tables keys
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DynamicDescriptorSystem >> attributeNameToFieldNameBlock: aBlock [
 	attributeNameToFieldNameBlock := aBlock
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 DynamicDescriptorSystem >> fieldNameForAttributeName: aSymbol [ 
 	attributeNameToFieldNameBlock isNil  
 		ifTrue: [^super fieldNameForAttributeName: aSymbol].
 	^attributeNameToFieldNameBlock value: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DynamicDescriptorSystem >> initializeClassModel: aClassModel [
 	"Assume we'll initialize it either before or after this"
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DynamicDescriptorSystem >> privateDescriptorAt: aClass put: aDescriptor [
 	"Normally you don't want to be setting tables explicitly, as it may defeat the identity management but it's here if needed"
 	descriptors at: aClass put: aDescriptor
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DynamicDescriptorSystem >> privateTableAt: aString put: aTable [
 	"Normally you don't want to be setting tables explicitly, as it may defeat the identity management but it's here if needed"
 	tables at: aString asUppercase put: aTable

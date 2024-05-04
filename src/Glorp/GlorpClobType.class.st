@@ -2,30 +2,32 @@
 CLOB type
 "
 Class {
-	#name : #GlorpClobType,
-	#superclass : #GlorpAbstractStringType,
-	#category : #'Glorp-Types'
+	#name : 'GlorpClobType',
+	#superclass : 'GlorpAbstractStringType',
+	#category : 'Glorp-Types',
+	#package : 'Glorp',
+	#tag : 'Types'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpClobType >> hasParameters [
 	"Return true if this has modifiable parameters. That is, when we return one of these, should we return a copy rather than trying to save space be re-using instances"
 	^false.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GlorpClobType >> initialize [
 	super initialize.
 	typeString := 'text'.
 	width := nil.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpClobType >> isVariableWidth [
 	^true.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlorpClobType >> requiresCast [
 	^(self platform class = PostgreSQLPlatform) or: [self platform class = SQLServerPlatform]
 ]

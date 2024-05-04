@@ -12,63 +12,65 @@ Instance Variables:
 
 "
 Class {
-	#name : #DatabaseSequence,
-	#superclass : #GlorpDatabaseValueGenerator,
+	#name : 'DatabaseSequence',
+	#superclass : 'GlorpDatabaseValueGenerator',
 	#instVars : [
 		'reservedNumbers'
 	],
-	#category : #'Glorp-Database'
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 DatabaseSequence class >> named: aString [
 
 	^ self new name: aString
 ]
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 DatabaseSequence >> creationString [
 
 	^ 'Create sequence ' , self qualifiedName
 ]
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 DatabaseSequence >> dropString [
 
 	^ 'Drop string unspecified for this type of sequence'
 ]
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 DatabaseSequence >> getSequenceValueFromDatabaseFor: aField in: aRow using: aSession [
 
 	self subclassResponsibility
 ]
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 DatabaseSequence >> hasReservedNumbers [
 
 	^ reservedNumbers notNil and: [ reservedNumbers isNotEmpty ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DatabaseSequence >> isIdentityColumn [
 
 	^ false
 ]
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 DatabaseSequence >> nextReservedNumber [
 
 	^ reservedNumbers removeFirst
 ]
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 DatabaseSequence >> postWriteAssignSequenceValueFor: aField in: aRow using: anAccessor [
 
 	self subclassResponsibility
 ]
 
-{ #category : #sequencing }
+{ #category : 'sequencing' }
 DatabaseSequence >> preWriteAssignSequenceValueFor: aField in: aRow using: anAccessor [
 
 	self hasReservedNumbers
@@ -80,7 +82,7 @@ DatabaseSequence >> preWriteAssignSequenceValueFor: aField in: aRow using: anAcc
 				using: anAccessor ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DatabaseSequence >> reservedNumbers [
 
 	reservedNumbers ifNil: [

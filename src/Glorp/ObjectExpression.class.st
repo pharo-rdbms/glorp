@@ -17,24 +17,26 @@ Instance Variables:
 
 "
 Class {
-	#name : #ObjectExpression,
-	#superclass : #GlorpExpression,
+	#name : 'ObjectExpression',
+	#superclass : 'GlorpExpression',
 	#instVars : [
 		'mappingExpressions',
 		'requiresDistinct',
 		'tableAliases',
 		'fieldAliases'
 	],
-	#category : #'Glorp-Expressions'
+	#category : 'Glorp-Expressions',
+	#package : 'Glorp',
+	#tag : 'Expressions'
 }
 
-{ #category : #'api-aggregates' }
+{ #category : 'api-aggregates' }
 ObjectExpression >> aggregate: anExpression as: aggregateFunctionName [
 
 	^ self aggregate: anExpression as: aggregateFunctionName where: nil
 ]
 
-{ #category : #'api-aggregates' }
+{ #category : 'api-aggregates' }
 ObjectExpression >> aggregate: anExpression as: aggregateFunctionName where: whereExpression [
 	"Make a subselect of the expression that is our argument, returning an aggregated value. e.g.
 session read: GlorpCustomer where: 	[:each |  
@@ -63,7 +65,7 @@ session read: GlorpCustomer where: 	[:each |
 	^q asGlorpExpressionOn: self ultimateBaseExpression.
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 ObjectExpression >> aliasTable: aDatabaseTable to: aString [
 
 	| newTable |
@@ -74,7 +76,7 @@ ObjectExpression >> aliasTable: aDatabaseTable to: aString [
 	self tableAliases at: aDatabaseTable put: newTable
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 ObjectExpression >> aliasedTableFor: aDatabaseTable [
 
 	tableAliases isNil ifTrue: [ ^ aDatabaseTable ].
@@ -93,7 +95,7 @@ ObjectExpression >> aliasedTableFor: aDatabaseTable [
 					  ifFalse: [ tableExpression aliasedTableFor: aDatabaseTable ] ] ]
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 ObjectExpression >> aliasedTableFor: aDatabaseTable ifAbsent: aBlock [
 
 	tableAliases isNil ifTrue: [ ^ aBlock value ].
@@ -101,7 +103,7 @@ ObjectExpression >> aliasedTableFor: aDatabaseTable ifAbsent: aBlock [
 	^ tableAliases at: aDatabaseTable ifAbsent: [ aBlock value ]
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 ObjectExpression >> anySatisfyDefault: anExpression [
 
 	^ (self system isNil or: [ self system useJoinsForAnySatisfy ])
@@ -109,7 +111,7 @@ ObjectExpression >> anySatisfyDefault: anExpression [
 		  ifFalse: [ self anySatisfyExists: anExpression ]
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 ObjectExpression >> anySatisfyExists: anExpression [ 
 	| newExpression |
 	anExpression isConstantExpression ifTrue: [self error: 'The argument to anySatisfy: must be a block evaluating to a boolean condition.'].
@@ -120,7 +122,7 @@ ObjectExpression >> anySatisfyExists: anExpression [
 	^newExpression.
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 ObjectExpression >> anySatisfyJoin: anExpression [ 
 	| newExpression |
 	anExpression isConstantExpression ifTrue: [self error: 'The argument to anySatisfy: must be a block evaluating to a boolean condition.'].
@@ -133,7 +135,7 @@ ObjectExpression >> anySatisfyJoin: anExpression [
 	^newExpression.
 ]
 
-{ #category : #'api-aggregates' }
+{ #category : 'api-aggregates' }
 ObjectExpression >> asDate [
 	"Cast the receiver to be a date"
 
@@ -143,7 +145,7 @@ ObjectExpression >> asDate [
 		  (Array with: self system platform date asGlorpExpression)
 ]
 
-{ #category : #'api-aggregates' }
+{ #category : 'api-aggregates' }
 ObjectExpression >> asTimestamp [
 	"Cast the receiver to be a timestamp"
 
@@ -153,7 +155,7 @@ ObjectExpression >> asTimestamp [
 		  (Array with: self system platform timestamp asGlorpExpression)
 ]
 
-{ #category : #preparing }
+{ #category : 'preparing' }
 ObjectExpression >> assignTableAliasesStartingAt: anInteger prefix: aString [
 
 	| tableNumber prefix |
@@ -169,26 +171,26 @@ ObjectExpression >> assignTableAliasesStartingAt: anInteger prefix: aString [
 	^ tableNumber
 ]
 
-{ #category : #'api-aggregates' }
+{ #category : 'api-aggregates' }
 ObjectExpression >> average: anExpression [
 
 	^ self aggregate: anExpression as: #average
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ObjectExpression >> canTranslateFields [
 	"Return true if we are a mapping expression and can thus translate from fields into their aliased version for a particular query. More generally, do we respond to translateField:"
 
 	^ true
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 ObjectExpression >> controlsTables [
 
 	self subclassResponsibility
 ]
 
-{ #category : #'api-aggregates' }
+{ #category : 'api-aggregates' }
 ObjectExpression >> count: anExpression [
 	"Make a subselect of the expression that is our argument, returning a count(*). e.g.
 session read: GlorpCustomer where: 	[:each |  (each count: [:eachCust | eachCust accounts]) = 1]."
@@ -196,14 +198,14 @@ session read: GlorpCustomer where: 	[:each |  (each count: [:eachCust | eachCust
 	^ self aggregate: anExpression as: #countStar
 ]
 
-{ #category : #'api-aggregates' }
+{ #category : 'api-aggregates' }
 ObjectExpression >> count: anExpression where: filterExpression [
 	"Make a subselect of the expression that is our argument, returning a count(*). e.g.
 session read: GlorpCustomer where: 	[:each |  (each count: [:eachCust | eachCust accounts]) = 1]."
 	^self aggregate: anExpression as: #countStar where: filterExpression.
 ]
 
-{ #category : #'api-aggregates' }
+{ #category : 'api-aggregates' }
 ObjectExpression >> existenceCheck: anExpression as: functionName [
 	"Make a subselect of the expression that is our argument, returning it wrapped in either an exists or a not exists, e.g. 
 	session read: GlorpCustomer where: 	[:each |  
@@ -228,14 +230,14 @@ ObjectExpression >> existenceCheck: anExpression as: functionName [
 	^self get: functionName withArguments: (Array with: (q asGlorpExpressionOn: self ultimateBaseExpression)).
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectExpression >> fieldAliases [
 
 	fieldAliases isNil ifTrue: [fieldAliases := IdentityDictionary new].
 	^fieldAliases.
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 ObjectExpression >> findFieldNamed: aString [
 	| fields |
 	fields := OrderedCollection new: 1.
@@ -248,7 +250,7 @@ ObjectExpression >> findFieldNamed: aString [
 	^ fields at: 1
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ObjectExpression >> get: aSymbol [ 
 	"Return the mapping expression corresponding to the named attribute"
 
@@ -260,7 +262,7 @@ ObjectExpression >> get: aSymbol [
 		ifAbsentPut: [MappingExpression named: reallyASymbol basedOn: self ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ObjectExpression >> get: aSymbol withArguments: anArray [ 
 
 	| specialExpression functionExpression |
@@ -275,7 +277,7 @@ ObjectExpression >> get: aSymbol withArguments: anArray [
 		withArguments: anArray
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ObjectExpression >> getConstant: anObject [
 	"Allows us to refer to a constant object easily. This is most useful for subselects, where I can already write something like
    [:each | (each count: subQuery) = 5]
@@ -287,7 +289,7 @@ because then the left-hand side expression doesn't refer back to the block argum
 	^ anObject asGlorpExpressionOn: self
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ObjectExpression >> getField: aField [
 
 	| realField |
@@ -305,7 +307,7 @@ ObjectExpression >> getField: aField [
 	^self getFieldKnownNotToBeAName: realField
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ObjectExpression >> getFieldKnownNotToBeAName: aField [
 	"The public getField method may, for convenience, be passed a string or a constant expression with a string that is a field name. This is a mess, and can be confused with a constant value. This method does not allow that."
 
@@ -319,7 +321,7 @@ ObjectExpression >> getFieldKnownNotToBeAName: aField [
 	^self getFieldThatsAnActualFieldObject: realField
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ObjectExpression >> getFieldThatsAnActualFieldObject: aField [
 	"If the field isn't from our table, do a getTable first. If we don't know, assume we can get it directly."
 
@@ -332,7 +334,7 @@ ObjectExpression >> getFieldThatsAnActualFieldObject: aField [
 		ifFalse: [(self getTable: aField table) getField: aField]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ObjectExpression >> getMapping: aMapping named: aString [
 	"Get a mapping expression given the actual mapping (this is most useful for an anonymous mapping that isn't named or in our descriptor). Only if you really know what you're doing!. Short circuit looking up the mapping, checking for functions, and so on."
 
@@ -343,13 +345,13 @@ ObjectExpression >> getMapping: aMapping named: aString [
 			expression]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ObjectExpression >> getParameter: aDatabaseField [
 
 	^ ParameterExpression forField: aDatabaseField basedOn: self
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ObjectExpression >> getTable: aTable [
 	"This can take a string, a constantExpression containing a string, or a table object"
 
@@ -367,26 +369,26 @@ ObjectExpression >> getTable: aTable [
 		ifAbsentPut: [TableExpression forTable: realTable basedOn: self]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ObjectExpression >> hasField [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ObjectExpression >> hasProvidedAdditionalExpressions [
 	"Return true if we have already provided additional expressions to some query. Only important when we're preparing a subselect and don't want to bring in joins that are part of the main query"
 
 	^ self hasTableAliases
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ObjectExpression >> hasTableAliases [
 
 	^ tableAliases notNil
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 ObjectExpression >> includes: anObject [
 	"Allow us to specify includes: as a shortcut for (anySatisfy: [:each | each = anObject]). Rather than just call anySatisfy:, we need to go through the get: mechanism, both to avoid the anySatisfy: method on expressions that treats them like a collection, and to make sure we get the default mechanism for anySatisfy: (either joins or exists)"
 
@@ -397,14 +399,14 @@ ObjectExpression >> includes: anObject [
 			   ([ :each | each = anObject ] asGlorpExpressionOn: self))
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ObjectExpression >> initialize [
 
 	super initialize.
 	requiresDistinct := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectExpression >> mappingExpressions [
 
 	mappingExpressions isNil ifTrue: [
@@ -412,30 +414,30 @@ ObjectExpression >> mappingExpressions [
 	^ mappingExpressions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectExpression >> mappingExpressions: anObject [
 	mappingExpressions := anObject
 ]
 
-{ #category : #'api-aggregates' }
+{ #category : 'api-aggregates' }
 ObjectExpression >> max: anExpression [
 
 	^ self aggregate: anExpression as: #max
 ]
 
-{ #category : #'api-aggregates' }
+{ #category : 'api-aggregates' }
 ObjectExpression >> min: anExpression [
 
 	^ self aggregate: anExpression as: #min
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 ObjectExpression >> newFieldExpressionFor: aField [
 
 	^ FieldExpression forField: aField basedOn: self
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 ObjectExpression >> noneSatisfy: anExpression [
 
 	| newExpression |
@@ -446,7 +448,7 @@ ObjectExpression >> noneSatisfy: anExpression [
 	^ newExpression
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 ObjectExpression >> noneSatisfyExists: anExpression [
 
 	| newExpression |
@@ -457,7 +459,7 @@ ObjectExpression >> noneSatisfyExists: anExpression [
 	^ newExpression
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 ObjectExpression >> oneArgumentSpecialSelectors [
 
 	^ #( #anySatisfyDefault: #anySatisfyJoin: #anySatisfyExists:
@@ -466,7 +468,7 @@ ObjectExpression >> oneArgumentSpecialSelectors [
 	     #average: #sqlSelect: #includes: )
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 ObjectExpression >> performSpecialExpression: aSymbol withArguments: anArray [
 
 	| symbolToPerform |
@@ -477,7 +479,7 @@ ObjectExpression >> performSpecialExpression: aSymbol withArguments: anArray [
 	^ nil
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ObjectExpression >> printTableAliasesOn: aStream [
 
 	self hasTableAliases ifTrue: [
@@ -486,33 +488,33 @@ ObjectExpression >> printTableAliasesOn: aStream [
 			aStream nextPutAll: eachKey name , '->' , eachValue name , ' ' ] ]
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 ObjectExpression >> referenceClass [
 	"Return the class that our mapping refers to, if we have a mapping. If we're a base expression, just return our class, and if we're a table expression, just return nil."
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #'private/accessing' }
+{ #category : 'private/accessing' }
 ObjectExpression >> removeMappingExpression: anExpression [
 	"Private. Normally you would never do this, but in the case of an anySatisfy: or allSatisfy: we want to have each of them as distinct joins, so we will remove the entry from the mappingExpression of the base, making sure that relationship will not be used for anything else. Since any/allSatisfy: is the only valid use of a collection relationship, we don't have to worry about whether it was used for something else earlier."
 
 	self mappingExpressions removeKey: anExpression name
 ]
 
-{ #category : #'private/accessing' }
+{ #category : 'private/accessing' }
 ObjectExpression >> requiresDistinct [
 
 	^ requiresDistinct
 ]
 
-{ #category : #'private/accessing' }
+{ #category : 'private/accessing' }
 ObjectExpression >> requiresDistinct: aBoolean [
 
 	requiresDistinct := aBoolean
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 ObjectExpression >> specialSymbolToPerformFor: aSymbol [
 	"Avoid polymorphism between things you can send to an expression inside a query block and things you can do to an expression to iterate over an expression true"
 
@@ -521,7 +523,7 @@ ObjectExpression >> specialSymbolToPerformFor: aSymbol [
 	^ aSymbol
 ]
 
-{ #category : #'api-aggregates' }
+{ #category : 'api-aggregates' }
 ObjectExpression >> sqlAverage [
 	"Make a subselect of the expression that is our argument, returning an avg(). e.g.
 session read: GlorpCustomer where: 	[:each |  each accounts balance sqlAverage > 100]."
@@ -529,7 +531,7 @@ session read: GlorpCustomer where: 	[:each |  each accounts balance sqlAverage >
 	^ self queryLevelBaseExpression average: self
 ]
 
-{ #category : #'api-aggregates' }
+{ #category : 'api-aggregates' }
 ObjectExpression >> sqlAvg [
 	"Make a subselect of the expression that is our argument, returning an avg(). e.g.
 session read: GlorpCustomer where: 	[:each |  each accounts balance sqlAvg > 100]."
@@ -537,7 +539,7 @@ session read: GlorpCustomer where: 	[:each |  each accounts balance sqlAvg > 100
 	^ self queryLevelBaseExpression average: self
 ]
 
-{ #category : #'api-aggregates' }
+{ #category : 'api-aggregates' }
 ObjectExpression >> sqlCount [
 	"Make a subselect of the expression that is our argument, returning a count(). e.g.
 session read: GlorpCustomer where: 	[:each |  each accounts sqlCount = 1]."
@@ -545,7 +547,7 @@ session read: GlorpCustomer where: 	[:each |  each accounts sqlCount = 1]."
 	^ self queryLevelBaseExpression count: self
 ]
 
-{ #category : #'api-aggregates' }
+{ #category : 'api-aggregates' }
 ObjectExpression >> sqlCountWhere: filterExpression [
 	"Make a subselect of the expression that is our argument, returning a count(). e.g.
 session read: GlorpCustomer where: 	[:each |  each accounts sqlCount = 1]."
@@ -553,7 +555,7 @@ session read: GlorpCustomer where: 	[:each |  each accounts sqlCount = 1]."
 	^ self queryLevelBaseExpression count: self where: filterExpression
 ]
 
-{ #category : #'api-aggregates' }
+{ #category : 'api-aggregates' }
 ObjectExpression >> sqlMax [
 	"Make a subselect of the expression that is our argument, returning a max(). e.g.
 session read: GlorpCustomer where: 	[:each |  each accounts balance sqlMax = 1]."
@@ -561,7 +563,7 @@ session read: GlorpCustomer where: 	[:each |  each accounts balance sqlMax = 1].
 	^ self queryLevelBaseExpression max: self
 ]
 
-{ #category : #'api-aggregates' }
+{ #category : 'api-aggregates' }
 ObjectExpression >> sqlMin [
 	"Make a subselect of the expression that is our argument, returning a minimum. e.g.
 session read: GlorpCustomer where: 	[:each |  each accounts balance sqlMin = 1]."
@@ -569,7 +571,7 @@ session read: GlorpCustomer where: 	[:each |  each accounts balance sqlMin = 1].
 	^ self queryLevelBaseExpression min: self
 ]
 
-{ #category : #'api-aggregates' }
+{ #category : 'api-aggregates' }
 ObjectExpression >> sqlSum [
 	"Make a subselect of the expression that is our argument, returning a count(*). e.g.
 session read: GlorpCustomer where: 	[:each |  each accounts balance sqlSum = 1]."
@@ -577,7 +579,7 @@ session read: GlorpCustomer where: 	[:each |  each accounts balance sqlSum = 1].
 	^ self queryLevelBaseExpression sum: self
 ]
 
-{ #category : #'api-aggregates' }
+{ #category : 'api-aggregates' }
 ObjectExpression >> sum: anExpression [
 	"Make a subselect of the expression that is our argument, returning a sum. e.g.
 session read: GlorpCustomer where: 	[:each |  (each sum: [:eachCust | eachCust accounts id]) > 5]."
@@ -585,18 +587,18 @@ session read: GlorpCustomer where: 	[:each |  (each sum: [:eachCust | eachCust a
 	^ self aggregate: anExpression as: #sum
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectExpression >> system [
 	self subclassResponsibility.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectExpression >> table [
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectExpression >> tableAliases [
 
 	tableAliases isNil ifTrue: [
@@ -604,7 +606,7 @@ ObjectExpression >> tableAliases [
 	^ tableAliases
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 ObjectExpression >> translateField: aDatabaseField [
 
 	| newTable rebuilt |
@@ -621,19 +623,19 @@ ObjectExpression >> translateField: aDatabaseField [
 		  ifAbsentPut: [ rebuilt withTable: newTable ]
 ]
 
-{ #category : #fields }
+{ #category : 'fields' }
 ObjectExpression >> translateFields: anOrderedCollection [
 
 	^ anOrderedCollection collect: [ :each | self translateField: each ]
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 ObjectExpression >> twoArgumentSpecialSelectors [
 
 	^ #( #aggregate:as: )
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 ObjectExpression >> zeroArgumentSpecialSelectors [
 
 	^ #( #asOuterJoin #sqlCount #sqlSum #sqlMin #sqlMax #sqlAverage

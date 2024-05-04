@@ -11,17 +11,19 @@ Instance Variables:
 
 "
 Class {
-	#name : #ForeignKeyConstraint,
-	#superclass : #DatabaseTableConstraint,
+	#name : 'ForeignKeyConstraint',
+	#superclass : 'DatabaseTableConstraint',
 	#instVars : [
 		'suffixExpression',
 		'sourceFields',
 		'targetFields'
 	],
-	#category : #'Glorp-Database'
+	#category : 'Glorp-Database',
+	#package : 'Glorp',
+	#tag : 'Database'
 }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 ForeignKeyConstraint class >> sourceField: aDatabaseField targetField: anotherDatabaseField [
 
 	^ self
@@ -30,7 +32,7 @@ ForeignKeyConstraint class >> sourceField: aDatabaseField targetField: anotherDa
 		  suffixExpression: nil
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 ForeignKeyConstraint class >> sourceField: aDatabaseField targetField: anotherDatabaseField suffixExpression: suffixExpression [
 
 	^ self new
@@ -40,7 +42,7 @@ ForeignKeyConstraint class >> sourceField: aDatabaseField targetField: anotherDa
 		  yourself
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 ForeignKeyConstraint class >> sourceFields: sourceFields targetFields: targetFields [
 
 	^ self
@@ -49,7 +51,7 @@ ForeignKeyConstraint class >> sourceFields: sourceFields targetFields: targetFie
 		  suffixExpression: nil
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 ForeignKeyConstraint class >> sourceFields: sourceFields targetFields: targetFields suffixExpression: suffixExpression [
 
 	^ self new
@@ -59,7 +61,7 @@ ForeignKeyConstraint class >> sourceFields: sourceFields targetFields: targetFie
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ForeignKeyConstraint >> addSourceField: aField [
 
 	(self sourceFields allSatisfy: [ :each | aField table = each table ])
@@ -69,7 +71,7 @@ ForeignKeyConstraint >> addSourceField: aField [
 	self sourceFields add: aField
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ForeignKeyConstraint >> addTargetField: aField [
 
 	(self targetFields allSatisfy: [ :each | aField table = each table ])
@@ -79,25 +81,25 @@ ForeignKeyConstraint >> addTargetField: aField [
 	self targetFields add: aField
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ForeignKeyConstraint >> asJoin [
 
 	^ Join fromAll: self sourceFields toAll: self targetFields
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ForeignKeyConstraint >> asReverseJoin [
 
 	^ Join fromAll: self targetFields toAll: self sourceFields
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ForeignKeyConstraint >> creationStringFor: aPlatform [
 
 	^ aPlatform createForeignKeyConstraintAddStatement: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ForeignKeyConstraint >> generateName [
 
 	| stream maxLength tableLength roomToBeVerbose shortTableLength longTableLength |
@@ -117,7 +119,7 @@ ForeignKeyConstraint >> generateName [
 	^ stream contents
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ForeignKeyConstraint >> initialize [
 
 	super initialize.
@@ -125,19 +127,19 @@ ForeignKeyConstraint >> initialize [
 	targetFields := OrderedCollection new: 2
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ForeignKeyConstraint >> isForeignKeyConstraint [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ForeignKeyConstraint >> isImaginary [
 
 	^ self targetTable isImaginary or: [ self sourceTable isImaginary ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ForeignKeyConstraint >> isSimilarForeignKeyConstraint: aConstraint [
 
 	self sourceFields size ~= aConstraint sourceFields size ifTrue: [^false].
@@ -151,7 +153,7 @@ ForeignKeyConstraint >> isSimilarForeignKeyConstraint: aConstraint [
 	^ true
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ForeignKeyConstraint >> isTheSameAs: aForeignKeyConstraint [
 
 	"Validate that two constraints are exactly the same. Most useful for testing purposes, rather than normal usage, which is why we don't just use the #= method."
@@ -166,7 +168,7 @@ ForeignKeyConstraint >> isTheSameAs: aForeignKeyConstraint [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ForeignKeyConstraint >> matchesForeignKeyConstraint: aConstraint [
 
 	name asUppercase = aConstraint name asUppercase ifFalse: [^false].
@@ -181,7 +183,7 @@ ForeignKeyConstraint >> matchesForeignKeyConstraint: aConstraint [
 	^ true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ForeignKeyConstraint >> printForConstraintName: aField on: aStream maxLength: maxLength [
 
 	| constraintName |
@@ -191,13 +193,13 @@ ForeignKeyConstraint >> printForConstraintName: aField on: aStream maxLength: ma
 	aStream nextPutAll: constraintName
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ForeignKeyConstraint >> refersToTable: aTable [
 
 	^ self targetTable yourself == aTable
 ]
 
-{ #category : #relationships }
+{ #category : 'relationships' }
 ForeignKeyConstraint >> rowsRelatedTo: aRow [
 
 	| myWrapper relatedRows sourceField targetField allWrappers |
@@ -217,21 +219,21 @@ ForeignKeyConstraint >> rowsRelatedTo: aRow [
 	^ relatedRows
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ForeignKeyConstraint >> someSourceField [
 	"Return any one of our source fields"
 
 	^ self sourceFields first
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ForeignKeyConstraint >> sourceField: aField [
 
 	self sourceFields isEmpty ifFalse: [self error: 'Adding a field to a non-empty constraint'].
 	self sourceFields add: aField
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ForeignKeyConstraint >> sourceField: aDatabaseField targetField: anotherDatabaseField [
 
 	self
@@ -240,7 +242,7 @@ ForeignKeyConstraint >> sourceField: aDatabaseField targetField: anotherDatabase
 		suffixExpression: nil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ForeignKeyConstraint >> sourceField: aDatabaseField targetField: anotherDatabaseField suffixExpression: suffixExpressionString [
 
 	self
@@ -249,19 +251,19 @@ ForeignKeyConstraint >> sourceField: aDatabaseField targetField: anotherDatabase
 		suffixExpression: suffixExpressionString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ForeignKeyConstraint >> sourceFields [
 
 	^ sourceFields
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ForeignKeyConstraint >> sourceFields: aCollection [
 
 	sourceFields := aCollection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ForeignKeyConstraint >> sourceFields: sourceFieldCollection targetFields: targetFieldCollection suffixExpression: suffixExpressionString [
 
 	self
@@ -270,51 +272,51 @@ ForeignKeyConstraint >> sourceFields: sourceFieldCollection targetFields: target
 		suffixExpression: suffixExpressionString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ForeignKeyConstraint >> sourceTable [
 	"All the source fields have to come from the same table, so just pick one"
 
 	^ self sourceFields first table
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ForeignKeyConstraint >> suffixExpression [
 
 	^ suffixExpression
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ForeignKeyConstraint >> suffixExpression: anObject [
 
 	suffixExpression := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ForeignKeyConstraint >> table [
 
 	^ self sourceTable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ForeignKeyConstraint >> targetField: aField [
 
 	self targetFields isEmpty ifFalse: [self error: 'Adding a field to a non-empty constraint'].
 	self targetFields add: aField
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ForeignKeyConstraint >> targetFields [
 
 	^ targetFields
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ForeignKeyConstraint >> targetFields: aCollection [
 
 	targetFields := aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ForeignKeyConstraint >> targetTable [
 	"All the target fields have to come from the same table, so just pick one"
 

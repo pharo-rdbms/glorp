@@ -1,12 +1,12 @@
-Extension { #name : #ByteArray }
+Extension { #name : 'ByteArray' }
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 ByteArray >> glorpIsCollection [
 	"For our purposes, these aren't collections, but rather a simple database type"
 	^false.
 ]
 
-{ #category : #'*Glorp' }
+{ #category : '*Glorp' }
 ByteArray >> glorpPrintSQLOn: aCommand [
 	|aStream|
 	aStream := WriteStream on: String new.
