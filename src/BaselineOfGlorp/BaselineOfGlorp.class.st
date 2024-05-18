@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfGlorp,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfGlorp
+	#name : 'BaselineOfGlorp',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfGlorp',
+	#package : 'BaselineOfGlorp'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfGlorp >> baseline: spec [
 
 	<baseline>
@@ -25,14 +26,14 @@ BaselineOfGlorp >> baseline: spec [
 			spec group: 'Glorp-Tests' with: 'Tests'
 			].
 	spec
-		for: #(#'pharo10.x' #'pharo11.x')
+		for: #(#'pharo10.x' #'pharo11.x' #'pharo12.x')
 		do: [ spec
 				package: 'Glorp-Pharo10';
 				group: 'Core' with: 'Glorp-Pharo10'
 			]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfGlorp >> projectClass [
 
 	^ MetacelloCypressBaselineProject
