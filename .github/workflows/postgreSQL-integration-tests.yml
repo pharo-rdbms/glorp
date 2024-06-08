@@ -9,7 +9,7 @@ jobs:
       fail-fast: false
       matrix:
         smalltalk: [ Pharo64-8.0, Pharo64-9.0, Pharo64-10, Pharo64-11, Pharo64-12 ]
-        rdbms: [ PostgreSQLv10, PostgreSQLv11, PostgreSQLv12, PostgreSQLv13, PostgreSQLv14 ]
+        rdbms: [ PostgreSQLv12, PostgreSQLv13, PostgreSQLv14, PostgreSQLv15, PostgreSQLv16 ]
     name: ${{ matrix.smalltalk }} + ${{ matrix.rdbms }}
     steps:
       - uses: actions/checkout@v2
