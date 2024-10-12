@@ -124,7 +124,7 @@ PharoDatabaseAccessor >> databaseDriver: aDriver [
 { #category : #executing }
 PharoDatabaseAccessor >> disconnect [
 
-	^ self connection disconnect
+	^ self connection ifNotNil: [ :conn | conn disconnect ]
 ]
 
 { #category : #accessing }
