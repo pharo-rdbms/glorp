@@ -32,7 +32,6 @@ Class {
 		'reusePreparedStatements',
 		'deniedCommands',
 		'mutex',
-		'dependents',
 		'logOnly',
 		'logger'
 	],
@@ -986,18 +985,6 @@ DatabaseAccessor >> loginIfError: aBlock [
 DatabaseAccessor >> logout [
 
 	^ self subclassResponsibility
-]
-
-{ #category : #dependencies }
-DatabaseAccessor >> myDependents [
-
-	^ dependents
-]
-
-{ #category : #dependencies }
-DatabaseAccessor >> myDependents: aCollection [
-
-	dependents := aCollection
 ]
 
 { #category : #accessing }
