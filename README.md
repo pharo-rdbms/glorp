@@ -7,6 +7,7 @@
 [![SQLite3 Integration Tests](https://github.com/pharo-rdbms/glorp/actions/workflows/sqlite3-integration-tests.yml/badge.svg)](https://github.com/pharo-rdbms/glorp/actions/workflows/sqlite3-integration-tests.yml)
 [![Coverage Status](https://codecov.io/github/pharo-rdbms/glorp/coverage.svg?branch=master)](https://codecov.io/gh/pharo-rdbms/glorp/branch/master)
 
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Pharo 8.0](https://img.shields.io/badge/Pharo-8.0-informational)](https://pharo.org)
 [![Pharo 9.0](https://img.shields.io/badge/Pharo-9.0-informational)](https://pharo.org)
 [![Pharo 10](https://img.shields.io/badge/Pharo-10-informational)](https://pharo.org)
