@@ -1,15 +1,6 @@
 Extension { #name : #ForeignKeyConstraint }
 
 { #category : #'*Glorp' }
-ForeignKeyConstraint class >> sourceField: aDatabaseField targetField: anotherDatabaseField [
-
-	^ self
-		  sourceField: aDatabaseField
-		  targetField: anotherDatabaseField
-		  suffixExpression: nil
-]
-
-{ #category : #'*Glorp' }
 ForeignKeyConstraint class >> sourceField: aDatabaseField targetField: anotherDatabaseField suffixExpression: suffixExpression [
 
 	^ self new

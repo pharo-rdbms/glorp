@@ -1,11 +1,6 @@
 Extension { #name : #Proxy }
 
 { #category : #'*Glorp' }
-Proxy class >> read: aClass where: aBlock [
-	^self new query: (Query read: aClass where: aBlock)
-]
-
-{ #category : #'*Glorp' }
 Proxy class >> read: aClass where: aBlock in: aSession [
 	^self new
 		query: (Query read: aClass where: aBlock);
@@ -46,12 +41,4 @@ Proxy class >> returningOneOf: aClass where: aBlock [
 
 	self deprecated: 'Use #readOneOf:where: instead'.
 	^self readOneOf: aClass where: aBlock
-]
-
-{ #category : #'*Glorp' }
-Proxy class >> returningOneOf: aClass where: aBlock in: aSession [
-	"returningOneOf: is a synonyms of readOneOf:. This now seems more natural to me, to be consistent with session API."
-
-	self deprecated: 'Use #readOneOf:where: instead'.
-	^self readOneOf: aClass where: aBlock in: aSession
 ]

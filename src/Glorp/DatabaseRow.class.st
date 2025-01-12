@@ -36,25 +36,25 @@ Class {
 	#category : #'Glorp-Database'
 }
 
-{ #category : #'*Glorp' }
+{ #category : #accessing }
 DatabaseRow class >> emptySlot [
 	emptySlot == nil ifTrue: [emptySlot := Object new].
 	^emptySlot.
 ]
 
-{ #category : #'*Glorp' }
+{ #category : #accessing }
 DatabaseRow class >> missingFieldIndicator [
 	missingFieldIndicator == nil ifTrue: [missingFieldIndicator := Object new].
 	^missingFieldIndicator.
 ]
 
-{ #category : #'*Glorp' }
+{ #category : #constructor }
 DatabaseRow class >> newForTable: aTable [
 
 	^self new table: aTable.
 ]
 
-{ #category : #'*Glorp' }
+{ #category : #constructor }
 DatabaseRow class >> newForTable: aTable withOwner: anObject [
 
 	^self new table: aTable; owner: anObject.

@@ -45,7 +45,7 @@ AbstractReadQuery class >> newQuery [
 	^self delegateClass new
 ]
 
-{ #category : #'*Glorp' }
+{ #category : #reading }
 AbstractReadQuery class >> read: aClass [
 	^self read: aClass where: nil
 ]
@@ -55,7 +55,7 @@ AbstractReadQuery class >> read: aClass limit: anInteger [
 	^self returningManyOf: aClass limit: anInteger
 ]
 
-{ #category : #'*Glorp' }
+{ #category : #reading }
 AbstractReadQuery class >> read: aClass where: anExpression [
 	^self read: aClass where: anExpression limit: nil
 ]
@@ -81,12 +81,12 @@ AbstractReadQuery class >> readManyOf: aClass where: anExpression limit: anInteg
 		limit: anInteger
 ]
 
-{ #category : #'*Glorp' }
+{ #category : #reading }
 AbstractReadQuery class >> readOneOf: aClass [
 	^self readOneOf: aClass where: nil.
 ]
 
-{ #category : #'*Glorp' }
+{ #category : #reading }
 AbstractReadQuery class >> readOneOf: aClass where: anExpression [
 	^self newQuery
 		initResultClass: aClass

@@ -21,7 +21,7 @@ Class {
 	#category : #'Glorp-Database'
 }
 
-{ #category : #'*Glorp' }
+{ #category : #constructor }
 ForeignKeyConstraint class >> sourceField: aDatabaseField targetField: anotherDatabaseField [
 
 	^ self

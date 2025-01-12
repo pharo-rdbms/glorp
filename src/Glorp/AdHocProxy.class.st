@@ -15,7 +15,7 @@ Class {
 	#category : #'Glorp-Queries'
 }
 
-{ #category : #'*Glorp' }
+{ #category : #reading }
 AdHocProxy class >> readBlock: aZeroArgumentBlock [
 
 	^self new glorpReadBlock: aZeroArgumentBlock

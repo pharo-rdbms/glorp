@@ -17,14 +17,14 @@ Class {
 	#category : #'Glorp-Database'
 }
 
-{ #category : #'*Glorp' }
+{ #category : #constructor }
 DatabaseIndex class >> forField: aField [
 	^(self new initialize)
 		addField: aField;
 		yourself
 ]
 
-{ #category : #'*Glorp' }
+{ #category : #constructor }
 DatabaseIndex class >> forFields: aCollection [
 	^(self new)
 		addFields: aCollection;

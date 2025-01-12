@@ -17,7 +17,7 @@ Class {
 	#category : #'Glorp-Database'
 }
 
-{ #category : #'*Glorp' }
+{ #category : #constructor }
 AdHocVersionGenerator class >> block: aBlock [
 	^self new block: aBlock.
 ]

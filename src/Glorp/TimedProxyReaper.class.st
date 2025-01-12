@@ -25,13 +25,13 @@ Class {
 	#category : #'Glorp-Core'
 }
 
-{ #category : #'*Glorp' }
+{ #category : #constructor }
 TimedProxyReaper class >> delay: seconds [
 
 	^ self new delay: seconds
 ]
 
-{ #category : #'*Glorp' }
+{ #category : #constructor }
 TimedProxyReaper class >> delay: seconds maximumWork: milliseconds [
 
 	^ self new

@@ -18,7 +18,7 @@ Class {
 	#category : #'Glorp-Core'
 }
 
-{ #category : #'*Glorp' }
+{ #category : #constructor }
 CachePolicy class >> default [
 
 	^ self new

@@ -20,7 +20,7 @@ Class {
 	#category : #'Glorp-Queries'
 }
 
-{ #category : #'*Glorp' }
+{ #category : #reading }
 Proxy class >> read: aClass where: aBlock [
 	^self new query: (Query read: aClass where: aBlock)
 ]
@@ -68,7 +68,7 @@ Proxy class >> returningOneOf: aClass where: aBlock [
 	^self readOneOf: aClass where: aBlock
 ]
 
-{ #category : #'*Glorp' }
+{ #category : #deprecated }
 Proxy class >> returningOneOf: aClass where: aBlock in: aSession [
 	"returningOneOf: is a synonyms of readOneOf:. This now seems more natural to me, to be consistent with session API."
 

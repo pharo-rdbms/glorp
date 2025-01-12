@@ -37,7 +37,7 @@ Class {
 	#category : #'Glorp-Queries'
 }
 
-{ #category : #'*Glorp' }
+{ #category : #'class factory' }
 ElementBuilder class >> basicClassFor: anExpression in: aQuery [
 
 	^(anExpression hasDescriptor and: [anExpression mapsSimpleObject not])
@@ -54,7 +54,7 @@ ElementBuilder class >> basicFor: anExpression in: aQuery [
 		setup
 ]
 
-{ #category : #'*Glorp' }
+{ #category : #'class factory' }
 ElementBuilder class >> classFor: anExpression in: aQuery [
 	
 	((aQuery returnsDictionary and: [anExpression == aQuery baseExpression])
