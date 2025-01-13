@@ -11,7 +11,7 @@ Class {
 	#category : #'Glorp-Database'
 }
 
-{ #category : #'*Glorp' }
+{ #category : #constructor }
 SQLStringCommand class >> for: aString [
 
 	^ self new setSQLString: aString

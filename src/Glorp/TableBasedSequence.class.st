@@ -15,7 +15,7 @@ Class {
 	#category : #'Glorp-Database'
 }
 
-{ #category : #'*Glorp' }
+{ #category : #constructor }
 TableBasedSequence class >> default [
 
 	^self new sequenceTableName: 'SEQUENCE'.

@@ -34,7 +34,7 @@ Class {
 	#category : #'Glorp-Database'
 }
 
-{ #category : #'*Glorp' }
+{ #category : #constructor }
 DatabaseTable class >> named: aString [
 
 	^ self new name: aString

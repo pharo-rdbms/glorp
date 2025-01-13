@@ -19,7 +19,7 @@ Class {
 	#category : #'Glorp-Exceptions'
 }
 
-{ #category : #'*Glorp' }
+{ #category : #accessing }
 GlorpDatabaseReadError class >> mayResume [
 
 	^ true

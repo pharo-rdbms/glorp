@@ -20,7 +20,7 @@ Class {
 	#category : #'Glorp-Database'
 }
 
-{ #category : #'*Glorp' }
+{ #category : #constructor }
 DatabaseSequence class >> named: aString [
 
 	^ self new name: aString

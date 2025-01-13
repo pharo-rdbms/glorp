@@ -26,7 +26,7 @@ Class {
 	#category : #'Glorp-Database'
 }
 
-{ #category : #'*Glorp' }
+{ #category : #constructor }
 RowBasedCommand class >> forRow: aDatabaseRow useBinding: aBoolean session: aSession [
 
 	^ self new
@@ -36,7 +36,7 @@ RowBasedCommand class >> forRow: aDatabaseRow useBinding: aBoolean session: aSes
 		  yourself
 ]
 
-{ #category : #'*Glorp' }
+{ #category : #constructor }
 RowBasedCommand class >> forRows: aCollectionOfDatabaseRows useBinding: aBoolean session: aSession [
 
 	^ self new
@@ -47,7 +47,7 @@ RowBasedCommand class >> forRows: aCollectionOfDatabaseRows useBinding: aBoolean
 		  yourself
 ]
 
-{ #category : #testing }
+{ #category : #accessing }
 RowBasedCommand class >> isAbstract [
 
 	^ self == RowBasedCommand

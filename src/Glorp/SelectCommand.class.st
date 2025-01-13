@@ -22,7 +22,7 @@ Class {
 	#category : #'Glorp-Database'
 }
 
-{ #category : #'*Glorp' }
+{ #category : #constructor }
 SelectCommand class >> forQuery: aQuery parameters: aDictionary [
 
 	^ self new
@@ -31,7 +31,7 @@ SelectCommand class >> forQuery: aQuery parameters: aDictionary [
 		  yourself
 ]
 
-{ #category : #'*Glorp' }
+{ #category : #constructor }
 SelectCommand class >> forQuery: aQuery parameters: aDictionary useBinding: aBoolean session: aSession [
 
 	^ self new

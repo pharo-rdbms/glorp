@@ -31,13 +31,13 @@ Class {
 	#category : #'Glorp-Database'
 }
 
-{ #category : #'*Glorp' }
+{ #category : #'error signalling' }
 DatabaseField class >> named: aString [
 
 	^self error: 'type needed'
 ]
 
-{ #category : #'*Glorp' }
+{ #category : #constructor }
 DatabaseField class >> named: aString type: dbType [
 
 	^ super new initialize
@@ -45,7 +45,7 @@ DatabaseField class >> named: aString type: dbType [
 		type: dbType
 ]
 
-{ #category : #'*Glorp' }
+{ #category : #private }
 DatabaseField class >> new [
 
 	^self error: 'dbType needed'
