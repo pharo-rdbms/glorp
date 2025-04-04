@@ -85,3 +85,14 @@ GlorpProxyTest >> testSpecies [
 
 	self assert: proxy species equals: GlorpAddress 
 ]
+
+{ #category : #tests }
+GlorpProxyTest >> testSpeciesisProxy [
+"a proxy without a result or a query returns Proxy as species"
+
+	| prox |
+	
+	prox := Proxy new.
+
+	self assert: prox species equals: Proxy 
+]
