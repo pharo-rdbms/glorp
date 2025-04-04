@@ -3,7 +3,8 @@ Class {
 	#superclass : #GlorpTestCase,
 	#instVars : [
 		'session',
-		'proxy'
+		'proxy',
+		'result'
 	],
 	#category : #'Glorp-Integration-Tests-Database'
 }
@@ -23,7 +24,8 @@ GlorpProxyTest >> setUp [
 	proxy := Proxy new.
 	proxy session: session.
 	stub := GlorpQueryStub readOneOf: GlorpAddress where: [:address | address id = 1].
-	stub result: 42.
+	result:= GlorpAddress new.
+	stub result: result.
 	proxy query: stub.
 	proxy parameters: #()
 ]
@@ -55,7 +57,7 @@ GlorpProxyTest >> testCreation [
 GlorpProxyTest >> testInstantiationFromStub [
 
 	self assert: (proxy getValue notNil).
-	self assert: proxy = 42.
+	self assert: proxy equals: result.
 	self assert: proxy isInstantiated.
 ]
 
@@ -76,4 +78,10 @@ GlorpProxyTest >> testPrintingUninstantiated [
 GlorpProxyTest >> testPrintingUninstantiatedCollection [
 	proxy query readsOneObject: false.
 	self assert: proxy printString = '{uninstantiated collection of GlorpAddress}'.
+]
+
+{ #category : #tests }
+GlorpProxyTest >> testSpecies [ 
+
+	self assert: proxy species equals: GlorpAddress 
 ]

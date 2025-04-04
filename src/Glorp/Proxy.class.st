@@ -208,10 +208,13 @@ Proxy >> session: aSession [
 
 { #category : #accessing }
 Proxy >> species [
+"returns the class of the proxied object either by looking at the actual value's class"
+"or the expected result of the proxy. Returns Proxy otherwise."
 
 	self isInstantiated ifTrue: [^value species].
 	query isNil ifTrue: [^Proxy].
-	query resultClass isNil ifTrue: [^Proxy].
-	^query resultClass 
+	"self traceCr: 'not instantiated'."
+	^ query resultClass ifNil: [ Proxy ]
+	
 
 ]
