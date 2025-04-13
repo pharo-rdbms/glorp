@@ -83,10 +83,10 @@ Dialect class >> dialectVersion [
 ]
 
 { #category : #numbers }
-Dialect class >> doesPrecisionOf: aNumber equal: aPrecision [
+Dialect class >> doesScaleOf: aNumber equal: aScale [
 
 	^ aNumber class == self fixedPointClass and: [
-		  aNumber scale = aPrecision ]
+		  aNumber scale = aScale ]
 ]
 
 { #category : #numbers }

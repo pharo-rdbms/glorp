@@ -45,7 +45,7 @@ GlorpDatabasePlatformTest >> string20 [
 GlorpDatabasePlatformTest >> testNumericCoercion [
 
 	| type platform num |
-	type := GlorpNumericType new scale: 5; precision: 2.
+	type := GlorpNumericType new precision: 5; scale: 2.
 	platform := DatabasePlatform new.
 	num := Dialect coerceToDoublePrecisionFloat: (123456 / 100).
 	self assert: (platform convertToNumber: num for: type) equals: num.
@@ -54,7 +54,17 @@ GlorpDatabasePlatformTest >> testNumericCoercion [
 	num := Dialect coerceToDoublePrecisionFloat: (123450 / 1000).
 	self assert: (platform convertToNumber: num for: type) equals: num.
 	num := Dialect coerceToDoublePrecisionFloat: (123456 / 1000).
-	self deny: (platform convertToNumber: num for: type) equals: num
+	self deny: (platform convertToNumber: num for: type) equals: num.
+	
+	type:= GlorpNumericType new precision: 7; scale: 4.
+	
+	"When coercing a smaller scale number to a larger scale, the number remains the same (7.2 => 7.20)"
+	num := 759.343 asScaledDecimal:3.
+	self assert: (platform convertToNumber: num for: type ) equals: num.
+	
+	"When coercing a higher scale number to a lower scale, the number is truncated and no longer equal (1.21 =>  1.2)"
+	num := 32.28345s5.
+	self deny: (platform convertToNumber: num for: type) equals: num.
 ]
 
 { #category : #tests }
