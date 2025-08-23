@@ -548,9 +548,10 @@ DatabaseAccessor >> dropSequence: aDatabaseSequence ifAbsent: aBlock [
 { #category : #executing }
 DatabaseAccessor >> dropSequences: anArray [
 
+
 	anArray do: [ :each |
 		self dropSequence: each ifAbsent: [ :ex |
-			Transcript show: (ex messageText ifNil: [ ex printString ]).
+			self log: ('Drop Sequences failed for <1> with: <2>' expandMacrosWith: each name with:  (ex messageText ifNil: [ ex printString ])).
 			ex return: nil ] ]
 ]
 
