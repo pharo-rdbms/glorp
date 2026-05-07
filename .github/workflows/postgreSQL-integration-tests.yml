@@ -16,6 +16,7 @@ jobs:
           - Pharo64-11
           - Pharo64-12
           - Pharo64-13
+          - Pharo64-14
         rdbms:
           - PostgreSQLv10
           - PostgreSQLv11
@@ -25,9 +26,10 @@ jobs:
           - PostgreSQLv15
           - PostgreSQLv16
           - PostgreSQLv17
+          - PostgreSQLv18
     name: ${{ matrix.smalltalk }} + ${{ matrix.rdbms }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Start PostgreSQL
         run: ./scripts/setup-PostgreSQL.sh
         env:
@@ -43,7 +45,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RDBMS: ${{ matrix.rdbms }}
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         with:
           name: PostgreSQL-Integration-Tests-${{matrix.smalltalk}}
           token: ${{ secrets.CODECOV_TOKEN }}
